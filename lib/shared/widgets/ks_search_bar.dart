@@ -39,36 +39,54 @@ class KsSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final asButton = readOnly && onTap != null;
+    final bar = _bar(context, asButton);
+    return asButton
+        ? GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onTap,
+            child: bar,
+          )
+        : bar;
+  }
+
+  Widget _bar(BuildContext context, bool asButton) {
     return Container(
       height: AppSizes.searchHeight,
-      padding:
-          const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.sm),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.sm),
       decoration: BoxDecoration(
         color: AppColors.bgSurface,
         borderRadius: BorderRadius.circular(AppRadius.xl),
       ),
       child: Row(
         children: [
-          const AppIcon(AppIcons.search,
-              size: _searchIcon, color: AppColors.borderStrong),
+          const AppIcon(
+            AppIcons.search,
+            size: _searchIcon,
+            color: AppColors.borderStrong,
+          ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
-            child: TextField(
-              controller: controller,
-              onChanged: onChanged,
-              onSubmitted: onSubmitted,
-              onTap: onTap,
-              readOnly: readOnly,
-              autofocus: autofocus,
-              textInputAction: TextInputAction.search,
-              style: AppTypography.bodyMedium.normal,
-              cursorColor: AppColors.bgBrand,
-              decoration: InputDecoration(
-                isCollapsed: true,
-                border: InputBorder.none,
-                hintText: hint,
-                hintStyle: AppTypography.bodyMedium.normal
-                    .withColor(AppColors.textSecondary),
+            child: IgnorePointer(
+              ignoring: asButton,
+              child: TextField(
+                controller: controller,
+                onChanged: onChanged,
+                onSubmitted: onSubmitted,
+                onTap: onTap,
+                readOnly: readOnly,
+                autofocus: autofocus,
+                textInputAction: TextInputAction.search,
+                style: AppTypography.bodyMedium.normal,
+                cursorColor: AppColors.bgBrand,
+                decoration: InputDecoration(
+                  isCollapsed: true,
+                  border: InputBorder.none,
+                  hintText: hint,
+                  hintStyle: AppTypography.bodyMedium.normal.withColor(
+                    AppColors.textSecondary,
+                  ),
+                ),
               ),
             ),
           ),
@@ -83,8 +101,11 @@ class KsSearchBar extends StatelessWidget {
               child: const SizedBox.square(
                 dimension: _micBox,
                 child: Center(
-                  child: AppIcon(AppIcons.mic,
-                      size: AppSizes.iconXs, color: AppColors.iconBrand),
+                  child: AppIcon(
+                    AppIcons.mic,
+                    size: AppSizes.iconXs,
+                    color: AppColors.iconBrand,
+                  ),
                 ),
               ),
             ),

@@ -1,12 +1,11 @@
 # KrishiSync — Plan
 
 ## Current status
-- **Phase:** Part 3 — E2E tested on emulator 2026-11-14 (farmer side ✅). Moderator approval test waits for Asif to set a role in the console.
-- **E2E results (real Firebase + Cloudinary):** language → onboarding → login with test number (OTP) → users doc created → role → profile with 4-step address picker (saved address works) → Farmer Home → Sell Crop 1–3 with gallery photo → Cloudinary upload → listing in Firestore (`pending`) → success modal → My Listings with "অনুমোদনের অপেক্ষায়" badge → language switch → logout.
-- **Fixed during test:** Bangla "১" font, full-width pills, picker result lost after Firestore write, keyboard refocus, double users doc write, grey loading button, union chevron, date format.
-- **Polish list (later):** English plurals ("1 active listings"), profile tab avatar fallback, banner slides 2–3, full Profile 68, Farmer Search 17.
-- **Firebase console done by Asif:** Firestore (asia-south1), Phone auth, 5 test numbers, SMS region policy = Bangladesh. Rules + indexes deployed.
-- **Next step:** Asif sets `role: moderator` for +8801700000004 → test approve → Part 4 (buyer).
+- **Phase:** Part 4 (buyer) built and partly E2E-tested 2026-11-14. Commit `2d81924` + search fix.
+- **Tested on emulator:** buyer login (01700000002) → role → profile → Buyer Home (stats, categories, quick actions) → Market tab (categories, filter row, empty state) → Search screen. Unapproved listings are correctly hidden from buyers (rules).
+- **Blocked:** moderator approval test + buyer browsing with real listings need `role: moderator` on users doc of +8801700000004 (Asif, Firebase console).
+- **Built in Part 4:** 71 Buyer Home, 74 Marketplace + filter sheet, 73 Search (recent on phone, popular + suggestions from listings), 75 Crop Details (distance, market range, farmer card, similar crops, sticky CTA), 76 Farmer Profile.
+- **Next step:** Part 5 — offers (77 Make Offer, 24 Buyer Offers, 25 Negotiate, D1, 26) + orders (78 Place Order, 40/42 farmer orders, 105/106 buyer orders) + notifications (16/72).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -260,9 +259,9 @@ counters/orders    next: int
 15 Farmer Home (+ nav icons on/off, glyph icons, tip/banner art), 18–20 Sell Crop, 21 Success modal, 22 My Listings, 23 Crop Details, HF/List Item / Status (badge).
 
 ### Phase 2 — Vertical slices (Tier A)
-- [ ] 2.1 Auth: splash, language, onboarding, login, OTP, role, profile + location + photo
-- [ ] 2.2 Farmer: home, sell crop 1–3 with photo upload, my listings, listing details
-- [ ] 2.3 Buyer: home, marketplace, search/filter, crop details, farmer profile
+- [x] 2.1 Auth: splash, language, onboarding, login, OTP, role, profile + location + photo
+- [x] 2.2 Farmer: home, sell crop 1–3 with photo upload, my listings, listing details
+- [x] 2.3 Buyer: home, marketplace, search/filter, crop details, farmer profile
 - [ ] 2.4 Offers & orders: make offer, negotiate, accept/reject, place order, orders lists/details, notifications
 - [ ] 2.5 Transport: book transporter, loads, freight offer, assigned, jobs, trip status, proof of delivery, delivery confirmation, ratings
 - [ ] 2.6 Payment UI + `PaymentService` placeholder
