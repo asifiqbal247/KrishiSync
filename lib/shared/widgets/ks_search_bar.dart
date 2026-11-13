@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_dimens.dart';
 import '../../core/theme/app_typography.dart';
 import 'app_icon.dart';
+import 'ks_toast.dart';
 
 /// HF/Search Bar (292:59): surface fill, radius 16, h 48, pl 16 pr 8, gap 8,
 /// 20px search icon (border/strong), Regular 14 text, 32px white mic circle
@@ -77,7 +78,8 @@ class KsSearchBar extends StatelessWidget {
             shape: const CircleBorder(),
             child: InkWell(
               customBorder: const CircleBorder(),
-              onTap: onMic,
+              // Voice search is planned for a later version.
+              onTap: onMic ?? () => KsToast.comingSoon(context),
               child: const SizedBox.square(
                 dimension: _micBox,
                 child: Center(

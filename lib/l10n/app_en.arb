@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "KrishiSync",
+  "appName": "Golaghor",
   "splashTagline": "With farming, by your side",
   "splashVersion": "Version {version}",
   "langTitleBn": "ভাষা নির্বাচন করুন",
@@ -113,5 +113,6 @@
   "photoCamera": "Take a photo",
   "photoGallery": "Choose from gallery",
   "homeComingSoon": "This section is being built",
-  "logout": "Log out"
+  "logout": "Log out",
+  "comingSoon": "Coming soon"
 }

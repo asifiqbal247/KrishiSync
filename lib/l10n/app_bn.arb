@@ -1,6 +1,6 @@
 {
   "@@locale": "bn",
-  "appName": "KrishiSync",
+  "appName": "Golaghor",
   "splashTagline": "কৃষির সাথে, আপনার পাশে",
   "splashVersion": "সংস্করণ {version}",
   "@splashVersion": {
@@ -168,5 +168,6 @@
   "photoCamera": "ক্যামেরা দিয়ে তুলুন",
   "photoGallery": "গ্যালারি থেকে নিন",
   "homeComingSoon": "এই অংশটি তৈরি হচ্ছে",
-  "logout": "লগআউট"
+  "logout": "লগআউট",
+  "comingSoon": "শীঘ্রই আসছে"
 }

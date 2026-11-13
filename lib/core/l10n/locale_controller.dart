@@ -44,6 +44,12 @@ class OnboardingController extends Notifier<bool> {
     await ref.read(sharedPrefsProvider).setBool(_key, true);
     state = true;
   }
+
+  /// Show onboarding again (back from Login).
+  Future<void> reset() async {
+    await ref.read(sharedPrefsProvider).remove(_key);
+    state = false;
+  }
 }
 
 final onboardingDoneProvider =

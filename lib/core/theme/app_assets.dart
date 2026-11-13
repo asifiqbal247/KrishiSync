@@ -75,6 +75,8 @@ abstract final class AppImages {
   static const dotActive = '$_p/dot_active.webp';
   static const langIcon = '$_p/lang_icon.webp';
   static const cameraUpload = '$_p/camera_upload.webp';
+  static const toastCheck = '$_p/ui/toast_check.webp';
+  static const successCheck = '$_p/ui/success_check.webp';
   static const locationThumb = '$_p/location_thumb.webp';
   /// Static map art used before a map pin exists (screen 12).
   static const mapStrip = '$_p/map_strip.webp';

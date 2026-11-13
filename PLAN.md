@@ -301,3 +301,9 @@ counters/orders    next: int
 | 2026-11-13 | Testing on Android Studio emulator. |
 | 2026-11-13 | `google-services.json` and `firebase_options.dart` are git-ignored, never committed. |
 | 2026-11-13 | Package list approved. |
+| 2026-11-14 | App name is **Golaghor** (splash, app title, Android launcher label). Package id stays `com.asif.krishisync`. Uses Figma logo HF/Logo/Golaghor. |
+| 2026-11-14 | Screen 21 text changed (approval flow): bn "মডারেটর অনুমোদনের পর ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।", en "Buyers can see your crop and make offers after a moderator approves it." |
+| 2026-11-14 | My Listings (22): pending listings shown under "চলমান" with an "অনুমোদনের অপেক্ষায়" badge, using Figma HF/List Item / Status (319:26). |
+| 2026-11-14 | Mic icons stay visible and tappable; tap shows the Figma HF/Toast with "শীঘ্রই আসছে" / "Coming soon" (ARB key `comingSoon`). Real voice search = Tier C (needs a speech package, ask first). |
+| 2026-11-14 | Back on Login (reached by redirect, no history) returns to onboarding. Default app-bar back uses go_router `canPop/pop`. |
+| 2026-11-14 | Gradle memory lowered (3G heap / 1G metaspace), Kotlin in-process, incremental off — PC has 16 GB and runs the emulator. Don't run two Gradle builds at once. |

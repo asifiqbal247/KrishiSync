@@ -10,7 +10,7 @@ class AppLocalizationsBn extends AppLocalizations {
   AppLocalizationsBn([String locale = 'bn']) : super(locale);
 
   @override
-  String get appName => 'KrishiSync';
+  String get appName => 'Golaghor';
 
   @override
   String get splashTagline => 'কৃষির সাথে, আপনার পাশে';
@@ -371,4 +371,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get logout => 'লগআউট';
+
+  @override
+  String get comingSoon => 'শীঘ্রই আসছে';
 }

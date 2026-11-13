@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../app/router.dart';
+import '../../../core/l10n/locale_controller.dart';
 import '../../../core/theme/app_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimens.dart';
@@ -57,7 +58,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: l.loginTitle),
+      appBar: KsAppBar(
+        title: l.loginTitle,
+        // Login is reached by redirect (no history): back = onboarding again.
+        onBack: () => ref.read(onboardingDoneProvider.notifier).reset(),
+      ),
       body: SafeArea(
         top: false,
         child: SingleChildScrollView(

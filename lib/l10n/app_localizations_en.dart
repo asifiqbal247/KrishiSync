@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'KrishiSync';
+  String get appName => 'Golaghor';
 
   @override
   String get splashTagline => 'With farming, by your side';
@@ -372,4 +372,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logout => 'Log out';
+
+  @override
+  String get comingSoon => 'Coming soon';
 }

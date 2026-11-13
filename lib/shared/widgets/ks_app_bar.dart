@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_assets.dart';
 import '../../core/theme/app_colors.dart';
@@ -41,7 +42,7 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               children: [
                 if (showBack) ...[
-                  _BackButton(onTap: onBack ?? () => Navigator.maybePop(context)),
+                  _BackButton(onTap: onBack ?? () => _defaultBack(context)),
                   const SizedBox(width: AppSpacing.md),
                 ],
                 Expanded(
@@ -61,6 +62,14 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
     );
+  }
+}
+
+void _defaultBack(BuildContext context) {
+  if (context.canPop()) {
+    context.pop();
+  } else {
+    Navigator.maybePop(context);
   }
 }
 

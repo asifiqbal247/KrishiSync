@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In bn, this message translates to:
-  /// **'KrishiSync'**
+  /// **'Golaghor'**
   String get appName;
 
   /// No description provided for @splashTagline.
@@ -781,6 +781,12 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'লগআউট'**
   String get logout;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In bn, this message translates to:
+  /// **'শীঘ্রই আসছে'**
+  String get comingSoon;
 }
 
 class _AppLocalizationsDelegate
