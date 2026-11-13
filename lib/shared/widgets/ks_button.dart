@@ -4,7 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_dimens.dart';
 import '../../core/theme/app_typography.dart';
 
-enum KsButtonType { primary, text }
+enum KsButtonType { primary, outline, text }
 
 /// HF/Button (315:170). Size L: 48 high, radius 14, px 24,
 /// label Hind Siliguri SemiBold 16.
@@ -18,6 +18,14 @@ class KsButton extends StatelessWidget {
     this.loading = false,
     this.expand = true,
   });
+
+  const KsButton.outline({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.loading = false,
+    this.expand = true,
+  }) : type = KsButtonType.outline;
 
   const KsButton.text({
     super.key,
@@ -39,6 +47,7 @@ class KsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (type) {
       KsButtonType.primary => _primary(),
+      KsButtonType.outline => _outline(),
       KsButtonType.text => _text(),
     };
   }
@@ -76,6 +85,41 @@ class KsButton extends StatelessWidget {
                     )
                   : Text(label,
                       style: AppTypography.labelButton.normal.withColor(fg)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Button/Outline (315:50): white, 1.5px brand border, shadow
+  /// 0 2 3 rgba(31,31,31,.06), brand SemiBold 16.
+  Widget _outline() {
+    final fg = _enabled ? AppColors.textBrand : AppColors.textDisabled;
+    final radius = BorderRadius.circular(AppRadius.button);
+    return Container(
+      width: expand ? double.infinity : null,
+      height: AppSizes.buttonL,
+      decoration: BoxDecoration(
+        borderRadius: radius,
+        boxShadow: _enabled ? AppShadows.outlineButton : null,
+      ),
+      child: Material(
+        color: AppColors.bgPage,
+        shape: RoundedRectangleBorder(
+          borderRadius: radius,
+          side: BorderSide(
+              color: _enabled ? AppColors.borderBrand : AppColors.borderDefault,
+              width: 1.5),
+        ),
+        child: InkWell(
+          onTap: _enabled ? onPressed : null,
+          borderRadius: radius,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2xl),
+            child: Center(
+              child: Text(label,
+                  style: AppTypography.labelButton.normal.withColor(fg)),
             ),
           ),
         ),

@@ -123,3 +123,7 @@ final currentUserProvider = StreamProvider<AppUser?>((ref) {
   if (uid == null) return Stream.value(null);
   return ref.watch(userRepositoryProvider).watchUser(uid);
 });
+
+/// Any user's public profile (names, photo, district, rating).
+final userByIdProvider = StreamProvider.family<AppUser?, String>(
+    (ref, uid) => ref.watch(userRepositoryProvider).watchUser(uid));

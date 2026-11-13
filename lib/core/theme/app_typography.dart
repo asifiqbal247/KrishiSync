@@ -48,6 +48,14 @@ abstract final class AppTypography {
   static final numberLarge = _s(28, _bold, 36);
   static final numberMedium = _s(18, _semiBold, 24);
   static final numberSmall = _s(14, _medium, 20);
+
+  // Styles used by HF components that are not in the Foundations list.
+  /// Stat card value / modal title: Bold 18.
+  static final bold18 = _s(18, _bold, 24);
+  /// Banner title: Bold 17.
+  static final bold17 = _s(17, _bold, 23);
+  /// Bottom-nav active label: Bold 11.
+  static final navActive = _s(11, _bold, 14);
 }
 
 extension AppTextStyleX on TextStyle {

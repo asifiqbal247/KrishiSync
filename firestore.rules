@@ -64,6 +64,56 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // ---------- listings/{id} ----------
+    // Farmers create (always 'pending'); moderators approve/reject;
+    // buyers & everyone signed in see only 'active' ones.
+    match /listings/{id} {
+      function isOwner() { return signedIn() && resource.data.farmerId == uid(); }
+      function validListing(d) {
+        return d.cropKey is string && d.cropNameBn is string && d.cropNameEn is string
+          && d.cropNameBn.size() > 0 && d.cropNameBn.size() <= 40
+          && d.grade in ['A', 'B', 'C']
+          && d.quantityKg is number && d.quantityKg > 0 && d.quantityKg <= 1000000
+          && d.availableKg is number && d.availableKg >= 0 && d.availableKg <= d.quantityKg
+          && d.pricePerKg is number && d.pricePerKg > 0 && d.pricePerKg <= 100000
+          && d.availableFrom is timestamp
+          && d.photos is list && d.photos.size() >= 1 && d.photos.size() <= 3
+          && d.pickup is map;
+      }
+
+      allow read: if signedIn()
+        && (resource.data.status == 'active' || isOwner() || isMod());
+
+      allow create: if isActive() && myRole() == 'farmer'
+        && request.resource.data.farmerId == uid()
+        && request.resource.data.status == 'pending'
+        && validListing(request.resource.data);
+
+      // Owner: may only mark an active listing as sold.
+      allow update: if (isOwner() && isActive()
+          && onlyChanges(['status', 'updatedAt'])
+          && resource.data.status == 'active'
+          && request.resource.data.status == 'sold')
+        // Moderator / admin: approve or reject with a note.
+        || (isMod()
+          && onlyChanges(['status', 'moderationNote', 'moderatedBy', 'moderatedAt', 'updatedAt'])
+          && request.resource.data.status in ['active', 'hidden']
+          && request.resource.data.moderatedBy == uid());
+
+      allow delete: if isAdmin()
+        || (isOwner() && resource.data.status in ['pending', 'hidden']);
+    }
+
+    // ---------- marketPrices/{cropKey} ----------
+    match /marketPrices/{cropKey} {
+      allow read: if signedIn();
+      allow write: if isAdmin()
+        && request.resource.data.price is number
+        && request.resource.data.min is number
+        && request.resource.data.max is number
+        && request.resource.data.min <= request.resource.data.max;
+    }
+
     // Everything else is closed until its Part adds rules.
     match /{document=**} {
       allow read, write: if false;

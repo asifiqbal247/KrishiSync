@@ -787,6 +787,648 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'শীঘ্রই আসছে'**
   String get comingSoon;
+
+  /// No description provided for @greetingMorning.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুভ সকাল,'**
+  String get greetingMorning;
+
+  /// No description provided for @greetingAfternoon.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুভ দুপুর,'**
+  String get greetingAfternoon;
+
+  /// No description provided for @greetingEvening.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুভ সন্ধ্যা,'**
+  String get greetingEvening;
+
+  /// No description provided for @navHome.
+  ///
+  /// In bn, this message translates to:
+  /// **'হোম'**
+  String get navHome;
+
+  /// No description provided for @navMarket.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজার'**
+  String get navMarket;
+
+  /// No description provided for @navSell.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিক্রি'**
+  String get navSell;
+
+  /// No description provided for @navOrders.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার'**
+  String get navOrders;
+
+  /// No description provided for @navProfile.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রোফাইল'**
+  String get navProfile;
+
+  /// No description provided for @navListings.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা'**
+  String get navListings;
+
+  /// No description provided for @navReports.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিপোর্ট'**
+  String get navReports;
+
+  /// No description provided for @navVerify.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই'**
+  String get navVerify;
+
+  /// No description provided for @farmerSearchHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল, ক্রেতা বা এলাকা খুঁজুন'**
+  String get farmerSearchHint;
+
+  /// No description provided for @homeNewOffers.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count}টি নতুন অফার এসেছে'**
+  String homeNewOffers(String count);
+
+  /// No description provided for @homeSee.
+  ///
+  /// In bn, this message translates to:
+  /// **'দেখুন'**
+  String get homeSee;
+
+  /// No description provided for @homeTodayPrices.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজকের বাজার দর'**
+  String get homeTodayPrices;
+
+  /// No description provided for @homeWhatToDo.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি কী করতে চান?'**
+  String get homeWhatToDo;
+
+  /// No description provided for @homeSellCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল বিক্রি করুন'**
+  String get homeSellCrop;
+
+  /// No description provided for @homeSellCropSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'২ মিনিটে তালিকা দিন'**
+  String get homeSellCropSub;
+
+  /// No description provided for @homeMyListings.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার তালিকা'**
+  String get homeMyListings;
+
+  /// No description provided for @homeMyListingsSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count}টি চলমান তালিকা'**
+  String homeMyListingsSub(String count);
+
+  /// No description provided for @homeBuyerDemand.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার চাহিদা'**
+  String get homeBuyerDemand;
+
+  /// No description provided for @homeBuyerDemandSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাছাকাছি চাহিদা দেখুন'**
+  String get homeBuyerDemandSub;
+
+  /// No description provided for @homePayments.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট'**
+  String get homePayments;
+
+  /// No description provided for @homePaymentsSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাসে {amount}'**
+  String homePaymentsSub(String amount);
+
+  /// No description provided for @homeOngoingOrders.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান অর্ডার'**
+  String get homeOngoingOrders;
+
+  /// No description provided for @homeBannerExportTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিদেশে ফসল বিক্রি করুন'**
+  String get homeBannerExportTitle;
+
+  /// No description provided for @homeBannerExportSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'রপ্তানি গাইড ও বিদেশি ক্রেতা'**
+  String get homeBannerExportSub;
+
+  /// No description provided for @homeTips.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষি টিপস'**
+  String get homeTips;
+
+  /// No description provided for @tipBetterPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভালো দাম পাওয়ার উপায়'**
+  String get tipBetterPrice;
+
+  /// No description provided for @tipPackaging.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্যাকেজিং টিপস'**
+  String get tipPackaging;
+
+  /// No description provided for @tipGrading.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড বোঝার নিয়ম'**
+  String get tipGrading;
+
+  /// No description provided for @tipListen.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুনুন · {time}'**
+  String tipListen(String time);
+
+  /// No description provided for @pricePerKg.
+  ///
+  /// In bn, this message translates to:
+  /// **'{price}/কেজি'**
+  String pricePerKg(String price);
+
+  /// No description provided for @sellTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল বিক্রি করুন'**
+  String get sellTitle;
+
+  /// No description provided for @sellStep1.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের তথ্য'**
+  String get sellStep1;
+
+  /// No description provided for @sellStep2.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম ও স্থান'**
+  String get sellStep2;
+
+  /// No description provided for @sellStep3.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিশ্চিত করুন'**
+  String get sellStep3;
+
+  /// No description provided for @sellChooseCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল বাছুন'**
+  String get sellChooseCrop;
+
+  /// No description provided for @sellOtherCropHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের নাম লিখুন'**
+  String get sellOtherCropHint;
+
+  /// No description provided for @sellGrade.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান (গ্রেড)'**
+  String get sellGrade;
+
+  /// No description provided for @gradeLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড {grade}'**
+  String gradeLabel(String grade);
+
+  /// No description provided for @sellQuantity.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিমাণ'**
+  String get sellQuantity;
+
+  /// No description provided for @sellAddPhoto.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের ছবি তুলুন'**
+  String get sellAddPhoto;
+
+  /// No description provided for @sellPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম (প্রতি কেজি)'**
+  String get sellPrice;
+
+  /// No description provided for @sellPriceUnit.
+  ///
+  /// In bn, this message translates to:
+  /// **'৳/কেজি'**
+  String get sellPriceUnit;
+
+  /// No description provided for @sellMarketRange.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজকের বাজার দর: ৳ {min}–{max} / কেজি'**
+  String sellMarketRange(String min, String max);
+
+  /// No description provided for @sellAvailableFrom.
+  ///
+  /// In bn, this message translates to:
+  /// **'কবে থেকে পাওয়া যাবে'**
+  String get sellAvailableFrom;
+
+  /// No description provided for @sellToday.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজ'**
+  String get sellToday;
+
+  /// No description provided for @sellTomorrow.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাল'**
+  String get sellTomorrow;
+
+  /// No description provided for @sellPickDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'তারিখ বাছুন'**
+  String get sellPickDate;
+
+  /// No description provided for @sellPickup.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিকআপ ঠিকানা'**
+  String get sellPickup;
+
+  /// No description provided for @sellNext.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরবর্তী'**
+  String get sellNext;
+
+  /// No description provided for @sellEdit.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পাদনা'**
+  String get sellEdit;
+
+  /// No description provided for @sellPublish.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রকাশ করুন'**
+  String get sellPublish;
+
+  /// No description provided for @fieldCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল'**
+  String get fieldCrop;
+
+  /// No description provided for @fieldQuantity.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিমাণ'**
+  String get fieldQuantity;
+
+  /// No description provided for @fieldPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম'**
+  String get fieldPrice;
+
+  /// No description provided for @fieldAvailability.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রাপ্যতা'**
+  String get fieldAvailability;
+
+  /// No description provided for @fieldPickup.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিকআপ'**
+  String get fieldPickup;
+
+  /// No description provided for @fieldMyPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার দাম'**
+  String get fieldMyPrice;
+
+  /// No description provided for @fieldMarketPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজার দর'**
+  String get fieldMarketPrice;
+
+  /// No description provided for @qtyKg.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} কেজি'**
+  String qtyKg(String qty);
+
+  /// No description provided for @priceLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'৳ {price} / কেজি'**
+  String priceLine(String price);
+
+  /// No description provided for @rangeLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'৳ {min}–{max} / কেজি'**
+  String rangeLine(String min, String max);
+
+  /// No description provided for @availableFromDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'{date} থেকে'**
+  String availableFromDate(String date);
+
+  /// No description provided for @cropWithGrade.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} (গ্রেড {grade})'**
+  String cropWithGrade(String crop, String grade);
+
+  /// No description provided for @errPhotoRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের একটি ছবি দিন'**
+  String get errPhotoRequired;
+
+  /// No description provided for @errQtyInvalid.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক পরিমাণ দিন'**
+  String get errQtyInvalid;
+
+  /// No description provided for @errPriceInvalid.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক দাম দিন'**
+  String get errPriceInvalid;
+
+  /// No description provided for @listingSuccessTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল তালিকায় যোগ হয়েছে!'**
+  String get listingSuccessTitle;
+
+  /// No description provided for @listingSuccessBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'মডারেটর অনুমোদনের পর ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।'**
+  String get listingSuccessBody;
+
+  /// No description provided for @listingSuccessCta.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার তালিকা দেখুন'**
+  String get listingSuccessCta;
+
+  /// No description provided for @myListingsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার তালিকা'**
+  String get myListingsTitle;
+
+  /// No description provided for @tabOngoing.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান'**
+  String get tabOngoing;
+
+  /// No description provided for @tabSold.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিক্রিত'**
+  String get tabSold;
+
+  /// No description provided for @tabDraft.
+  ///
+  /// In bn, this message translates to:
+  /// **'খসড়া'**
+  String get tabDraft;
+
+  /// No description provided for @emptyFilter.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ফিল্টারে এখন কিছু নেই'**
+  String get emptyFilter;
+
+  /// No description provided for @addNewCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'+ নতুন ফসল যোগ করুন'**
+  String get addNewCrop;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদনের অপেক্ষায়'**
+  String get statusPending;
+
+  /// No description provided for @statusActive.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান'**
+  String get statusActive;
+
+  /// No description provided for @statusSold.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিক্রিত'**
+  String get statusSold;
+
+  /// No description provided for @statusHidden.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get statusHidden;
+
+  /// No description provided for @listingSubtitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} কেজি · ৳ {price}/কেজি'**
+  String listingSubtitle(String qty, String price);
+
+  /// No description provided for @cropDetailsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের বিবরণ'**
+  String get cropDetailsTitle;
+
+  /// No description provided for @seeBuyerOffers.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার অফার দেখুন ({count})'**
+  String seeBuyerOffers(String count);
+
+  /// No description provided for @moderationNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'মডারেটরের মন্তব্য: {note}'**
+  String moderationNote(String note);
+
+  /// No description provided for @markSold.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিক্রি হয়েছে চিহ্নিত করুন'**
+  String get markSold;
+
+  /// No description provided for @modHomeQueue.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদনের অপেক্ষায় থাকা তালিকা'**
+  String get modHomeQueue;
+
+  /// No description provided for @modStatPending.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপেক্ষমাণ তালিকা'**
+  String get modStatPending;
+
+  /// No description provided for @modStatActive.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান তালিকা'**
+  String get modStatActive;
+
+  /// No description provided for @modStatHidden.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল তালিকা'**
+  String get modStatHidden;
+
+  /// No description provided for @modListingsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা যাচাই'**
+  String get modListingsTitle;
+
+  /// No description provided for @modReviewTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা পর্যালোচনা'**
+  String get modReviewTitle;
+
+  /// No description provided for @modFarmer.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক'**
+  String get modFarmer;
+
+  /// No description provided for @modApprove.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদন দিন'**
+  String get modApprove;
+
+  /// No description provided for @modReject.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল করুন'**
+  String get modReject;
+
+  /// No description provided for @modRejectReasonTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিলের কারণ'**
+  String get modRejectReasonTitle;
+
+  /// No description provided for @modRejectReasonHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'যেমন: ছবি অস্পষ্ট, দাম অস্বাভাবিক'**
+  String get modRejectReasonHint;
+
+  /// No description provided for @modApproved.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা অনুমোদিত হয়েছে'**
+  String get modApproved;
+
+  /// No description provided for @modRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা বাতিল হয়েছে'**
+  String get modRejected;
+
+  /// No description provided for @modQueueEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপেক্ষমাণ কোনো তালিকা নেই'**
+  String get modQueueEmpty;
+
+  /// No description provided for @submittedOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'জমা: {date}'**
+  String submittedOn(String date);
+
+  /// No description provided for @cropOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্যান্য'**
+  String get cropOther;
+
+  /// No description provided for @profileLanguage.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাষা'**
+  String get profileLanguage;
+
+  /// No description provided for @profileRole.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভূমিকা'**
+  String get profileRole;
+
+  /// No description provided for @profilePhone.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোবাইল নম্বর'**
+  String get profilePhone;
+
+  /// No description provided for @tabComingTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই অংশটি পরের ধাপে আসছে'**
+  String get tabComingTitle;
 }
 
 class _AppLocalizationsDelegate

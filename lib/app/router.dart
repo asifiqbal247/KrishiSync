@@ -14,6 +14,11 @@ import '../features/auth/presentation/otp_screen.dart';
 import '../features/auth/presentation/profile_setup_screen.dart';
 import '../features/auth/presentation/role_screen.dart';
 import '../features/auth/presentation/splash_screen.dart';
+import '../features/farmer/presentation/farmer_shell.dart';
+import '../features/farmer/presentation/listing_details_screen.dart';
+import '../features/farmer/presentation/my_listings_screen.dart';
+import '../features/farmer/presentation/sell_crop_screen.dart';
+import '../features/moderator/presentation/moderator_screens.dart';
 import '../shared/presentation/role_home_placeholder.dart';
 
 abstract final class Routes {
@@ -31,6 +36,14 @@ abstract final class Routes {
   static const transporterHome = '/transporter';
   static const moderatorHome = '/moderator';
   static const adminHome = '/admin';
+
+  // Farmer
+  static const farmerSell = '/farmer/sell';
+  static const farmerListings = '/farmer/listings';
+  static String farmerListingDetails(String id) => '/farmer/listings/$id';
+
+  // Moderator (Admin may open these too)
+  static String moderatorReview(String id) => '/moderator/review/$id';
 
   static String homeFor(UserRole role) => switch (role) {
         UserRole.farmer => farmerHome,
@@ -143,7 +156,39 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: Routes.locationPicker,
           builder: (_, _) => const LocationPickerScreen()),
-      for (final r in UserRole.values)
+      GoRoute(
+        path: Routes.farmerHome,
+        builder: (_, _) => const FarmerShell(),
+        routes: [
+          GoRoute(path: 'sell', builder: (_, _) => const SellCropScreen()),
+          GoRoute(
+            path: 'listings',
+            builder: (_, _) => const MyListingsScreen(),
+            routes: [
+              GoRoute(
+                path: ':id',
+                builder: (_, s) =>
+                    ListingDetailsScreen(listingId: s.pathParameters['id']!),
+              ),
+            ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Routes.moderatorHome,
+        builder: (_, _) => const ModeratorShell(),
+        routes: [
+          GoRoute(
+            path: 'review/:id',
+            builder: (_, s) =>
+                ListingReviewScreen(listingId: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      // Admin uses the moderator tools until A1–A7 are built (Part 7).
+      GoRoute(
+          path: Routes.adminHome, builder: (_, _) => const ModeratorShell()),
+      for (final r in [UserRole.buyer, UserRole.transporter])
         GoRoute(
           path: Routes.homeFor(r),
           builder: (_, _) => RoleHomePlaceholder(role: r),

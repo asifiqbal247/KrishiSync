@@ -169,5 +169,236 @@
   "photoGallery": "গ্যালারি থেকে নিন",
   "homeComingSoon": "এই অংশটি তৈরি হচ্ছে",
   "logout": "লগআউট",
-  "comingSoon": "শীঘ্রই আসছে"
+  "comingSoon": "শীঘ্রই আসছে",
+  "greetingMorning": "শুভ সকাল,",
+  "greetingAfternoon": "শুভ দুপুর,",
+  "greetingEvening": "শুভ সন্ধ্যা,",
+  "navHome": "হোম",
+  "navMarket": "বাজার",
+  "navSell": "বিক্রি",
+  "navOrders": "অর্ডার",
+  "navProfile": "প্রোফাইল",
+  "navListings": "তালিকা",
+  "navReports": "রিপোর্ট",
+  "navVerify": "যাচাই",
+  "farmerSearchHint": "ফসল, ক্রেতা বা এলাকা খুঁজুন",
+  "homeNewOffers": "{count}টি নতুন অফার এসেছে",
+  "@homeNewOffers": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "homeSee": "দেখুন",
+  "homeTodayPrices": "আজকের বাজার দর",
+  "homeWhatToDo": "আপনি কী করতে চান?",
+  "homeSellCrop": "ফসল বিক্রি করুন",
+  "homeSellCropSub": "২ মিনিটে তালিকা দিন",
+  "homeMyListings": "আমার তালিকা",
+  "homeMyListingsSub": "{count}টি চলমান তালিকা",
+  "@homeMyListingsSub": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "homeBuyerDemand": "ক্রেতার চাহিদা",
+  "homeBuyerDemandSub": "কাছাকাছি চাহিদা দেখুন",
+  "homePayments": "পেমেন্ট",
+  "homePaymentsSub": "এ মাসে {amount}",
+  "@homePaymentsSub": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOngoingOrders": "চলমান অর্ডার",
+  "homeBannerExportTitle": "বিদেশে ফসল বিক্রি করুন",
+  "homeBannerExportSub": "রপ্তানি গাইড ও বিদেশি ক্রেতা",
+  "homeTips": "কৃষি টিপস",
+  "tipBetterPrice": "ভালো দাম পাওয়ার উপায়",
+  "tipPackaging": "প্যাকেজিং টিপস",
+  "tipGrading": "গ্রেড বোঝার নিয়ম",
+  "tipListen": "শুনুন · {time}",
+  "@tipListen": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pricePerKg": "{price}/কেজি",
+  "@pricePerKg": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "sellTitle": "ফসল বিক্রি করুন",
+  "sellStep1": "ফসলের তথ্য",
+  "sellStep2": "দাম ও স্থান",
+  "sellStep3": "নিশ্চিত করুন",
+  "sellChooseCrop": "ফসল বাছুন",
+  "sellOtherCropHint": "ফসলের নাম লিখুন",
+  "sellGrade": "মান (গ্রেড)",
+  "gradeLabel": "গ্রেড {grade}",
+  "@gradeLabel": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "sellQuantity": "পরিমাণ",
+  "sellAddPhoto": "ফসলের ছবি তুলুন",
+  "sellPrice": "দাম (প্রতি কেজি)",
+  "sellPriceUnit": "৳/কেজি",
+  "sellMarketRange": "আজকের বাজার দর: ৳ {min}–{max} / কেজি",
+  "@sellMarketRange": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "sellAvailableFrom": "কবে থেকে পাওয়া যাবে",
+  "sellToday": "আজ",
+  "sellTomorrow": "কাল",
+  "sellPickDate": "তারিখ বাছুন",
+  "sellPickup": "পিকআপ ঠিকানা",
+  "sellNext": "পরবর্তী",
+  "sellEdit": "সম্পাদনা",
+  "sellPublish": "প্রকাশ করুন",
+  "fieldCrop": "ফসল",
+  "fieldQuantity": "পরিমাণ",
+  "fieldPrice": "দাম",
+  "fieldAvailability": "প্রাপ্যতা",
+  "fieldPickup": "পিকআপ",
+  "fieldMyPrice": "আমার দাম",
+  "fieldMarketPrice": "বাজার দর",
+  "qtyKg": "{qty} কেজি",
+  "@qtyKg": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "priceLine": "৳ {price} / কেজি",
+  "@priceLine": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "rangeLine": "৳ {min}–{max} / কেজি",
+  "@rangeLine": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "availableFromDate": "{date} থেকে",
+  "@availableFromDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "cropWithGrade": "{crop} (গ্রেড {grade})",
+  "@cropWithGrade": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "errPhotoRequired": "ফসলের একটি ছবি দিন",
+  "errQtyInvalid": "সঠিক পরিমাণ দিন",
+  "errPriceInvalid": "সঠিক দাম দিন",
+  "listingSuccessTitle": "ফসল তালিকায় যোগ হয়েছে!",
+  "listingSuccessBody": "মডারেটর অনুমোদনের পর ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।",
+  "listingSuccessCta": "আমার তালিকা দেখুন",
+  "myListingsTitle": "আমার তালিকা",
+  "tabOngoing": "চলমান",
+  "tabSold": "বিক্রিত",
+  "tabDraft": "খসড়া",
+  "emptyFilter": "এই ফিল্টারে এখন কিছু নেই",
+  "addNewCrop": "+ নতুন ফসল যোগ করুন",
+  "statusPending": "অনুমোদনের অপেক্ষায়",
+  "statusActive": "চলমান",
+  "statusSold": "বিক্রিত",
+  "statusHidden": "বাতিল",
+  "listingSubtitle": "{qty} কেজি · ৳ {price}/কেজি",
+  "@listingSubtitle": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "cropDetailsTitle": "ফসলের বিবরণ",
+  "seeBuyerOffers": "ক্রেতার অফার দেখুন ({count})",
+  "@seeBuyerOffers": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "moderationNote": "মডারেটরের মন্তব্য: {note}",
+  "@moderationNote": {
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "markSold": "বিক্রি হয়েছে চিহ্নিত করুন",
+  "modHomeQueue": "অনুমোদনের অপেক্ষায় থাকা তালিকা",
+  "modStatPending": "অপেক্ষমাণ তালিকা",
+  "modStatActive": "চলমান তালিকা",
+  "modStatHidden": "বাতিল তালিকা",
+  "modListingsTitle": "তালিকা যাচাই",
+  "modReviewTitle": "তালিকা পর্যালোচনা",
+  "modFarmer": "কৃষক",
+  "modApprove": "অনুমোদন দিন",
+  "modReject": "বাতিল করুন",
+  "modRejectReasonTitle": "বাতিলের কারণ",
+  "modRejectReasonHint": "যেমন: ছবি অস্পষ্ট, দাম অস্বাভাবিক",
+  "modApproved": "তালিকা অনুমোদিত হয়েছে",
+  "modRejected": "তালিকা বাতিল হয়েছে",
+  "modQueueEmpty": "অপেক্ষমাণ কোনো তালিকা নেই",
+  "submittedOn": "জমা: {date}",
+  "@submittedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "cropOther": "অন্যান্য",
+  "profileLanguage": "ভাষা",
+  "profileRole": "ভূমিকা",
+  "profilePhone": "মোবাইল নম্বর",
+  "tabComingTitle": "এই অংশটি পরের ধাপে আসছে"
 }

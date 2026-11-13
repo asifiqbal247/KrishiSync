@@ -23,7 +23,16 @@ class KsListItem extends StatelessWidget {
     this.highlighted = false,
     this.showChevron = true,
     this.subtitleMaxLines = 2,
+    this.badge,
+    this.badgeColor = AppColors.bgSuccessSubtle,
+    this.badgeTextColor = AppColors.textSuccess,
   });
+
+  /// HF/List Item / Status (319:26) badge: px 10, py 3, radius 13,
+  /// Medium 13, success colours by default.
+  final String? badge;
+  final Color badgeColor;
+  final Color badgeTextColor;
 
   final String title;
   final String? subtitle;
@@ -88,6 +97,20 @@ class KsListItem extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (badge != null) ...[
+                  const SizedBox(width: AppSpacing.md),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.x10, vertical: AppSpacing.badgeV),
+                    decoration: BoxDecoration(
+                      color: badgeColor,
+                      borderRadius: BorderRadius.circular(AppRadius.badge),
+                    ),
+                    child: Text(badge!,
+                        style: AppTypography.bodySmallEmphasis.normal
+                            .withColor(badgeTextColor)),
+                  ),
+                ],
                 if (trailingText != null) ...[
                   const SizedBox(width: AppSpacing.md),
                   Text(trailingText!,

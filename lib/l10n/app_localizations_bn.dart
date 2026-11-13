@@ -374,4 +374,358 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get comingSoon => 'শীঘ্রই আসছে';
+
+  @override
+  String get greetingMorning => 'শুভ সকাল,';
+
+  @override
+  String get greetingAfternoon => 'শুভ দুপুর,';
+
+  @override
+  String get greetingEvening => 'শুভ সন্ধ্যা,';
+
+  @override
+  String get navHome => 'হোম';
+
+  @override
+  String get navMarket => 'বাজার';
+
+  @override
+  String get navSell => 'বিক্রি';
+
+  @override
+  String get navOrders => 'অর্ডার';
+
+  @override
+  String get navProfile => 'প্রোফাইল';
+
+  @override
+  String get navListings => 'তালিকা';
+
+  @override
+  String get navReports => 'রিপোর্ট';
+
+  @override
+  String get navVerify => 'যাচাই';
+
+  @override
+  String get farmerSearchHint => 'ফসল, ক্রেতা বা এলাকা খুঁজুন';
+
+  @override
+  String homeNewOffers(String count) {
+    return '$countটি নতুন অফার এসেছে';
+  }
+
+  @override
+  String get homeSee => 'দেখুন';
+
+  @override
+  String get homeTodayPrices => 'আজকের বাজার দর';
+
+  @override
+  String get homeWhatToDo => 'আপনি কী করতে চান?';
+
+  @override
+  String get homeSellCrop => 'ফসল বিক্রি করুন';
+
+  @override
+  String get homeSellCropSub => '২ মিনিটে তালিকা দিন';
+
+  @override
+  String get homeMyListings => 'আমার তালিকা';
+
+  @override
+  String homeMyListingsSub(String count) {
+    return '$countটি চলমান তালিকা';
+  }
+
+  @override
+  String get homeBuyerDemand => 'ক্রেতার চাহিদা';
+
+  @override
+  String get homeBuyerDemandSub => 'কাছাকাছি চাহিদা দেখুন';
+
+  @override
+  String get homePayments => 'পেমেন্ট';
+
+  @override
+  String homePaymentsSub(String amount) {
+    return 'এ মাসে $amount';
+  }
+
+  @override
+  String get homeOngoingOrders => 'চলমান অর্ডার';
+
+  @override
+  String get homeBannerExportTitle => 'বিদেশে ফসল বিক্রি করুন';
+
+  @override
+  String get homeBannerExportSub => 'রপ্তানি গাইড ও বিদেশি ক্রেতা';
+
+  @override
+  String get homeTips => 'কৃষি টিপস';
+
+  @override
+  String get tipBetterPrice => 'ভালো দাম পাওয়ার উপায়';
+
+  @override
+  String get tipPackaging => 'প্যাকেজিং টিপস';
+
+  @override
+  String get tipGrading => 'গ্রেড বোঝার নিয়ম';
+
+  @override
+  String tipListen(String time) {
+    return 'শুনুন · $time';
+  }
+
+  @override
+  String pricePerKg(String price) {
+    return '$price/কেজি';
+  }
+
+  @override
+  String get sellTitle => 'ফসল বিক্রি করুন';
+
+  @override
+  String get sellStep1 => 'ফসলের তথ্য';
+
+  @override
+  String get sellStep2 => 'দাম ও স্থান';
+
+  @override
+  String get sellStep3 => 'নিশ্চিত করুন';
+
+  @override
+  String get sellChooseCrop => 'ফসল বাছুন';
+
+  @override
+  String get sellOtherCropHint => 'ফসলের নাম লিখুন';
+
+  @override
+  String get sellGrade => 'মান (গ্রেড)';
+
+  @override
+  String gradeLabel(String grade) {
+    return 'গ্রেড $grade';
+  }
+
+  @override
+  String get sellQuantity => 'পরিমাণ';
+
+  @override
+  String get sellAddPhoto => 'ফসলের ছবি তুলুন';
+
+  @override
+  String get sellPrice => 'দাম (প্রতি কেজি)';
+
+  @override
+  String get sellPriceUnit => '৳/কেজি';
+
+  @override
+  String sellMarketRange(String min, String max) {
+    return 'আজকের বাজার দর: ৳ $min–$max / কেজি';
+  }
+
+  @override
+  String get sellAvailableFrom => 'কবে থেকে পাওয়া যাবে';
+
+  @override
+  String get sellToday => 'আজ';
+
+  @override
+  String get sellTomorrow => 'কাল';
+
+  @override
+  String get sellPickDate => 'তারিখ বাছুন';
+
+  @override
+  String get sellPickup => 'পিকআপ ঠিকানা';
+
+  @override
+  String get sellNext => 'পরবর্তী';
+
+  @override
+  String get sellEdit => 'সম্পাদনা';
+
+  @override
+  String get sellPublish => 'প্রকাশ করুন';
+
+  @override
+  String get fieldCrop => 'ফসল';
+
+  @override
+  String get fieldQuantity => 'পরিমাণ';
+
+  @override
+  String get fieldPrice => 'দাম';
+
+  @override
+  String get fieldAvailability => 'প্রাপ্যতা';
+
+  @override
+  String get fieldPickup => 'পিকআপ';
+
+  @override
+  String get fieldMyPrice => 'আমার দাম';
+
+  @override
+  String get fieldMarketPrice => 'বাজার দর';
+
+  @override
+  String qtyKg(String qty) {
+    return '$qty কেজি';
+  }
+
+  @override
+  String priceLine(String price) {
+    return '৳ $price / কেজি';
+  }
+
+  @override
+  String rangeLine(String min, String max) {
+    return '৳ $min–$max / কেজি';
+  }
+
+  @override
+  String availableFromDate(String date) {
+    return '$date থেকে';
+  }
+
+  @override
+  String cropWithGrade(String crop, String grade) {
+    return '$crop (গ্রেড $grade)';
+  }
+
+  @override
+  String get errPhotoRequired => 'ফসলের একটি ছবি দিন';
+
+  @override
+  String get errQtyInvalid => 'সঠিক পরিমাণ দিন';
+
+  @override
+  String get errPriceInvalid => 'সঠিক দাম দিন';
+
+  @override
+  String get listingSuccessTitle => 'ফসল তালিকায় যোগ হয়েছে!';
+
+  @override
+  String get listingSuccessBody =>
+      'মডারেটর অনুমোদনের পর ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।';
+
+  @override
+  String get listingSuccessCta => 'আমার তালিকা দেখুন';
+
+  @override
+  String get myListingsTitle => 'আমার তালিকা';
+
+  @override
+  String get tabOngoing => 'চলমান';
+
+  @override
+  String get tabSold => 'বিক্রিত';
+
+  @override
+  String get tabDraft => 'খসড়া';
+
+  @override
+  String get emptyFilter => 'এই ফিল্টারে এখন কিছু নেই';
+
+  @override
+  String get addNewCrop => '+ নতুন ফসল যোগ করুন';
+
+  @override
+  String get statusPending => 'অনুমোদনের অপেক্ষায়';
+
+  @override
+  String get statusActive => 'চলমান';
+
+  @override
+  String get statusSold => 'বিক্রিত';
+
+  @override
+  String get statusHidden => 'বাতিল';
+
+  @override
+  String listingSubtitle(String qty, String price) {
+    return '$qty কেজি · ৳ $price/কেজি';
+  }
+
+  @override
+  String get cropDetailsTitle => 'ফসলের বিবরণ';
+
+  @override
+  String seeBuyerOffers(String count) {
+    return 'ক্রেতার অফার দেখুন ($count)';
+  }
+
+  @override
+  String moderationNote(String note) {
+    return 'মডারেটরের মন্তব্য: $note';
+  }
+
+  @override
+  String get markSold => 'বিক্রি হয়েছে চিহ্নিত করুন';
+
+  @override
+  String get modHomeQueue => 'অনুমোদনের অপেক্ষায় থাকা তালিকা';
+
+  @override
+  String get modStatPending => 'অপেক্ষমাণ তালিকা';
+
+  @override
+  String get modStatActive => 'চলমান তালিকা';
+
+  @override
+  String get modStatHidden => 'বাতিল তালিকা';
+
+  @override
+  String get modListingsTitle => 'তালিকা যাচাই';
+
+  @override
+  String get modReviewTitle => 'তালিকা পর্যালোচনা';
+
+  @override
+  String get modFarmer => 'কৃষক';
+
+  @override
+  String get modApprove => 'অনুমোদন দিন';
+
+  @override
+  String get modReject => 'বাতিল করুন';
+
+  @override
+  String get modRejectReasonTitle => 'বাতিলের কারণ';
+
+  @override
+  String get modRejectReasonHint => 'যেমন: ছবি অস্পষ্ট, দাম অস্বাভাবিক';
+
+  @override
+  String get modApproved => 'তালিকা অনুমোদিত হয়েছে';
+
+  @override
+  String get modRejected => 'তালিকা বাতিল হয়েছে';
+
+  @override
+  String get modQueueEmpty => 'অপেক্ষমাণ কোনো তালিকা নেই';
+
+  @override
+  String submittedOn(String date) {
+    return 'জমা: $date';
+  }
+
+  @override
+  String get cropOther => 'অন্যান্য';
+
+  @override
+  String get profileLanguage => 'ভাষা';
+
+  @override
+  String get profileRole => 'ভূমিকা';
+
+  @override
+  String get profilePhone => 'মোবাইল নম্বর';
+
+  @override
+  String get tabComingTitle => 'এই অংশটি পরের ধাপে আসছে';
 }

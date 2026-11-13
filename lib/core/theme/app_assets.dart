@@ -82,6 +82,31 @@ abstract final class AppImages {
   static const mapStrip = '$_p/map_strip.webp';
 }
 
+/// Figma HF – Assets images used inside screens (assets/images/ui).
+abstract final class AppUi {
+  static const _p = 'assets/images/ui';
+  static const navOnHome = '$_p/nav_on_home.webp';
+  static const navOffHome = '$_p/nav_off_home.webp';
+  static const navOnMarket = '$_p/nav_on_market.webp';
+  static const navOffMarket = '$_p/nav_off_market.webp';
+  static const navOnOrders = '$_p/nav_on_orders.webp';
+  static const navOffOrders = '$_p/nav_off_orders.webp';
+  static const navOnProfile = '$_p/nav_on_profile.webp';
+  static const navOffProfile = '$_p/nav_off_profile.webp';
+  static const navOnWallet = '$_p/nav_on_wallet.webp';
+  static const navOffWallet = '$_p/nav_off_wallet.webp';
+  static const navOnTruck = '$_p/nav_on_truck.webp';
+  static const navOffTruck = '$_p/nav_off_truck.webp';
+  static const glyphLeaf = '$_p/glyph_leaf.webp';
+  static const glyphList = '$_p/glyph_list.webp';
+  static const glyphTrendUp = '$_p/glyph_trend_up.webp';
+  static const glyphWallet = '$_p/glyph_wallet.webp';
+  static const tileBell = '$_p/tile_bell.webp';
+  static const tipClipboard = '$_p/tip_clipboard.webp';
+  static const tipStar = '$_p/tip_star.webp';
+  static const avatarFarmer = '$_p/avatar_farmer.webp';
+}
+
 abstract final class AppData {
   static const bdLocations = 'assets/data/bd_locations.json';
 }

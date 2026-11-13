@@ -28,6 +28,9 @@ abstract final class AppSpacing {
 
   /// 10px gaps used in some HF lists and notes.
   static const double x10 = 10;
+
+  /// Status badge vertical padding (319:35).
+  static const double badgeV = 3;
 }
 
 /// Corner radius scale from Figma, plus the extra radii used by HF components.
@@ -44,6 +47,9 @@ abstract final class AppRadius {
   static const double tile = 18; // HF/Action Tile
   static const double chip = 22; // HF/Chip
   static const double navIcon = 6; // bottom-nav icon wrap
+  static const double badge = 13; // status badge
+  static const double modal = 24; // HF/Modal
+  static const double actionIcon = 22; // action tile icon wrap (44/2)
 }
 
 /// Fixed sizes from HF components.
@@ -63,6 +69,8 @@ abstract final class AppSizes {
   static const double iconXs = 16;
   static const double thumb = 48;
   static const double sectionHeader = 28;
+  static const double modalWidth = 312;
+  static const double modalIcon = 64;
 }
 
 /// Shadows from Figma (DS – Foundations → Shadows) and HF components.
@@ -83,6 +91,26 @@ abstract final class AppShadows {
         color: AppColors.shadowBrandButton,
         offset: Offset(0, 4),
         blurRadius: 5),
+  ];
+
+  /// Button/Outline: drop-shadow 0 2 3 rgba(31,31,31,.06).
+  static const outlineButton = [
+    BoxShadow(
+        color: AppColors.shadowOutline, offset: Offset(0, 2), blurRadius: 3),
+  ];
+
+  /// Brand action tile (main action): drop-shadow 0 6 7 rgba(46,125,51,.30).
+  static const brandTile = [
+    BoxShadow(
+        color: AppColors.shadowBrandTileStrong,
+        offset: Offset(0, 6),
+        blurRadius: 7),
+  ];
+
+  /// HF/Modal: drop-shadow 0 12 16 rgba(0,0,0,.18).
+  static const modal = [
+    BoxShadow(
+        color: AppColors.shadowModal, offset: Offset(0, 12), blurRadius: 16),
   ];
 
   /// HF/List Item: drop-shadow 0 4 7 rgba(31,51,31,.08).

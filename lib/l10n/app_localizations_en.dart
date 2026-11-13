@@ -375,4 +375,358 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get comingSoon => 'Coming soon';
+
+  @override
+  String get greetingMorning => 'Good morning,';
+
+  @override
+  String get greetingAfternoon => 'Good afternoon,';
+
+  @override
+  String get greetingEvening => 'Good evening,';
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navMarket => 'Market';
+
+  @override
+  String get navSell => 'Sell';
+
+  @override
+  String get navOrders => 'Orders';
+
+  @override
+  String get navProfile => 'Profile';
+
+  @override
+  String get navListings => 'Listings';
+
+  @override
+  String get navReports => 'Reports';
+
+  @override
+  String get navVerify => 'Verify';
+
+  @override
+  String get farmerSearchHint => 'Search crops, buyers or areas';
+
+  @override
+  String homeNewOffers(String count) {
+    return '$count new offers';
+  }
+
+  @override
+  String get homeSee => 'See';
+
+  @override
+  String get homeTodayPrices => 'Today\'s market prices';
+
+  @override
+  String get homeWhatToDo => 'What do you want to do?';
+
+  @override
+  String get homeSellCrop => 'Sell crop';
+
+  @override
+  String get homeSellCropSub => 'List in 2 minutes';
+
+  @override
+  String get homeMyListings => 'My listings';
+
+  @override
+  String homeMyListingsSub(String count) {
+    return '$count active listings';
+  }
+
+  @override
+  String get homeBuyerDemand => 'Buyer demand';
+
+  @override
+  String get homeBuyerDemandSub => 'See nearby demand';
+
+  @override
+  String get homePayments => 'Payments';
+
+  @override
+  String homePaymentsSub(String amount) {
+    return '$amount this month';
+  }
+
+  @override
+  String get homeOngoingOrders => 'Ongoing orders';
+
+  @override
+  String get homeBannerExportTitle => 'Sell crops abroad';
+
+  @override
+  String get homeBannerExportSub => 'Export guide and foreign buyers';
+
+  @override
+  String get homeTips => 'Farming tips';
+
+  @override
+  String get tipBetterPrice => 'How to get a better price';
+
+  @override
+  String get tipPackaging => 'Packaging tips';
+
+  @override
+  String get tipGrading => 'Understanding grades';
+
+  @override
+  String tipListen(String time) {
+    return 'Listen · $time';
+  }
+
+  @override
+  String pricePerKg(String price) {
+    return '$price/kg';
+  }
+
+  @override
+  String get sellTitle => 'Sell crop';
+
+  @override
+  String get sellStep1 => 'Crop info';
+
+  @override
+  String get sellStep2 => 'Price & place';
+
+  @override
+  String get sellStep3 => 'Confirm';
+
+  @override
+  String get sellChooseCrop => 'Choose crop';
+
+  @override
+  String get sellOtherCropHint => 'Type the crop name';
+
+  @override
+  String get sellGrade => 'Quality (grade)';
+
+  @override
+  String gradeLabel(String grade) {
+    return 'Grade $grade';
+  }
+
+  @override
+  String get sellQuantity => 'Quantity';
+
+  @override
+  String get sellAddPhoto => 'Take a photo of the crop';
+
+  @override
+  String get sellPrice => 'Price (per kg)';
+
+  @override
+  String get sellPriceUnit => '৳/kg';
+
+  @override
+  String sellMarketRange(String min, String max) {
+    return 'Today\'s market price: ৳ $min–$max / kg';
+  }
+
+  @override
+  String get sellAvailableFrom => 'Available from';
+
+  @override
+  String get sellToday => 'Today';
+
+  @override
+  String get sellTomorrow => 'Tomorrow';
+
+  @override
+  String get sellPickDate => 'Pick a date';
+
+  @override
+  String get sellPickup => 'Pickup address';
+
+  @override
+  String get sellNext => 'Next';
+
+  @override
+  String get sellEdit => 'Edit';
+
+  @override
+  String get sellPublish => 'Publish';
+
+  @override
+  String get fieldCrop => 'Crop';
+
+  @override
+  String get fieldQuantity => 'Quantity';
+
+  @override
+  String get fieldPrice => 'Price';
+
+  @override
+  String get fieldAvailability => 'Availability';
+
+  @override
+  String get fieldPickup => 'Pickup';
+
+  @override
+  String get fieldMyPrice => 'My price';
+
+  @override
+  String get fieldMarketPrice => 'Market price';
+
+  @override
+  String qtyKg(String qty) {
+    return '$qty kg';
+  }
+
+  @override
+  String priceLine(String price) {
+    return '৳ $price / kg';
+  }
+
+  @override
+  String rangeLine(String min, String max) {
+    return '৳ $min–$max / kg';
+  }
+
+  @override
+  String availableFromDate(String date) {
+    return 'From $date';
+  }
+
+  @override
+  String cropWithGrade(String crop, String grade) {
+    return '$crop (Grade $grade)';
+  }
+
+  @override
+  String get errPhotoRequired => 'Add a photo of the crop';
+
+  @override
+  String get errQtyInvalid => 'Enter a valid quantity';
+
+  @override
+  String get errPriceInvalid => 'Enter a valid price';
+
+  @override
+  String get listingSuccessTitle => 'Crop added to your listings!';
+
+  @override
+  String get listingSuccessBody =>
+      'Buyers can see your crop and make offers after a moderator approves it.';
+
+  @override
+  String get listingSuccessCta => 'See my listings';
+
+  @override
+  String get myListingsTitle => 'My listings';
+
+  @override
+  String get tabOngoing => 'Ongoing';
+
+  @override
+  String get tabSold => 'Sold';
+
+  @override
+  String get tabDraft => 'Draft';
+
+  @override
+  String get emptyFilter => 'Nothing in this filter yet';
+
+  @override
+  String get addNewCrop => '+ Add a new crop';
+
+  @override
+  String get statusPending => 'Waiting for approval';
+
+  @override
+  String get statusActive => 'Active';
+
+  @override
+  String get statusSold => 'Sold';
+
+  @override
+  String get statusHidden => 'Rejected';
+
+  @override
+  String listingSubtitle(String qty, String price) {
+    return '$qty kg · ৳ $price/kg';
+  }
+
+  @override
+  String get cropDetailsTitle => 'Crop details';
+
+  @override
+  String seeBuyerOffers(String count) {
+    return 'See buyer offers ($count)';
+  }
+
+  @override
+  String moderationNote(String note) {
+    return 'Moderator note: $note';
+  }
+
+  @override
+  String get markSold => 'Mark as sold';
+
+  @override
+  String get modHomeQueue => 'Listings waiting for approval';
+
+  @override
+  String get modStatPending => 'Pending listings';
+
+  @override
+  String get modStatActive => 'Active listings';
+
+  @override
+  String get modStatHidden => 'Rejected listings';
+
+  @override
+  String get modListingsTitle => 'Review listings';
+
+  @override
+  String get modReviewTitle => 'Review listing';
+
+  @override
+  String get modFarmer => 'Farmer';
+
+  @override
+  String get modApprove => 'Approve';
+
+  @override
+  String get modReject => 'Reject';
+
+  @override
+  String get modRejectReasonTitle => 'Reason for rejecting';
+
+  @override
+  String get modRejectReasonHint => 'e.g. blurry photo, unusual price';
+
+  @override
+  String get modApproved => 'Listing approved';
+
+  @override
+  String get modRejected => 'Listing rejected';
+
+  @override
+  String get modQueueEmpty => 'No listings waiting';
+
+  @override
+  String submittedOn(String date) {
+    return 'Submitted: $date';
+  }
+
+  @override
+  String get cropOther => 'Other';
+
+  @override
+  String get profileLanguage => 'Language';
+
+  @override
+  String get profileRole => 'Role';
+
+  @override
+  String get profilePhone => 'Mobile number';
+
+  @override
+  String get tabComingTitle => 'This section is coming in the next step';
 }

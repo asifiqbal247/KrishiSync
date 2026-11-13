@@ -93,4 +93,16 @@ abstract final class AppColors {
   static const shadowCard = Color(0x141F331F);
   /// Action tile drop shadow: rgba(46,125,51,0.10).
   static const shadowBrandTile = Color(0x1A2E7D33);
+  /// Brand action tile shadow: rgba(46,125,51,0.30).
+  static const shadowBrandTileStrong = Color(0x4D2E7D33);
+  /// Outline button shadow: rgba(31,31,31,0.06).
+  static const shadowOutline = Color(0x0F1F1F1F);
+  /// HF/Modal shadow: rgba(0,0,0,0.18).
+  static const shadowModal = Color(0x2E000000);
+  /// Modal overlay: rgba(31,31,31,0.45).
+  static const overlayScrim = Color(0x731F1F1F);
+  /// Price / tip card border (#E0E0E0 in Figma cards).
+  static const cardBorder = Color(0xFFE0E0E0);
+  /// Tip card thumb background (#F3F3F3).
+  static const tipThumbBg = Color(0xFFF3F3F3);
 }
