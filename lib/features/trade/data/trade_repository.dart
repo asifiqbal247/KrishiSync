@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
+import '../../../shared/utils/geo.dart';
 import '../../farmer/domain/listing.dart';
 import '../domain/trade_models.dart';
 
@@ -272,6 +275,36 @@ class TradeRepository {
         'createdAt': FieldValue.serverTimestamp(),
         'updatedAt': FieldValue.serverTimestamp(),
       });
+      // Platform truck: open a load for transporters (Part 6) and a
+      // 4-digit delivery OTP that only the buyer can read.
+      if (mode == TransportMode.platform) {
+        final km = distanceKm(listing.pickup.geo, dropoff.geo);
+        final dRef = _db.collection('deliveries').doc(orderRef.id);
+        tx.set(dRef, {
+          'orderId': orderRef.id,
+          'orderNo': no,
+          'buyerId': buyer.uid,
+          'buyerName': buyer.name,
+          'farmerId': listing.farmerId,
+          'farmerName': listing.farmerName,
+          'cropKey': listing.cropKey,
+          'cropNameBn': listing.cropNameBn,
+          'cropNameEn': listing.cropNameEn,
+          'photo': listing.photo,
+          'weightKg': quantityKg,
+          'pickup': listing.pickup.toMap(),
+          'dropoff': dropoff.toMap(),
+          'pickupDate': Timestamp.fromDate(listing.availableFrom),
+          'suggestedFare': transportFare,
+          'distanceKm': km,
+          'status': 'open',
+          'createdAt': FieldValue.serverTimestamp(),
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+        tx.set(dRef.collection('private').doc('otp'), {
+          'code': (1000 + Random.secure().nextInt(9000)).toString(),
+        });
+      }
       return no;
     });
 

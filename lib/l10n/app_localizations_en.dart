@@ -1426,4 +1426,754 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rowOfferStatus => 'Status';
+
+  @override
+  String get navTrip => 'Trips';
+
+  @override
+  String get navLoad => 'Loads';
+
+  @override
+  String get navEarnings => 'Earnings';
+
+  @override
+  String get trStatToday => 'Today\'s earnings';
+
+  @override
+  String get trStatOngoing => 'Ongoing trips';
+
+  @override
+  String trOngoingTitle(String no) {
+    return 'Ongoing: $no';
+  }
+
+  @override
+  String trOngoingSub(String n, String status) {
+    return '$n pickup · $status';
+  }
+
+  @override
+  String get trContinue => 'Continue';
+
+  @override
+  String get trWhatToDo => 'What do you want to do?';
+
+  @override
+  String get trFindLoads => 'Find loads';
+
+  @override
+  String trFindLoadsSub(String n) {
+    return '$n loads nearby';
+  }
+
+  @override
+  String get trMyJobs => 'My jobs';
+
+  @override
+  String trMyJobsSub(String n) {
+    return '$n jobs';
+  }
+
+  @override
+  String get trReturnLoads => 'Return loads';
+
+  @override
+  String get trReturnLoadsSub => 'Don\'t return empty';
+
+  @override
+  String get trEarnings => 'Earnings';
+
+  @override
+  String trEarningsSub(String amount) {
+    return 'This week $amount';
+  }
+
+  @override
+  String get trNearbyLoads => 'Loads near you';
+
+  @override
+  String get seeAllLink => 'See all';
+
+  @override
+  String get trReturnChances => 'Return load chances';
+
+  @override
+  String get trWeekEarnings => 'This week\'s earnings';
+
+  @override
+  String get trThisWeek => 'This week';
+
+  @override
+  String get trPendingPay => 'Pending';
+
+  @override
+  String get wdSat => 'Sat';
+
+  @override
+  String get wdSun => 'Sun';
+
+  @override
+  String get wdMon => 'Mon';
+
+  @override
+  String get wdTue => 'Tue';
+
+  @override
+  String get wdWed => 'Wed';
+
+  @override
+  String get wdThu => 'Thu';
+
+  @override
+  String get wdFri => 'Fri';
+
+  @override
+  String routeLine(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String loadSub(String crop, String qty) {
+    return '$crop · $qty';
+  }
+
+  @override
+  String loadSubDate(String crop, String qty, String date) {
+    return '$crop · $qty · $date';
+  }
+
+  @override
+  String get noLoads => 'No loads right now';
+
+  @override
+  String takaAmount(String amount) {
+    return '৳ $amount';
+  }
+
+  @override
+  String get vehicleNeeded => 'Add your vehicle to take loads';
+
+  @override
+  String get loadsTitle => 'Available loads';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterNearby => 'Nearby';
+
+  @override
+  String get filterFullLoad => 'Full load';
+
+  @override
+  String get filterMultiPickup => 'Multiple pickups';
+
+  @override
+  String get loadDetailsTitle => 'Load details';
+
+  @override
+  String get rowGoods => 'Goods';
+
+  @override
+  String get rowDestination => 'Destination';
+
+  @override
+  String get rowDistance => 'Distance';
+
+  @override
+  String distanceLine(String km, String h) {
+    return '$km km · ~$h h';
+  }
+
+  @override
+  String get rowFare => 'Fare';
+
+  @override
+  String fareSafeLine(String amount) {
+    return '$amount (safe payment)';
+  }
+
+  @override
+  String get rowCustomer => 'Customer';
+
+  @override
+  String nameVerified(String name) {
+    return '$name · verified';
+  }
+
+  @override
+  String placeDate(String place, String date) {
+    return '$place · $date';
+  }
+
+  @override
+  String fitsTruck(String cap) {
+    return 'Fits your truck: $cap capacity';
+  }
+
+  @override
+  String tooBigTruck(String cap) {
+    return 'Your truck holds $cap — this load is more';
+  }
+
+  @override
+  String tonQty(String t) {
+    return '$t ton';
+  }
+
+  @override
+  String get sendFareOffer => 'Offer a fare';
+
+  @override
+  String get acceptJob => 'Accept job';
+
+  @override
+  String myBidLine(String amount) {
+    return 'Your offer: $amount · waiting for the buyer';
+  }
+
+  @override
+  String get bidSent => 'Offer sent';
+
+  @override
+  String get loadTaken => 'Another driver got this load';
+
+  @override
+  String get fareOfferTitle => 'Offer a fare';
+
+  @override
+  String get suggestedFareRow => 'Suggested fare (platform)';
+
+  @override
+  String takaRange(String min, String max) {
+    return '৳ $min–$max';
+  }
+
+  @override
+  String get otherBidsRow => 'Other offers';
+
+  @override
+  String otherBidsLine(String n, String amount) {
+    return '$n · lowest $amount';
+  }
+
+  @override
+  String get noneYet => 'None yet';
+
+  @override
+  String get yourFare => 'Your fare';
+
+  @override
+  String get fareNote =>
+      'The job is confirmed when the buyer picks your offer and pays into safe payment. The fare can\'t change after that.';
+
+  @override
+  String get sendProposal => 'Send offer';
+
+  @override
+  String get errFareInvalid => 'Enter a valid fare';
+
+  @override
+  String get myJobsTitle => 'My jobs';
+
+  @override
+  String get jobsToday => 'Today';
+
+  @override
+  String get jobsUpcoming => 'Upcoming';
+
+  @override
+  String get jobsDone => 'Done';
+
+  @override
+  String jobTitle(String no, String crop, String qty) {
+    return '$no · $crop $qty';
+  }
+
+  @override
+  String get badgeRunning => 'Running';
+
+  @override
+  String get badgeScheduled => 'Scheduled';
+
+  @override
+  String get badgeDone => 'Done';
+
+  @override
+  String get noJobs => 'No jobs';
+
+  @override
+  String get scheduleTitle => 'Pickup schedule';
+
+  @override
+  String get rowJob => 'Job';
+
+  @override
+  String get rowTotalStops => 'Total stops';
+
+  @override
+  String get stopsOne => '1 pickup + 1 delivery';
+
+  @override
+  String get pickupOrder => 'Pickup order';
+
+  @override
+  String stopN(String n, String name) {
+    return '$n. $name';
+  }
+
+  @override
+  String stopSub(String place, String qty, String date) {
+    return '$place · $qty · $date';
+  }
+
+  @override
+  String get stopDelivery => 'Delivery';
+
+  @override
+  String get seeRoute => 'See route';
+
+  @override
+  String get tripStatusTitle => 'Trip status';
+
+  @override
+  String freeSpaceTitle(String t) {
+    return '$t ton free on your truck';
+  }
+
+  @override
+  String get freeSpaceSub => 'Loads on your route · separate fare';
+
+  @override
+  String get seeLink => 'See';
+
+  @override
+  String stepPickupN(String n, String name) {
+    return 'Pickup $n – $name';
+  }
+
+  @override
+  String get stepLoadedDone => 'Loaded';
+
+  @override
+  String stepDeliveryTo(String name) {
+    return 'Delivery – $name';
+  }
+
+  @override
+  String get offlineSafeNote => 'Updates are saved even on a weak network.';
+
+  @override
+  String get tripProblem => 'Problem on the trip?';
+
+  @override
+  String get startLoading => 'Start loading at pickup';
+
+  @override
+  String get loadConfirmTitle => 'Is the crop loaded?';
+
+  @override
+  String get loadConfirmBody =>
+      'When you confirm, the farmer is paid and the buyer is told.';
+
+  @override
+  String get yesLoaded => 'Loaded';
+
+  @override
+  String get deliverNow => 'Deliver';
+
+  @override
+  String get tripDoneBtn => 'Trip complete';
+
+  @override
+  String get podTitle => 'Proof of delivery';
+
+  @override
+  String get podPhoto => 'Take a delivery photo';
+
+  @override
+  String get deliveredQty => 'Delivered quantity';
+
+  @override
+  String get buyerOtp => 'Customer\'s OTP';
+
+  @override
+  String get otpHint4 => '4-digit code';
+
+  @override
+  String get podNote =>
+      'The fare is released as soon as the buyer gives the OTP or GPS and photo prove delivery. It can\'t be held later.';
+
+  @override
+  String get podSubmit => 'Delivery complete';
+
+  @override
+  String get errOtpWrong => 'Wrong OTP';
+
+  @override
+  String get errOtp4 => 'Enter the 4-digit code';
+
+  @override
+  String get tripDoneTitle => 'Trip complete';
+
+  @override
+  String get tripDoneHeading => 'Delivery complete!';
+
+  @override
+  String tripDoneBody(String amount) {
+    return '$amount sent to your bKash. This fare is final.';
+  }
+
+  @override
+  String get seeReceipt => 'See receipt';
+
+  @override
+  String receiptSub(String amount) {
+    return '$amount · sent to bKash';
+  }
+
+  @override
+  String get rateCustomer => 'Rate the customer';
+
+  @override
+  String nameOrderNo(String name, String no) {
+    return '$name · $no';
+  }
+
+  @override
+  String get dontGoEmpty => 'Don\'t return empty';
+
+  @override
+  String get acceptReturnLoad => 'Take a return load';
+
+  @override
+  String get seeEarnings => 'See earnings';
+
+  @override
+  String get alreadyRated => 'Rated';
+
+  @override
+  String get rateTitle => 'Rate';
+
+  @override
+  String roleCustomer(String name) {
+    return '$name (customer)';
+  }
+
+  @override
+  String get justFinishedTrip => 'Trip just finished';
+
+  @override
+  String get howWasCustomer => 'How was the customer?';
+
+  @override
+  String get tagOnTimeLoad => 'On-time loading';
+
+  @override
+  String get tagCorrectInfo => 'Correct info';
+
+  @override
+  String get tagFastPay => 'Fast payment';
+
+  @override
+  String roleFarmerName(String name) {
+    return '$name (farmer)';
+  }
+
+  @override
+  String get howWasSupplier => 'How was the supplier?';
+
+  @override
+  String get tagGoodQuality => 'Good quality';
+
+  @override
+  String get tagRightWeight => 'Correct weight';
+
+  @override
+  String get tagOnTime => 'On time';
+
+  @override
+  String roleDriver(String name) {
+    return '$name (driver)';
+  }
+
+  @override
+  String get rateTransport => 'Rate the transport';
+
+  @override
+  String get commentOptional => 'Comment (optional)';
+
+  @override
+  String get commentHint => 'Write about your experience';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get errPickStars => 'Tap the stars to rate';
+
+  @override
+  String get ratingThanks => 'Thanks for rating';
+
+  @override
+  String get vehicleTitle => 'Vehicle & capacity';
+
+  @override
+  String get truckPhoto => 'Truck photo';
+
+  @override
+  String get vehicleType => 'Vehicle type';
+
+  @override
+  String get regNo => 'Registration number';
+
+  @override
+  String get regHint => 'Dhaka Metro-T 12-3456';
+
+  @override
+  String get baseLocation => 'Base location (where the truck stays)';
+
+  @override
+  String get maxCapacity => 'Maximum capacity';
+
+  @override
+  String get tonUnit => 'ton';
+
+  @override
+  String get preferredRoute => 'Preferred route';
+
+  @override
+  String get vt_pickup => 'Pickup van';
+
+  @override
+  String get vt_small_open => 'Small truck (open)';
+
+  @override
+  String get vt_medium_open => 'Medium truck (open)';
+
+  @override
+  String get vt_medium_covered => 'Medium truck (covered)';
+
+  @override
+  String get vt_large_open => 'Large truck (open)';
+
+  @override
+  String get vt_covered_van => 'Covered van';
+
+  @override
+  String get vt_refrigerated => 'Refrigerated van';
+
+  @override
+  String get successTitle => 'Success!';
+
+  @override
+  String get successBody => 'Your task was completed successfully.';
+
+  @override
+  String get okBtn => 'OK';
+
+  @override
+  String get transportTitle => 'Transport';
+
+  @override
+  String get tabBooked => 'Booked';
+
+  @override
+  String get tabDone => 'Done';
+
+  @override
+  String noOrderCrop(String no, String crop) {
+    return '$no · $crop';
+  }
+
+  @override
+  String get dsOpen => 'Finding a truck';
+
+  @override
+  String get dsAssigned => 'Scheduled';
+
+  @override
+  String get dsPickedUp => 'On the way';
+
+  @override
+  String get dsDelivered => 'Delivered';
+
+  @override
+  String nameStatus(String name, String status) {
+    return '$name · $status';
+  }
+
+  @override
+  String bidsCountLine(String n) {
+    return '$n offers';
+  }
+
+  @override
+  String get bookTruckBtn => '+ Book a truck';
+
+  @override
+  String get noTruckNeeded => 'All orders already have a truck';
+
+  @override
+  String get noTransport => 'No transport yet';
+
+  @override
+  String get bookTruckTitle => 'Book a truck';
+
+  @override
+  String get pickupLocation => 'Pickup location';
+
+  @override
+  String get goodsWeight => 'Goods & weight';
+
+  @override
+  String get dateLabel => 'Date';
+
+  @override
+  String get suggestedTrucks => 'Suggested trucks';
+
+  @override
+  String truckSub(String type, String cap, String rating) {
+    return '$type · $cap · $rating';
+  }
+
+  @override
+  String get waitingBids => 'Waiting for truck offers…';
+
+  @override
+  String get bookBtn => 'Book';
+
+  @override
+  String bookConfirmTitle(String name) {
+    return 'Book $name?';
+  }
+
+  @override
+  String bookConfirmBody(String amount) {
+    return 'The fare $amount stays in safe payment.';
+  }
+
+  @override
+  String get truckBooked => 'Truck booked';
+
+  @override
+  String get assignedTitle => 'Assigned transport';
+
+  @override
+  String verifiedDriverRating(String r) {
+    return 'Verified driver · rating $r';
+  }
+
+  @override
+  String driverRating(String r) {
+    return 'Driver · rating $r';
+  }
+
+  @override
+  String get rowTruck => 'Truck';
+
+  @override
+  String get rowCapacity => 'Capacity';
+
+  @override
+  String get callBtn => 'Call';
+
+  @override
+  String get trackBtn => 'Track';
+
+  @override
+  String get receiveTitle => 'Receive delivery';
+
+  @override
+  String get rowOrder => 'Order';
+
+  @override
+  String get rowOrdered => 'Ordered';
+
+  @override
+  String get rowLoaded => 'Weighed at loading';
+
+  @override
+  String yourOtp(String code) {
+    return 'Your OTP: $code';
+  }
+
+  @override
+  String get otpNote =>
+      'Give this OTP to the driver when the truck arrives. The fare is released then.';
+
+  @override
+  String get qualityFinalTitle => 'Quality and quantity are final at loading';
+
+  @override
+  String get qualityFinalBody =>
+      'After loading, no refunds for quality or quantity. Confirming delivery releases the fare.';
+
+  @override
+  String get deliveryPhotoOpt => 'Delivery photo (optional)';
+
+  @override
+  String get otherProblem => 'Report another problem';
+
+  @override
+  String get otpGiven => 'I gave the OTP';
+
+  @override
+  String get otpWaitDriver => 'Continue after the driver enters the OTP';
+
+  @override
+  String get orderBookTruck => 'Book a truck';
+
+  @override
+  String get orderReceive => 'Receive delivery';
+
+  @override
+  String get orderRate => 'Rate';
+
+  @override
+  String get handedOver => 'I handed it over';
+
+  @override
+  String get handedOverTitle => 'Handed over the crop?';
+
+  @override
+  String get handedOverBody =>
+      'Confirm when the crop is on the buyer\'s vehicle.';
+
+  @override
+  String get receivedSelf => 'I received it';
+
+  @override
+  String get receivedTitle => 'Received the crop?';
+
+  @override
+  String get receivedBody => 'The farmer will be told when you confirm.';
+
+  @override
+  String get yesConfirm => 'Yes, confirm';
+
+  @override
+  String nBidNew(String no) {
+    return 'New fare offer: $no';
+  }
+
+  @override
+  String nBidNewBody(String name, String amount) {
+    return '$name · $amount';
+  }
+
+  @override
+  String nJobAssigned(String no) {
+    return 'You got a job: $no';
+  }
+
+  @override
+  String nTripPicked(String no) {
+    return 'Crop loaded: $no';
+  }
+
+  @override
+  String nTripDelivered(String no) {
+    return 'Delivered: $no';
+  }
 }

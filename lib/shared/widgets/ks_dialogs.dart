@@ -11,12 +11,14 @@ import 'ks_button.dart';
 /// gap 12, shadow 0 8 24 rgba(0,0,0,.2); 40px alert icon; Bold 18 title;
 /// Regular 14 body (line height 1.5); Secondary "no" + Destructive "yes".
 /// Returns true when the destructive action is confirmed.
+/// [positive]: safe step (no alert icon, brand "yes" button).
 Future<bool> showKsConfirm(
   BuildContext context, {
   required String title,
   required String body,
   required String noLabel,
   required String yesLabel,
+  bool positive = false,
 }) async {
   final r = await showGeneralDialog<bool>(
     context: context,
@@ -38,9 +40,11 @@ Future<bool> showKsConfirm(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(AppUi.alertIcon,
-                  width: AppSizes.dialogIcon, height: AppSizes.dialogIcon),
-              const SizedBox(height: AppSpacing.md),
+              if (!positive) ...[
+                Image.asset(AppUi.alertIcon,
+                    width: AppSizes.dialogIcon, height: AppSizes.dialogIcon),
+                const SizedBox(height: AppSpacing.md),
+              ],
               Text(title, style: AppTypography.bold18.normal),
               const SizedBox(height: AppSpacing.md),
               Text(body, style: AppTypography.bodyMedium.copyWith(height: 1.5)),
@@ -55,10 +59,15 @@ Future<bool> showKsConfirm(
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
-                    child: KsButton.destructive(
-                      label: yesLabel,
-                      onPressed: () => Navigator.of(ctx).pop(true),
-                    ),
+                    child: positive
+                        ? KsButton(
+                            label: yesLabel,
+                            onPressed: () => Navigator.of(ctx).pop(true),
+                          )
+                        : KsButton.destructive(
+                            label: yesLabel,
+                            onPressed: () => Navigator.of(ctx).pop(true),
+                          ),
                   ),
                 ],
               ),

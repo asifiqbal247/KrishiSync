@@ -965,5 +965,601 @@
   "emptyOrdersBuyerBody": "বাজার থেকে পছন্দের ফসল অর্ডার করুন।",
   "emptyOrdersBuyerCta": "বাজার দেখুন",
   "rowMyCounter": "আমার পাল্টা অফার",
-  "rowOfferStatus": "অবস্থা"
+  "rowOfferStatus": "অবস্থা",
+  "navTrip": "ট্রিপ",
+  "navLoad": "লোড",
+  "navEarnings": "আয়",
+  "trStatToday": "আজকের আয়",
+  "trStatOngoing": "চলমান ট্রিপ",
+  "trOngoingTitle": "চলমান: {no}",
+  "@trOngoingTitle": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "trOngoingSub": "{n}টি পিকআপ · {status}",
+  "@trOngoingSub": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "trContinue": "চালিয়ে যান",
+  "trWhatToDo": "কী করতে চান?",
+  "trFindLoads": "লোড খুঁজুন",
+  "trFindLoadsSub": "কাছাকাছি {n}টি লোড",
+  "@trFindLoadsSub": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "trMyJobs": "আমার কাজ",
+  "trMyJobsSub": "{n}টি কাজ",
+  "@trMyJobsSub": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "trReturnLoads": "ফিরতি লোড",
+  "trReturnLoadsSub": "খালি ফিরবেন না",
+  "trEarnings": "আয়",
+  "trEarningsSub": "এ সপ্তাহে {amount}",
+  "@trEarningsSub": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "trNearbyLoads": "আপনার কাছাকাছি লোড",
+  "seeAllLink": "সব দেখুন",
+  "trReturnChances": "ফিরতি লোডের সুযোগ",
+  "trWeekEarnings": "এ সপ্তাহের আয়",
+  "trThisWeek": "এ সপ্তাহে",
+  "trPendingPay": "অপেক্ষমাণ",
+  "wdSat": "শনি",
+  "wdSun": "রবি",
+  "wdMon": "সোম",
+  "wdTue": "মঙ্গল",
+  "wdWed": "বুধ",
+  "wdThu": "বৃহঃ",
+  "wdFri": "শুক্র",
+  "routeLine": "{from} → {to}",
+  "@routeLine": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "loadSub": "{crop} · {qty}",
+  "@loadSub": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "loadSubDate": "{crop} · {qty} · {date}",
+  "@loadSubDate": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noLoads": "এখন কোনো লোড নেই",
+  "takaAmount": "৳ {amount}",
+  "@takaAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "vehicleNeeded": "লোড নিতে আগে গাড়ির তথ্য দিন",
+  "loadsTitle": "উপলব্ধ লোড",
+  "filterAll": "সব",
+  "filterNearby": "কাছাকাছি",
+  "filterFullLoad": "ফুল লোড",
+  "filterMultiPickup": "একাধিক পিকআপ",
+  "loadDetailsTitle": "লোডের বিবরণ",
+  "rowGoods": "মালামাল",
+  "rowDestination": "গন্তব্য",
+  "rowDistance": "দূরত্ব",
+  "distanceLine": "{km} কিমি · ~{h} ঘণ্টা",
+  "@distanceLine": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      },
+      "h": {
+        "type": "String"
+      }
+    }
+  },
+  "rowFare": "ভাড়া",
+  "fareSafeLine": "{amount} (নিরাপদ লেনদেন)",
+  "@fareSafeLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "rowCustomer": "গ্রাহক",
+  "nameVerified": "{name} · যাচাইকৃত",
+  "@nameVerified": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "placeDate": "{place} · {date}",
+  "@placeDate": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fitsTruck": "আপনার ট্রাকে মানানসই: {cap} ধারণক্ষমতা",
+  "@fitsTruck": {
+    "placeholders": {
+      "cap": {
+        "type": "String"
+      }
+    }
+  },
+  "tooBigTruck": "আপনার ট্রাকের ধারণক্ষমতা {cap} — এই লোড বেশি",
+  "@tooBigTruck": {
+    "placeholders": {
+      "cap": {
+        "type": "String"
+      }
+    }
+  },
+  "tonQty": "{t} টন",
+  "@tonQty": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "sendFareOffer": "ভাড়ার প্রস্তাব দিন",
+  "acceptJob": "কাজটি গ্রহণ করুন",
+  "myBidLine": "আপনার প্রস্তাব: {amount} · ক্রেতার উত্তরের অপেক্ষায়",
+  "@myBidLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "bidSent": "প্রস্তাব পাঠানো হয়েছে",
+  "loadTaken": "এই লোড অন্য চালক পেয়েছেন",
+  "fareOfferTitle": "ভাড়ার প্রস্তাব দিন",
+  "suggestedFareRow": "প্রস্তাবিত ভাড়া (প্ল্যাটফর্ম)",
+  "takaRange": "৳ {min}–{max}",
+  "@takaRange": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "otherBidsRow": "অন্য প্রস্তাব",
+  "otherBidsLine": "{n}টি · সর্বনিম্ন {amount}",
+  "@otherBidsLine": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "noneYet": "এখনো নেই",
+  "yourFare": "আপনার ভাড়া",
+  "fareNote": "ক্রেতা প্রস্তাব বেছে নিরাপদ লেনদেনে টাকা জমা দিলে কাজ নিশ্চিত হবে। এরপর ভাড়া বদলানো যাবে না।",
+  "sendProposal": "প্রস্তাব পাঠান",
+  "errFareInvalid": "সঠিক ভাড়া লিখুন",
+  "myJobsTitle": "আমার কাজ",
+  "jobsToday": "আজ",
+  "jobsUpcoming": "আসন্ন",
+  "jobsDone": "সম্পন্ন",
+  "jobTitle": "{no} · {crop} {qty}",
+  "@jobTitle": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "badgeRunning": "চলছে",
+  "badgeScheduled": "নির্ধারিত",
+  "badgeDone": "সম্পন্ন",
+  "noJobs": "কোনো কাজ নেই",
+  "scheduleTitle": "পিকআপ সূচি",
+  "rowJob": "কাজ",
+  "rowTotalStops": "মোট স্টপ",
+  "stopsOne": "১টি পিকআপ + ১টি ডেলিভারি",
+  "pickupOrder": "পিকআপের ক্রম",
+  "stopN": "{n}. {name}",
+  "@stopN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stopSub": "{place} · {qty} · {date}",
+  "@stopSub": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "stopDelivery": "ডেলিভারি",
+  "seeRoute": "রুট দেখুন",
+  "tripStatusTitle": "ট্রিপের অবস্থা",
+  "freeSpaceTitle": "আপনার ট্রাকে {t} টন খালি",
+  "@freeSpaceTitle": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "freeSpaceSub": "রুটে লোড আছে · আলাদা ভাড়া",
+  "seeLink": "দেখুন",
+  "stepPickupN": "পিকআপ {n} – {name}",
+  "@stepPickupN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "stepLoadedDone": "লোড হয়েছে",
+  "stepDeliveryTo": "ডেলিভারি – {name}",
+  "@stepDeliveryTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineSafeNote": "দুর্বল নেটওয়ার্কেও আপডেট সংরক্ষিত থাকে।",
+  "tripProblem": "ট্রিপে সমস্যা?",
+  "startLoading": "পিকআপে লোড শুরু করুন",
+  "loadConfirmTitle": "মাল গাড়িতে উঠেছে?",
+  "loadConfirmBody": "নিশ্চিত করলে কৃষক টাকা পাবেন এবং ক্রেতাকে জানানো হবে।",
+  "yesLoaded": "লোড হয়েছে",
+  "deliverNow": "ডেলিভারি দিন",
+  "tripDoneBtn": "ট্রিপ সম্পন্ন",
+  "podTitle": "ডেলিভারির প্রমাণ",
+  "podPhoto": "ডেলিভারির ছবি তুলুন",
+  "deliveredQty": "ডেলিভারি করা পরিমাণ",
+  "buyerOtp": "গ্রাহকের OTP",
+  "otpHint4": "৪ সংখ্যার কোড",
+  "podNote": "ক্রেতা OTP দিলে বা GPS ও ছবিতে ডেলিভারি প্রমাণ হলে সাথে সাথে ভাড়া ছাড়। পরে আটকানো যাবে না।",
+  "podSubmit": "ডেলিভারি সম্পন্ন",
+  "errOtpWrong": "OTP সঠিক নয়",
+  "errOtp4": "৪ সংখ্যার কোড দিন",
+  "tripDoneTitle": "ট্রিপ সম্পন্ন",
+  "tripDoneHeading": "ডেলিভারি সম্পন্ন!",
+  "tripDoneBody": "{amount} আপনার বিকাশে পাঠানো হয়েছে। এই ভাড়া চূড়ান্ত।",
+  "@tripDoneBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "seeReceipt": "রসিদ দেখুন",
+  "receiptSub": "{amount} · বিকাশে পাঠানো",
+  "@receiptSub": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "rateCustomer": "গ্রাহককে রেটিং দিন",
+  "nameOrderNo": "{name} · {no}",
+  "@nameOrderNo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "dontGoEmpty": "খালি ফিরবেন না",
+  "acceptReturnLoad": "ফিরতি লোড গ্রহণ করুন",
+  "seeEarnings": "আয় দেখুন",
+  "alreadyRated": "রেটিং দেওয়া হয়েছে",
+  "rateTitle": "রেটিং দিন",
+  "roleCustomer": "{name} (গ্রাহক)",
+  "@roleCustomer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "justFinishedTrip": "সদ্য শেষ হওয়া ট্রিপ",
+  "howWasCustomer": "গ্রাহক কেমন ছিলেন?",
+  "tagOnTimeLoad": "সময়মতো লোড",
+  "tagCorrectInfo": "সঠিক তথ্য",
+  "tagFastPay": "দ্রুত পেমেন্ট",
+  "roleFarmerName": "{name} (কৃষক)",
+  "@roleFarmerName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "howWasSupplier": "সরবরাহকারী কেমন ছিল?",
+  "tagGoodQuality": "ভালো মান",
+  "tagRightWeight": "সঠিক ওজন",
+  "tagOnTime": "সময়মতো",
+  "roleDriver": "{name} (চালক)",
+  "@roleDriver": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rateTransport": "পরিবহন রেটিং দিন",
+  "commentOptional": "মন্তব্য (ঐচ্ছিক)",
+  "commentHint": "অভিজ্ঞতা লিখুন",
+  "submit": "জমা দিন",
+  "errPickStars": "স্টার দিয়ে রেটিং দিন",
+  "ratingThanks": "রেটিং দেওয়ার জন্য ধন্যবাদ",
+  "vehicleTitle": "গাড়ি ও ধারণক্ষমতা",
+  "truckPhoto": "ট্রাকের ছবি",
+  "vehicleType": "গাড়ির ধরন",
+  "regNo": "রেজিস্ট্রেশন নম্বর",
+  "regHint": "ঢাকা মেট্রো-ট ১২-৩৪৫৬",
+  "baseLocation": "বেস লোকেশন (ট্রাক কোথায় থাকে)",
+  "maxCapacity": "সর্বোচ্চ ধারণক্ষমতা",
+  "tonUnit": "টন",
+  "preferredRoute": "পছন্দের রুট",
+  "vt_pickup": "পিকআপ ভ্যান",
+  "vt_small_open": "ছোট ট্রাক (খোলা)",
+  "vt_medium_open": "মাঝারি ট্রাক (খোলা)",
+  "vt_medium_covered": "মাঝারি ট্রাক (ঢাকা)",
+  "vt_large_open": "বড় ট্রাক (খোলা)",
+  "vt_covered_van": "কাভার্ড ভ্যান",
+  "vt_refrigerated": "রেফ্রিজারেটেড ভ্যান",
+  "successTitle": "সফল হয়েছে!",
+  "successBody": "আপনার কাজটি সফলভাবে সম্পন্ন হয়েছে।",
+  "okBtn": "ঠিক আছে",
+  "transportTitle": "পরিবহন",
+  "tabBooked": "বুক করা",
+  "tabDone": "সম্পন্ন",
+  "noOrderCrop": "{no} · {crop}",
+  "@noOrderCrop": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "dsOpen": "ট্রাক খোঁজা হচ্ছে",
+  "dsAssigned": "নির্ধারিত",
+  "dsPickedUp": "পথে",
+  "dsDelivered": "পৌঁছেছে",
+  "nameStatus": "{name} · {status}",
+  "@nameStatus": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "bidsCountLine": "{n}টি প্রস্তাব",
+  "@bidsCountLine": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "bookTruckBtn": "+ ট্রাক বুক করুন",
+  "noTruckNeeded": "সব অর্ডারে ট্রাক বুক করা আছে",
+  "noTransport": "কোনো পরিবহন নেই",
+  "bookTruckTitle": "ট্রাক বুক করুন",
+  "pickupLocation": "পিকআপ লোকেশন",
+  "goodsWeight": "মালামাল ও ওজন",
+  "dateLabel": "তারিখ",
+  "suggestedTrucks": "প্রস্তাবিত ট্রাক",
+  "truckSub": "{type} · {cap} · {rating}",
+  "@truckSub": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "cap": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "waitingBids": "ট্রাকচালকদের প্রস্তাবের অপেক্ষায়…",
+  "bookBtn": "বুক করুন",
+  "bookConfirmTitle": "{name}-কে বুক করবেন?",
+  "@bookConfirmTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bookConfirmBody": "ভাড়া {amount} নিরাপদ লেনদেনে জমা থাকবে।",
+  "@bookConfirmBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "truckBooked": "ট্রাক বুক হয়েছে",
+  "assignedTitle": "নির্ধারিত পরিবহন",
+  "verifiedDriverRating": "যাচাইকৃত চালক · রেটিং {r}",
+  "@verifiedDriverRating": {
+    "placeholders": {
+      "r": {
+        "type": "String"
+      }
+    }
+  },
+  "driverRating": "চালক · রেটিং {r}",
+  "@driverRating": {
+    "placeholders": {
+      "r": {
+        "type": "String"
+      }
+    }
+  },
+  "rowTruck": "ট্রাক",
+  "rowCapacity": "ধারণক্ষমতা",
+  "callBtn": "কল করুন",
+  "trackBtn": "ট্র্যাক করুন",
+  "receiveTitle": "ডেলিভারি গ্রহণ",
+  "rowOrder": "অর্ডার",
+  "rowOrdered": "অর্ডারকৃত",
+  "rowLoaded": "লোডে মাপা",
+  "yourOtp": "আপনার OTP: {code}",
+  "@yourOtp": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "otpNote": "ট্রাক পৌঁছালে ড্রাইভারকে এই OTP দিন। দিলেই ভাড়া ছাড় হবে।",
+  "qualityFinalTitle": "মান ও পরিমাণ লোডের সময়ই চূড়ান্ত",
+  "qualityFinalBody": "লোডের পর মান বা পরিমাণ নিয়ে টাকা ফেরত চাওয়া যাবে না। ডেলিভারি নিশ্চিত করলে ভাড়া ছাড় হবে।",
+  "deliveryPhotoOpt": "ডেলিভারির ছবি (ঐচ্ছিক)",
+  "otherProblem": "অন্য সমস্যা জানান",
+  "otpGiven": "OTP দিয়েছি",
+  "otpWaitDriver": "ড্রাইভার OTP দিলে এগোতে পারবেন",
+  "orderBookTruck": "ট্রাক বুক করুন",
+  "orderReceive": "ডেলিভারি গ্রহণ",
+  "orderRate": "রেটিং দিন",
+  "handedOver": "পণ্য হস্তান্তর করেছি",
+  "handedOverTitle": "পণ্য হস্তান্তর করেছেন?",
+  "handedOverBody": "ক্রেতার গাড়িতে মাল তোলা হলে নিশ্চিত করুন।",
+  "receivedSelf": "পণ্য পেয়েছি",
+  "receivedTitle": "পণ্য পেয়েছেন?",
+  "receivedBody": "নিশ্চিত করলে কৃষককে জানানো হবে।",
+  "yesConfirm": "হ্যাঁ, নিশ্চিত",
+  "nBidNew": "নতুন ভাড়ার প্রস্তাব: {no}",
+  "@nBidNew": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "nBidNewBody": "{name} · {amount}",
+  "@nBidNewBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "nJobAssigned": "আপনি কাজ পেয়েছেন: {no}",
+  "@nJobAssigned": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "nTripPicked": "মাল গাড়িতে উঠেছে: {no}",
+  "@nTripPicked": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "nTripDelivered": "ডেলিভারি সম্পন্ন: {no}",
+  "@nTripDelivered": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -50,6 +50,14 @@ class NotificationsScreen extends ConsumerWidget {
         ),
       'listing_approved' => (l.nListingApproved(crop), l.nListingApprovedBody),
       'listing_rejected' => (l.nListingRejected(crop), p['note'] ?? ''),
+      'bid_new' => (
+          l.nBidNew(p['no'] ?? ''),
+          l.nBidNewBody(p['name'] ?? '', Fmt.taka(context,
+              double.tryParse(p['fare'] ?? '') ?? 0))
+        ),
+      'job_assigned' => (l.nJobAssigned(p['no'] ?? ''), crop),
+      'trip_picked' => (l.nTripPicked(p['no'] ?? ''), crop),
+      'trip_delivered' => (l.nTripDelivered(p['no'] ?? ''), crop),
       _ => (n.type, ''),
     };
   }
@@ -65,6 +73,8 @@ class NotificationsScreen extends ConsumerWidget {
       'offer' => Routes.offer(id),
       'order' => Routes.order(id),
       'listing' => Routes.farmerListingDetails(id),
+      'book' => Routes.buyerBook(id),
+      'job' => Routes.trJob(id),
       _ => null,
     };
   }

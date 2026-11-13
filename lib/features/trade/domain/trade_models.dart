@@ -156,6 +156,8 @@ class TradeOrder {
     required this.timeline,
     this.pickupDate,
     this.createdAt,
+    this.transporterId,
+    this.transporterName,
   });
 
   final String id;
@@ -185,6 +187,8 @@ class TradeOrder {
   final Map<String, DateTime> timeline; // status name → time
   final DateTime? pickupDate;
   final DateTime? createdAt;
+  final String? transporterId;
+  final String? transporterName;
 
   String cropName(String lang) => lang == 'bn' ? cropNameBn : cropNameEn;
 
@@ -224,6 +228,8 @@ class TradeOrder {
       timeline: tl,
       pickupDate: (m['pickupDate'] as Timestamp?)?.toDate(),
       createdAt: (m['createdAt'] as Timestamp?)?.toDate(),
+      transporterId: m['transporterId'] as String?,
+      transporterName: m['transporterName'] as String?,
     );
   }
 }

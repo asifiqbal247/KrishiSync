@@ -94,7 +94,7 @@ class BuyerHomeScreen extends ConsumerWidget {
                 child: KsStatCard(
                     label: l.statInTransit,
                     value: n(moving),
-                    onTap: () => ref.read(buyerTabProvider.notifier).go(2))),
+                    onTap: () => context.push(Routes.buyerTransport))),
           ]),
           const SizedBox(height: AppSpacing.block),
           Row(children: [
@@ -172,7 +172,7 @@ class BuyerHomeScreen extends ConsumerWidget {
                 icon: AppUi.glyphTruck,
                 title: l.actBookTruck,
                 hint: l.actBookTruckSub,
-                onTap: soon,
+                onTap: () => context.push(Routes.buyerTransport),
               ),
             ),
           ]),

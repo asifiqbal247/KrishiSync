@@ -1,11 +1,10 @@
 # KrishiSync — Plan
 
 ## Current status
-- **Phase:** Part 5 (offers, orders, notifications) built 2026-11-14. Rules + indexes deployed.
-- **Built in Part 5:** 77 Make Offer, 24 Buyer Offers (farmer), 25 Negotiate (both roles) + D1 confirm + 26 success modal, 78 Place Order (payment = `PaymentService` placeholder), 40/105 Orders tab, 42/106 Order Details (timeline), Notifications (bell on both homes), farmer home "new offers" card, moderator approve/reject notifies farmer. Shared state widgets 41 Empty / 212 Error / 214 No Internet (`ks_states.dart`) + Button/Warning.
-- **Tested on emulator (E2E, 2026-11-14):** moderator (01700000004) approves tomato listing → buyer sees it in Market → Make Offer ৳35 × 200 kg → farmer home "new offer" card → farmer counters ৳37 → buyer gets notification → accepts → orders at ৳37 → order **KS-1048** (৳9,474 incl. ৳2,000 transport + 1% fee) → farmer sees order + "৳7,400 this month". No rules errors.
-- **Fixed during test:** negotiate rows (buyer price vs farmer counter shown separately), offer status label, buyer tab resets to Home after login, keyboard no longer reopens after date picker, buyer home stats + farmer payments now from real orders/offers.
-- **Next step:** Part 6 — transport (transporter screens, booking, pickup/delivery status, ratings).
+- **Phase:** Part 6 (transport) built + E2E-tested 2026-11-14. Rules + indexes deployed.
+- **Built in Part 6:** Transporter: 141 Home (real earnings/jobs/loads, weekly chart), 143 Available Loads (+ return loads), 144 Load Details, 145 Fare Offer, 152 My Jobs (Trip tab), 153 Pickup Schedule, 159 Trip Status, 167 Proof of Delivery (OTP checked by rules), 168 Trip Complete, 169 Rate Customer, 194 Vehicle & Capacity (+ 211 success), vehicle link in profile. Buyer: 115 Transport, 116 Book Truck (bids), 117 Assigned Transport (call + route map), 110 Receive Delivery (OTP), 111 Rate farmer + driver → order completed. Order details show the next real action per role (book truck / receive / rate / self-transport handed over + received).
+- **Tested on emulator (E2E):** buyer orders 100 kg (KS-1049, platform truck) → load opens → new transporter (01700000003, Kamal Hossain) sets up vehicle → sees load → offers ৳1,800 → buyer notified → books → order total updated → driver loads (farmer paid) → wrong OTP rejected by rules → right OTP → delivered → driver rates buyer → buyer rates farmer (5★) + driver (4★) → order completed. Weekly chart shows ৳1,800 on Saturday.
+- **Next step:** Part 7 — Admin A1–A7 + Moderator M4–M7 + Safe Payment UI (82). Then Part 8 polish.
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -301,3 +300,8 @@ counters/orders    next: int
 | 2026-11-14 | Order numbers `KS-1048`, `KS-1049`… from `counters/orders` (+1 per order in a transaction). Platform fee 1%. Platform transport fare estimate = ৳1500 + ৳20/km, rounded to ৳100 (until Part 6 real bids). |
 | 2026-11-14 | Buyer can lower a listing's `availableKg` only while ordering (rules); listing becomes `sold` at 0. Offers valid 24 h. |
 | 2026-11-14 | Orders empty state (41) for buyers: Figma only has the farmer version, so buyer text is "বাজার থেকে পছন্দের ফসল অর্ডার করুন।" + "বাজার দেখুন" (opens Market tab). Same layout. |
+| 2026-11-14 | Transport booking = bids: a platform-truck order opens a delivery ("load"). Transporters accept at the suggested fare or send their own fare (145). Buyer sees bids on 116 and books one → 117. |
+| 2026-11-14 | One order = one pickup + one delivery (no pooling). "Return load" sections show real open loads that start in the driver's drop district; hidden when none. Pill "একাধিক পিকআপ" kept (Figma) but shows empty state (pooling = Tier C). |
+| 2026-11-14 | Delivery confirmation: buyer sees a 4-digit OTP (stored in `deliveries/{id}/private/otp`, readable only by the buyer). Driver enters it (+ optional photo) on 167; Firestore rules compare the code. Then buyer rates farmer + driver (111), driver rates buyer (169). |
+| 2026-11-14 | Self-transport orders: farmer taps "handed over" (pickedUp), buyer taps "received" (delivered) → buyer rates farmer → completed. |
+

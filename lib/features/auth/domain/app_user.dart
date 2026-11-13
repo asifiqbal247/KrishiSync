@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../transport/domain/delivery.dart';
+
 enum UserRole {
   farmer,
   buyer,
@@ -105,6 +107,7 @@ class AppUser {
     this.completedOrders = 0,
     this.onTimeRate,
     this.complaintCount = 0,
+    this.vehicle,
   });
 
   final String uid;
@@ -126,6 +129,9 @@ class AppUser {
   final int completedOrders;
   final int? onTimeRate; // 0–100, null until first delivery
   final int complaintCount;
+
+  /// Transporters only (Figma 194). Null until the vehicle form is saved.
+  final Vehicle? vehicle;
 
   bool get isVerified => verification == VerificationStatus.verified;
 
@@ -156,6 +162,9 @@ class AppUser {
       completedOrders: (m['completedOrders'] as num?)?.toInt() ?? 0,
       onTimeRate: (m['onTimeRate'] as num?)?.toInt(),
       complaintCount: (m['complaintCount'] as num?)?.toInt() ?? 0,
+      vehicle: m['vehicle'] == null
+          ? null
+          : Vehicle.fromMap(m['vehicle'] as Map<String, dynamic>),
       savedAddresses: [
         for (final a in (m['savedAddresses'] as List<dynamic>? ?? const []))
           SavedAddress.fromMap(a as Map<String, dynamic>),

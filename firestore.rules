@@ -38,13 +38,28 @@ service cloud.firestore {
       // Verification: may only move to 'pending' (submitting an NID).
       allow update: if isSelfUpdateOk(userId)
                     || isModVerificationUpdate()
+                    || isRatingUpdate(userId)
                     || isAdmin();
+
+      // A trade partner adds ONE rating, written in the same batch as a new
+      // reviews/{id} doc from them to this user.
+      function isRatingUpdate(userId) {
+        let rid = request.resource.data.get('lastReviewId', '');
+        let review = getAfter(/databases/$(database)/documents/reviews/$(rid)).data;
+        return isActive() && userId != uid()
+          && onlyChanges(['ratingAvg', 'ratingCount', 'lastReviewId'])
+          && request.resource.data.ratingCount == resource.data.get('ratingCount', 0) + 1
+          && request.resource.data.ratingAvg >= 1 && request.resource.data.ratingAvg <= 5
+          && !exists(/databases/$(database)/documents/reviews/$(rid))
+          && review.toUid == userId && review.fromUid == uid();
+      }
 
       function isSelfUpdateOk(userId) {
         return signedIn() && userId == uid()
           && me().get('status', 'active') == 'active'
           && onlyChanges(['name', 'photoUrl', 'language', 'location', 'nidNumber',
-                          'verification', 'role', 'savedAddresses', 'updatedAt'])
+                          'verification', 'role', 'savedAddresses', 'vehicle',
+                          'updatedAt'])
           && (!('role' in changed())
               || (resource.data.get('role', null) == null
                   && request.resource.data.role in ['farmer', 'buyer', 'transporter']))
@@ -175,8 +190,32 @@ service cloud.firestore {
         && request.resource.data.quantityKg is number && request.resource.data.quantityKg > 0
         && request.resource.data.pricePerKg is number && request.resource.data.pricePerKg > 0
         && request.resource.data.transportMode in ['platform', 'self'];
-      // Status moves are added with the transport flow (Part 6).
-      allow update: if isAdmin();
+      function delAfter() { return getAfter(/databases/$(database)/documents/deliveries/$(id)).data; }
+      function to(s) { return request.resource.data.status == s; }
+      function from(s) { return resource.data.status == s; }
+      function statusOnly() { return onlyChanges(['status', 'timeline', 'updatedAt']); }
+      function isSelf() { return resource.data.transportMode == 'self'; }
+
+      allow update: if isAdmin() || (isActive() && (
+        // Buyer books a transporter's bid (116).
+        (resource.data.buyerId == uid() && from('confirmed') && to('transportBooked')
+          && onlyChanges(['status', 'transporterId', 'transporterName', 'transportFare',
+                          'total', 'timeline', 'updatedAt'])
+          && delAfter().transporterId == request.resource.data.transporterId
+          && delAfter().fare == request.resource.data.transportFare)
+        // Transporter loads at the farm / delivers (delivery doc moves too).
+        || (resource.data.get('transporterId', null) == uid() && statusOnly()
+          && ((from('transportBooked') && to('pickedUp') && delAfter().status == 'pickedUp')
+              || (from('pickedUp') && to('delivered') && delAfter().status == 'delivered')))
+        // Self transport: farmer hands over, buyer receives.
+        || (isSelf() && resource.data.farmerId == uid() && statusOnly()
+          && from('confirmed') && to('pickedUp'))
+        || (isSelf() && resource.data.buyerId == uid() && statusOnly()
+          && from('pickedUp') && to('delivered'))
+        // Buyer completes after rating (111).
+        || (resource.data.buyerId == uid() && statusOnly()
+          && from('delivered') && to('completed'))
+      ));
     }
 
     // ---------- notifications/{uid}/items/{id} ----------
@@ -189,6 +228,85 @@ service cloud.firestore {
         && request.resource.data.type is string;
       allow update: if signedIn() && owner == uid() && onlyChanges(['read']);
       allow delete: if signedIn() && owner == uid();
+    }
+
+    // ---------- deliveries/{orderId} ("loads") ----------
+    match /deliveries/{id} {
+      function d() { return resource.data; }
+      function nd() { return request.resource.data; }
+      function isDelParty() {
+        return signedIn() && (d().buyerId == uid() || d().farmerId == uid()
+          || d().get('transporterId', null) == uid());
+      }
+      allow read: if isDelParty() || isMod()
+        || (isActive() && myRole() == 'transporter' && d().status == 'open');
+
+      // Created by the buyer in the order transaction.
+      allow create: if isActive() && nd().buyerId == uid() && nd().status == 'open'
+        && getAfter(/databases/$(database)/documents/orders/$(id)).data.buyerId == uid();
+
+      allow update: if isActive() && (
+        // Buyer books one of the bids.
+        (d().buyerId == uid() && d().status == 'open' && nd().status == 'assigned'
+          && onlyChanges(['status', 'transporterId', 'transporterName',
+                          'transporterPhotoUrl', 'vehicle', 'fare', 'timeline', 'updatedAt'])
+          && nd().fare == get(/databases/$(database)/documents/deliveries/$(id)/bids/$(nd().transporterId)).data.fare)
+        // Assigned transporter: loaded at pickup.
+        || (d().get('transporterId', null) == uid() && d().status == 'assigned'
+          && nd().status == 'pickedUp' && onlyChanges(['status', 'timeline', 'updatedAt']))
+        // Assigned transporter: delivered with the buyer's OTP.
+        || (d().get('transporterId', null) == uid() && d().status == 'pickedUp'
+          && nd().status == 'delivered'
+          && onlyChanges(['status', 'otpInput', 'deliveredKg', 'proofPhotoUrl',
+                          'timeline', 'updatedAt'])
+          && nd().otpInput == get(/databases/$(database)/documents/deliveries/$(id)/private/otp).data.code)
+        // Transporter rated the buyer.
+        || (d().get('transporterId', null) == uid()
+          && onlyChanges(['transporterRated', 'updatedAt']))
+      );
+
+      // 4-digit delivery code: only the buyer may read it.
+      match /private/{doc} {
+        allow read: if signedIn()
+          && get(/databases/$(database)/documents/deliveries/$(id)).data.buyerId == uid();
+        allow create: if isActive()
+          && getAfter(/databases/$(database)/documents/deliveries/$(id)).data.buyerId == uid()
+          && ((doc == 'otp' && request.resource.data.keys().hasOnly(['code']))
+              || (doc == 'receipt'
+                  && request.resource.data.keys().hasOnly(['photoUrl', 'createdAt'])));
+      }
+
+      // Transporter bids: one per transporter, while the load is open.
+      match /bids/{tid} {
+        function load() { return get(/databases/$(database)/documents/deliveries/$(id)).data; }
+        allow read: if isActive() && (myRole() == 'transporter' || load().buyerId == uid());
+        allow create, update: if isActive() && tid == uid() && myRole() == 'transporter'
+          && load().status == 'open'
+          && request.resource.data.status == 'pending'
+          && request.resource.data.fare is number && request.resource.data.fare > 0
+          && request.resource.data.keys().hasOnly(['name', 'photoUrl', 'vehicle',
+               'ratingAvg', 'ratingCount', 'fare', 'status', 'createdAt']);
+        // Buyer marks the booked bid as accepted.
+        allow update: if isActive() && load().buyerId == uid()
+          && onlyChanges(['status']) && request.resource.data.status == 'accepted';
+      }
+    }
+
+    // ---------- reviews/{orderId_from_to} ----------
+    match /reviews/{rid} {
+      function ord() { return get(/databases/$(database)/documents/orders/$(request.resource.data.orderId)).data; }
+      function inOrder(u) {
+        return u == ord().buyerId || u == ord().farmerId || u == ord().get('transporterId', null);
+      }
+      allow read: if signedIn();
+      allow create: if isActive()
+        && request.resource.data.fromUid == uid()
+        && rid == request.resource.data.orderId + '_' + uid() + '_' + request.resource.data.toUid
+        && request.resource.data.toUid != uid()
+        && inOrder(uid()) && inOrder(request.resource.data.toUid)
+        && ord().status in ['delivered', 'completed']
+        && request.resource.data.stars is int
+        && request.resource.data.stars >= 1 && request.resource.data.stars <= 5;
     }
 
     // Everything else is closed until its Part adds rules.

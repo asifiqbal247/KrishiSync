@@ -29,7 +29,12 @@ import '../features/trade/presentation/notifications_screen.dart';
 import '../features/trade/presentation/offers_screen.dart';
 import '../features/trade/presentation/orders_screens.dart';
 import '../features/trade/presentation/place_order_screen.dart';
-import '../shared/presentation/role_home_placeholder.dart';
+import '../features/transport/presentation/buyer_transport_screens.dart';
+import '../features/transport/presentation/loads_screens.dart';
+import '../features/transport/presentation/rate_screens.dart';
+import '../features/transport/presentation/transporter_shell.dart';
+import '../features/transport/presentation/trip_screens.dart';
+import '../features/transport/presentation/vehicle_screen.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -66,6 +71,26 @@ abstract final class Routes {
   static String placeOrder(String listingId, {String? offerId}) =>
       '/buyer/order/$listingId${offerId == null ? '' : '?offer=$offerId'}';
   static const notifications = '/notifications';
+
+  // Buyer transport (Part 6)
+  static const buyerTransport = '/buyer/transport';
+  static String buyerBook(String deliveryId) => '/buyer/book/$deliveryId';
+  static String buyerAssigned(String deliveryId) =>
+      '/buyer/assigned/$deliveryId';
+  static String buyerReceive(String deliveryId) => '/buyer/receive/$deliveryId';
+  static String buyerRate(String orderId) => '/buyer/rate/$orderId';
+
+  // Transporter
+  static const trLoads = '/transporter/loads';
+  static const trReturnLoads = '/transporter/loads?return=1';
+  static String trLoad(String id) => '/transporter/load/$id';
+  static String trFareOffer(String id) => '/transporter/load/$id/offer';
+  static String trJob(String id) => '/transporter/job/$id';
+  static String trTrip(String id) => '/transporter/trip/$id';
+  static String trDeliver(String id) => '/transporter/trip/$id/deliver';
+  static String trDone(String id) => '/transporter/trip/$id/done';
+  static String trRate(String id) => '/transporter/trip/$id/rate';
+  static const trVehicle = '/transporter/vehicle';
 
   // Moderator (Admin may open these too)
   static String moderatorReview(String id) => '/moderator/review/$id';
@@ -137,6 +162,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       return (loc == Routes.profileSetup || loc == Routes.locationPicker)
           ? null
           : Routes.profileSetup;
+    }
+    // 7b. Transporter must add a vehicle first (194).
+    if (u.role == UserRole.transporter && u.vehicle == null) {
+      return (loc == Routes.trVehicle || loc == Routes.locationPicker)
+          ? null
+          : Routes.trVehicle;
     }
     // 8. Ready: leave auth screens for the role home.
     if (Routes.isPreAuth(loc) ||
@@ -262,12 +293,81 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, s) =>
                 FarmerProfileScreen(farmerId: s.pathParameters['uid']!),
           ),
+          GoRoute(
+              path: 'transport',
+              builder: (_, _) => const BuyerTransportScreen()),
+          GoRoute(
+            path: 'book/:id',
+            builder: (_, s) =>
+                BookTruckScreen(deliveryId: s.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'assigned/:id',
+            builder: (_, s) =>
+                AssignedTransportScreen(deliveryId: s.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'receive/:id',
+            builder: (_, s) =>
+                ReceiveDeliveryScreen(deliveryId: s.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'rate/:id',
+            builder: (_, s) =>
+                RateOrderScreen(orderId: s.pathParameters['id']!),
+          ),
         ],
       ),
       GoRoute(
         path: Routes.transporterHome,
-        builder: (_, _) =>
-            const RoleHomePlaceholder(role: UserRole.transporter),
+        builder: (_, _) => const TransporterShell(),
+        routes: [
+          GoRoute(
+            path: 'loads',
+            builder: (_, s) => LoadsScreen(
+                returnOnly: s.uri.queryParameters['return'] == '1'),
+          ),
+          GoRoute(
+            path: 'load/:id',
+            builder: (_, s) =>
+                LoadDetailsScreen(deliveryId: s.pathParameters['id']!),
+            routes: [
+              GoRoute(
+                path: 'offer',
+                builder: (_, s) =>
+                    FareOfferScreen(deliveryId: s.pathParameters['id']!),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: 'job/:id',
+            builder: (_, s) =>
+                PickupScheduleScreen(deliveryId: s.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'trip/:id',
+            builder: (_, s) =>
+                TripStatusScreen(deliveryId: s.pathParameters['id']!),
+            routes: [
+              GoRoute(
+                path: 'deliver',
+                builder: (_, s) =>
+                    ProofOfDeliveryScreen(deliveryId: s.pathParameters['id']!),
+              ),
+              GoRoute(
+                path: 'done',
+                builder: (_, s) =>
+                    TripCompleteScreen(deliveryId: s.pathParameters['id']!),
+              ),
+              GoRoute(
+                path: 'rate',
+                builder: (_, s) =>
+                    RateCustomerScreen(deliveryId: s.pathParameters['id']!),
+              ),
+            ],
+          ),
+          GoRoute(path: 'vehicle', builder: (_, _) => const VehicleScreen()),
+        ],
       ),
     ],
   );

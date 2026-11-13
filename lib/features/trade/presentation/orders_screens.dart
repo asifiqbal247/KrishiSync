@@ -22,6 +22,7 @@ import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
+import '../../transport/data/transport_repository.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
 
@@ -202,6 +203,56 @@ class OrderDetailsScreen extends ConsumerWidget {
   const OrderDetailsScreen({super.key, required this.orderId});
   final String orderId;
 
+  /// The next step for this person, or null when there is none (Part 6).
+  Widget? _action(BuildContext context, WidgetRef ref, AppLocalizations l,
+      TradeOrder o, bool iAmFarmer) {
+    final platform = o.transportMode == TransportMode.platform;
+    final repo = ref.read(transportRepositoryProvider);
+
+    Future<void> confirmThen(
+        String title, String body, Future<void> Function() run) async {
+      final ok = await showKsConfirm(context,
+          title: title,
+          body: body,
+          noLabel: l.commonCancel,
+          yesLabel: l.yesConfirm,
+          positive: true);
+      if (!ok) return;
+      try {
+        await run();
+      } catch (_) {
+        if (context.mounted) KsToast.show(context, l.errorGeneric);
+      }
+    }
+
+    KsButton go(String label, String route) =>
+        KsButton(label: label, onPressed: () => context.push(route));
+
+    if (iAmFarmer) {
+      if (!platform && o.status == OrderStatus.confirmed) {
+        return KsButton(
+          label: l.handedOver,
+          onPressed: () => confirmThen(l.handedOverTitle, l.handedOverBody,
+              () => repo.farmerHandedOver(o)),
+        );
+      }
+      return null;
+    }
+    return switch (o.status) {
+      OrderStatus.confirmed when platform =>
+        go(l.orderBookTruck, Routes.buyerBook(o.id)),
+      OrderStatus.transportBooked || OrderStatus.pickedUp when platform =>
+        go(l.orderReceive, Routes.buyerReceive(o.id)),
+      OrderStatus.pickedUp => KsButton(
+          label: l.receivedSelf,
+          onPressed: () => confirmThen(
+              l.receivedTitle, l.receivedBody, () => repo.buyerReceived(o)),
+        ),
+      OrderStatus.delivered => go(l.orderRate, Routes.buyerRate(o.id)),
+      _ => null,
+    };
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
@@ -294,21 +345,23 @@ class OrderDetailsScreen extends ConsumerWidget {
                 : l.stepTruckBooked,
             subtitle: when(o.timeline['transportBooked']),
             done: done(OrderStatus.transportBooked),
-            onTap: done(OrderStatus.transportBooked) ? null : soon,
+            onTap: !iAmFarmer &&
+                    o.transportMode == TransportMode.platform &&
+                    o.transporterId != null
+                ? () => context.push(Routes.buyerAssigned(o.id))
+                : null,
           ),
           const SizedBox(height: AppSpacing.block),
           KsTimelineItem(
             title: iAmFarmer ? l.stepLoaded : l.stepLoadedBuyer,
             subtitle: when(o.timeline['pickedUp']),
             done: done(OrderStatus.pickedUp),
-            onTap: done(OrderStatus.pickedUp) ? null : soon,
           ),
           const SizedBox(height: AppSpacing.block),
           KsTimelineItem(
             title: l.stepDelivered,
             subtitle: when(o.timeline['delivered']),
             done: done(OrderStatus.delivered),
-            onTap: done(OrderStatus.delivered) ? null : soon,
           ),
           const SizedBox(height: AppSpacing.block),
           KsListItem(
@@ -319,8 +372,7 @@ class OrderDetailsScreen extends ConsumerWidget {
           const SizedBox(
             height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
           ),
-          // Tracking arrives with the transport flow (Part 6).
-          KsButton(label: l.trackShipment, onPressed: soon),
+          ?_action(context, ref, l, o, iAmFarmer),
         ],
       ),
     );

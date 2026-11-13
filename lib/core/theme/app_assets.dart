@@ -12,6 +12,10 @@ abstract final class AppIcons {
   static const mic = '$_p/mic.svg';
   static const back = '$_p/back.svg';
   static const chevronRight = '$_p/chevron_right.svg';
+  static const starOn = '$_p/star_on.svg';
+  static const starOff = '$_p/star_off.svg';
+  /// Transporter bottom-nav FAB (HF/Bottom Nav / Transporter, 292:263).
+  static const loadBox = '$_p/load_box.svg';
   static const chevronDown = '$_p/chevron_down.svg';
   static const camera = '$_p/camera.svg';
   static const truck = '$_p/truck.svg';
@@ -122,6 +126,13 @@ abstract final class AppUi {
   static const speaker = '$_p/speaker.webp';
   static const alertIcon = '$_p/alert_icon.webp';
   static const timelineDone = '$_p/timeline_done.webp';
+
+  // Transporter (141).
+  static const glyphBox = '$_p/glyph_box.webp';
+  static const glyphMap = '$_p/glyph_map.webp';
+  static const thumbTrip = '$_p/thumb_trip.webp';
+  static const thumbLoad = '$_p/thumb_load.webp';
+  static const avatarDriver = '$_p/avatar_driver.webp';
 }
 
 abstract final class AppData {
