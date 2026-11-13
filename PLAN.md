@@ -1,12 +1,12 @@
 # KrishiSync — Plan
 
 ## Current status
-- **Phase:** Part 3 code done (farmer listings + moderator approval). Waiting for emulator E2E test.
-- **Done:** Parts 1–2 code, Part 3 code (commit `7ed0209`). Firestore DB created by Asif; rules + indexes deployed 2026-11-14.
-- **Built in Part 3:** Farmer shell + bottom nav, 15 Farmer Home, 18–20 Sell Crop (photo → Cloudinary), 21 success modal, 22 My Listings (status badges), 23 Crop Details, M1–M3 moderator (approve / reject with reason), simple Profile tab (language switch + logout). Admin temporarily uses moderator tools.
-- **Not yet on home (data comes in later Parts):** offers card, ongoing orders, nearby demands, payment summary. Market price carousel shows only when `marketPrices` has data (Admin A5, Part 7).
-- **Known gaps to finish later:** banner slides 2–3 (Figma 292:121, 292:133), full Profile screen 68, Farmer Search 17.
-- **Next step:** Asif hot-restarts, tests auth + sell + approve flow with test numbers → fix issues → push → Part 4 (buyer).
+- **Phase:** Part 3 — E2E tested on emulator 2026-11-14 (farmer side ✅). Moderator approval test waits for Asif to set a role in the console.
+- **E2E results (real Firebase + Cloudinary):** language → onboarding → login with test number (OTP) → users doc created → role → profile with 4-step address picker (saved address works) → Farmer Home → Sell Crop 1–3 with gallery photo → Cloudinary upload → listing in Firestore (`pending`) → success modal → My Listings with "অনুমোদনের অপেক্ষায়" badge → language switch → logout.
+- **Fixed during test:** Bangla "১" font, full-width pills, picker result lost after Firestore write, keyboard refocus, double users doc write, grey loading button, union chevron, date format.
+- **Polish list (later):** English plurals ("1 active listings"), profile tab avatar fallback, banner slides 2–3, full Profile 68, Farmer Search 17.
+- **Firebase console done by Asif:** Firestore (asia-south1), Phone auth, 5 test numbers, SMS region policy = Bangladesh. Rules + indexes deployed.
+- **Next step:** Asif sets `role: moderator` for +8801700000004 → test approve → Part 4 (buyer).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.

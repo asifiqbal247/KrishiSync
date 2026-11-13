@@ -60,8 +60,10 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   String get _lang => Localizations.localeOf(context).languageCode;
 
   Future<void> _pickLocation() async {
-    FocusScope.of(context).unfocus();
+    FocusManager.instance.primaryFocus?.unfocus();
     final loc = await context.push<UserLocation>(Routes.locationPicker);
+    // Flutter gives focus back to the last field when the route pops.
+    FocusManager.instance.primaryFocus?.unfocus();
     if (loc != null) {
       setState(() {
         _location = loc;

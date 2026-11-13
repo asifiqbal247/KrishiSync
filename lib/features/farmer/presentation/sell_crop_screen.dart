@@ -158,8 +158,10 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
   }
 
   Future<void> _pickPickup() async {
-    FocusScope.of(context).unfocus();
+    FocusManager.instance.primaryFocus?.unfocus();
     final loc = await context.push<UserLocation>(Routes.locationPicker);
+    // Flutter gives focus back to the last field when the route pops.
+    FocusManager.instance.primaryFocus?.unfocus();
     if (loc != null) {
       setState(() {
         _pickup = loc;
