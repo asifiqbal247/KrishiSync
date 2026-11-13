@@ -258,13 +258,16 @@ counters/orders    next: int
 
 ### Phase 1 — Foundation
 - [x] 1.1 `flutter create` (com.asif.krishisync), git init, remote, first commit — **push pending (403)**
-- [ ] 1.2 Firebase: `flutterfire configure`, enable Phone Auth + test numbers, Firestore (Spark plan)
-- [ ] 1.3 First rules + indexes files, deploy with Firebase CLI
-- [ ] 1.4 End-to-end test: test-phone login → write/read Firestore doc → upload image via `ImageStorageService`
-- [ ] 1.5 Theme (tokens from DESIGN.md), fonts bundled, assets exported from Figma
-- [ ] 1.6 Localization scaffold (bn default, en), language switch provider
-- [ ] 1.7 Shared widgets (App Bar, buttons, input, search bar, list item, stat card, action tile, chip, section header, modal, toast, bottom navs, state screens)
-- [ ] 1.8 go_router skeleton with role redirects
+- [~] 1.2 Firebase: `flutterfire configure` ✅ — Asif: create Firestore DB, enable Phone, add test numbers, SHA keys
+- [~] 1.3 Rules + indexes files written ✅ — deploy after DB exists (`firebase deploy --only firestore`)
+- [ ] 1.4 End-to-end test: test-phone login → users doc → profile photo to Cloudinary
+- [x] 1.5 Theme, fonts, assets (icons, images, nav icons, BD locations)
+- [x] 1.6 Localization scaffold (bn default, en), language switch provider
+- [~] 1.7 Shared widgets — done: app bar, buttons (primary/text), input, select, option card, upload box, dots, list item, pill, search bar. Todo: outline button, stat card, action tile, section header, modal, toast, bottom navs, state screens (with Part 3)
+- [x] 1.8 go_router with role redirects
+
+### Part 3 design already pulled (ready to build)
+15 Farmer Home (+ nav icons on/off, glyph icons, tip/banner art), 18–20 Sell Crop, 21 Success modal, 22 My Listings, 23 Crop Details, HF/List Item / Status (badge).
 
 ### Phase 2 — Vertical slices (Tier A)
 - [ ] 2.1 Auth: splash, language, onboarding, login, OTP, role, profile + location + photo

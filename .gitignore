@@ -66,3 +66,7 @@ firestore-debug.log
 
 # Local app secrets (Cloudinary preset etc.)
 lib/core/config/app_secrets.dart
+
+# JVM crash logs
+hs_err_pid*.log
+replay_pid*.log
