@@ -89,8 +89,21 @@ service cloud.firestore {
         && request.resource.data.status == 'pending'
         && validListing(request.resource.data);
 
+      // Buyer placing an order: may only lower availableKg (sold at 0).
+      function isBuyerStockDecrease() {
+        return isActive() && myRole() == 'buyer'
+          && resource.data.status == 'active'
+          && onlyChanges(['availableKg', 'status', 'updatedAt'])
+          && request.resource.data.availableKg is number
+          && request.resource.data.availableKg >= 0
+          && request.resource.data.availableKg < resource.data.availableKg
+          && (request.resource.data.status == 'active'
+              || (request.resource.data.status == 'sold'
+                  && request.resource.data.availableKg == 0));
+      }
+
       // Owner: may only mark an active listing as sold.
-      allow update: if (isOwner() && isActive()
+      allow update: if isBuyerStockDecrease() || (isOwner() && isActive()
           && onlyChanges(['status', 'updatedAt'])
           && resource.data.status == 'active'
           && request.resource.data.status == 'sold')
@@ -112,6 +125,70 @@ service cloud.firestore {
         && request.resource.data.min is number
         && request.resource.data.max is number
         && request.resource.data.min <= request.resource.data.max;
+    }
+
+    // ---------- offers/{id} ----------
+    // Buyer creates; farmer accepts / rejects / counters; buyer answers.
+    match /offers/{id} {
+      function isParty() {
+        return signedIn() && (resource.data.buyerId == uid() || resource.data.farmerId == uid());
+      }
+      allow read: if isParty() || isMod();
+      allow create: if isActive() && myRole() == 'buyer'
+        && request.resource.data.buyerId == uid()
+        && request.resource.data.status == 'pending'
+        && request.resource.data.lastBy == 'buyer'
+        && request.resource.data.pricePerKg is number && request.resource.data.pricePerKg > 0
+        && request.resource.data.quantityKg is number && request.resource.data.quantityKg > 0
+        && get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.status == 'active'
+        && get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.farmerId == request.resource.data.farmerId;
+      allow update: if isParty() && isActive()
+        && onlyChanges(['status', 'pricePerKg', 'buyerPrice', 'counterPrice', 'lastBy',
+                        'updatedAt', 'expiresAt', 'orderId'])
+        && request.resource.data.status in ['pending', 'countered', 'accepted', 'rejected', 'withdrawn']
+        // Only the farmer may counter; the buyer's answer returns to pending.
+        && (request.resource.data.status != 'countered' || resource.data.farmerId == uid())
+        && (!('pricePerKg' in changed()) || request.resource.data.pricePerKg > 0);
+    }
+
+    // ---------- counters/orders ----------
+    // Order numbers KS-1048, KS-1049 … (+1 per order, inside a transaction).
+    match /counters/{name} {
+      allow read: if signedIn();
+      allow create: if isActive() && name == 'orders'
+        && request.resource.data.keys().hasOnly(['next']);
+      allow update: if isActive() && name == 'orders'
+        && request.resource.data.keys().hasOnly(['next'])
+        && request.resource.data.next == resource.data.next + 1;
+    }
+
+    // ---------- orders/{id} ----------
+    match /orders/{id} {
+      function isOrderParty() {
+        return signedIn() && (resource.data.buyerId == uid() || resource.data.farmerId == uid()
+          || resource.data.get('transporterId', null) == uid());
+      }
+      allow read: if isOrderParty() || isMod();
+      allow create: if isActive() && myRole() == 'buyer'
+        && request.resource.data.buyerId == uid()
+        && request.resource.data.status == 'confirmed'
+        && request.resource.data.quantityKg is number && request.resource.data.quantityKg > 0
+        && request.resource.data.pricePerKg is number && request.resource.data.pricePerKg > 0
+        && request.resource.data.transportMode in ['platform', 'self'];
+      // Status moves are added with the transport flow (Part 6).
+      allow update: if isAdmin();
+    }
+
+    // ---------- notifications/{uid}/items/{id} ----------
+    match /notifications/{owner}/items/{id} {
+      allow read: if signedIn() && owner == uid();
+      // Anyone signed in may notify someone else, but must sign as themselves.
+      allow create: if isActive()
+        && request.resource.data.fromUid == uid()
+        && request.resource.data.read == false
+        && request.resource.data.type is string;
+      allow update: if signedIn() && owner == uid() && onlyChanges(['read']);
+      allow delete: if signedIn() && owner == uid();
     }
 
     // Everything else is closed until its Part adds rules.

@@ -97,6 +97,12 @@ abstract final class AppColors {
   static const shadowBrandTileStrong = Color(0x4D2E7D33);
   /// Outline button shadow: rgba(31,31,31,0.06).
   static const shadowOutline = Color(0x0F1F1F1F);
+  /// Warning button shadow: rgba(242,201,76,0.50).
+  static const shadowWarning = Color(0x80F2C94C);
+  /// Destructive button shadow: rgba(201,76,76,0.30).
+  static const shadowDestructive = Color(0x4DC94C4C);
+  /// Confirm dialog shadow: rgba(0,0,0,0.20).
+  static const shadowDialog = Color(0x33000000);
   /// HF/Modal shadow: rgba(0,0,0,0.18).
   static const shadowModal = Color(0x2E000000);
   /// Modal overlay: rgba(31,31,31,0.45).

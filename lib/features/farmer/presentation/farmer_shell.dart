@@ -6,6 +6,7 @@ import '../../../core/theme/app_assets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/presentation/simple_tabs.dart';
 import '../../../shared/widgets/ks_bottom_nav.dart';
+import '../../trade/presentation/orders_screens.dart';
 import 'farmer_home_screen.dart';
 
 /// Farmer area with HF/Bottom Nav / Farmer (Sell FAB) (292:225).
@@ -25,7 +26,7 @@ class _FarmerShellState extends State<FarmerShell> {
     final pages = [
       const FarmerHomeScreen(),
       ComingTab(title: l.navMarket),
-      ComingTab(title: l.navOrders),
+      const OrdersTab(),
       const SimpleProfileTab(),
     ];
     return Scaffold(

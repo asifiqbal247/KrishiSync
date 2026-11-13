@@ -23,6 +23,12 @@ import '../features/farmer/presentation/listing_details_screen.dart';
 import '../features/farmer/presentation/my_listings_screen.dart';
 import '../features/farmer/presentation/sell_crop_screen.dart';
 import '../features/moderator/presentation/moderator_screens.dart';
+import '../features/trade/presentation/make_offer_screen.dart';
+import '../features/trade/presentation/negotiate_screen.dart';
+import '../features/trade/presentation/notifications_screen.dart';
+import '../features/trade/presentation/offers_screen.dart';
+import '../features/trade/presentation/orders_screens.dart';
+import '../features/trade/presentation/place_order_screen.dart';
 import '../shared/presentation/role_home_placeholder.dart';
 
 abstract final class Routes {
@@ -50,6 +56,16 @@ abstract final class Routes {
   static const buyerSearch = '/buyer/search';
   static String buyerListing(String id) => '/buyer/listing/$id';
   static String buyerFarmer(String uid) => '/buyer/farmer/$uid';
+
+  // Trade (farmer + buyer)
+  static String makeOffer(String listingId) => '/buyer/listing/$listingId/offer';
+  static String listingOffers(String listingId) =>
+      '/farmer/listings/$listingId/offers';
+  static String offer(String id) => '/offer/$id';
+  static String order(String id) => '/order/$id';
+  static String placeOrder(String listingId, {String? offerId}) =>
+      '/buyer/order/$listingId${offerId == null ? '' : '?offer=$offerId'}';
+  static const notifications = '/notifications';
 
   // Moderator (Admin may open these too)
   static String moderatorReview(String id) => '/moderator/review/$id';
@@ -178,10 +194,30 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: ':id',
                 builder: (_, s) =>
                     ListingDetailsScreen(listingId: s.pathParameters['id']!),
+                routes: [
+                  GoRoute(
+                    path: 'offers',
+                    builder: (_, s) =>
+                        OffersScreen(listingId: s.pathParameters['id']!),
+                  ),
+                ],
               ),
             ],
           ),
         ],
+      ),
+      // Shared by farmer and buyer (rules decide who may read).
+      GoRoute(
+        path: '/offer/:id',
+        builder: (_, s) => NegotiateScreen(offerId: s.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/order/:id',
+        builder: (_, s) => OrderDetailsScreen(orderId: s.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: Routes.notifications,
+        builder: (_, _) => const NotificationsScreen(),
       ),
       GoRoute(
         path: Routes.moderatorHome,
@@ -206,6 +242,20 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'listing/:id',
             builder: (_, s) =>
                 BuyerListingScreen(listingId: s.pathParameters['id']!),
+            routes: [
+              GoRoute(
+                path: 'offer',
+                builder: (_, s) =>
+                    MakeOfferScreen(listingId: s.pathParameters['id']!),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: 'order/:listingId',
+            builder: (_, s) => PlaceOrderScreen(
+              listingId: s.pathParameters['listingId']!,
+              offerId: s.uri.queryParameters['offer'],
+            ),
           ),
           GoRoute(
             path: 'farmer/:uid',

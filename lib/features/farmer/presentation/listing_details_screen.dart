@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimens.dart';
@@ -13,7 +15,7 @@ import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_net_image.dart';
-import '../../../shared/widgets/ks_toast.dart';
+import '../../trade/data/trade_repository.dart';
 import '../data/listing_repository.dart';
 import '../domain/listing.dart';
 import 'listing_widgets.dart';
@@ -111,11 +113,11 @@ class ListingDetailsScreen extends ConsumerWidget {
                 const SizedBox(
                     height:
                         AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-                // Offers arrive in Part 5; count is 0 until then.
                 KsButton(
-                  label: l.seeBuyerOffers(Fmt.digits(context, '0')),
+                  label: l.seeBuyerOffers(Fmt.digits(context,
+                      '${(ref.watch(listingOffersProvider(x.id)).value ?? const []).length}')),
                   onPressed: x.status == ListingStatus.active
-                      ? () => KsToast.comingSoon(context)
+                      ? () => context.push(Routes.listingOffers(x.id))
                       : null,
                 ),
                 if (x.status == ListingStatus.active) ...[

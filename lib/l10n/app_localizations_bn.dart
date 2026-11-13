@@ -1009,4 +1009,413 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get backToHome => 'হোম';
+
+  @override
+  String get offerTitle => 'অফার দিন';
+
+  @override
+  String get offerYourPrice => 'আপনার দাম';
+
+  @override
+  String get offerDeliveryDate => 'ডেলিভারি তারিখ';
+
+  @override
+  String get offerTotal => 'মোট মূল্য';
+
+  @override
+  String get offerSend => 'অফার পাঠান';
+
+  @override
+  String get offerSent => 'অফার পাঠানো হয়েছে';
+
+  @override
+  String farmerQty(String farmer, String qty) {
+    return '$farmer · $qty';
+  }
+
+  @override
+  String get offersTitle => 'ক্রেতার অফার';
+
+  @override
+  String get offerTabAll => 'সব';
+
+  @override
+  String get offerTabNew => 'নতুন';
+
+  @override
+  String get offerTabTalking => 'আলোচনায়';
+
+  @override
+  String marketRangeShort(String min, String max) {
+    return 'বাজার দর: ৳ $min–$max / কেজি';
+  }
+
+  @override
+  String buyerVerifiedRating(String rating) {
+    return 'যাচাইকৃত · রেটিং $rating';
+  }
+
+  @override
+  String buyerRating(String rating) {
+    return 'রেটিং $rating';
+  }
+
+  @override
+  String newBuyerQty(String qty) {
+    return 'নতুন ক্রেতা · $qty';
+  }
+
+  @override
+  String pricePerKgShort(String price) {
+    return '৳ $price/কেজি';
+  }
+
+  @override
+  String get negotiateTitle => 'দর কষাকষি';
+
+  @override
+  String get rowBuyer => 'ক্রেতা';
+
+  @override
+  String get rowFarmer => 'কৃষক';
+
+  @override
+  String verifiedSuffix(String name) {
+    return '$name (যাচাইকৃত)';
+  }
+
+  @override
+  String get rowBuyerOffer => 'ক্রেতার অফার';
+
+  @override
+  String get rowFarmerCounter => 'কৃষকের পাল্টা অফার';
+
+  @override
+  String get rowMyOffer => 'আমার অফার';
+
+  @override
+  String get rowOfferValidity => 'অফারের মেয়াদ';
+
+  @override
+  String hoursLeft(String h) {
+    return '$h ঘণ্টা বাকি';
+  }
+
+  @override
+  String get offerExpired => 'মেয়াদ শেষ';
+
+  @override
+  String get paymentSafeLoad => 'নিরাপদ লেনদেন · লোড হলেই পাবেন';
+
+  @override
+  String get counterLabel => 'পাল্টা অফার দিন';
+
+  @override
+  String get reject => 'প্রত্যাখ্যান';
+
+  @override
+  String get counter => 'পাল্টা অফার';
+
+  @override
+  String get acceptOffer => 'অফার গ্রহণ করুন';
+
+  @override
+  String get rejectConfirmTitle => 'প্রত্যাখ্যান করবেন?';
+
+  @override
+  String get rejectConfirmBody =>
+      'অপর পক্ষকে জানানো হবে। এটি আর গ্রহণ করা যাবে না, তবে তারা নতুন প্রস্তাব দিতে পারবেন।';
+
+  @override
+  String get noGoBack => 'না, ফিরে যান';
+
+  @override
+  String get yesReject => 'হ্যাঁ, প্রত্যাখ্যান';
+
+  @override
+  String get offerAcceptedTitle => 'অফার গ্রহণ হয়েছে!';
+
+  @override
+  String get offerAcceptedBody =>
+      'ক্রেতা টাকা জমা দিলে অর্ডার নিশ্চিত হবে। তখন আপনি জানতে পারবেন।';
+
+  @override
+  String get seeOrder => 'অর্ডার দেখুন';
+
+  @override
+  String get counterSent => 'পাল্টা অফার পাঠানো হয়েছে';
+
+  @override
+  String get offerRejected => 'অফার প্রত্যাখ্যান করা হয়েছে';
+
+  @override
+  String get offerStatusPending => 'নতুন';
+
+  @override
+  String get offerStatusCountered => 'আলোচনায়';
+
+  @override
+  String get offerStatusAccepted => 'গৃহীত';
+
+  @override
+  String get offerStatusRejected => 'প্রত্যাখ্যাত';
+
+  @override
+  String get offerStatusWithdrawn => 'প্রত্যাহার';
+
+  @override
+  String get orderNowFromOffer => 'এই দামে অর্ডার করুন';
+
+  @override
+  String get placeOrderTitle => 'অর্ডার নিশ্চিত করুন';
+
+  @override
+  String get deliveryAddress => 'ডেলিভারি ঠিকানা';
+
+  @override
+  String cropQtyTitle(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String farmerPrice(String farmer, String price) {
+    return '$farmer · ৳ $price/কেজি';
+  }
+
+  @override
+  String get platformTruck => 'প্ল্যাটফর্মের ট্রাক';
+
+  @override
+  String get platformTruckSub => 'স্বয়ংক্রিয় পরিবহন বুকিং';
+
+  @override
+  String get selfTransport => 'নিজে পরিবহন করব';
+
+  @override
+  String get rowCropPrice => 'ফসলের মূল্য';
+
+  @override
+  String get rowTransport => 'পরিবহন';
+
+  @override
+  String rowPlatformFee(String pct) {
+    return 'প্ল্যাটফর্ম ফি ($pct%)';
+  }
+
+  @override
+  String get rowTotal => 'মোট';
+
+  @override
+  String get payWithSafe => 'নিরাপদ লেনদেনে পেমেন্ট করুন';
+
+  @override
+  String get orderPlacedTitle => 'অর্ডার নিশ্চিত হয়েছে!';
+
+  @override
+  String get orderPlacedBody =>
+      'টাকা নিরাপদ লেনদেনে জমা আছে। মাল গাড়িতে উঠলেই কৃষক টাকা পাবেন।';
+
+  @override
+  String get errQtyTooMuch => 'উপলব্ধ পরিমাণের চেয়ে বেশি';
+
+  @override
+  String get errAddressRequired => 'ডেলিভারি ঠিকানা দিন';
+
+  @override
+  String get ordersTitle => 'আমার অর্ডার';
+
+  @override
+  String get ordersTabAll => 'সব';
+
+  @override
+  String get ordersTabOngoing => 'চলমান';
+
+  @override
+  String get ordersTabDone => 'সম্পন্ন';
+
+  @override
+  String get ordersTabCancelled => 'বাতিল';
+
+  @override
+  String qtyPrice(String qty, String price) {
+    return '$qty · ৳ $price/কেজি';
+  }
+
+  @override
+  String get orderStatusConfirmed => 'নিশ্চিত';
+
+  @override
+  String get orderStatusTransportBooked => 'ট্রাক বুক';
+
+  @override
+  String get orderStatusPickedUp => 'লোড হয়েছে';
+
+  @override
+  String get orderStatusInTransit => 'পথে আছে';
+
+  @override
+  String get orderStatusDelivered => 'পৌঁছেছে';
+
+  @override
+  String get orderStatusCompleted => 'সম্পন্ন';
+
+  @override
+  String get orderStatusCancelled => 'বাতিল';
+
+  @override
+  String get orderDetailsTitle => 'অর্ডারের বিবরণ';
+
+  @override
+  String orderNoLine(String no) {
+    return 'অর্ডার #$no';
+  }
+
+  @override
+  String get rowPayment => 'পেমেন্ট';
+
+  @override
+  String get paymentHeld => 'নিরাপদ লেনদেনে জমা';
+
+  @override
+  String get paymentPending => 'অপেক্ষমাণ';
+
+  @override
+  String get rowLoadAndMoney => 'গাড়িতে লোড + আপনার টাকা';
+
+  @override
+  String get rowPickupDate => 'পিকআপ';
+
+  @override
+  String get orderStatusSection => 'অর্ডারের অবস্থা';
+
+  @override
+  String get stepConfirmed => 'অর্ডার নিশ্চিত';
+
+  @override
+  String get stepTruckBooked => 'ক্রেতা ট্রাক বুক করেছেন';
+
+  @override
+  String get stepTruckBookedSelf => 'ক্রেতা নিজে পরিবহন করবেন';
+
+  @override
+  String get stepLoaded => 'গাড়িতে লোড + আপনার টাকা';
+
+  @override
+  String get stepLoadedBuyer => 'গাড়িতে লোড + কৃষকের টাকা';
+
+  @override
+  String get stepDelivered => 'ডেলিভারি';
+
+  @override
+  String get stepWaiting => 'অপেক্ষমাণ';
+
+  @override
+  String get orderProblem => 'অর্ডারে সমস্যা?';
+
+  @override
+  String get orderProblemSub => 'সমস্যা জানান বা সাহায্য নিন';
+
+  @override
+  String get trackShipment => 'চালান ট্র্যাক করুন';
+
+  @override
+  String dateTime(String date, String time) {
+    return '$date, $time';
+  }
+
+  @override
+  String get notifTitle => 'নোটিফিকেশন';
+
+  @override
+  String get notifEmpty => 'কোনো নোটিফিকেশন নেই';
+
+  @override
+  String nOfferNew(String crop) {
+    return 'নতুন অফার: $crop';
+  }
+
+  @override
+  String nOfferNewBody(String buyer, String price, String qty) {
+    return '$buyer · ৳ $price/কেজি · $qty';
+  }
+
+  @override
+  String nOfferCounter(String crop) {
+    return 'পাল্টা অফার: $crop';
+  }
+
+  @override
+  String nOfferCounterBody(String farmer, String price) {
+    return '$farmer · ৳ $price/কেজি';
+  }
+
+  @override
+  String nOfferAccepted(String crop) {
+    return 'অফার গৃহীত: $crop';
+  }
+
+  @override
+  String nOfferAcceptedBody(String price) {
+    return '৳ $price/কেজি দামে অর্ডার করুন';
+  }
+
+  @override
+  String nOfferRejected(String crop) {
+    return 'অফার প্রত্যাখ্যাত: $crop';
+  }
+
+  @override
+  String nOrderNew(String no) {
+    return 'নতুন অর্ডার #$no';
+  }
+
+  @override
+  String nOrderNewBody(String buyer, String crop, String qty) {
+    return '$buyer · $crop $qty';
+  }
+
+  @override
+  String nListingApproved(String crop) {
+    return 'তালিকা অনুমোদিত: $crop';
+  }
+
+  @override
+  String nListingRejected(String crop) {
+    return 'তালিকা বাতিল: $crop';
+  }
+
+  @override
+  String get nListingApprovedBody => 'ক্রেতারা এখন আপনার ফসল দেখতে পারবেন';
+
+  @override
+  String homeOffersSub(String crop, String price) {
+    return '$crop · সর্বোচ্চ ৳ $price/কেজি';
+  }
+
+  @override
+  String get stateErrorTitle => 'কিছু সমস্যা হয়েছে';
+
+  @override
+  String get stateErrorBody =>
+      'আপনার দেওয়া তথ্য সঠিক নয়। অনুগ্রহ করে আবার চেষ্টা করুন।';
+
+  @override
+  String get stateGetHelp => 'সাহায্য নিন';
+
+  @override
+  String get stateOfflineBody =>
+      'আপনার তথ্য সংরক্ষিত আছে। সংযোগ ফিরলে স্বয়ংক্রিয়ভাবে পাঠানো হবে।';
+
+  @override
+  String get emptyOrdersTitle => 'এখনো কোনো অর্ডার নেই';
+
+  @override
+  String get emptyOrdersFarmerBody =>
+      'ফসল তালিকাভুক্ত করুন, ক্রেতারা অফার পাঠাবে।';
+
+  @override
+  String get emptyOrdersBuyerBody => 'বাজার থেকে পছন্দের ফসল অর্ডার করুন।';
+
+  @override
+  String get emptyOrdersBuyerCta => 'বাজার দেখুন';
 }

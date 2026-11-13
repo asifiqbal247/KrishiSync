@@ -68,6 +68,11 @@ abstract final class AppImages {
   static const port = '$_p/port.webp';
   static const handshake = '$_p/handshake.webp';
 
+  // State screens: 41 Empty, 212 Error, 214 No Internet.
+  static const stateEmpty = '$_p/state_empty.webp';
+  static const stateError = '$_p/state_error.webp';
+  static const stateOffline = '$_p/state_offline.webp';
+
   /// HF/Logo/Golaghor (599:9448), exported @3x (160×156 logical).
   static const logo = '$_p/logo_golaghor.webp';
 
@@ -115,6 +120,8 @@ abstract final class AppUi {
   static const glyphMarket = '$_p/glyph_market.webp';
   static const glyphTruck = '$_p/glyph_truck.webp';
   static const speaker = '$_p/speaker.webp';
+  static const alertIcon = '$_p/alert_icon.webp';
+  static const timelineDone = '$_p/timeline_done.webp';
 }
 
 abstract final class AppData {

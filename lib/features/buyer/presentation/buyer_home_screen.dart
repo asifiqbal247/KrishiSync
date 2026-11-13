@@ -54,7 +54,7 @@ class BuyerHomeScreen extends ConsumerWidget {
         name: me?.name ?? '',
         photoUrl: me?.photoUrl,
         fallbackAvatar: AppUi.avatarBuyer,
-        onBell: soon,
+        onBell: () => context.push(Routes.notifications),
         onChat: soon,
         onAvatar: () => ref.read(buyerTabProvider.notifier).go(3),
       ),

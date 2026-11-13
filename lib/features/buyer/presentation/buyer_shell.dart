@@ -6,6 +6,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/presentation/simple_tabs.dart';
 import '../../../shared/widgets/ks_bottom_nav.dart';
 import '../../../shared/widgets/ks_toast.dart';
+import '../../trade/presentation/orders_screens.dart';
 import 'buyer_common.dart';
 import 'buyer_home_screen.dart';
 import 'marketplace_screen.dart';
@@ -22,7 +23,7 @@ class BuyerShell extends ConsumerWidget {
     final pages = [
       const BuyerHomeScreen(),
       const MarketplaceScreen(),
-      ComingTab(title: l.navCollect), // Orders list arrives in Part 5
+      const OrdersTab(),
       const SimpleProfileTab(),
     ];
     return Scaffold(

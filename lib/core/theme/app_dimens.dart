@@ -71,6 +71,7 @@ abstract final class AppSizes {
   static const double sectionHeader = 28;
   static const double modalWidth = 312;
   static const double modalIcon = 64;
+  static const double dialogIcon = 40;
 }
 
 /// Shadows from Figma (DS – Foundations → Shadows) and HF components.
@@ -91,6 +92,24 @@ abstract final class AppShadows {
         color: AppColors.shadowBrandButton,
         offset: Offset(0, 4),
         blurRadius: 5),
+  ];
+
+  /// Button/Warning: drop-shadow 0 4 5 rgba(242,201,76,.50).
+  static const warningButton = [
+    BoxShadow(
+        color: AppColors.shadowWarning, offset: Offset(0, 4), blurRadius: 5),
+  ];
+
+  /// Button/Destructive: drop-shadow 0 4 5 rgba(201,76,76,.30).
+  static const destructiveButton = [
+    BoxShadow(
+        color: AppColors.shadowDestructive, offset: Offset(0, 4), blurRadius: 5),
+  ];
+
+  /// Confirm dialogs (D1–D6): 0 8 24 rgba(0,0,0,.20).
+  static const dialog = [
+    BoxShadow(
+        color: AppColors.shadowDialog, offset: Offset(0, 8), blurRadius: 24),
   ];
 
   /// Button/Outline: drop-shadow 0 2 3 rgba(31,31,31,.06).

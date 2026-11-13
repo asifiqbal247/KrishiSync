@@ -4,7 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_dimens.dart';
 import '../../core/theme/app_typography.dart';
 
-enum KsButtonType { primary, secondary, outline, text }
+enum KsButtonType { primary, secondary, outline, destructive, warning, text }
 
 /// HF/Button (315:170). Size L: 48 high, radius 14, px 24,
 /// label Hind Siliguri SemiBold 16.
@@ -35,6 +35,23 @@ class KsButton extends StatelessWidget {
     this.expand = true,
   }) : type = KsButtonType.secondary;
 
+  const KsButton.destructive({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.loading = false,
+    this.expand = true,
+  }) : type = KsButtonType.destructive;
+
+  /// Button/Warning: accent (yellow) fill, dark label, yellow shadow.
+  const KsButton.warning({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.loading = false,
+    this.expand = true,
+  }) : type = KsButtonType.warning;
+
   const KsButton.text({
     super.key,
     required this.label,
@@ -55,24 +72,34 @@ class KsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (type) {
       KsButtonType.primary => _primary(),
+      KsButtonType.destructive => _primary(
+          fill: AppColors.bgError, shadow: AppShadows.destructiveButton),
+      KsButtonType.warning => _primary(
+          fill: AppColors.bgAccent,
+          shadow: AppShadows.warningButton,
+          label: AppColors.textPrimary),
       KsButtonType.secondary => _outline(fill: AppColors.bgSubtle, shadow: false),
       KsButtonType.outline => _outline(),
       KsButtonType.text => _text(),
     };
   }
 
-  Widget _primary() {
-    // While loading the button keeps its brand colour (spinner inside).
+  Widget _primary({
+    Color fill = AppColors.bgBrand,
+    List<BoxShadow> shadow = AppShadows.brandButton,
+    Color label = AppColors.textOnBrand,
+  }) {
+    // While loading the button keeps its colour (spinner inside).
     final active = onPressed != null;
-    final bg = active ? AppColors.bgBrand : AppColors.bgDisabled;
-    final fg = _enabled ? AppColors.textOnBrand : AppColors.textDisabled;
+    final bg = active ? fill : AppColors.bgDisabled;
+    final fg = _enabled ? label : AppColors.textDisabled;
     final radius = BorderRadius.circular(AppRadius.button);
     return Container(
       width: expand ? double.infinity : null,
       height: AppSizes.buttonL,
       decoration: BoxDecoration(
         borderRadius: radius,
-        boxShadow: active ? AppShadows.brandButton : null,
+        boxShadow: active ? shadow : null,
       ),
       child: Material(
         color: bg,
@@ -86,15 +113,15 @@ class KsButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2xl),
             child: Center(
               child: loading
-                  ? const SizedBox(
+                  ? SizedBox(
                       width: 22,
                       height: 22,
                       child: CircularProgressIndicator(
                         strokeWidth: 2.4,
-                        color: AppColors.textOnBrand,
+                        color: label,
                       ),
                     )
-                  : Text(label,
+                  : Text(this.label,
                       style: AppTypography.labelButton.normal.withColor(fg)),
             ),
           ),

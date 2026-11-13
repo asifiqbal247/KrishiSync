@@ -26,6 +26,7 @@ import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
 import '../../farmer/domain/listing.dart';
 import '../../farmer/presentation/listing_widgets.dart';
+import '../../trade/data/trade_repository.dart';
 
 /// Moderator area (no Figma — built from HF components in the same theme).
 /// Nav: Home · Listings · Reports · Verify · Profile.
@@ -269,6 +270,15 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
     setState(() => _busy = true);
     try {
       await ref.read(listingRepositoryProvider).approve(widget.listingId, uid);
+      final x = ref.read(listingProvider(widget.listingId)).value;
+      if (x != null) {
+        await ref.read(tradeRepositoryProvider).notify(
+            toUid: x.farmerId,
+            fromUid: uid,
+            type: 'listing_approved',
+            params: {'cropBn': x.cropNameBn, 'cropEn': x.cropNameEn},
+            link: 'listing:${x.id}');
+      }
       if (!mounted) return;
       KsToast.show(context, l.modApproved);
       context.pop();
@@ -294,6 +304,19 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
       await ref
           .read(listingRepositoryProvider)
           .reject(widget.listingId, uid, note.trim());
+      final x = ref.read(listingProvider(widget.listingId)).value;
+      if (x != null) {
+        await ref.read(tradeRepositoryProvider).notify(
+            toUid: x.farmerId,
+            fromUid: uid,
+            type: 'listing_rejected',
+            params: {
+              'cropBn': x.cropNameBn,
+              'cropEn': x.cropNameEn,
+              'note': note.trim(),
+            },
+            link: 'listing:${x.id}');
+      }
       if (!mounted) return;
       KsToast.show(context, l.modRejected);
       context.pop();

@@ -13,14 +13,24 @@ class KsOptionCard extends StatelessWidget {
     super.key,
     required this.image,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     required this.selected,
     required this.onTap,
+    this.imageSize = _imageSize,
+    this.verticalPadding = AppSpacing.lg,
+    this.titleStyleSmall = false,
   });
 
   final ImageProvider image;
   final String title;
-  final String subtitle;
+  final String? subtitle;
+
+  /// 44 (02, 14) or 36 (78 transport options).
+  final double imageSize;
+  final double verticalPadding;
+
+  /// 78 uses SemiBold 15 titles instead of 16.
+  final bool titleStyleSmall;
   final bool selected;
   final VoidCallback onTap;
 
@@ -42,8 +52,11 @@ class KsOptionCard extends StatelessWidget {
           borderRadius: radius,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
-            padding: EdgeInsets.all(
-                selected ? AppSpacing.lg - 1 : AppSpacing.lg), // keep size
+            // Selected border is 2px: shrink padding by 1 to keep the size.
+            padding: EdgeInsets.symmetric(
+              horizontal: selected ? AppSpacing.lg - 1 : AppSpacing.lg,
+              vertical: selected ? verticalPadding - 1 : verticalPadding,
+            ),
             decoration: BoxDecoration(
               borderRadius: radius,
               border: Border.all(
@@ -58,8 +71,8 @@ class KsOptionCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(_imageRadius),
                   child: Image(
                     image: image,
-                    width: _imageSize,
-                    height: _imageSize,
+                    width: imageSize,
+                    height: imageSize,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -70,15 +83,19 @@ class KsOptionCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(title,
-                          style: AppTypography.labelButton.normal,
+                          style: titleStyleSmall
+                              ? AppTypography.labelMedium15.normal
+                              : AppTypography.labelButton.normal,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: AppSpacing.s2xs),
-                      Text(subtitle,
-                          style: AppTypography.bodySmall.normal
-                              .withColor(AppColors.textSecondary),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: AppSpacing.s2xs),
+                        Text(subtitle!,
+                            style: AppTypography.bodySmall.normal
+                                .withColor(AppColors.textSecondary),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis),
+                      ],
                     ],
                   ),
                 ),

@@ -628,5 +628,340 @@
       }
     }
   },
-  "backToHome": "হোম"
+  "backToHome": "হোম",
+  "offerTitle": "অফার দিন",
+  "offerYourPrice": "আপনার দাম",
+  "offerDeliveryDate": "ডেলিভারি তারিখ",
+  "offerTotal": "মোট মূল্য",
+  "offerSend": "অফার পাঠান",
+  "offerSent": "অফার পাঠানো হয়েছে",
+  "farmerQty": "{farmer} · {qty}",
+  "@farmerQty": {
+    "placeholders": {
+      "farmer": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "offersTitle": "ক্রেতার অফার",
+  "offerTabAll": "সব",
+  "offerTabNew": "নতুন",
+  "offerTabTalking": "আলোচনায়",
+  "marketRangeShort": "বাজার দর: ৳ {min}–{max} / কেজি",
+  "@marketRangeShort": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "buyerVerifiedRating": "যাচাইকৃত · রেটিং {rating}",
+  "@buyerVerifiedRating": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "buyerRating": "রেটিং {rating}",
+  "@buyerRating": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "newBuyerQty": "নতুন ক্রেতা · {qty}",
+  "@newBuyerQty": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "pricePerKgShort": "৳ {price}/কেজি",
+  "@pricePerKgShort": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "negotiateTitle": "দর কষাকষি",
+  "rowBuyer": "ক্রেতা",
+  "rowFarmer": "কৃষক",
+  "verifiedSuffix": "{name} (যাচাইকৃত)",
+  "@verifiedSuffix": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rowBuyerOffer": "ক্রেতার অফার",
+  "rowFarmerCounter": "কৃষকের পাল্টা অফার",
+  "rowMyOffer": "আমার অফার",
+  "rowOfferValidity": "অফারের মেয়াদ",
+  "hoursLeft": "{h} ঘণ্টা বাকি",
+  "@hoursLeft": {
+    "placeholders": {
+      "h": {
+        "type": "String"
+      }
+    }
+  },
+  "offerExpired": "মেয়াদ শেষ",
+  "paymentSafeLoad": "নিরাপদ লেনদেন · লোড হলেই পাবেন",
+  "counterLabel": "পাল্টা অফার দিন",
+  "reject": "প্রত্যাখ্যান",
+  "counter": "পাল্টা অফার",
+  "acceptOffer": "অফার গ্রহণ করুন",
+  "rejectConfirmTitle": "প্রত্যাখ্যান করবেন?",
+  "rejectConfirmBody": "অপর পক্ষকে জানানো হবে। এটি আর গ্রহণ করা যাবে না, তবে তারা নতুন প্রস্তাব দিতে পারবেন।",
+  "noGoBack": "না, ফিরে যান",
+  "yesReject": "হ্যাঁ, প্রত্যাখ্যান",
+  "offerAcceptedTitle": "অফার গ্রহণ হয়েছে!",
+  "offerAcceptedBody": "ক্রেতা টাকা জমা দিলে অর্ডার নিশ্চিত হবে। তখন আপনি জানতে পারবেন।",
+  "seeOrder": "অর্ডার দেখুন",
+  "counterSent": "পাল্টা অফার পাঠানো হয়েছে",
+  "offerRejected": "অফার প্রত্যাখ্যান করা হয়েছে",
+  "offerStatusPending": "নতুন",
+  "offerStatusCountered": "আলোচনায়",
+  "offerStatusAccepted": "গৃহীত",
+  "offerStatusRejected": "প্রত্যাখ্যাত",
+  "offerStatusWithdrawn": "প্রত্যাহার",
+  "orderNowFromOffer": "এই দামে অর্ডার করুন",
+  "placeOrderTitle": "অর্ডার নিশ্চিত করুন",
+  "deliveryAddress": "ডেলিভারি ঠিকানা",
+  "cropQtyTitle": "{crop} – {qty}",
+  "@cropQtyTitle": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "farmerPrice": "{farmer} · ৳ {price}/কেজি",
+  "@farmerPrice": {
+    "placeholders": {
+      "farmer": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "platformTruck": "প্ল্যাটফর্মের ট্রাক",
+  "platformTruckSub": "স্বয়ংক্রিয় পরিবহন বুকিং",
+  "selfTransport": "নিজে পরিবহন করব",
+  "rowCropPrice": "ফসলের মূল্য",
+  "rowTransport": "পরিবহন",
+  "rowPlatformFee": "প্ল্যাটফর্ম ফি ({pct}%)",
+  "@rowPlatformFee": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "rowTotal": "মোট",
+  "payWithSafe": "নিরাপদ লেনদেনে পেমেন্ট করুন",
+  "orderPlacedTitle": "অর্ডার নিশ্চিত হয়েছে!",
+  "orderPlacedBody": "টাকা নিরাপদ লেনদেনে জমা আছে। মাল গাড়িতে উঠলেই কৃষক টাকা পাবেন।",
+  "errQtyTooMuch": "উপলব্ধ পরিমাণের চেয়ে বেশি",
+  "errAddressRequired": "ডেলিভারি ঠিকানা দিন",
+  "ordersTitle": "আমার অর্ডার",
+  "ordersTabAll": "সব",
+  "ordersTabOngoing": "চলমান",
+  "ordersTabDone": "সম্পন্ন",
+  "ordersTabCancelled": "বাতিল",
+  "qtyPrice": "{qty} · ৳ {price}/কেজি",
+  "@qtyPrice": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStatusConfirmed": "নিশ্চিত",
+  "orderStatusTransportBooked": "ট্রাক বুক",
+  "orderStatusPickedUp": "লোড হয়েছে",
+  "orderStatusInTransit": "পথে আছে",
+  "orderStatusDelivered": "পৌঁছেছে",
+  "orderStatusCompleted": "সম্পন্ন",
+  "orderStatusCancelled": "বাতিল",
+  "orderDetailsTitle": "অর্ডারের বিবরণ",
+  "orderNoLine": "অর্ডার #{no}",
+  "@orderNoLine": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "rowPayment": "পেমেন্ট",
+  "paymentHeld": "নিরাপদ লেনদেনে জমা",
+  "paymentPending": "অপেক্ষমাণ",
+  "rowLoadAndMoney": "গাড়িতে লোড + আপনার টাকা",
+  "rowPickupDate": "পিকআপ",
+  "orderStatusSection": "অর্ডারের অবস্থা",
+  "stepConfirmed": "অর্ডার নিশ্চিত",
+  "stepTruckBooked": "ক্রেতা ট্রাক বুক করেছেন",
+  "stepTruckBookedSelf": "ক্রেতা নিজে পরিবহন করবেন",
+  "stepLoaded": "গাড়িতে লোড + আপনার টাকা",
+  "stepLoadedBuyer": "গাড়িতে লোড + কৃষকের টাকা",
+  "stepDelivered": "ডেলিভারি",
+  "stepWaiting": "অপেক্ষমাণ",
+  "orderProblem": "অর্ডারে সমস্যা?",
+  "orderProblemSub": "সমস্যা জানান বা সাহায্য নিন",
+  "trackShipment": "চালান ট্র্যাক করুন",
+  "dateTime": "{date}, {time}",
+  "@dateTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "notifTitle": "নোটিফিকেশন",
+  "notifEmpty": "কোনো নোটিফিকেশন নেই",
+  "nOfferNew": "নতুন অফার: {crop}",
+  "@nOfferNew": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nOfferNewBody": "{buyer} · ৳ {price}/কেজি · {qty}",
+  "@nOfferNewBody": {
+    "placeholders": {
+      "buyer": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "nOfferCounter": "পাল্টা অফার: {crop}",
+  "@nOfferCounter": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nOfferCounterBody": "{farmer} · ৳ {price}/কেজি",
+  "@nOfferCounterBody": {
+    "placeholders": {
+      "farmer": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "nOfferAccepted": "অফার গৃহীত: {crop}",
+  "@nOfferAccepted": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nOfferAcceptedBody": "৳ {price}/কেজি দামে অর্ডার করুন",
+  "@nOfferAcceptedBody": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "nOfferRejected": "অফার প্রত্যাখ্যাত: {crop}",
+  "@nOfferRejected": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nOrderNew": "নতুন অর্ডার #{no}",
+  "@nOrderNew": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "nOrderNewBody": "{buyer} · {crop} {qty}",
+  "@nOrderNewBody": {
+    "placeholders": {
+      "buyer": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "nListingApproved": "তালিকা অনুমোদিত: {crop}",
+  "@nListingApproved": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nListingRejected": "তালিকা বাতিল: {crop}",
+  "@nListingRejected": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nListingApprovedBody": "ক্রেতারা এখন আপনার ফসল দেখতে পারবেন",
+  "homeOffersSub": "{crop} · সর্বোচ্চ ৳ {price}/কেজি",
+  "@homeOffersSub": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "stateErrorTitle": "কিছু সমস্যা হয়েছে",
+  "stateErrorBody": "আপনার দেওয়া তথ্য সঠিক নয়। অনুগ্রহ করে আবার চেষ্টা করুন।",
+  "stateGetHelp": "সাহায্য নিন",
+  "stateOfflineBody": "আপনার তথ্য সংরক্ষিত আছে। সংযোগ ফিরলে স্বয়ংক্রিয়ভাবে পাঠানো হবে।",
+  "emptyOrdersTitle": "এখনো কোনো অর্ডার নেই",
+  "emptyOrdersFarmerBody": "ফসল তালিকাভুক্ত করুন, ক্রেতারা অফার পাঠাবে।",
+  "emptyOrdersBuyerBody": "বাজার থেকে পছন্দের ফসল অর্ডার করুন।",
+  "emptyOrdersBuyerCta": "বাজার দেখুন"
 }

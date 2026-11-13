@@ -16,6 +16,9 @@ import '../../../shared/widgets/ks_home_header.dart';
 import '../../../shared/widgets/ks_search_bar.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
+import '../../../shared/widgets/ks_list_item.dart';
+import '../../trade/data/trade_repository.dart';
+import '../../trade/domain/trade_models.dart';
 import '../data/listing_repository.dart';
 import '../domain/listing.dart';
 
@@ -35,6 +38,9 @@ class FarmerHomeScreen extends ConsumerWidget {
             x.status == ListingStatus.pending)
         .length;
     final prices = ref.watch(marketPricesProvider).value ?? const [];
+    final newOffers = (ref.watch(myOffersProvider).value ?? const [])
+        .where((o) => o.status == OfferStatus.pending && o.lastBy == 'buyer')
+        .toList();
     void soon() => KsToast.comingSoon(context);
 
     return Scaffold(
@@ -42,7 +48,7 @@ class FarmerHomeScreen extends ConsumerWidget {
       appBar: KsHomeHeader(
         name: me?.name ?? '',
         photoUrl: me?.photoUrl,
-        onBell: soon,
+        onBell: () => context.push(Routes.notifications),
         onChat: soon,
         onAvatar: () {},
       ),
@@ -55,6 +61,26 @@ class FarmerHomeScreen extends ConsumerWidget {
             readOnly: true,
             onTap: soon,
           ),
+          if (newOffers.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.block),
+            KsListItem(
+              highlighted: true,
+              thumb: Image.asset(AppUi.tileBell, fit: BoxFit.cover),
+              title: l.homeNewOffers(
+                  Fmt.digits(context, '${newOffers.length}')),
+              subtitle: l.homeOffersSub(
+                  newOffers.first.cropName(Localizations.localeOf(context)
+                      .languageCode),
+                  Fmt.number(
+                      context,
+                      newOffers
+                          .map((o) => o.pricePerKg)
+                          .reduce((a, b) => a > b ? a : b))),
+              trailingText: l.homeSee,
+              onTap: () => context
+                  .push(Routes.listingOffers(newOffers.first.listingId)),
+            ),
+          ],
           if (prices.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
             KsSectionHeader(

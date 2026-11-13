@@ -1,11 +1,11 @@
 # KrishiSync — Plan
 
 ## Current status
-- **Phase:** Part 4 (buyer) built and partly E2E-tested 2026-11-14. Commit `2d81924` + search fix.
-- **Tested on emulator:** buyer login (01700000002) → role → profile → Buyer Home (stats, categories, quick actions) → Market tab (categories, filter row, empty state) → Search screen. Unapproved listings are correctly hidden from buyers (rules).
-- **Blocked:** moderator approval test + buyer browsing with real listings need `role: moderator` on users doc of +8801700000004 (Asif, Firebase console).
-- **Built in Part 4:** 71 Buyer Home, 74 Marketplace + filter sheet, 73 Search (recent on phone, popular + suggestions from listings), 75 Crop Details (distance, market range, farmer card, similar crops, sticky CTA), 76 Farmer Profile.
-- **Next step:** Part 5 — offers (77 Make Offer, 24 Buyer Offers, 25 Negotiate, D1, 26) + orders (78 Place Order, 40/42 farmer orders, 105/106 buyer orders) + notifications (16/72).
+- **Phase:** Part 5 (offers, orders, notifications) built 2026-11-14. Rules + indexes deployed.
+- **Built in Part 5:** 77 Make Offer, 24 Buyer Offers (farmer), 25 Negotiate (both roles) + D1 confirm + 26 success modal, 78 Place Order (payment = `PaymentService` placeholder), 40/105 Orders tab, 42/106 Order Details (timeline), Notifications (bell on both homes), farmer home "new offers" card, moderator approve/reject notifies farmer. Shared state widgets 41 Empty / 212 Error / 214 No Internet (`ks_states.dart`) + Button/Warning.
+- **Tested on emulator:** buyer home, notifications (empty), Orders tab empty state (41) → "Go to market" CTA.
+- **Blocked:** offer → negotiate → order flow needs an approved listing → needs `role: moderator` on users doc of +8801700000004 (Asif, Firebase console).
+- **Next step:** after approval test, E2E test offer/order flow; then Part 6 — transport (transporter screens, booking, delivery status, ratings).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -298,3 +298,6 @@ counters/orders    next: int
 | 2026-11-14 | My Listings tabs: চলমান = pending + active, বিক্রিত = sold, খসড়া = rejected by moderator (status `hidden`, shows the moderator note). |
 | 2026-11-14 | Sell Crop: 1 photo per listing (Figma has one upload box); crop chips from bundled catalog + "অন্যান্য" with typed name. |
 | 2026-11-14 | Gradle memory lowered (3G heap / 1G metaspace), Kotlin in-process, incremental off — PC has 16 GB and runs the emulator. Don't run two Gradle builds at once. |
+| 2026-11-14 | Order numbers `KS-1048`, `KS-1049`… from `counters/orders` (+1 per order in a transaction). Platform fee 1%. Platform transport fare estimate = ৳1500 + ৳20/km, rounded to ৳100 (until Part 6 real bids). |
+| 2026-11-14 | Buyer can lower a listing's `availableKg` only while ordering (rules); listing becomes `sold` at 0. Offers valid 24 h. |
+| 2026-11-14 | Orders empty state (41) for buyers: Figma only has the farmer version, so buyer text is "বাজার থেকে পছন্দের ফসল অর্ডার করুন।" + "বাজার দেখুন" (opens Market tab). Same layout. |

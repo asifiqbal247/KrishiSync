@@ -19,7 +19,6 @@ import '../../../shared/widgets/ks_cards.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
 import 'buyer_common.dart';
@@ -205,15 +204,16 @@ class BuyerListingScreen extends ConsumerWidget {
                     Expanded(
                       child: KsButton.secondary(
                         label: l.makeOffer,
-                        // Offers & orders arrive in Part 5.
-                        onPressed: () => KsToast.comingSoon(context),
+                        onPressed: () =>
+                            context.push(Routes.makeOffer(x.id)),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: KsButton(
                         label: l.placeOrder,
-                        onPressed: () => KsToast.comingSoon(context),
+                        onPressed: () =>
+                            context.push(Routes.placeOrder(x.id)),
                       ),
                     ),
                   ],

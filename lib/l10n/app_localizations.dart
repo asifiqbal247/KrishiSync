@@ -1927,6 +1927,708 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'হোম'**
   String get backToHome;
+
+  /// No description provided for @offerTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার দিন'**
+  String get offerTitle;
+
+  /// No description provided for @offerYourPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার দাম'**
+  String get offerYourPrice;
+
+  /// No description provided for @offerDeliveryDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি তারিখ'**
+  String get offerDeliveryDate;
+
+  /// No description provided for @offerTotal.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট মূল্য'**
+  String get offerTotal;
+
+  /// No description provided for @offerSend.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার পাঠান'**
+  String get offerSend;
+
+  /// No description provided for @offerSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার পাঠানো হয়েছে'**
+  String get offerSent;
+
+  /// No description provided for @farmerQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'{farmer} · {qty}'**
+  String farmerQty(String farmer, String qty);
+
+  /// No description provided for @offersTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার অফার'**
+  String get offersTitle;
+
+  /// No description provided for @offerTabAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব'**
+  String get offerTabAll;
+
+  /// No description provided for @offerTabNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন'**
+  String get offerTabNew;
+
+  /// No description provided for @offerTabTalking.
+  ///
+  /// In bn, this message translates to:
+  /// **'আলোচনায়'**
+  String get offerTabTalking;
+
+  /// No description provided for @marketRangeShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজার দর: ৳ {min}–{max} / কেজি'**
+  String marketRangeShort(String min, String max);
+
+  /// No description provided for @buyerVerifiedRating.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত · রেটিং {rating}'**
+  String buyerVerifiedRating(String rating);
+
+  /// No description provided for @buyerRating.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেটিং {rating}'**
+  String buyerRating(String rating);
+
+  /// No description provided for @newBuyerQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন ক্রেতা · {qty}'**
+  String newBuyerQty(String qty);
+
+  /// No description provided for @pricePerKgShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'৳ {price}/কেজি'**
+  String pricePerKgShort(String price);
+
+  /// No description provided for @negotiateTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'দর কষাকষি'**
+  String get negotiateTitle;
+
+  /// No description provided for @rowBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা'**
+  String get rowBuyer;
+
+  /// No description provided for @rowFarmer.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক'**
+  String get rowFarmer;
+
+  /// No description provided for @verifiedSuffix.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} (যাচাইকৃত)'**
+  String verifiedSuffix(String name);
+
+  /// No description provided for @rowBuyerOffer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার অফার'**
+  String get rowBuyerOffer;
+
+  /// No description provided for @rowFarmerCounter.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষকের পাল্টা অফার'**
+  String get rowFarmerCounter;
+
+  /// No description provided for @rowMyOffer.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার অফার'**
+  String get rowMyOffer;
+
+  /// No description provided for @rowOfferValidity.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফারের মেয়াদ'**
+  String get rowOfferValidity;
+
+  /// No description provided for @hoursLeft.
+  ///
+  /// In bn, this message translates to:
+  /// **'{h} ঘণ্টা বাকি'**
+  String hoursLeft(String h);
+
+  /// No description provided for @offerExpired.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেয়াদ শেষ'**
+  String get offerExpired;
+
+  /// No description provided for @paymentSafeLoad.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেন · লোড হলেই পাবেন'**
+  String get paymentSafeLoad;
+
+  /// No description provided for @counterLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাল্টা অফার দিন'**
+  String get counterLabel;
+
+  /// No description provided for @reject.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাখ্যান'**
+  String get reject;
+
+  /// No description provided for @counter.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাল্টা অফার'**
+  String get counter;
+
+  /// No description provided for @acceptOffer.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার গ্রহণ করুন'**
+  String get acceptOffer;
+
+  /// No description provided for @rejectConfirmTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাখ্যান করবেন?'**
+  String get rejectConfirmTitle;
+
+  /// No description provided for @rejectConfirmBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপর পক্ষকে জানানো হবে। এটি আর গ্রহণ করা যাবে না, তবে তারা নতুন প্রস্তাব দিতে পারবেন।'**
+  String get rejectConfirmBody;
+
+  /// No description provided for @noGoBack.
+  ///
+  /// In bn, this message translates to:
+  /// **'না, ফিরে যান'**
+  String get noGoBack;
+
+  /// No description provided for @yesReject.
+  ///
+  /// In bn, this message translates to:
+  /// **'হ্যাঁ, প্রত্যাখ্যান'**
+  String get yesReject;
+
+  /// No description provided for @offerAcceptedTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার গ্রহণ হয়েছে!'**
+  String get offerAcceptedTitle;
+
+  /// No description provided for @offerAcceptedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা টাকা জমা দিলে অর্ডার নিশ্চিত হবে। তখন আপনি জানতে পারবেন।'**
+  String get offerAcceptedBody;
+
+  /// No description provided for @seeOrder.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার দেখুন'**
+  String get seeOrder;
+
+  /// No description provided for @counterSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাল্টা অফার পাঠানো হয়েছে'**
+  String get counterSent;
+
+  /// No description provided for @offerRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার প্রত্যাখ্যান করা হয়েছে'**
+  String get offerRejected;
+
+  /// No description provided for @offerStatusPending.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন'**
+  String get offerStatusPending;
+
+  /// No description provided for @offerStatusCountered.
+  ///
+  /// In bn, this message translates to:
+  /// **'আলোচনায়'**
+  String get offerStatusCountered;
+
+  /// No description provided for @offerStatusAccepted.
+  ///
+  /// In bn, this message translates to:
+  /// **'গৃহীত'**
+  String get offerStatusAccepted;
+
+  /// No description provided for @offerStatusRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাখ্যাত'**
+  String get offerStatusRejected;
+
+  /// No description provided for @offerStatusWithdrawn.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাহার'**
+  String get offerStatusWithdrawn;
+
+  /// No description provided for @orderNowFromOffer.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই দামে অর্ডার করুন'**
+  String get orderNowFromOffer;
+
+  /// No description provided for @placeOrderTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার নিশ্চিত করুন'**
+  String get placeOrderTitle;
+
+  /// No description provided for @deliveryAddress.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি ঠিকানা'**
+  String get deliveryAddress;
+
+  /// No description provided for @cropQtyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {qty}'**
+  String cropQtyTitle(String crop, String qty);
+
+  /// No description provided for @farmerPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'{farmer} · ৳ {price}/কেজি'**
+  String farmerPrice(String farmer, String price);
+
+  /// No description provided for @platformTruck.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্ল্যাটফর্মের ট্রাক'**
+  String get platformTruck;
+
+  /// No description provided for @platformTruckSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্বয়ংক্রিয় পরিবহন বুকিং'**
+  String get platformTruckSub;
+
+  /// No description provided for @selfTransport.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিজে পরিবহন করব'**
+  String get selfTransport;
+
+  /// No description provided for @rowCropPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের মূল্য'**
+  String get rowCropPrice;
+
+  /// No description provided for @rowTransport.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবহন'**
+  String get rowTransport;
+
+  /// No description provided for @rowPlatformFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্ল্যাটফর্ম ফি ({pct}%)'**
+  String rowPlatformFee(String pct);
+
+  /// No description provided for @rowTotal.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট'**
+  String get rowTotal;
+
+  /// No description provided for @payWithSafe.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে পেমেন্ট করুন'**
+  String get payWithSafe;
+
+  /// No description provided for @orderPlacedTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার নিশ্চিত হয়েছে!'**
+  String get orderPlacedTitle;
+
+  /// No description provided for @orderPlacedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকা নিরাপদ লেনদেনে জমা আছে। মাল গাড়িতে উঠলেই কৃষক টাকা পাবেন।'**
+  String get orderPlacedBody;
+
+  /// No description provided for @errQtyTooMuch.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপলব্ধ পরিমাণের চেয়ে বেশি'**
+  String get errQtyTooMuch;
+
+  /// No description provided for @errAddressRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি ঠিকানা দিন'**
+  String get errAddressRequired;
+
+  /// No description provided for @ordersTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার অর্ডার'**
+  String get ordersTitle;
+
+  /// No description provided for @ordersTabAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব'**
+  String get ordersTabAll;
+
+  /// No description provided for @ordersTabOngoing.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান'**
+  String get ordersTabOngoing;
+
+  /// No description provided for @ordersTabDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন'**
+  String get ordersTabDone;
+
+  /// No description provided for @ordersTabCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get ordersTabCancelled;
+
+  /// No description provided for @qtyPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} · ৳ {price}/কেজি'**
+  String qtyPrice(String qty, String price);
+
+  /// No description provided for @orderStatusConfirmed.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিশ্চিত'**
+  String get orderStatusConfirmed;
+
+  /// No description provided for @orderStatusTransportBooked.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক বুক'**
+  String get orderStatusTransportBooked;
+
+  /// No description provided for @orderStatusPickedUp.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড হয়েছে'**
+  String get orderStatusPickedUp;
+
+  /// No description provided for @orderStatusInTransit.
+  ///
+  /// In bn, this message translates to:
+  /// **'পথে আছে'**
+  String get orderStatusInTransit;
+
+  /// No description provided for @orderStatusDelivered.
+  ///
+  /// In bn, this message translates to:
+  /// **'পৌঁছেছে'**
+  String get orderStatusDelivered;
+
+  /// No description provided for @orderStatusCompleted.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন'**
+  String get orderStatusCompleted;
+
+  /// No description provided for @orderStatusCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get orderStatusCancelled;
+
+  /// No description provided for @orderDetailsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডারের বিবরণ'**
+  String get orderDetailsTitle;
+
+  /// No description provided for @orderNoLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার #{no}'**
+  String orderNoLine(String no);
+
+  /// No description provided for @rowPayment.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট'**
+  String get rowPayment;
+
+  /// No description provided for @paymentHeld.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে জমা'**
+  String get paymentHeld;
+
+  /// No description provided for @paymentPending.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপেক্ষমাণ'**
+  String get paymentPending;
+
+  /// No description provided for @rowLoadAndMoney.
+  ///
+  /// In bn, this message translates to:
+  /// **'গাড়িতে লোড + আপনার টাকা'**
+  String get rowLoadAndMoney;
+
+  /// No description provided for @rowPickupDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিকআপ'**
+  String get rowPickupDate;
+
+  /// No description provided for @orderStatusSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডারের অবস্থা'**
+  String get orderStatusSection;
+
+  /// No description provided for @stepConfirmed.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার নিশ্চিত'**
+  String get stepConfirmed;
+
+  /// No description provided for @stepTruckBooked.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা ট্রাক বুক করেছেন'**
+  String get stepTruckBooked;
+
+  /// No description provided for @stepTruckBookedSelf.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা নিজে পরিবহন করবেন'**
+  String get stepTruckBookedSelf;
+
+  /// No description provided for @stepLoaded.
+  ///
+  /// In bn, this message translates to:
+  /// **'গাড়িতে লোড + আপনার টাকা'**
+  String get stepLoaded;
+
+  /// No description provided for @stepLoadedBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'গাড়িতে লোড + কৃষকের টাকা'**
+  String get stepLoadedBuyer;
+
+  /// No description provided for @stepDelivered.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি'**
+  String get stepDelivered;
+
+  /// No description provided for @stepWaiting.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপেক্ষমাণ'**
+  String get stepWaiting;
+
+  /// No description provided for @orderProblem.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডারে সমস্যা?'**
+  String get orderProblem;
+
+  /// No description provided for @orderProblemSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমস্যা জানান বা সাহায্য নিন'**
+  String get orderProblemSub;
+
+  /// No description provided for @trackShipment.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালান ট্র্যাক করুন'**
+  String get trackShipment;
+
+  /// No description provided for @dateTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'{date}, {time}'**
+  String dateTime(String date, String time);
+
+  /// No description provided for @notifTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোটিফিকেশন'**
+  String get notifTitle;
+
+  /// No description provided for @notifEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো নোটিফিকেশন নেই'**
+  String get notifEmpty;
+
+  /// No description provided for @nOfferNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন অফার: {crop}'**
+  String nOfferNew(String crop);
+
+  /// No description provided for @nOfferNewBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{buyer} · ৳ {price}/কেজি · {qty}'**
+  String nOfferNewBody(String buyer, String price, String qty);
+
+  /// No description provided for @nOfferCounter.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাল্টা অফার: {crop}'**
+  String nOfferCounter(String crop);
+
+  /// No description provided for @nOfferCounterBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{farmer} · ৳ {price}/কেজি'**
+  String nOfferCounterBody(String farmer, String price);
+
+  /// No description provided for @nOfferAccepted.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার গৃহীত: {crop}'**
+  String nOfferAccepted(String crop);
+
+  /// No description provided for @nOfferAcceptedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'৳ {price}/কেজি দামে অর্ডার করুন'**
+  String nOfferAcceptedBody(String price);
+
+  /// No description provided for @nOfferRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার প্রত্যাখ্যাত: {crop}'**
+  String nOfferRejected(String crop);
+
+  /// No description provided for @nOrderNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন অর্ডার #{no}'**
+  String nOrderNew(String no);
+
+  /// No description provided for @nOrderNewBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{buyer} · {crop} {qty}'**
+  String nOrderNewBody(String buyer, String crop, String qty);
+
+  /// No description provided for @nListingApproved.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা অনুমোদিত: {crop}'**
+  String nListingApproved(String crop);
+
+  /// No description provided for @nListingRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা বাতিল: {crop}'**
+  String nListingRejected(String crop);
+
+  /// No description provided for @nListingApprovedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতারা এখন আপনার ফসল দেখতে পারবেন'**
+  String get nListingApprovedBody;
+
+  /// No description provided for @homeOffersSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} · সর্বোচ্চ ৳ {price}/কেজি'**
+  String homeOffersSub(String crop, String price);
+
+  /// No description provided for @stateErrorTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'কিছু সমস্যা হয়েছে'**
+  String get stateErrorTitle;
+
+  /// No description provided for @stateErrorBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার দেওয়া তথ্য সঠিক নয়। অনুগ্রহ করে আবার চেষ্টা করুন।'**
+  String get stateErrorBody;
+
+  /// No description provided for @stateGetHelp.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাহায্য নিন'**
+  String get stateGetHelp;
+
+  /// No description provided for @stateOfflineBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার তথ্য সংরক্ষিত আছে। সংযোগ ফিরলে স্বয়ংক্রিয়ভাবে পাঠানো হবে।'**
+  String get stateOfflineBody;
+
+  /// No description provided for @emptyOrdersTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো অর্ডার নেই'**
+  String get emptyOrdersTitle;
+
+  /// No description provided for @emptyOrdersFarmerBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল তালিকাভুক্ত করুন, ক্রেতারা অফার পাঠাবে।'**
+  String get emptyOrdersFarmerBody;
+
+  /// No description provided for @emptyOrdersBuyerBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজার থেকে পছন্দের ফসল অর্ডার করুন।'**
+  String get emptyOrdersBuyerBody;
+
+  /// No description provided for @emptyOrdersBuyerCta.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজার দেখুন'**
+  String get emptyOrdersBuyerCta;
 }
 
 class _AppLocalizationsDelegate
