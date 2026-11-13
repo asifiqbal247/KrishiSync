@@ -1,22 +1,12 @@
 # KrishiSync — Plan
 
 ## Current status
-- **Phase:** Part 1 (foundation) nearly done + Part 2 (auth screens) code written.
-- **Done:**
-  - 1.1 project + git (pushed to asifiqbal247/KrishiSync).
-  - 1.2 FlutterFire configured (Android app registered, `firebase_options.dart` + `google-services.json` git-ignored). Firebase CLI logged in, project `krishisync-678d2`.
-  - Android NDK 28.2.13676358 installed (needed by Firebase plugins).
-  - 1.5 Theme tokens (`lib/core/theme/*`), fonts (Hind Siliguri 400–700 + Noto Sans Bengali), 36 Figma icons (SVG), 27 images (WebP), BD location data (MIT).
-  - 1.6 l10n scaffold (bn template + en), language + onboarding prefs.
-  - 1.7 Shared widgets: AppIcon, KsAppBar, KsButton (primary/text), KsTextField, KsSelectField, KsOptionCard, KsUploadBox, KsPageDots, KsListItem, KsPill, KsSearchBar, photo picker sheet.
-  - 1.8 go_router with role redirects (splash → language → onboarding → login/otp → role → profile → role home).
-  - `ImageStorageService` (Cloudinary, unsigned preset in git-ignored `lib/core/config/app_secrets.dart`).
-  - Part 2 screens coded: 01 Splash, 02 Language, 03–05 Onboarding, 06 Login, 07 OTP, 14 Role, 08 Profile Setup, 09–12 Location picker (GPS → nearest upazila offline, saved addresses, OSM map pin).
-  - `firestore.rules` v1 (users), `firebase.json`/`.firebaserc` for deploy.
-  - `flutter analyze`: 0 issues. `flutter test`: 3/3 pass.
-- **Blocked on Asif (console):** create Firestore DB (asia-south1), enable Phone sign-in, add test numbers, add SHA-1/SHA-256.
-- **Open question:** app name — Figma splash now says "Golaghor" with a new logo; code uses "KrishiSync" text + the Figma logo image.
-- **Next step:** deploy rules → run on emulator → E2E test (test-phone login → users doc in Firestore → profile photo to Cloudinary) → compare with Figma → commit/push → Part 3.
+- **Phase:** Part 3 code done (farmer listings + moderator approval). Waiting for emulator E2E test.
+- **Done:** Parts 1–2 code, Part 3 code (commit `7ed0209`). Firestore DB created by Asif; rules + indexes deployed 2026-11-14.
+- **Built in Part 3:** Farmer shell + bottom nav, 15 Farmer Home, 18–20 Sell Crop (photo → Cloudinary), 21 success modal, 22 My Listings (status badges), 23 Crop Details, M1–M3 moderator (approve / reject with reason), simple Profile tab (language switch + logout). Admin temporarily uses moderator tools.
+- **Not yet on home (data comes in later Parts):** offers card, ongoing orders, nearby demands, payment summary. Market price carousel shows only when `marketPrices` has data (Admin A5, Part 7).
+- **Known gaps to finish later:** banner slides 2–3 (Figma 292:121, 292:133), full Profile screen 68, Farmer Search 17.
+- **Next step:** Asif hot-restarts, tests auth + sell + approve flow with test numbers → fix issues → push → Part 4 (buyer).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -306,4 +296,6 @@ counters/orders    next: int
 | 2026-11-14 | My Listings (22): pending listings shown under "চলমান" with an "অনুমোদনের অপেক্ষায়" badge, using Figma HF/List Item / Status (319:26). |
 | 2026-11-14 | Mic icons stay visible and tappable; tap shows the Figma HF/Toast with "শীঘ্রই আসছে" / "Coming soon" (ARB key `comingSoon`). Real voice search = Tier C (needs a speech package, ask first). |
 | 2026-11-14 | Back on Login (reached by redirect, no history) returns to onboarding. Default app-bar back uses go_router `canPop/pop`. |
+| 2026-11-14 | My Listings tabs: চলমান = pending + active, বিক্রিত = sold, খসড়া = rejected by moderator (status `hidden`, shows the moderator note). |
+| 2026-11-14 | Sell Crop: 1 photo per listing (Figma has one upload box); crop chips from bundled catalog + "অন্যান্য" with typed name. |
 | 2026-11-14 | Gradle memory lowered (3G heap / 1G metaspace), Kotlin in-process, incremental off — PC has 16 GB and runs the emulator. Don't run two Gradle builds at once. |
