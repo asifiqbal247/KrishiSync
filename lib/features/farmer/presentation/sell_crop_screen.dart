@@ -158,6 +158,7 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
   }
 
   Future<void> _pickPickup() async {
+    FocusScope.of(context).unfocus();
     final loc = await context.push<UserLocation>(Routes.locationPicker);
     if (loc != null) {
       setState(() {

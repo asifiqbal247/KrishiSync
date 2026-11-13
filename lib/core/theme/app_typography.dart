@@ -10,7 +10,9 @@ import 'app_colors.dart';
 /// `style.normal` (see [AppTextStyleX]) which drops the fixed line height.
 abstract final class AppTypography {
   static const fontFamily = 'HindSiliguri';
-  static const fontFamilyFallback = <String>['NotoSansBengali'];
+  /// Hind Siliguri has its "১" removed (assets/fonts/original has the
+  /// untouched files), so Flutter draws ১ with Noto Sans Bengali — as Figma.
+  static const fontFamilyFallback = <String>['NotoSansBengaliDigits'];
 
   static TextStyle _s(double size, FontWeight weight, double lineHeight) =>
       TextStyle(

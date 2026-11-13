@@ -69,7 +69,7 @@ Frame size: **360 × 800** (Android). The "9:41" status bar in Figma is mock chr
 
 ## Typography
 Font: **Hind Siliguri** (Google Fonts, OFL license) — weights 400, 500, 600, 700. Bundle TTFs in `assets/fonts/`.
-Fallback: **Noto Sans Bengali** (Figma uses it for the digit "১"). Set as `fontFamilyFallback`.
+Fallback: **Noto Sans Bengali** (Figma uses it for the digit "১"). Implementation: U+09E7 is removed from the bundled Hind Siliguri files (`scripts`: see PLAN decisions; originals in `assets/fonts/original/`), and a 4 KB digits-only Noto subset at 400/500/600/700 (`NotoSansBengaliDigits`) is the `fontFamilyFallback`. Both fonts are OFL 1.1 without Reserved Font Names, so modification is allowed.
 Letter spacing 0 for all. Flutter line height: `height = lineHeight / size`.
 
 | Style | Weight | Size / Line height |

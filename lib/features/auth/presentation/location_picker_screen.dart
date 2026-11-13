@@ -47,7 +47,6 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
   bool _gpsBusy = false;
   String? _gpsError;
   String? _unionError;
-  bool _saving = false;
 
   final _search = TextEditingController();
   final _village = TextEditingController();
@@ -172,18 +171,17 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
       landmark: _landmark.text.trim().isEmpty ? null : _landmark.text.trim(),
       geo: _pin == null ? null : GeoPoint(_pin!.latitude, _pin!.longitude),
     );
-    if (me != null) {
-      setState(() => _saving = true);
-      try {
-        await ref.read(userRepositoryProvider).saveAddress(
-            me.uid, SavedAddress(tag: _tag, location: loc), me.savedAddresses);
-      } catch (_) {
-        // Saving the shortcut is optional; the address itself still returns.
-      }
-      if (!mounted) return;
-      setState(() => _saving = false);
-    }
+    // Return the address first. Saving the shortcut updates users/{uid},
+    // which refreshes the router; doing that before pop() loses the result.
+    final repo = ref.read(userRepositoryProvider);
     context.pop(loc);
+    if (me != null) {
+      // Optional shortcut ("বাড়ি", "খামার"…); failure must not block the flow.
+      repo
+          .saveAddress(
+              me.uid, SavedAddress(tag: _tag, location: loc), me.savedAddresses)
+          .catchError((_) {});
+    }
   }
 
   @override
@@ -456,6 +454,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
           value: _union?.name(_lang),
           onTap: _pickUnion,
           errorText: _unionError,
+          showChevron: false,
         ),
         const SizedBox(height: AppSpacing.md),
         KsTextField(
@@ -547,7 +546,6 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
             height: AppSpacing.md + AppSpacing.xs + AppSpacing.md),
         KsButton(
           label: l.locConfirm,
-          loading: _saving,
           onPressed: () => _confirm(me),
         ),
       ],

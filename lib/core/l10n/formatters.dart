@@ -50,8 +50,10 @@ abstract final class Fmt {
     return digits(context, '$m:$s');
   }
 
+  /// Figma style: "১২ সেপ্টেম্বর" (year only when not this year).
   static String date(BuildContext context, DateTime d) {
     final loc = Localizations.localeOf(context).languageCode;
-    return digits(context, DateFormat.yMMMd(loc).format(d));
+    final pattern = d.year == DateTime.now().year ? 'd MMMM' : 'd MMMM y';
+    return digits(context, DateFormat(pattern, loc).format(d));
   }
 }

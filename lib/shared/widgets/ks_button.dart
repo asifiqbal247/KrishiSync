@@ -53,7 +53,9 @@ class KsButton extends StatelessWidget {
   }
 
   Widget _primary() {
-    final bg = _enabled ? AppColors.bgBrand : AppColors.bgDisabled;
+    // While loading the button keeps its brand colour (spinner inside).
+    final active = onPressed != null;
+    final bg = active ? AppColors.bgBrand : AppColors.bgDisabled;
     final fg = _enabled ? AppColors.textOnBrand : AppColors.textDisabled;
     final radius = BorderRadius.circular(AppRadius.button);
     return Container(
@@ -61,7 +63,7 @@ class KsButton extends StatelessWidget {
       height: AppSizes.buttonL,
       decoration: BoxDecoration(
         borderRadius: radius,
-        boxShadow: _enabled ? AppShadows.brandButton : null,
+        boxShadow: active ? AppShadows.brandButton : null,
       ),
       child: Material(
         color: bg,

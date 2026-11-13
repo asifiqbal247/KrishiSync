@@ -154,8 +154,11 @@ class KsSelectField extends StatelessWidget {
     required this.onTap,
     this.value,
     this.errorText,
+    this.showChevron = true,
   });
 
+  /// Screen 12's union field has no visible chevron in Figma.
+  final bool showChevron;
   final String label;
   final String placeholder;
   final String? value;
@@ -195,8 +198,11 @@ class KsSelectField extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
-                  const AppIcon(AppIcons.chevronDown,
-                      size: AppSizes.iconSm, color: AppColors.iconBrand),
+                  if (showChevron)
+                    const AppIcon(AppIcons.chevronDown,
+                        size: AppSizes.iconSm, color: AppColors.iconBrand)
+                  else
+                    const SizedBox(width: AppSizes.iconSm),
                 ],
               ),
             ),

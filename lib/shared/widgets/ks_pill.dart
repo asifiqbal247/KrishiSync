@@ -31,14 +31,17 @@ class KsPill extends StatelessWidget {
         child: Container(
           height: AppSizes.chipMinHeight,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-          alignment: Alignment.center,
-          child: Text(
+          // widthFactor 1 = hug the label (no full-width stretch).
+          child: Center(
+            widthFactor: 1,
+            child: Text(
             label,
             style: selected
                 ? AppTypography.bodyMediumStrong.normal
                     .withColor(AppColors.textOnBrand)
                 : AppTypography.bodyMediumEmphasis.normal
                     .withColor(AppColors.textBrand),
+            ),
           ),
         ),
       ),

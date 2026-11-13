@@ -43,12 +43,19 @@ class FirestoreUserRepository implements UserRepository {
       .snapshots()
       .map((s) => s.exists ? AppUser.fromDoc(s) : null);
 
+  final Map<String, Future<void>> _ensuring = {};
+
   @override
   Future<void> ensureUserDoc({
     required String uid,
     required String phone,
     required String language,
-  }) async {
+  }) =>
+      // OTP screen and the app-level listener may both call this at once.
+      _ensuring[uid] ??= _ensure(uid, phone, language)
+          .whenComplete(() => _ensuring.remove(uid));
+
+  Future<void> _ensure(String uid, String phone, String language) async {
     final ref = _doc(uid);
     final snap = await ref.get();
     if (snap.exists) return;
