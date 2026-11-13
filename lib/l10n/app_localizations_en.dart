@@ -729,4 +729,285 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tabComingTitle => 'This section is coming in the next step';
+
+  @override
+  String get navCollect => 'Orders';
+
+  @override
+  String get navDemand => 'Demand';
+
+  @override
+  String get buyerSearchHint => 'Search crops, farmers or areas';
+
+  @override
+  String get statOngoingOrders => 'Ongoing orders';
+
+  @override
+  String get statInTransit => 'On the way';
+
+  @override
+  String get statSafePay => 'In safe payment';
+
+  @override
+  String get statNewOffers => 'New offers';
+
+  @override
+  String countTi(String count) {
+    return '$count';
+  }
+
+  @override
+  String get catAll => 'All';
+
+  @override
+  String get catVegetable => 'Vegetables';
+
+  @override
+  String get catFruit => 'Fruit';
+
+  @override
+  String get catGrain => 'Grains';
+
+  @override
+  String get catFish => 'Fish';
+
+  @override
+  String get catSpice => 'Spices';
+
+  @override
+  String get catPulse => 'Pulses';
+
+  @override
+  String get quickActions => 'Quick actions';
+
+  @override
+  String get actPostDemand => 'Post a demand';
+
+  @override
+  String get actPostDemandSub => 'Farmers will send offers';
+
+  @override
+  String get actMarket => 'Market';
+
+  @override
+  String actMarketSub(String count) {
+    return '$count crops';
+  }
+
+  @override
+  String get actProcurement => 'Procurement dashboard';
+
+  @override
+  String get actProcurementSub => 'Demand and sourcing';
+
+  @override
+  String get actBookTruck => 'Book a truck';
+
+  @override
+  String get actBookTruckSub => 'Compare fares and book';
+
+  @override
+  String get bannerPoolTitle => 'New: digital pooling';
+
+  @override
+  String get bannerPoolSub => 'Big orders from several farmers';
+
+  @override
+  String get bannerTry => 'Try it';
+
+  @override
+  String get topSuppliers => 'Top suppliers';
+
+  @override
+  String get recommendedCrops => 'Recommended crops for you';
+
+  @override
+  String onTimePct(String pct) {
+    return '$pct% on time';
+  }
+
+  @override
+  String get marketTitle => 'Market';
+
+  @override
+  String get marketSearchHint => 'Search crops, areas or farmers';
+
+  @override
+  String resultsCount(String count) {
+    return 'Results: $count';
+  }
+
+  @override
+  String get filterLabel => 'Filter: area, quantity, price';
+
+  @override
+  String listingLine(String qty, String place) {
+    return '$qty kg · $place';
+  }
+
+  @override
+  String listingLineRated(String qty, String place, String rating) {
+    return '$qty kg · $place · $rating';
+  }
+
+  @override
+  String get filterTitle => 'Filter';
+
+  @override
+  String get filterDistrict => 'Area (district)';
+
+  @override
+  String get filterAnyDistrict => 'All districts';
+
+  @override
+  String get filterMinQty => 'Minimum quantity';
+
+  @override
+  String get filterMaxPrice => 'Maximum price (per kg)';
+
+  @override
+  String get filterApply => 'Apply filter';
+
+  @override
+  String get filterClear => 'Clear';
+
+  @override
+  String get searchTitle => 'Search';
+
+  @override
+  String get searchHint => 'Potato, tomato, area…';
+
+  @override
+  String get recentSearches => 'Recent searches';
+
+  @override
+  String get clearRecent => 'Clear';
+
+  @override
+  String get popularNow => 'Popular now';
+
+  @override
+  String get suggestions => 'Suggestions';
+
+  @override
+  String get voiceGuide => 'Press the mic and say the crop name';
+
+  @override
+  String suggestListings(String count) {
+    return '$count listings';
+  }
+
+  @override
+  String suggestListingsRange(String count, String min, String max) {
+    return '$count listings · ৳ $min–$max';
+  }
+
+  @override
+  String get noResults => 'No crops found';
+
+  @override
+  String marketRangeFair(String min, String max) {
+    return 'Market price ৳ $min–$max / kg · within a fair price';
+  }
+
+  @override
+  String marketRangeOnly(String min, String max) {
+    return 'Market price ৳ $min–$max / kg';
+  }
+
+  @override
+  String qtyAvailable(String qty) {
+    return '$qty kg available';
+  }
+
+  @override
+  String get fieldAvailable => 'Available';
+
+  @override
+  String get fieldLocation => 'Location';
+
+  @override
+  String placeWithKm(String place, String km) {
+    return '$place ($km km)';
+  }
+
+  @override
+  String get sectionFarmer => 'Farmer';
+
+  @override
+  String get sectionDelivery => 'Delivery & transport';
+
+  @override
+  String get fieldPayment => 'Payment';
+
+  @override
+  String get safePayment => 'Safe payment';
+
+  @override
+  String reviewsCount(String count) {
+    return 'Reviews ($count)';
+  }
+
+  @override
+  String get similarCrops => 'Similar crops';
+
+  @override
+  String get makeOffer => 'Make offer';
+
+  @override
+  String get placeOrder => 'Order';
+
+  @override
+  String farmerCardSub(String verified, String rating, String count) {
+    return '${verified}Rating $rating · $count trades';
+  }
+
+  @override
+  String get verifiedDot => 'Verified · ';
+
+  @override
+  String get profileLink => 'Profile';
+
+  @override
+  String get farmerProfileTitle => 'Farmer profile';
+
+  @override
+  String get verifiedNid => 'Verified (NID)';
+
+  @override
+  String get notVerified => 'Not verified yet';
+
+  @override
+  String get statRating => 'Rating';
+
+  @override
+  String get statOnTime => 'On-time delivery';
+
+  @override
+  String get statCompleted => 'Completed trades';
+
+  @override
+  String get statComplaints => 'Quality complaints';
+
+  @override
+  String ratingWithCount(String rating, String count) {
+    return '$rating ($count)';
+  }
+
+  @override
+  String get availableCrops => 'Available crops';
+
+  @override
+  String get sendMessage => 'Send message';
+
+  @override
+  String get notAvailable => '—';
+
+  @override
+  String qtyTon(String t) {
+    return '$t t';
+  }
+
+  @override
+  String get backToHome => 'Home';
 }

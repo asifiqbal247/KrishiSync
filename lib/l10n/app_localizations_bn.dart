@@ -728,4 +728,285 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get tabComingTitle => 'এই অংশটি পরের ধাপে আসছে';
+
+  @override
+  String get navCollect => 'সংগ্রহ';
+
+  @override
+  String get navDemand => 'চাহিদা';
+
+  @override
+  String get buyerSearchHint => 'ফসল, কৃষক বা এলাকা খুঁজুন';
+
+  @override
+  String get statOngoingOrders => 'চলমান অর্ডার';
+
+  @override
+  String get statInTransit => 'পথে আছে';
+
+  @override
+  String get statSafePay => 'নিরাপদ লেনদেনে';
+
+  @override
+  String get statNewOffers => 'নতুন অফার';
+
+  @override
+  String countTi(String count) {
+    return '$countটি';
+  }
+
+  @override
+  String get catAll => 'সব';
+
+  @override
+  String get catVegetable => 'সবজি';
+
+  @override
+  String get catFruit => 'ফল';
+
+  @override
+  String get catGrain => 'শস্য';
+
+  @override
+  String get catFish => 'মাছ';
+
+  @override
+  String get catSpice => 'মসলা';
+
+  @override
+  String get catPulse => 'ডাল';
+
+  @override
+  String get quickActions => 'দ্রুত কাজ';
+
+  @override
+  String get actPostDemand => 'চাহিদা পোস্ট করুন';
+
+  @override
+  String get actPostDemandSub => 'কৃষকরা অফার দেবেন';
+
+  @override
+  String get actMarket => 'বাজার';
+
+  @override
+  String actMarketSub(String count) {
+    return '$countটি ফসল';
+  }
+
+  @override
+  String get actProcurement => 'সংগ্রহ ড্যাশবোর্ড';
+
+  @override
+  String get actProcurementSub => 'চাহিদা ও সংগ্রহ';
+
+  @override
+  String get actBookTruck => 'ট্রাক বুক করুন';
+
+  @override
+  String get actBookTruckSub => 'ভাড়া তুলনা করে বুক';
+
+  @override
+  String get bannerPoolTitle => 'নতুন: ডিজিটাল পুলিং';
+
+  @override
+  String get bannerPoolSub => 'একাধিক কৃষক থেকে বড় অর্ডার';
+
+  @override
+  String get bannerTry => 'চেষ্টা করুন';
+
+  @override
+  String get topSuppliers => 'শীর্ষ সরবরাহকারী';
+
+  @override
+  String get recommendedCrops => 'আপনার জন্য সুপারিশকৃত ফসল';
+
+  @override
+  String onTimePct(String pct) {
+    return '$pct% সময়মতো';
+  }
+
+  @override
+  String get marketTitle => 'বাজার';
+
+  @override
+  String get marketSearchHint => 'ফসল, এলাকা বা কৃষক খুঁজুন';
+
+  @override
+  String resultsCount(String count) {
+    return 'ফলাফল: $countটি';
+  }
+
+  @override
+  String get filterLabel => 'ফিল্টার: এলাকা, পরিমাণ, দাম';
+
+  @override
+  String listingLine(String qty, String place) {
+    return '$qty কেজি · $place';
+  }
+
+  @override
+  String listingLineRated(String qty, String place, String rating) {
+    return '$qty কেজি · $place · $rating';
+  }
+
+  @override
+  String get filterTitle => 'ফিল্টার';
+
+  @override
+  String get filterDistrict => 'এলাকা (জেলা)';
+
+  @override
+  String get filterAnyDistrict => 'সব জেলা';
+
+  @override
+  String get filterMinQty => 'ন্যূনতম পরিমাণ';
+
+  @override
+  String get filterMaxPrice => 'সর্বোচ্চ দাম (প্রতি কেজি)';
+
+  @override
+  String get filterApply => 'ফিল্টার করুন';
+
+  @override
+  String get filterClear => 'মুছুন';
+
+  @override
+  String get searchTitle => 'খুঁজুন';
+
+  @override
+  String get searchHint => 'আলু, টমেটো, এলাকা…';
+
+  @override
+  String get recentSearches => 'সাম্প্রতিক খোঁজ';
+
+  @override
+  String get clearRecent => 'মুছুন';
+
+  @override
+  String get popularNow => 'জনপ্রিয় এখন';
+
+  @override
+  String get suggestions => 'পরামর্শ';
+
+  @override
+  String get voiceGuide => 'মাইক চেপে ফসলের নাম বলুন';
+
+  @override
+  String suggestListings(String count) {
+    return '$countটি তালিকা';
+  }
+
+  @override
+  String suggestListingsRange(String count, String min, String max) {
+    return '$countটি তালিকা · ৳ $min–$max';
+  }
+
+  @override
+  String get noResults => 'কোনো ফসল পাওয়া যায়নি';
+
+  @override
+  String marketRangeFair(String min, String max) {
+    return 'বাজার দর ৳ $min–$max / কেজি · ন্যায্য দামের মধ্যে';
+  }
+
+  @override
+  String marketRangeOnly(String min, String max) {
+    return 'বাজার দর ৳ $min–$max / কেজি';
+  }
+
+  @override
+  String qtyAvailable(String qty) {
+    return '$qty কেজি উপলব্ধ';
+  }
+
+  @override
+  String get fieldAvailable => 'উপলব্ধ';
+
+  @override
+  String get fieldLocation => 'অবস্থান';
+
+  @override
+  String placeWithKm(String place, String km) {
+    return '$place ($km কিমি)';
+  }
+
+  @override
+  String get sectionFarmer => 'কৃষক';
+
+  @override
+  String get sectionDelivery => 'ডেলিভারি ও পরিবহন';
+
+  @override
+  String get fieldPayment => 'পেমেন্ট';
+
+  @override
+  String get safePayment => 'নিরাপদ লেনদেন';
+
+  @override
+  String reviewsCount(String count) {
+    return 'রিভিউ ($count)';
+  }
+
+  @override
+  String get similarCrops => 'একই ধরনের ফসল';
+
+  @override
+  String get makeOffer => 'অফার দিন';
+
+  @override
+  String get placeOrder => 'অর্ডার করুন';
+
+  @override
+  String farmerCardSub(String verified, String rating, String count) {
+    return '$verifiedরেটিং $rating · $count লেনদেন';
+  }
+
+  @override
+  String get verifiedDot => 'যাচাইকৃত · ';
+
+  @override
+  String get profileLink => 'প্রোফাইল';
+
+  @override
+  String get farmerProfileTitle => 'কৃষকের প্রোফাইল';
+
+  @override
+  String get verifiedNid => 'যাচাইকৃত (NID)';
+
+  @override
+  String get notVerified => 'যাচাই বাকি';
+
+  @override
+  String get statRating => 'রেটিং';
+
+  @override
+  String get statOnTime => 'সময়মতো সরবরাহ';
+
+  @override
+  String get statCompleted => 'সম্পন্ন লেনদেন';
+
+  @override
+  String get statComplaints => 'মান অভিযোগ';
+
+  @override
+  String ratingWithCount(String rating, String count) {
+    return '$rating ($count)';
+  }
+
+  @override
+  String get availableCrops => 'উপলব্ধ ফসল';
+
+  @override
+  String get sendMessage => 'বার্তা পাঠান';
+
+  @override
+  String get notAvailable => '—';
+
+  @override
+  String qtyTon(String t) {
+    return '$t টন';
+  }
+
+  @override
+  String get backToHome => 'হোম';
 }

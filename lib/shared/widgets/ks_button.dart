@@ -4,7 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_dimens.dart';
 import '../../core/theme/app_typography.dart';
 
-enum KsButtonType { primary, outline, text }
+enum KsButtonType { primary, secondary, outline, text }
 
 /// HF/Button (315:170). Size L: 48 high, radius 14, px 24,
 /// label Hind Siliguri SemiBold 16.
@@ -27,6 +27,14 @@ class KsButton extends StatelessWidget {
     this.expand = true,
   }) : type = KsButtonType.outline;
 
+  const KsButton.secondary({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.loading = false,
+    this.expand = true,
+  }) : type = KsButtonType.secondary;
+
   const KsButton.text({
     super.key,
     required this.label,
@@ -47,6 +55,7 @@ class KsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (type) {
       KsButtonType.primary => _primary(),
+      KsButtonType.secondary => _outline(fill: AppColors.bgSubtle, shadow: false),
       KsButtonType.outline => _outline(),
       KsButtonType.text => _text(),
     };
@@ -94,9 +103,10 @@ class KsButton extends StatelessWidget {
     );
   }
 
+  /// Button/Secondary (315:32): subtle fill, 1.5px brand border, no shadow.
   /// Button/Outline (315:50): white, 1.5px brand border, shadow
   /// 0 2 3 rgba(31,31,31,.06), brand SemiBold 16.
-  Widget _outline() {
+  Widget _outline({Color fill = AppColors.bgPage, bool shadow = true}) {
     final fg = _enabled ? AppColors.textBrand : AppColors.textDisabled;
     final radius = BorderRadius.circular(AppRadius.button);
     return Container(
@@ -104,10 +114,10 @@ class KsButton extends StatelessWidget {
       height: AppSizes.buttonL,
       decoration: BoxDecoration(
         borderRadius: radius,
-        boxShadow: _enabled ? AppShadows.outlineButton : null,
+        boxShadow: _enabled && shadow ? AppShadows.outlineButton : null,
       ),
       child: Material(
-        color: AppColors.bgPage,
+        color: fill,
         shape: RoundedRectangleBorder(
           borderRadius: radius,
           side: BorderSide(

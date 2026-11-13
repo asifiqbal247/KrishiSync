@@ -134,3 +134,13 @@ final currentUserProvider = StreamProvider<AppUser?>((ref) {
 /// Any user's public profile (names, photo, district, rating).
 final userByIdProvider = StreamProvider.family<AppUser?, String>(
     (ref, uid) => ref.watch(userRepositoryProvider).watchUser(uid));
+
+/// Top suppliers on Buyer Home: farmers by rating.
+final topFarmersProvider = StreamProvider<List<AppUser>>((ref) => ref
+    .watch(firestoreProvider)
+    .collection('users')
+    .where('role', isEqualTo: 'farmer')
+    .orderBy('ratingAvg', descending: true)
+    .limit(10)
+    .snapshots()
+    .map((q) => [for (final d in q.docs) AppUser.fromDoc(d)]));

@@ -102,6 +102,9 @@ class AppUser {
     this.ratingCount = 0,
     this.createdAt,
     this.savedAddresses = const [],
+    this.completedOrders = 0,
+    this.onTimeRate,
+    this.complaintCount = 0,
   });
 
   final String uid;
@@ -118,6 +121,13 @@ class AppUser {
   final int ratingCount;
   final DateTime? createdAt;
   final List<SavedAddress> savedAddresses;
+
+  /// Trade stats, updated when orders complete (Parts 5–6).
+  final int completedOrders;
+  final int? onTimeRate; // 0–100, null until first delivery
+  final int complaintCount;
+
+  bool get isVerified => verification == VerificationStatus.verified;
 
   bool get hasRole => role != null;
   bool get profileComplete => name.trim().isNotEmpty && location.isComplete;
@@ -143,6 +153,9 @@ class AppUser {
       ratingAvg: (m['ratingAvg'] as num?)?.toDouble() ?? 0,
       ratingCount: (m['ratingCount'] as num?)?.toInt() ?? 0,
       createdAt: (m['createdAt'] as Timestamp?)?.toDate(),
+      completedOrders: (m['completedOrders'] as num?)?.toInt() ?? 0,
+      onTimeRate: (m['onTimeRate'] as num?)?.toInt(),
+      complaintCount: (m['complaintCount'] as num?)?.toInt() ?? 0,
       savedAddresses: [
         for (final a in (m['savedAddresses'] as List<dynamic>? ?? const []))
           SavedAddress.fromMap(a as Map<String, dynamic>),

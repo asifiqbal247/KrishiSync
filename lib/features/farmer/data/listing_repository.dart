@@ -18,6 +18,11 @@ abstract interface class ListingRepository {
   Stream<List<Listing>> watchByStatus(ListingStatus status, {int limit = 50});
   Stream<int> countByStatus(ListingStatus status);
 
+  /// Buyers: approved listings only (rules allow only status == active).
+  Stream<List<Listing>> watchActive({int limit = 200});
+  Stream<List<Listing>> watchActiveByFarmer(String farmerId);
+  Stream<List<Listing>> watchActiveByCrop(String cropKey, {int limit = 10});
+
   Future<void> markSold(String id);
 
   /// Moderator / admin actions.
@@ -94,6 +99,32 @@ class FirestoreListingRepository implements ListingRepository {
       .map((q) => q.size);
 
   @override
+  Stream<List<Listing>> watchActive({int limit = 200}) => _col
+      .where('status', isEqualTo: ListingStatus.active.name)
+      .orderBy('createdAt', descending: true)
+      .limit(limit)
+      .snapshots()
+      .map(_list);
+
+  @override
+  Stream<List<Listing>> watchActiveByFarmer(String farmerId) => _col
+      .where('farmerId', isEqualTo: farmerId)
+      .where('status', isEqualTo: ListingStatus.active.name)
+      .orderBy('createdAt', descending: true)
+      .snapshots()
+      .map(_list);
+
+  @override
+  Stream<List<Listing>> watchActiveByCrop(String cropKey, {int limit = 10}) =>
+      _col
+          .where('status', isEqualTo: ListingStatus.active.name)
+          .where('cropKey', isEqualTo: cropKey)
+          .orderBy('createdAt', descending: true)
+          .limit(limit)
+          .snapshots()
+          .map(_list);
+
+  @override
   Future<void> markSold(String id) => _col.doc(id).update({
         'status': ListingStatus.sold.name,
         'updatedAt': FieldValue.serverTimestamp(),
@@ -138,3 +169,14 @@ final listingsByStatusProvider =
 
 final listingCountProvider = StreamProvider.family<int, ListingStatus>(
     (ref, s) => ref.watch(listingRepositoryProvider).countByStatus(s));
+
+final activeListingsProvider = StreamProvider<List<Listing>>(
+    (ref) => ref.watch(listingRepositoryProvider).watchActive());
+
+final farmerActiveListingsProvider =
+    StreamProvider.family<List<Listing>, String>((ref, farmerId) =>
+        ref.watch(listingRepositoryProvider).watchActiveByFarmer(farmerId));
+
+final similarListingsProvider = StreamProvider.family<List<Listing>, String>(
+    (ref, cropKey) =>
+        ref.watch(listingRepositoryProvider).watchActiveByCrop(cropKey));

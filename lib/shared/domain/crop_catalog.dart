@@ -1,6 +1,6 @@
 import '../../core/theme/app_assets.dart';
 
-enum CropCategory { vegetable, fruit, grain, other }
+enum CropCategory { vegetable, fruit, grain, fish, spice, pulse, other }
 
 /// Reference list of crops shown as chips in Sell Crop (18) and used for
 /// market prices. Like the location list, this is bundled reference data.

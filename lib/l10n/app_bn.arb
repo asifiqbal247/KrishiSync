@@ -400,5 +400,233 @@
   "profileLanguage": "ভাষা",
   "profileRole": "ভূমিকা",
   "profilePhone": "মোবাইল নম্বর",
-  "tabComingTitle": "এই অংশটি পরের ধাপে আসছে"
+  "tabComingTitle": "এই অংশটি পরের ধাপে আসছে",
+  "navCollect": "সংগ্রহ",
+  "navDemand": "চাহিদা",
+  "buyerSearchHint": "ফসল, কৃষক বা এলাকা খুঁজুন",
+  "statOngoingOrders": "চলমান অর্ডার",
+  "statInTransit": "পথে আছে",
+  "statSafePay": "নিরাপদ লেনদেনে",
+  "statNewOffers": "নতুন অফার",
+  "countTi": "{count}টি",
+  "@countTi": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "catAll": "সব",
+  "catVegetable": "সবজি",
+  "catFruit": "ফল",
+  "catGrain": "শস্য",
+  "catFish": "মাছ",
+  "catSpice": "মসলা",
+  "catPulse": "ডাল",
+  "quickActions": "দ্রুত কাজ",
+  "actPostDemand": "চাহিদা পোস্ট করুন",
+  "actPostDemandSub": "কৃষকরা অফার দেবেন",
+  "actMarket": "বাজার",
+  "actMarketSub": "{count}টি ফসল",
+  "@actMarketSub": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "actProcurement": "সংগ্রহ ড্যাশবোর্ড",
+  "actProcurementSub": "চাহিদা ও সংগ্রহ",
+  "actBookTruck": "ট্রাক বুক করুন",
+  "actBookTruckSub": "ভাড়া তুলনা করে বুক",
+  "bannerPoolTitle": "নতুন: ডিজিটাল পুলিং",
+  "bannerPoolSub": "একাধিক কৃষক থেকে বড় অর্ডার",
+  "bannerTry": "চেষ্টা করুন",
+  "topSuppliers": "শীর্ষ সরবরাহকারী",
+  "recommendedCrops": "আপনার জন্য সুপারিশকৃত ফসল",
+  "onTimePct": "{pct}% সময়মতো",
+  "@onTimePct": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "marketTitle": "বাজার",
+  "marketSearchHint": "ফসল, এলাকা বা কৃষক খুঁজুন",
+  "resultsCount": "ফলাফল: {count}টি",
+  "@resultsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "filterLabel": "ফিল্টার: এলাকা, পরিমাণ, দাম",
+  "listingLine": "{qty} কেজি · {place}",
+  "@listingLine": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "listingLineRated": "{qty} কেজি · {place} · {rating}",
+  "@listingLineRated": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "filterTitle": "ফিল্টার",
+  "filterDistrict": "এলাকা (জেলা)",
+  "filterAnyDistrict": "সব জেলা",
+  "filterMinQty": "ন্যূনতম পরিমাণ",
+  "filterMaxPrice": "সর্বোচ্চ দাম (প্রতি কেজি)",
+  "filterApply": "ফিল্টার করুন",
+  "filterClear": "মুছুন",
+  "searchTitle": "খুঁজুন",
+  "searchHint": "আলু, টমেটো, এলাকা…",
+  "recentSearches": "সাম্প্রতিক খোঁজ",
+  "clearRecent": "মুছুন",
+  "popularNow": "জনপ্রিয় এখন",
+  "suggestions": "পরামর্শ",
+  "voiceGuide": "মাইক চেপে ফসলের নাম বলুন",
+  "suggestListings": "{count}টি তালিকা",
+  "@suggestListings": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "suggestListingsRange": "{count}টি তালিকা · ৳ {min}–{max}",
+  "@suggestListingsRange": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "noResults": "কোনো ফসল পাওয়া যায়নি",
+  "marketRangeFair": "বাজার দর ৳ {min}–{max} / কেজি · ন্যায্য দামের মধ্যে",
+  "@marketRangeFair": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "marketRangeOnly": "বাজার দর ৳ {min}–{max} / কেজি",
+  "@marketRangeOnly": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "qtyAvailable": "{qty} কেজি উপলব্ধ",
+  "@qtyAvailable": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldAvailable": "উপলব্ধ",
+  "fieldLocation": "অবস্থান",
+  "placeWithKm": "{place} ({km} কিমি)",
+  "@placeWithKm": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionFarmer": "কৃষক",
+  "sectionDelivery": "ডেলিভারি ও পরিবহন",
+  "fieldPayment": "পেমেন্ট",
+  "safePayment": "নিরাপদ লেনদেন",
+  "reviewsCount": "রিভিউ ({count})",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "similarCrops": "একই ধরনের ফসল",
+  "makeOffer": "অফার দিন",
+  "placeOrder": "অর্ডার করুন",
+  "farmerCardSub": "{verified}রেটিং {rating} · {count} লেনদেন",
+  "@farmerCardSub": {
+    "placeholders": {
+      "verified": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "verifiedDot": "যাচাইকৃত · ",
+  "profileLink": "প্রোফাইল",
+  "farmerProfileTitle": "কৃষকের প্রোফাইল",
+  "verifiedNid": "যাচাইকৃত (NID)",
+  "notVerified": "যাচাই বাকি",
+  "statRating": "রেটিং",
+  "statOnTime": "সময়মতো সরবরাহ",
+  "statCompleted": "সম্পন্ন লেনদেন",
+  "statComplaints": "মান অভিযোগ",
+  "ratingWithCount": "{rating} ({count})",
+  "@ratingWithCount": {
+    "placeholders": {
+      "rating": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "availableCrops": "উপলব্ধ ফসল",
+  "sendMessage": "বার্তা পাঠান",
+  "notAvailable": "—",
+  "qtyTon": "{t} টন",
+  "@qtyTon": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "backToHome": "হোম"
 }

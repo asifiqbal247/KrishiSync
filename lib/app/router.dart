@@ -14,6 +14,10 @@ import '../features/auth/presentation/otp_screen.dart';
 import '../features/auth/presentation/profile_setup_screen.dart';
 import '../features/auth/presentation/role_screen.dart';
 import '../features/auth/presentation/splash_screen.dart';
+import '../features/buyer/presentation/buyer_listing_screen.dart';
+import '../features/buyer/presentation/buyer_shell.dart';
+import '../features/buyer/presentation/farmer_profile_screen.dart';
+import '../features/buyer/presentation/search_screen.dart';
 import '../features/farmer/presentation/farmer_shell.dart';
 import '../features/farmer/presentation/listing_details_screen.dart';
 import '../features/farmer/presentation/my_listings_screen.dart';
@@ -41,6 +45,11 @@ abstract final class Routes {
   static const farmerSell = '/farmer/sell';
   static const farmerListings = '/farmer/listings';
   static String farmerListingDetails(String id) => '/farmer/listings/$id';
+
+  // Buyer
+  static const buyerSearch = '/buyer/search';
+  static String buyerListing(String id) => '/buyer/listing/$id';
+  static String buyerFarmer(String uid) => '/buyer/farmer/$uid';
 
   // Moderator (Admin may open these too)
   static String moderatorReview(String id) => '/moderator/review/$id';
@@ -188,11 +197,28 @@ final routerProvider = Provider<GoRouter>((ref) {
       // Admin uses the moderator tools until A1–A7 are built (Part 7).
       GoRoute(
           path: Routes.adminHome, builder: (_, _) => const ModeratorShell()),
-      for (final r in [UserRole.buyer, UserRole.transporter])
-        GoRoute(
-          path: Routes.homeFor(r),
-          builder: (_, _) => RoleHomePlaceholder(role: r),
-        ),
+      GoRoute(
+        path: Routes.buyerHome,
+        builder: (_, _) => const BuyerShell(),
+        routes: [
+          GoRoute(path: 'search', builder: (_, _) => const SearchScreen()),
+          GoRoute(
+            path: 'listing/:id',
+            builder: (_, s) =>
+                BuyerListingScreen(listingId: s.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'farmer/:uid',
+            builder: (_, s) =>
+                FarmerProfileScreen(farmerId: s.pathParameters['uid']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Routes.transporterHome,
+        builder: (_, _) =>
+            const RoleHomePlaceholder(role: UserRole.transporter),
+      ),
     ],
   );
 });

@@ -105,6 +105,16 @@ abstract final class AppUi {
   static const tipClipboard = '$_p/tip_clipboard.webp';
   static const tipStar = '$_p/tip_star.webp';
   static const avatarFarmer = '$_p/avatar_farmer.webp';
+  static const avatarBuyer = '$_p/avatar_buyer.webp';
+  static const catAll = '$_p/cat_all.webp';
+  static const catVegetable = '$_p/cat_vegetable.webp';
+  static const catFruit = '$_p/cat_fruit.webp';
+  static const catGrain = '$_p/cat_grain.webp';
+  static const catSpice = '$_p/cat_spice.webp';
+  static const glyphDemand = '$_p/glyph_demand.webp';
+  static const glyphMarket = '$_p/glyph_market.webp';
+  static const glyphTruck = '$_p/glyph_truck.webp';
+  static const speaker = '$_p/speaker.webp';
 }
 
 abstract final class AppData {

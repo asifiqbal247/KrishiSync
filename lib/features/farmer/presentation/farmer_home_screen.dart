@@ -10,8 +10,8 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/data/market_price_repository.dart';
-import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/widgets/ks_blocks.dart';
+import '../../../shared/widgets/ks_cards.dart';
 import '../../../shared/widgets/ks_home_header.dart';
 import '../../../shared/widgets/ks_search_bar.dart';
 import '../../../shared/widgets/ks_toast.dart';
@@ -62,16 +62,9 @@ class FarmerHomeScreen extends ConsumerWidget {
                 actionLabel: l.commonSeeAll,
                 onAction: soon),
             const SizedBox(height: AppSpacing.block),
-            SizedBox(
-              height: _PriceCard.height,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: prices.length,
-                separatorBuilder: (_, _) =>
-                    const SizedBox(width: AppSpacing.md),
-                itemBuilder: (_, i) => _PriceCard(price: prices[i]),
-              ),
-            ),
+            KsCarousel(children: [
+              for (final p in prices) KsPriceCard(price: p),
+            ]),
           ],
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.homeWhatToDo),
@@ -155,64 +148,6 @@ class FarmerHomeScreen extends ConsumerWidget {
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-/// "Card" in the market price carousel: 140 wide, white, #E0E0E0 border,
-/// radius 12, p 12, gap 6; 116×64 thumb radius 8; SemiBold 14 name,
-/// Regular 12 price, SemiBold 13 change (green up / red down).
-class _PriceCard extends StatelessWidget {
-  const _PriceCard({required this.price});
-  final MarketPrice price;
-
-  static const width = 140.0;
-  static const height = 164.0;
-  static const _thumbH = 64.0;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    final lang = Localizations.localeOf(context).languageCode;
-    final crop = CropCatalog.byKey(price.cropKey);
-    final pct = price.changePct;
-    final up = pct >= 0;
-    final pctText =
-        '${up ? '+' : '−'}${Fmt.digits(context, '${pct.abs()}')}%';
-    return Container(
-      width: width,
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.bgPage,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        border: Border.all(color: AppColors.cardBorder),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            child: SizedBox(
-              height: _thumbH,
-              width: double.infinity,
-              child: crop?.image == null
-                  ? const ColoredBox(color: AppColors.bgMuted)
-                  : Image.asset(crop!.image!, fit: BoxFit.cover),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.label),
-          Text(crop?.name(lang) ?? price.cropKey,
-              style: AppTypography.bodyMediumStrong.normal),
-          const SizedBox(height: AppSpacing.label),
-          Text(l.pricePerKg(Fmt.taka(context, price.price)),
-              style: AppTypography.caption.normal
-                  .withColor(AppColors.textSecondary)),
-          const SizedBox(height: AppSpacing.label),
-          Text(pctText,
-              style: AppTypography.bodySmallStrong.normal.withColor(
-                  up ? AppColors.textSuccess : AppColors.textError)),
         ],
       ),
     );
