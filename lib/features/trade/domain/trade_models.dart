@@ -41,6 +41,7 @@ class Offer {
     this.counterPrice,
     this.createdAt,
     this.expiresAt,
+    this.orderId,
   });
 
   final String id;
@@ -65,9 +66,16 @@ class Offer {
   final num? counterPrice;
   final DateTime? createdAt;
   final DateTime? expiresAt;
+  final String? orderId;
 
   String cropName(String lang) => lang == 'bn' ? cropNameBn : cropNameEn;
   num get total => pricePerKg * quantityKg;
+
+  /// Buyer must act: farmer countered, or accepted and not ordered yet.
+  bool get needsBuyer =>
+      lastBy == 'farmer' &&
+      (status == OfferStatus.countered ||
+          (status == OfferStatus.accepted && orderId == null));
 
   factory Offer.fromDoc(DocumentSnapshot<Map<String, dynamic>> d) {
     final m = d.data() ?? const {};
@@ -95,6 +103,7 @@ class Offer {
       counterPrice: m['counterPrice'] as num?,
       createdAt: ts('createdAt'),
       expiresAt: ts('expiresAt'),
+      orderId: m['orderId'] as String?,
     );
   }
 }

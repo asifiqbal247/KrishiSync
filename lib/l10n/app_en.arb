@@ -421,5 +421,7 @@
   "emptyOrdersTitle": "No orders yet",
   "emptyOrdersFarmerBody": "List your crops and buyers will send offers.",
   "emptyOrdersBuyerBody": "Order the crops you like from the market.",
-  "emptyOrdersBuyerCta": "Go to market"
+  "emptyOrdersBuyerCta": "Go to market",
+  "rowMyCounter": "My counter offer",
+  "rowOfferStatus": "Status"
 }

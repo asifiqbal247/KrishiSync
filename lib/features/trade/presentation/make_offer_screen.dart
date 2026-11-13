@@ -56,6 +56,7 @@ class _MakeOfferScreenState extends ConsumerState<MakeOfferScreen> {
       num.tryParse(Fmt.latinDigits(c.text.trim()));
 
   Future<void> _pickDate() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     final now = DateTime.now();
     final d = await showDatePicker(
       context: context,
@@ -63,6 +64,7 @@ class _MakeOfferScreenState extends ConsumerState<MakeOfferScreen> {
       lastDate: now.add(const Duration(days: 120)),
       initialDate: _date ?? now.add(const Duration(days: 2)),
     );
+    FocusManager.instance.primaryFocus?.unfocus();
     if (d != null) setState(() => _date = d);
   }
 

@@ -10,6 +10,7 @@ import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/services/bd_location_service.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
+import '../../auth/data/auth_repository.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/domain/listing.dart';
 
@@ -89,7 +90,12 @@ final marketFilterProvider =
 /// Selected tab in the buyer shell (Home can jump to Market).
 class BuyerTabController extends Notifier<int> {
   @override
-  int build() => 0;
+  int build() {
+    // Back to Home whenever the signed-in user changes (logout/login).
+    ref.watch(authStateProvider.select((u) => u.value?.uid));
+    return 0;
+  }
+
   void go(int i) => state = i;
 }
 

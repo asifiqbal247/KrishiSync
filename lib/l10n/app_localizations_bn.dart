@@ -1418,4 +1418,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get emptyOrdersBuyerCta => 'বাজার দেখুন';
+
+  @override
+  String get rowMyCounter => 'আমার পাল্টা অফার';
+
+  @override
+  String get rowOfferStatus => 'অবস্থা';
 }

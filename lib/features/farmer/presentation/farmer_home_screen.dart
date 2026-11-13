@@ -136,7 +136,19 @@ class FarmerHomeScreen extends ConsumerWidget {
                 child: KsActionTile(
                   icon: AppUi.glyphWallet,
                   title: l.homePayments,
-                  hint: l.homePaymentsSub(Fmt.taka(context, 0)),
+                  hint: l.homePaymentsSub(Fmt.taka(
+                      context,
+                      () {
+                        final now = DateTime.now();
+                        return (ref.watch(myOrdersProvider).value ??
+                                const <TradeOrder>[])
+                            .where((o) =>
+                                o.status != OrderStatus.cancelled &&
+                                o.createdAt != null &&
+                                o.createdAt!.year == now.year &&
+                                o.createdAt!.month == now.month)
+                            .fold<num>(0, (a, o) => a + o.cropTotal);
+                      }())),
                   onTap: soon,
                 ),
               ),

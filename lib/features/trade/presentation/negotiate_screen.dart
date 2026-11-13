@@ -90,11 +90,12 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
                   ? null
                   : context.push(Routes.buyerFarmer(o.farmerId)),
             ),
-            KsInfoRow(
-                iAmFarmer
-                    ? l.rowBuyerOffer
-                    : (o.lastBy == 'farmer' ? l.rowFarmerCounter : l.rowMyOffer),
-                l.priceLine(Fmt.number(context, o.pricePerKg))),
+            // Buyer's latest price, then the farmer's counter (if any).
+            KsInfoRow(iAmFarmer ? l.rowBuyerOffer : l.rowMyOffer,
+                l.priceLine(Fmt.number(context, o.buyerPrice ?? o.pricePerKg))),
+            if (o.counterPrice != null)
+              KsInfoRow(iAmFarmer ? l.rowMyCounter : l.rowFarmerCounter,
+                  l.priceLine(Fmt.number(context, o.counterPrice!))),
             KsInfoRow(iAmFarmer ? l.fieldMyPrice : l.fieldPrice,
                 l.priceLine(Fmt.number(context, o.listingPrice))),
             if (market != null)
@@ -113,7 +114,7 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
                     : l.hoursLeft(Fmt.digits(context, '${left.inHours}')),
               )
             else
-              KsInfoRow(l.fieldAvailability, _statusText(l, o.status)),
+              KsInfoRow(l.rowOfferStatus, _statusText(l, o.status)),
           ]),
           if (myTurn) ...[
             const SizedBox(height: AppSpacing.block),

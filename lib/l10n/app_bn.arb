@@ -963,5 +963,7 @@
   "emptyOrdersTitle": "এখনো কোনো অর্ডার নেই",
   "emptyOrdersFarmerBody": "ফসল তালিকাভুক্ত করুন, ক্রেতারা অফার পাঠাবে।",
   "emptyOrdersBuyerBody": "বাজার থেকে পছন্দের ফসল অর্ডার করুন।",
-  "emptyOrdersBuyerCta": "বাজার দেখুন"
+  "emptyOrdersBuyerCta": "বাজার দেখুন",
+  "rowMyCounter": "আমার পাল্টা অফার",
+  "rowOfferStatus": "অবস্থা"
 }

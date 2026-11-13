@@ -18,6 +18,8 @@ import '../../../shared/widgets/ks_search_bar.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
+import '../../trade/data/trade_repository.dart';
+import '../../trade/domain/trade_models.dart';
 import 'buyer_common.dart';
 
 /// 71 Buyer Home (Figma 292:2325). Demand / pooling / procurement sections
@@ -40,6 +42,19 @@ class BuyerHomeScreen extends ConsumerWidget {
         .toList();
     void soon() => KsToast.comingSoon(context);
     String n(int v) => l.countTi(Fmt.digits(context, '$v'));
+    final orders = ref.watch(myOrdersProvider).value ?? const <TradeOrder>[];
+    final offers = ref.watch(myOffersProvider).value ?? const <Offer>[];
+    final ongoing = orders.where((o) => o.status.isOngoing).length;
+    final moving = orders
+        .where((o) =>
+            o.status == OrderStatus.pickedUp ||
+            o.status == OrderStatus.inTransit)
+        .length;
+    // Safe payment = money held for orders not yet completed.
+    final held = orders
+        .where((o) => o.status.isOngoing)
+        .fold<num>(0, (a, o) => a + o.total);
+    final actionOffers = offers.where((o) => o.needsBuyer).toList();
 
     void openCategory(category) {
       ref
@@ -72,13 +87,13 @@ class BuyerHomeScreen extends ConsumerWidget {
             Expanded(
                 child: KsStatCard(
                     label: l.statOngoingOrders,
-                    value: n(0),
+                    value: n(ongoing),
                     onTap: () => ref.read(buyerTabProvider.notifier).go(2))),
             const SizedBox(width: AppSpacing.lg),
             Expanded(
                 child: KsStatCard(
                     label: l.statInTransit,
-                    value: n(0),
+                    value: n(moving),
                     onTap: () => ref.read(buyerTabProvider.notifier).go(2))),
           ]),
           const SizedBox(height: AppSpacing.block),
@@ -86,12 +101,16 @@ class BuyerHomeScreen extends ConsumerWidget {
             Expanded(
                 child: KsStatCard(
                     label: l.statSafePay,
-                    value: Fmt.taka(context, 0),
-                    onTap: soon)),
+                    value: Fmt.taka(context, held),
+                    onTap: () => ref.read(buyerTabProvider.notifier).go(2))),
             const SizedBox(width: AppSpacing.lg),
             Expanded(
                 child: KsStatCard(
-                    label: l.statNewOffers, value: n(0), onTap: soon)),
+                    label: l.statNewOffers,
+                    value: n(actionOffers.length),
+                    onTap: () => actionOffers.length == 1
+                        ? context.push(Routes.offer(actionOffers.first.id))
+                        : context.push(Routes.notifications))),
           ]),
           const SizedBox(height: AppSpacing.block),
           SizedBox(

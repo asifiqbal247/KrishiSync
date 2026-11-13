@@ -1420,4 +1420,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emptyOrdersBuyerCta => 'Go to market';
+
+  @override
+  String get rowMyCounter => 'My counter offer';
+
+  @override
+  String get rowOfferStatus => 'Status';
 }

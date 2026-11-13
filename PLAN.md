@@ -3,9 +3,9 @@
 ## Current status
 - **Phase:** Part 5 (offers, orders, notifications) built 2026-11-14. Rules + indexes deployed.
 - **Built in Part 5:** 77 Make Offer, 24 Buyer Offers (farmer), 25 Negotiate (both roles) + D1 confirm + 26 success modal, 78 Place Order (payment = `PaymentService` placeholder), 40/105 Orders tab, 42/106 Order Details (timeline), Notifications (bell on both homes), farmer home "new offers" card, moderator approve/reject notifies farmer. Shared state widgets 41 Empty / 212 Error / 214 No Internet (`ks_states.dart`) + Button/Warning.
-- **Tested on emulator:** buyer home, notifications (empty), Orders tab empty state (41) → "Go to market" CTA.
-- **Blocked:** offer → negotiate → order flow needs an approved listing → needs `role: moderator` on users doc of +8801700000004 (Asif, Firebase console).
-- **Next step:** after approval test, E2E test offer/order flow; then Part 6 — transport (transporter screens, booking, delivery status, ratings).
+- **Tested on emulator (E2E, 2026-11-14):** moderator (01700000004) approves tomato listing → buyer sees it in Market → Make Offer ৳35 × 200 kg → farmer home "new offer" card → farmer counters ৳37 → buyer gets notification → accepts → orders at ৳37 → order **KS-1048** (৳9,474 incl. ৳2,000 transport + 1% fee) → farmer sees order + "৳7,400 this month". No rules errors.
+- **Fixed during test:** negotiate rows (buyer price vs farmer counter shown separately), offer status label, buyer tab resets to Home after login, keyboard no longer reopens after date picker, buyer home stats + farmer payments now from real orders/offers.
+- **Next step:** Part 6 — transport (transporter screens, booking, pickup/delivery status, ratings).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.

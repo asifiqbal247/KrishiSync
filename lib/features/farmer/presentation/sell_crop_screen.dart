@@ -142,6 +142,7 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
   }
 
   Future<void> _pickDate() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     final now = DateTime.now();
     final d = await showDatePicker(
       context: context,
@@ -149,6 +150,7 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
       lastDate: now.add(const Duration(days: 180)),
       initialDate: _date ?? now,
     );
+    FocusManager.instance.primaryFocus?.unfocus();
     if (d != null) {
       setState(() {
         _date = d;

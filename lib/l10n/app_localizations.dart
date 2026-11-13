@@ -2629,6 +2629,18 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বাজার দেখুন'**
   String get emptyOrdersBuyerCta;
+
+  /// No description provided for @rowMyCounter.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার পাল্টা অফার'**
+  String get rowMyCounter;
+
+  /// No description provided for @rowOfferStatus.
+  ///
+  /// In bn, this message translates to:
+  /// **'অবস্থা'**
+  String get rowOfferStatus;
 }
 
 class _AppLocalizationsDelegate
