@@ -1,10 +1,22 @@
 # KrishiSync — Plan
 
 ## Current status
-- **Phase:** 1 (foundation). Plan approved 2026-11-13.
-- **Done:** Phase 0. Phase 1.1 in progress (Flutter project + git).
-- **Waiting for:** Asif's choice of image storage on the Spark plan (see "Spark plan limits").
-- **Next step:** Phase 1.2 (Firebase setup: flutterfire configure, Phone Auth with test numbers, Firestore).
+- **Phase:** Part 1 (foundation) nearly done + Part 2 (auth screens) code written.
+- **Done:**
+  - 1.1 project + git (pushed to asifiqbal247/KrishiSync).
+  - 1.2 FlutterFire configured (Android app registered, `firebase_options.dart` + `google-services.json` git-ignored). Firebase CLI logged in, project `krishisync-678d2`.
+  - Android NDK 28.2.13676358 installed (needed by Firebase plugins).
+  - 1.5 Theme tokens (`lib/core/theme/*`), fonts (Hind Siliguri 400–700 + Noto Sans Bengali), 36 Figma icons (SVG), 27 images (WebP), BD location data (MIT).
+  - 1.6 l10n scaffold (bn template + en), language + onboarding prefs.
+  - 1.7 Shared widgets: AppIcon, KsAppBar, KsButton (primary/text), KsTextField, KsSelectField, KsOptionCard, KsUploadBox, KsPageDots, KsListItem, KsPill, KsSearchBar, photo picker sheet.
+  - 1.8 go_router with role redirects (splash → language → onboarding → login/otp → role → profile → role home).
+  - `ImageStorageService` (Cloudinary, unsigned preset in git-ignored `lib/core/config/app_secrets.dart`).
+  - Part 2 screens coded: 01 Splash, 02 Language, 03–05 Onboarding, 06 Login, 07 OTP, 14 Role, 08 Profile Setup, 09–12 Location picker (GPS → nearest upazila offline, saved addresses, OSM map pin).
+  - `firestore.rules` v1 (users), `firebase.json`/`.firebaserc` for deploy.
+  - `flutter analyze`: 0 issues. `flutter test`: 3/3 pass.
+- **Blocked on Asif (console):** create Firestore DB (asia-south1), enable Phone sign-in, add test numbers, add SHA-1/SHA-256.
+- **Open question:** app name — Figma splash now says "Golaghor" with a new logo; code uses "KrishiSync" text + the Figma logo image.
+- **Next step:** deploy rules → run on emulator → E2E test (test-phone login → users doc in Firestore → profile photo to Cloudinary) → compare with Figma → commit/push → Part 3.
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -245,7 +257,7 @@ counters/orders    next: int
 - [x] Asif approves plan, scope tier, data model, admin/mod screen list
 
 ### Phase 1 — Foundation
-- [ ] 1.1 `flutter create` (package name from Asif), git init, remote, first commit
+- [x] 1.1 `flutter create` (com.asif.krishisync), git init, remote, first commit — **push pending (403)**
 - [ ] 1.2 Firebase: `flutterfire configure`, enable Phone Auth + test numbers, Firestore (Spark plan)
 - [ ] 1.3 First rules + indexes files, deploy with Firebase CLI
 - [ ] 1.4 End-to-end test: test-phone login → write/read Firestore doc → upload image via `ImageStorageService`

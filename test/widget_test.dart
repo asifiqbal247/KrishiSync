@@ -1,30 +1,28 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:material_ui/material_ui.dart';
-
-import 'package:krishisync/main.dart';
+import 'package:krishisync/core/l10n/formatters.dart';
+import 'package:krishisync/features/auth/presentation/phone_auth_controller.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Fmt', () {
+    test('Bangla digits round trip', () {
+      expect(Fmt.bnDigits('৳ 38 / 12,500'), '৳ ৩৮ / ১২,৫০০');
+      expect(Fmt.latinDigits('০১৭১২৩৪৫৬৭৮'), '01712345678');
+    });
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  group('BdPhone', () {
+    test('normalizes valid numbers', () {
+      expect(BdPhone.normalizeLocal('01712345678'), '01712345678');
+      expect(BdPhone.normalizeLocal('+8801712345678'), '01712345678');
+      expect(BdPhone.normalizeLocal('০১৭১২-৩৪৫৬৭৮'), '01712345678');
+      expect(BdPhone.toE164('01712345678'), '+8801712345678');
+      expect(BdPhone.pretty('01712345678'), '01712-345678');
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('rejects invalid numbers', () {
+      expect(BdPhone.normalizeLocal('0171234567'), isNull);
+      expect(BdPhone.normalizeLocal('01212345678'), isNull);
+      expect(BdPhone.normalizeLocal('abc'), isNull);
+    });
   });
 }

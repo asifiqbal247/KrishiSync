@@ -63,3 +63,6 @@ service-account*.json
 .firebase/
 firebase-debug.log
 firestore-debug.log
+
+# Local app secrets (Cloudinary preset etc.)
+lib/core/config/app_secrets.dart

@@ -1,0 +1,132 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../../../core/l10n/locale_controller.dart';
+import '../../../core/theme/app_assets.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_dimens.dart';
+import '../../../core/theme/app_typography.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../../shared/widgets/ks_app_bar.dart';
+import '../../../shared/widgets/ks_button.dart';
+import '../../../shared/widgets/ks_page_dots.dart';
+
+/// 03–05 Onboarding (Figma 292:2570, 299:12376, 299:12393).
+class OnboardingScreen extends ConsumerStatefulWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
+  final _pager = PageController();
+  int _page = 0;
+
+  static const _imageHeight = 380.0;
+  static const _images = [
+    AppImages.farmerField,
+    AppImages.handshake,
+    AppImages.truckRoad,
+  ];
+
+  @override
+  void dispose() {
+    _pager.dispose();
+    super.dispose();
+  }
+
+  void _finish() => ref.read(onboardingDoneProvider.notifier).complete();
+
+  void _next() {
+    if (_page == _images.length - 1) {
+      _finish();
+    } else {
+      _pager.nextPage(
+          duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
+    }
+  }
+
+  void _back() {
+    if (_page > 0) {
+      _pager.previousPage(
+          duration: const Duration(milliseconds: 250), curve: Curves.easeOut);
+    } else {
+      // Back from the first page returns to language selection.
+      ref.read(localeProvider.notifier).reset();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final titles = [l.onb1Title, l.onb2Title, l.onb3Title];
+    final bodies = [l.onb1Body, l.onb2Body, l.onb3Body];
+    final last = _page == _images.length - 1;
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _back();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.bgPage,
+        appBar: KsAppBar(onBack: _back),
+        body: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView.builder(
+                  controller: _pager,
+                  itemCount: _images.length,
+                  onPageChanged: (i) => setState(() => _page = i),
+                  itemBuilder: (_, i) => SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
+                        AppSpacing.contentTop, AppSpacing.screen, 0),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(AppRadius.xl),
+                          child: Image.asset(_images[i],
+                              height: _imageHeight,
+                              width: double.infinity,
+                              fit: BoxFit.cover),
+                        ),
+                        const SizedBox(height: AppSpacing.block),
+                        KsPageDots(count: _images.length, index: i),
+                        const SizedBox(height: AppSpacing.block),
+                        Text(titles[i],
+                            textAlign: TextAlign.center,
+                            style: AppTypography.headingBold22.normal),
+                        const SizedBox(height: AppSpacing.block),
+                        Text(bodies[i],
+                            textAlign: TextAlign.center,
+                            style: AppTypography.bodyMedium.normal
+                                .withColor(AppColors.textSecondary)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
+                    AppSpacing.block + AppSpacing.xs, AppSpacing.screen,
+                    AppSpacing.lg),
+                child: Column(
+                  children: [
+                    KsButton(
+                        label: last ? l.onbStart : l.onbNext,
+                        onPressed: _next),
+                    const SizedBox(height: AppSpacing.block),
+                    KsButton.text(label: l.onbSkip, onPressed: _finish),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

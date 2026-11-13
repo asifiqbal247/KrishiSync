@@ -1,0 +1,153 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../core/l10n/locale_controller.dart';
+import '../features/auth/data/auth_repository.dart';
+import '../features/auth/data/user_repository.dart';
+import '../features/auth/domain/app_user.dart';
+import '../features/auth/presentation/language_screen.dart';
+import '../features/auth/presentation/location_picker_screen.dart';
+import '../features/auth/presentation/login_screen.dart';
+import '../features/auth/presentation/onboarding_screen.dart';
+import '../features/auth/presentation/otp_screen.dart';
+import '../features/auth/presentation/profile_setup_screen.dart';
+import '../features/auth/presentation/role_screen.dart';
+import '../features/auth/presentation/splash_screen.dart';
+import '../shared/presentation/role_home_placeholder.dart';
+
+abstract final class Routes {
+  static const splash = '/splash';
+  static const language = '/language';
+  static const onboarding = '/onboarding';
+  static const login = '/login';
+  static const otp = '/otp';
+  static const role = '/role';
+  static const profileSetup = '/profile-setup';
+  static const locationPicker = '/location';
+
+  static const farmerHome = '/farmer';
+  static const buyerHome = '/buyer';
+  static const transporterHome = '/transporter';
+  static const moderatorHome = '/moderator';
+  static const adminHome = '/admin';
+
+  static String homeFor(UserRole role) => switch (role) {
+        UserRole.farmer => farmerHome,
+        UserRole.buyer => buyerHome,
+        UserRole.transporter => transporterHome,
+        UserRole.moderator => moderatorHome,
+        UserRole.admin => adminHome,
+      };
+
+  static const _preAuth = {splash, language, onboarding, login, otp};
+  static bool isPreAuth(String loc) => _preAuth.contains(loc);
+}
+
+/// Splash stays visible at least this long (Figma 01).
+final splashMinElapsedProvider = FutureProvider<void>(
+    (_) => Future<void>.delayed(const Duration(milliseconds: 1500)));
+
+/// Re-runs go_router redirects whenever auth / profile / prefs change.
+class _RouterRefresh extends ChangeNotifier {
+  _RouterRefresh(Ref ref) {
+    void ping(_, _) => notifyListeners();
+    ref.listen(authStateProvider, ping);
+    ref.listen(currentUserProvider, ping);
+    ref.listen(localeProvider, ping);
+    ref.listen(onboardingDoneProvider, ping);
+    ref.listen(splashMinElapsedProvider, ping);
+  }
+}
+
+final routerProvider = Provider<GoRouter>((ref) {
+  final refresh = _RouterRefresh(ref);
+  ref.onDispose(refresh.dispose);
+
+  String? redirect(GoRouterState state) {
+    final loc = state.matchedLocation;
+    final splashDone = ref.read(splashMinElapsedProvider).hasValue;
+    final auth = ref.read(authStateProvider);
+    final user = ref.read(currentUserProvider);
+
+    // 1. Still loading anything → splash.
+    if (!splashDone || auth.isLoading) {
+      return loc == Routes.splash ? null : Routes.splash;
+    }
+    // 2. Language not chosen.
+    if (ref.read(localeProvider) == null) {
+      return loc == Routes.language ? null : Routes.language;
+    }
+    // 3. Onboarding not seen.
+    if (!ref.read(onboardingDoneProvider)) {
+      return loc == Routes.onboarding ? null : Routes.onboarding;
+    }
+    // 4. Signed out → login / otp only.
+    final fbUser = auth.value;
+    if (fbUser == null) {
+      return (loc == Routes.login || loc == Routes.otp) ? null : Routes.login;
+    }
+    // 5. Signed in but profile doc still loading / being created.
+    if (user.isLoading || user.value == null) {
+      return loc == Routes.splash ? null : Routes.splash;
+    }
+    final u = user.value!;
+    // 6. No role yet.
+    if (!u.hasRole) return loc == Routes.role ? null : Routes.role;
+    // 7. Profile incomplete (location picker is part of that step).
+    if (!u.profileComplete) {
+      return (loc == Routes.profileSetup || loc == Routes.locationPicker)
+          ? null
+          : Routes.profileSetup;
+    }
+    // 8. Ready: leave auth screens for the role home.
+    if (Routes.isPreAuth(loc) ||
+        loc == Routes.role ||
+        loc == Routes.profileSetup) {
+      return Routes.homeFor(u.role!);
+    }
+    // 9. Block other roles' areas.
+    final home = Routes.homeFor(u.role!);
+    const areas = [
+      Routes.farmerHome,
+      Routes.buyerHome,
+      Routes.transporterHome,
+      Routes.moderatorHome,
+      Routes.adminHome,
+    ];
+    for (final a in areas) {
+      if (loc.startsWith(a) && a != home) {
+        // Admin may open moderator screens.
+        if (u.role == UserRole.admin && a == Routes.moderatorHome) continue;
+        return home;
+      }
+    }
+    return null;
+  }
+
+  return GoRouter(
+    initialLocation: Routes.splash,
+    refreshListenable: refresh,
+    redirect: (_, state) => redirect(state),
+    routes: [
+      GoRoute(path: Routes.splash, builder: (_, _) => const SplashScreen()),
+      GoRoute(path: Routes.language, builder: (_, _) => const LanguageScreen()),
+      GoRoute(
+          path: Routes.onboarding, builder: (_, _) => const OnboardingScreen()),
+      GoRoute(path: Routes.login, builder: (_, _) => const LoginScreen()),
+      GoRoute(path: Routes.otp, builder: (_, _) => const OtpScreen()),
+      GoRoute(path: Routes.role, builder: (_, _) => const RoleScreen()),
+      GoRoute(
+          path: Routes.profileSetup,
+          builder: (_, _) => const ProfileSetupScreen()),
+      GoRoute(
+          path: Routes.locationPicker,
+          builder: (_, _) => const LocationPickerScreen()),
+      for (final r in UserRole.values)
+        GoRoute(
+          path: Routes.homeFor(r),
+          builder: (_, _) => RoleHomePlaceholder(role: r),
+        ),
+    ],
+  );
+});

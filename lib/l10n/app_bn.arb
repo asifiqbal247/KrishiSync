@@ -1,0 +1,172 @@
+{
+  "@@locale": "bn",
+  "appName": "KrishiSync",
+  "splashTagline": "কৃষির সাথে, আপনার পাশে",
+  "splashVersion": "সংস্করণ {version}",
+  "@splashVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "langTitleBn": "ভাষা নির্বাচন করুন",
+  "langTitleEn": "Choose your language",
+  "langBangla": "বাংলা",
+  "langBanglaSub": "Bangla",
+  "langEnglish": "English",
+  "langEnglishSub": "ইংরেজি",
+  "langContinue": "এগিয়ে যান",
+  "onb1Title": "সরাসরি ক্রেতার কাছে বিক্রি করুন",
+  "onb1Body": "মধ্যস্বত্বভোগী ছাড়াই ন্যায্য দাম পান। নিজের ফসলের দাম নিজেই ঠিক করুন।",
+  "onb2Title": "নিরাপদ লেনদেনে নিশ্চিন্ত থাকুন",
+  "onb2Body": "মাল গাড়িতে উঠলেই কৃষকের টাকা, ক্রেতার কাছে পৌঁছালেই ট্রান্সপোর্টারের টাকা।",
+  "onb3Title": "সহজে ট্রাক, ঝামেলা ছাড়াই পরিবহন",
+  "onb3Body": "ক্রেতা ট্রাক বুক করেন। কৃষক ও ক্রেতা দুজনেই ট্রাকের অবস্থান দেখতে পান।",
+  "onbNext": "পরবর্তী",
+  "onbStart": "শুরু করুন",
+  "onbSkip": "এড়িয়ে যান",
+  "loginTitle": "লগইন / নিবন্ধন",
+  "loginHeading": "আপনার মোবাইল নম্বর দিন",
+  "loginSub": "আমরা একটি ৬ সংখ্যার কোড পাঠাব",
+  "loginPhoneLabel": "মোবাইল নম্বর",
+  "loginPhoneHint": "01X XXXX XXXX",
+  "loginCountryCode": "+880",
+  "loginTerms": "চালিয়ে গেলে আপনি শর্তাবলী ও গোপনীয়তা নীতিতে সম্মত হচ্ছেন।",
+  "loginSendCode": "কোড পাঠান",
+  "loginInvalidPhone": "সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন",
+  "otpTitle": "কোড যাচাই",
+  "otpHeading": "কোড লিখুন",
+  "otpSub": "{phone} নম্বরে পাঠানো ৬ সংখ্যার কোড লিখুন",
+  "@otpSub": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "otpNoCode": "কোড পাননি?",
+  "otpResendIn": "আবার পাঠান ({time})",
+  "@otpResendIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "otpResend": "আবার পাঠান",
+  "otpVerify": "যাচাই করুন",
+  "otpWrong": "কোডটি সঠিক নয়। আবার চেষ্টা করুন।",
+  "roleTitle": "আপনি কে?",
+  "roleSub": "আপনার ভূমিকায় চাপ দিন",
+  "roleFarmer": "কৃষক",
+  "roleFarmerSub": "ফসল বিক্রি করুন, ক্রেতা খুঁজুন",
+  "roleBuyer": "ক্রেতা (ব্যবসা)",
+  "roleBuyerSub": "ফসল কিনুন, সরবরাহ সংগ্রহ করুন",
+  "roleTransporter": "পরিবহনকারী",
+  "roleTransporterSub": "লোড খুঁজুন, ট্রিপ সম্পন্ন করুন",
+  "roleModerator": "মডারেটর",
+  "roleAdmin": "অ্যাডমিন",
+  "profileSetupTitle": "প্রোফাইল তৈরি",
+  "profileAddPhoto": "প্রোফাইল ছবি যোগ করুন",
+  "profileFullName": "পুরো নাম",
+  "profileFullNameHint": "আপনার নাম লিখুন",
+  "profileDivision": "বিভাগ",
+  "profileDistrictUpazilaUnion": "জেলা › উপজেলা › ইউনিয়ন",
+  "profileVillage": "গ্রাম / পাড়া",
+  "profileVillageHint": "নাম লিখুন বা ম্যাপে পিন দিন",
+  "profileNid": "NID নম্বর (ঐচ্ছিক)",
+  "profileNidHint": "যাচাইয়ের জন্য",
+  "profileDone": "সম্পন্ন করুন",
+  "selectHint": "নির্বাচন করুন",
+  "commonBack": "পেছনে",
+  "commonSeeAll": "সব দেখুন",
+  "commonSearch": "খুঁজুন",
+  "commonRetry": "আবার চেষ্টা করুন",
+  "commonCancel": "বাতিল",
+  "commonConfirm": "নিশ্চিত করুন",
+  "commonSave": "সংরক্ষণ করুন",
+  "commonLoading": "লোড হচ্ছে…",
+  "commonRequired": "এই ঘরটি পূরণ করুন",
+  "errorGeneric": "কিছু একটা সমস্যা হয়েছে। আবার চেষ্টা করুন।",
+  "errorNetwork": "ইন্টারনেট সংযোগ নেই",
+  "errorUpload": "ছবি আপলোড হয়নি। আবার চেষ্টা করুন।",
+  "errorPermission": "এই কাজের অনুমতি আপনার নেই",
+  "unitKg": "কেজি",
+  "currencySymbol": "৳",
+  "errorTooManyRequests": "অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।",
+  "locTitleDivision": "এলাকা বাছুন",
+  "locTitleDistrict": "জেলা বাছুন",
+  "locTitleUpazila": "উপজেলা বাছুন",
+  "locTitleVillage": "গ্রাম ও ঠিকানা",
+  "locUseGps": "আমার বর্তমান অবস্থান ব্যবহার করুন",
+  "locGps": "GPS",
+  "locGpsLocating": "অবস্থান খোঁজা হচ্ছে…",
+  "locGpsFailed": "অবস্থান পাওয়া যায়নি। লোকেশন চালু করে আবার চেষ্টা করুন।",
+  "locRecent": "সাম্প্রতিক ঠিকানা",
+  "locMapPinSaved": "ম্যাপ পিন সেভ করা",
+  "locSearchAll": "বিভাগ, জেলা, উপজেলা বা গ্রাম খুঁজুন",
+  "locSearchDistrict": "জেলা খুঁজুন",
+  "locSearchUpazila": "উপজেলা খুঁজুন",
+  "locStep": "ধাপ {step}/{total} · {level}",
+  "@locStep": {
+    "placeholders": {
+      "step": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "locLevelDivision": "বিভাগ",
+  "locLevelDistrict": "জেলা",
+  "locLevelUpazila": "উপজেলা",
+  "locLevelUnionVillage": "ইউনিয়ন ও গ্রাম",
+  "locDivisionPill": "{name} বিভাগ",
+  "@locDivisionPill": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "locDistrictCount": "{count}টি জেলা",
+  "@locDistrictCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "locUpazilaCount": "{count}টি উপজেলা",
+  "@locUpazilaCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "locUnionLabel": "ইউনিয়ন / পৌরসভা",
+  "locUnionHint": "তালিকা থেকে বাছুন",
+  "locVillageLabel": "গ্রাম / পাড়া / মহল্লা",
+  "locVillageHint": "নাম লিখুন বা মাইকে বলুন",
+  "locLandmarkLabel": "চেনার চিহ্ন (ঐচ্ছিক)",
+  "locLandmarkHint": "যেমন: বাজারের পাশে, স্কুলের সামনে",
+  "locWhyTitle": "কেন সঠিক ঠিকানা দরকার",
+  "locWhyBody": "ট্রাক ঠিক জায়গায় পৌঁছাবে, কাছের ক্রেতা ও লোড মিলবে।",
+  "locSaveAs": "এই ঠিকানা সেভ করুন (পরে এক ট্যাপে বাছতে)",
+  "locTagHome": "বাড়ি",
+  "locTagFarm": "খামার",
+  "locTagStore": "গুদাম",
+  "locTagOther": "অন্যান্য",
+  "locConfirm": "এই ঠিকানা নিশ্চিত করুন",
+  "locNoResults": "কিছু পাওয়া যায়নি",
+  "photoCamera": "ক্যামেরা দিয়ে তুলুন",
+  "photoGallery": "গ্যালারি থেকে নিন",
+  "homeComingSoon": "এই অংশটি তৈরি হচ্ছে",
+  "logout": "লগআউট"
+}

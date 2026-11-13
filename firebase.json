@@ -1,0 +1,25 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "krishisync-678d2",
+          "appId": "1:559039700430:android:698ab6d8079f05e1281f9f",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "krishisync-678d2",
+          "configurations": {
+            "android": "1:559039700430:android:698ab6d8079f05e1281f9f"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

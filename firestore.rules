@@ -1,0 +1,72 @@
+rules_version = '2';
+
+// KrishiSync Firestore rules. Role checks live HERE, not only in the UI.
+// Roles: farmer | buyer | transporter | moderator | admin
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- helpers ----------
+    function signedIn() { return request.auth != null; }
+    function uid() { return request.auth.uid; }
+    function userDoc(id) { return get(/databases/$(database)/documents/users/$(id)); }
+    function me() { return userDoc(uid()).data; }
+    function myRole() { return me().get('role', null); }
+    function isActive() { return signedIn() && me().get('status', 'active') == 'active'; }
+    function isAdmin() { return isActive() && myRole() == 'admin'; }
+    function isMod() { return isActive() && (myRole() == 'moderator' || myRole() == 'admin'); }
+    function changed() { return request.resource.data.diff(resource.data).affectedKeys(); }
+    function onlyChanges(keys) { return changed().hasOnly(keys); }
+
+    // ---------- users/{userId} ----------
+    match /users/{userId} {
+      // Names, photos, district and ratings are shown to trade partners.
+      allow read: if signedIn();
+
+      // First login: create own doc with safe defaults, no role yet.
+      allow create: if signedIn() && userId == uid()
+        && request.resource.data.keys().hasOnly(
+             ['phone', 'name', 'language', 'status', 'verification',
+              'ratingAvg', 'ratingCount', 'createdAt', 'updatedAt'])
+        && request.resource.data.phone == request.auth.token.phone_number
+        && request.resource.data.status == 'active'
+        && request.resource.data.verification == 'none'
+        && request.resource.data.ratingAvg == 0
+        && request.resource.data.ratingCount == 0;
+
+      // Owner edits own profile. Cannot touch status / ratings / phone.
+      // Role: only once, only a self-selectable role.
+      // Verification: may only move to 'pending' (submitting an NID).
+      allow update: if isSelfUpdateOk(userId)
+                    || isModVerificationUpdate()
+                    || isAdmin();
+
+      function isSelfUpdateOk(userId) {
+        return signedIn() && userId == uid()
+          && me().get('status', 'active') == 'active'
+          && onlyChanges(['name', 'photoUrl', 'language', 'location', 'nidNumber',
+                          'verification', 'role', 'savedAddresses', 'updatedAt'])
+          && (!('role' in changed())
+              || (resource.data.get('role', null) == null
+                  && request.resource.data.role in ['farmer', 'buyer', 'transporter']))
+          && (!('verification' in changed())
+              || request.resource.data.verification == 'pending')
+          && (!('name' in changed())
+              || (request.resource.data.name is string
+                  && request.resource.data.name.size() <= 80));
+      }
+
+      function isModVerificationUpdate() {
+        return isMod()
+          && onlyChanges(['verification', 'verifiedBy', 'verifiedAt', 'updatedAt'])
+          && request.resource.data.verification in ['verified', 'rejected', 'pending'];
+      }
+
+      allow delete: if isAdmin();
+    }
+
+    // Everything else is closed until its Part adds rules.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

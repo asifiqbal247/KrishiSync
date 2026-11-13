@@ -111,6 +111,24 @@ Screen side padding: 16 (content width 328 on a 360 frame).
 | Shadow/Medium | `#0000001A` (10%) | 0, 4 | 12 | 0 |
 | Shadow/Large | `#00000024` (14%) | 0, 8 | 24 | 0 |
 
+## Extra values used by HF components (not in the scales above)
+Found while building; kept as named tokens in `app_dimens.dart` / `app_colors.dart`.
+
+| What | Value |
+|---|---|
+| Button radius (all sizes) | 14 |
+| Action tile radius | 18 |
+| Chip / Pill radius | 22 |
+| Bottom-nav icon wrap radius | 6 |
+| Button/Primary shadow (in screens) | 0 4 5 `rgba(46,125,50,.32)` |
+| List item shadow | 0 4 7 `rgba(31,51,31,.08)` |
+| Action tile shadow | 0 4 6 `rgba(46,125,51,.10)` |
+| Screen content | padding 8 top / 16 sides, 14 gap between blocks |
+| Input | label Medium 14, gap 6, field 48 high, radius 8, px 12 |
+| Upload box | 1.2px dashed brand border, radius 14, subtle fill, 61.4 high |
+| Option card (02, 14) | radius 12, p 16, selected border 2 brand, 44 image radius 10, 20 radio |
+| Most HF text uses `line-height: normal` | `AppTextStyleX.normal` |
+
 ## Components (page HF – Components `292:27`)
 | Component | Node | Size |
 |---|---|---|
