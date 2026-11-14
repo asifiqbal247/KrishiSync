@@ -10,6 +10,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_pill.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../data/listing_repository.dart';
 import '../domain/listing.dart';
 import 'listing_widgets.dart';
@@ -74,7 +75,7 @@ class _MyListingsScreenState extends ConsumerState<MyListingsScreen> {
               Expanded(
                 child: async.when(
                   loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                      const KsSkeletonList(padded: false),
                   error: (_, _) => Center(
                       child: Text(l.errorGeneric,
                           style: AppTypography.bodyMedium)),

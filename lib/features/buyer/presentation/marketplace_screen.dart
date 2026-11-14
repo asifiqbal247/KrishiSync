@@ -18,6 +18,7 @@ import '../../../shared/widgets/ks_cards.dart';
 import '../../../shared/widgets/ks_input.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_search_bar.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../farmer/data/listing_repository.dart';
 import '../../farmer/domain/listing.dart';
 import 'buyer_common.dart';
@@ -74,7 +75,7 @@ class MarketplaceScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.block),
           ...async.when(
-            loading: () => [const Center(child: CircularProgressIndicator())],
+            loading: () => [const KsSkeletonList(padded: false)],
             error: (_, _) => [Text(l.errorGeneric)],
             data: (all) {
               final shown = all.where(filter.matches).toList();

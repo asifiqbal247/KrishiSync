@@ -12,6 +12,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_states.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
@@ -92,7 +93,7 @@ class NotificationsScreen extends ConsumerWidget {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.notifTitle),
       body: async.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const KsSkeletonList(),
         error: (e, _) => KsErrorState.from(e,
             onRetry: () => ref.invalidate(myNotificationsProvider)),
         data: (list) => list.isEmpty

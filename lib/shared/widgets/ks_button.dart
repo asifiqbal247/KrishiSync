@@ -17,6 +17,7 @@ class KsButton extends StatelessWidget {
     this.type = KsButtonType.primary,
     this.loading = false,
     this.expand = true,
+    this.compact = false,
   });
 
   const KsButton.outline({
@@ -25,6 +26,7 @@ class KsButton extends StatelessWidget {
     required this.onPressed,
     this.loading = false,
     this.expand = true,
+    this.compact = false,
   }) : type = KsButtonType.outline;
 
   const KsButton.secondary({
@@ -33,6 +35,7 @@ class KsButton extends StatelessWidget {
     required this.onPressed,
     this.loading = false,
     this.expand = true,
+    this.compact = false,
   }) : type = KsButtonType.secondary;
 
   const KsButton.destructive({
@@ -41,6 +44,7 @@ class KsButton extends StatelessWidget {
     required this.onPressed,
     this.loading = false,
     this.expand = true,
+    this.compact = false,
   }) : type = KsButtonType.destructive;
 
   /// Button/Warning: accent (yellow) fill, dark label, yellow shadow.
@@ -50,6 +54,7 @@ class KsButton extends StatelessWidget {
     required this.onPressed,
     this.loading = false,
     this.expand = true,
+    this.compact = false,
   }) : type = KsButtonType.warning;
 
   const KsButton.text({
@@ -58,6 +63,7 @@ class KsButton extends StatelessWidget {
     required this.onPressed,
     this.loading = false,
     this.expand = true,
+    this.compact = false,
   }) : type = KsButtonType.text;
 
   final String label;
@@ -65,6 +71,11 @@ class KsButton extends StatelessWidget {
   final KsButtonType type;
   final bool loading;
   final bool expand;
+
+  /// Smaller side padding (16) for two buttons side by side in dialogs.
+  final bool compact;
+
+  double get _px => compact ? AppSpacing.lg : AppSpacing.s2xl;
 
   bool get _enabled => onPressed != null && !loading;
 
@@ -110,7 +121,7 @@ class KsButton extends StatelessWidget {
           highlightColor: AppColors.bgBrandPressed,
           splashColor: AppColors.bgBrandHover,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2xl),
+            padding: EdgeInsets.symmetric(horizontal: _px),
             child: Center(
               child: loading
                   ? SizedBox(
@@ -155,7 +166,7 @@ class KsButton extends StatelessWidget {
           onTap: _enabled ? onPressed : null,
           borderRadius: radius,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2xl),
+            padding: EdgeInsets.symmetric(horizontal: _px),
             child: Center(
               child: Text(label,
                   style: AppTypography.labelButton.normal.withColor(fg)),

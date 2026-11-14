@@ -25,6 +25,7 @@ import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_transport_widgets.dart';
 import '../../../shared/widgets/ks_upload_box.dart';
 import '../../../shared/widgets/photo_source_sheet.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
@@ -304,7 +305,7 @@ class _ReportsQueueState extends ConsumerState<ReportsQueue> {
                   ],
                 ],
               ),
-              _ => const Center(child: CircularProgressIndicator()),
+              _ => const KsSkeletonList(),
             },
           ),
         ],

@@ -48,6 +48,7 @@ abstract final class AppRadius {
   static const double chip = 22; // HF/Chip
   static const double navIcon = 6; // bottom-nav icon wrap
   static const double badge = 13; // status badge
+  static const double bone = 6; // 215 skeleton title line
   static const double modal = 24; // HF/Modal
   static const double actionIcon = 22; // action tile icon wrap (44/2)
 }

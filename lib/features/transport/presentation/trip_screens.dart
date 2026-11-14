@@ -27,6 +27,7 @@ import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_transport_widgets.dart';
 import '../../../shared/widgets/ks_upload_box.dart';
 import '../../../shared/widgets/photo_source_sheet.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../data/transport_repository.dart';
@@ -101,7 +102,7 @@ class _MyJobsScreenState extends ConsumerState<MyJobsScreen> {
           ]),
           if (jobs == null) ...[
             const SizedBox(height: AppSpacing.block),
-            const Center(child: CircularProgressIndicator()),
+            const KsSkeletonList(padded: false),
           ] else if (shown.isEmpty) ...[
             const SizedBox(height: AppSpacing.block),
             Text(l.noJobs,

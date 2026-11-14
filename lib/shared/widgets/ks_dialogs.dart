@@ -53,6 +53,7 @@ Future<bool> showKsConfirm(
                 children: [
                   Expanded(
                     child: KsButton.secondary(
+                      compact: true,
                       label: noLabel,
                       onPressed: () => Navigator.of(ctx).pop(false),
                     ),
@@ -61,10 +62,12 @@ Future<bool> showKsConfirm(
                   Expanded(
                     child: positive
                         ? KsButton(
+                            compact: true,
                             label: yesLabel,
                             onPressed: () => Navigator.of(ctx).pop(true),
                           )
                         : KsButton.destructive(
+                            compact: true,
                             label: yesLabel,
                             onPressed: () => Navigator.of(ctx).pop(true),
                           ),

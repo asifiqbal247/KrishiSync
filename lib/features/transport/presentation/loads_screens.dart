@@ -20,6 +20,7 @@ import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_states.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_transport_widgets.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../data/transport_repository.dart';
@@ -118,7 +119,7 @@ class _LoadsScreenState extends ConsumerState<LoadsScreen> {
               ],
             );
           }(),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const KsSkeletonList(),
       },
     );
   }

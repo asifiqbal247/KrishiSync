@@ -27,6 +27,7 @@ import '../../../shared/widgets/ks_search_bar.dart';
 import '../../../shared/widgets/ks_states.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_transport_widgets.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../farmer/data/listing_repository.dart';
@@ -217,7 +218,7 @@ class AdminDashboard extends ConsumerWidget {
             ],
           ),
         ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const KsSkeletonHome(),
       },
     );
   }
@@ -343,7 +344,7 @@ class _UsersScreenState extends ConsumerState<UsersScreen> {
                   ],
                 );
               }(),
-              _ => const Center(child: CircularProgressIndicator()),
+              _ => const KsSkeletonList(),
             },
           ),
         ],

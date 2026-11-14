@@ -22,6 +22,7 @@ import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_toast.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../admin/data/admin_repository.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
@@ -183,7 +184,7 @@ class ModeratorHome extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.block),
           ...pending.when(
-            loading: () => [const Center(child: CircularProgressIndicator())],
+            loading: () => [const KsSkeletonList(rows: 3, padded: false)],
             error: (_, _) => [Text(l.errorGeneric)],
             data: (list) => list.isEmpty
                 ? [
@@ -267,7 +268,7 @@ class ListingsQueue extends ConsumerWidget {
             const SizedBox(height: AppSpacing.block),
             Expanded(
               child: async.when(
-                loading: () => const Center(child: CircularProgressIndicator()),
+                loading: () => const KsSkeletonList(padded: false),
                 error: (_, _) => Center(child: Text(l.errorGeneric)),
                 data: (list) => list.isEmpty
                     ? Align(

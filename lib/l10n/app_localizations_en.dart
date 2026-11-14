@@ -306,12 +306,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String locDistrictCount(String count) {
-    return '$count districts';
+    return 'Districts: $count';
   }
 
   @override
   String locUpazilaCount(String count) {
-    return '$count upazilas';
+    return 'Upazilas: $count';
   }
 
   @override
@@ -414,7 +414,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String homeNewOffers(String count) {
-    return '$count new offers';
+    return 'New offers: $count';
   }
 
   @override
@@ -437,7 +437,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String homeMyListingsSub(String count) {
-    return '$count active listings';
+    return 'Active listings: $count';
   }
 
   @override
@@ -791,7 +791,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String actMarketSub(String count) {
-    return '$count crops';
+    return 'Crops: $count';
   }
 
   @override
@@ -894,12 +894,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String suggestListings(String count) {
-    return '$count listings';
+    return 'Listings: $count';
   }
 
   @override
   String suggestListingsRange(String count, String min, String max) {
-    return '$count listings · ৳ $min–$max';
+    return 'Listings: $count · ৳ $min–$max';
   }
 
   @override
@@ -1099,7 +1099,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String hoursLeft(String h) {
-    return '$h hours left';
+    return 'Hours left: $h';
   }
 
   @override
@@ -1463,7 +1463,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String trFindLoadsSub(String n) {
-    return '$n loads nearby';
+    return 'Loads nearby: $n';
   }
 
   @override
@@ -1471,7 +1471,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String trMyJobsSub(String n) {
-    return '$n jobs';
+    return 'Jobs: $n';
   }
 
   @override
@@ -2005,7 +2005,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String bidsCountLine(String n) {
-    return '$n offers';
+    return 'Offers: $n';
   }
 
   @override
@@ -2446,7 +2446,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String ratingLine(String avg, String n) {
-    return '$avg ($n ratings)';
+    return '$avg (ratings: $n)';
   }
 
   @override
@@ -2535,4 +2535,113 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pricesSub => 'Enter today\'s market prices';
+
+  @override
+  String get verifiedBadge => 'Verified';
+
+  @override
+  String roleDistrict(String role, String district) {
+    return '$role · $district';
+  }
+
+  @override
+  String ratingShort(String avg, String n) {
+    return '$avg ($n)';
+  }
+
+  @override
+  String get statDoneDeals => 'Completed deals';
+
+  @override
+  String get statTotalOrders => 'Total orders';
+
+  @override
+  String get statDoneTrips => 'Completed trips';
+
+  @override
+  String get shareTrack => 'Share my track record';
+
+  @override
+  String get shareTrackSub => 'Verified summary · QR & link';
+
+  @override
+  String get shareLink => 'Share';
+
+  @override
+  String get rowNidVerify => 'Verification (NID)';
+
+  @override
+  String get rowBizVerify => 'Business verification';
+
+  @override
+  String get rowVerifyRating => 'Verification & rating';
+
+  @override
+  String get verifyDone => 'Verified';
+
+  @override
+  String get verifyPendingSub => 'Waiting for verification';
+
+  @override
+  String get verifyNoneSub => 'Not verified';
+
+  @override
+  String get verifyRejectedSub => 'Not verified — try again';
+
+  @override
+  String get rowMyRatings => 'My ratings & reviews';
+
+  @override
+  String get rowRatings => 'Ratings & reviews';
+
+  @override
+  String profileReviews(String n) {
+    return 'Reviews: $n';
+  }
+
+  @override
+  String get rowMyContracts => 'My contracts';
+
+  @override
+  String get rowContracts => 'Contracts';
+
+  @override
+  String get rowPayMethod => 'Payment methods';
+
+  @override
+  String get rowPayAccount => 'Payment account';
+
+  @override
+  String get rowLanguage => 'ভাষা / Language';
+
+  @override
+  String languageSub(String lang) {
+    return '$lang · tap to change the language';
+  }
+
+  @override
+  String get rowHelp => 'Help';
+
+  @override
+  String get helpSub => 'Voice guide, helpline';
+
+  @override
+  String get logoutTitle => 'Log out?';
+
+  @override
+  String get logoutBody =>
+      'You\'ll need your mobile number and OTP to come back. Your trade history stays saved.';
+
+  @override
+  String get langSheetTitle => 'ভাষা পরিবর্তন / Change language';
+
+  @override
+  String get langBnSub => 'Bangla';
+
+  @override
+  String get langEnSub => 'ইংরেজি';
+
+  @override
+  String get langSheetNote =>
+      'You can change the language again from your profile.';
 }

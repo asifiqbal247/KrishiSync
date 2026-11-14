@@ -1735,5 +1735,72 @@
   "customCrop": "নতুন যোগ করা",
   "cropSaved": "সংরক্ষণ হয়েছে",
   "cropsSub": "বিক্রির তালিকায় কোন ফসল দেখাবে",
-  "pricesSub": "প্রতিদিনের বাজার দর দিন"
+  "pricesSub": "প্রতিদিনের বাজার দর দিন",
+  "verifiedBadge": "যাচাইকৃত",
+  "roleDistrict": "{role} · {district}",
+  "@roleDistrict": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      },
+      "district": {
+        "type": "String"
+      }
+    }
+  },
+  "ratingShort": "{avg} ({n})",
+  "@ratingShort": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "statDoneDeals": "সম্পন্ন লেনদেন",
+  "statTotalOrders": "মোট অর্ডার",
+  "statDoneTrips": "সম্পন্ন ট্রিপ",
+  "shareTrack": "আমার ট্র্যাক রেকর্ড শেয়ার করুন",
+  "shareTrackSub": "যাচাইকৃত সারাংশ · QR ও লিংক",
+  "shareLink": "শেয়ার",
+  "rowNidVerify": "যাচাইকরণ (NID)",
+  "rowBizVerify": "ব্যবসা যাচাইকরণ",
+  "rowVerifyRating": "যাচাইকরণ ও রেটিং",
+  "verifyDone": "যাচাই সম্পন্ন",
+  "verifyPendingSub": "যাচাইয়ের অপেক্ষায়",
+  "verifyNoneSub": "যাচাই করা হয়নি",
+  "verifyRejectedSub": "যাচাই হয়নি — আবার চেষ্টা করুন",
+  "rowMyRatings": "আমার রেটিং ও রিভিউ",
+  "rowRatings": "রেটিং ও রিভিউ",
+  "profileReviews": "{n}টি রিভিউ",
+  "@profileReviews": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "rowMyContracts": "আমার চুক্তি",
+  "rowContracts": "চুক্তি",
+  "rowPayMethod": "পেমেন্ট মাধ্যম",
+  "rowPayAccount": "পেমেন্ট অ্যাকাউন্ট",
+  "rowLanguage": "ভাষা / Language",
+  "languageSub": "{lang} · চাপলে ভাষা পরিবর্তনের অপশন খুলবে",
+  "@languageSub": {
+    "placeholders": {
+      "lang": {
+        "type": "String"
+      }
+    }
+  },
+  "rowHelp": "সাহায্য",
+  "helpSub": "ভয়েস গাইড, হেল্পলাইন",
+  "logoutTitle": "লগআউট করবেন?",
+  "logoutBody": "আবার ঢুকতে মোবাইল নম্বর ও OTP লাগবে। আপনার লেনদেনের ইতিহাস সংরক্ষিত থাকবে।",
+  "langSheetTitle": "ভাষা পরিবর্তন / Change language",
+  "langBnSub": "Bangla",
+  "langEnSub": "ইংরেজি",
+  "langSheetNote": "পরে প্রোফাইল থেকে আবার ভাষা বদলাতে পারবেন।"
 }

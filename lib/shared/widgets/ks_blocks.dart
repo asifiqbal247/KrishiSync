@@ -104,12 +104,14 @@ class KsStatCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Positioned(
-              top: _arrowInset,
-              right: _arrowInset,
-              child: AppIcon(AppIcons.chevronRight,
-                  size: AppSizes.iconXs, color: AppColors.iconBrand),
-            ),
+            // Arrow only when tappable (profile stats 68/138/193 have none).
+            if (onTap != null)
+              const Positioned(
+                top: _arrowInset,
+                right: _arrowInset,
+                child: AppIcon(AppIcons.chevronRight,
+                    size: AppSizes.iconXs, color: AppColors.iconBrand),
+              ),
           ],
         ),
       ),

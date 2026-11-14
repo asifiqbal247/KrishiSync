@@ -15,6 +15,7 @@ import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_states.dart';
 import '../../../shared/widgets/ks_toast.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../admin/data/admin_repository.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
@@ -71,7 +72,7 @@ class VerificationQueue extends ConsumerWidget {
             ],
           ],
         ),
-        _ => const Center(child: CircularProgressIndicator()),
+        _ => const KsSkeletonList(),
       },
     );
   }

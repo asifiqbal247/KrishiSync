@@ -2530,4 +2530,112 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get pricesSub => 'প্রতিদিনের বাজার দর দিন';
+
+  @override
+  String get verifiedBadge => 'যাচাইকৃত';
+
+  @override
+  String roleDistrict(String role, String district) {
+    return '$role · $district';
+  }
+
+  @override
+  String ratingShort(String avg, String n) {
+    return '$avg ($n)';
+  }
+
+  @override
+  String get statDoneDeals => 'সম্পন্ন লেনদেন';
+
+  @override
+  String get statTotalOrders => 'মোট অর্ডার';
+
+  @override
+  String get statDoneTrips => 'সম্পন্ন ট্রিপ';
+
+  @override
+  String get shareTrack => 'আমার ট্র্যাক রেকর্ড শেয়ার করুন';
+
+  @override
+  String get shareTrackSub => 'যাচাইকৃত সারাংশ · QR ও লিংক';
+
+  @override
+  String get shareLink => 'শেয়ার';
+
+  @override
+  String get rowNidVerify => 'যাচাইকরণ (NID)';
+
+  @override
+  String get rowBizVerify => 'ব্যবসা যাচাইকরণ';
+
+  @override
+  String get rowVerifyRating => 'যাচাইকরণ ও রেটিং';
+
+  @override
+  String get verifyDone => 'যাচাই সম্পন্ন';
+
+  @override
+  String get verifyPendingSub => 'যাচাইয়ের অপেক্ষায়';
+
+  @override
+  String get verifyNoneSub => 'যাচাই করা হয়নি';
+
+  @override
+  String get verifyRejectedSub => 'যাচাই হয়নি — আবার চেষ্টা করুন';
+
+  @override
+  String get rowMyRatings => 'আমার রেটিং ও রিভিউ';
+
+  @override
+  String get rowRatings => 'রেটিং ও রিভিউ';
+
+  @override
+  String profileReviews(String n) {
+    return '$nটি রিভিউ';
+  }
+
+  @override
+  String get rowMyContracts => 'আমার চুক্তি';
+
+  @override
+  String get rowContracts => 'চুক্তি';
+
+  @override
+  String get rowPayMethod => 'পেমেন্ট মাধ্যম';
+
+  @override
+  String get rowPayAccount => 'পেমেন্ট অ্যাকাউন্ট';
+
+  @override
+  String get rowLanguage => 'ভাষা / Language';
+
+  @override
+  String languageSub(String lang) {
+    return '$lang · চাপলে ভাষা পরিবর্তনের অপশন খুলবে';
+  }
+
+  @override
+  String get rowHelp => 'সাহায্য';
+
+  @override
+  String get helpSub => 'ভয়েস গাইড, হেল্পলাইন';
+
+  @override
+  String get logoutTitle => 'লগআউট করবেন?';
+
+  @override
+  String get logoutBody =>
+      'আবার ঢুকতে মোবাইল নম্বর ও OTP লাগবে। আপনার লেনদেনের ইতিহাস সংরক্ষিত থাকবে।';
+
+  @override
+  String get langSheetTitle => 'ভাষা পরিবর্তন / Change language';
+
+  @override
+  String get langBnSub => 'Bangla';
+
+  @override
+  String get langEnSub => 'ইংরেজি';
+
+  @override
+  String get langSheetNote => 'পরে প্রোফাইল থেকে আবার ভাষা বদলাতে পারবেন।';
 }

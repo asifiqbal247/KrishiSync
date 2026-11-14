@@ -64,7 +64,9 @@ class KsMiniCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: AppTypography.caption.normal
                     .withColor(AppColors.textSecondary)),
-            const SizedBox(height: AppSpacing.label),
+            // 4 (not 6): Hind Siliguri's line box is ~2px taller than
+            // Figma's, and the card height is fixed at 164.
+            const SizedBox(height: AppSpacing.xs),
             Text(line3,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

@@ -19,6 +19,7 @@ import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_states.dart';
 import '../../../shared/widgets/ks_toast.dart';
+import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
@@ -134,7 +135,7 @@ class _OrdersTabState extends ConsumerState<OrdersTab> {
             ...async.when(
               loading: () => [
                 const SizedBox(height: AppSpacing.block),
-                const Center(child: CircularProgressIndicator()),
+                const KsSkeletonList(padded: false),
               ],
               error: (_, _) => const [],
               data: (all) {

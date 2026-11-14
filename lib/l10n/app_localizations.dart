@@ -4633,6 +4633,204 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'প্রতিদিনের বাজার দর দিন'**
   String get pricesSub;
+
+  /// No description provided for @verifiedBadge.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত'**
+  String get verifiedBadge;
+
+  /// No description provided for @roleDistrict.
+  ///
+  /// In bn, this message translates to:
+  /// **'{role} · {district}'**
+  String roleDistrict(String role, String district);
+
+  /// No description provided for @ratingShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'{avg} ({n})'**
+  String ratingShort(String avg, String n);
+
+  /// No description provided for @statDoneDeals.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন লেনদেন'**
+  String get statDoneDeals;
+
+  /// No description provided for @statTotalOrders.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট অর্ডার'**
+  String get statTotalOrders;
+
+  /// No description provided for @statDoneTrips.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন ট্রিপ'**
+  String get statDoneTrips;
+
+  /// No description provided for @shareTrack.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার ট্র্যাক রেকর্ড শেয়ার করুন'**
+  String get shareTrack;
+
+  /// No description provided for @shareTrackSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত সারাংশ · QR ও লিংক'**
+  String get shareTrackSub;
+
+  /// No description provided for @shareLink.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেয়ার'**
+  String get shareLink;
+
+  /// No description provided for @rowNidVerify.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকরণ (NID)'**
+  String get rowNidVerify;
+
+  /// No description provided for @rowBizVerify.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবসা যাচাইকরণ'**
+  String get rowBizVerify;
+
+  /// No description provided for @rowVerifyRating.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকরণ ও রেটিং'**
+  String get rowVerifyRating;
+
+  /// No description provided for @verifyDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই সম্পন্ন'**
+  String get verifyDone;
+
+  /// No description provided for @verifyPendingSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইয়ের অপেক্ষায়'**
+  String get verifyPendingSub;
+
+  /// No description provided for @verifyNoneSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই করা হয়নি'**
+  String get verifyNoneSub;
+
+  /// No description provided for @verifyRejectedSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই হয়নি — আবার চেষ্টা করুন'**
+  String get verifyRejectedSub;
+
+  /// No description provided for @rowMyRatings.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার রেটিং ও রিভিউ'**
+  String get rowMyRatings;
+
+  /// No description provided for @rowRatings.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেটিং ও রিভিউ'**
+  String get rowRatings;
+
+  /// No description provided for @profileReviews.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}টি রিভিউ'**
+  String profileReviews(String n);
+
+  /// No description provided for @rowMyContracts.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার চুক্তি'**
+  String get rowMyContracts;
+
+  /// No description provided for @rowContracts.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি'**
+  String get rowContracts;
+
+  /// No description provided for @rowPayMethod.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট মাধ্যম'**
+  String get rowPayMethod;
+
+  /// No description provided for @rowPayAccount.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট অ্যাকাউন্ট'**
+  String get rowPayAccount;
+
+  /// No description provided for @rowLanguage.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাষা / Language'**
+  String get rowLanguage;
+
+  /// No description provided for @languageSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{lang} · চাপলে ভাষা পরিবর্তনের অপশন খুলবে'**
+  String languageSub(String lang);
+
+  /// No description provided for @rowHelp.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাহায্য'**
+  String get rowHelp;
+
+  /// No description provided for @helpSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভয়েস গাইড, হেল্পলাইন'**
+  String get helpSub;
+
+  /// No description provided for @logoutTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'লগআউট করবেন?'**
+  String get logoutTitle;
+
+  /// No description provided for @logoutBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'আবার ঢুকতে মোবাইল নম্বর ও OTP লাগবে। আপনার লেনদেনের ইতিহাস সংরক্ষিত থাকবে।'**
+  String get logoutBody;
+
+  /// No description provided for @langSheetTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাষা পরিবর্তন / Change language'**
+  String get langSheetTitle;
+
+  /// No description provided for @langBnSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'Bangla'**
+  String get langBnSub;
+
+  /// No description provided for @langEnSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ইংরেজি'**
+  String get langEnSub;
+
+  /// No description provided for @langSheetNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরে প্রোফাইল থেকে আবার ভাষা বদলাতে পারবেন।'**
+  String get langSheetNote;
 }
 
 class _AppLocalizationsDelegate
