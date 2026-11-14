@@ -289,7 +289,7 @@ class _TripStatusScreenState extends ConsumerState<TripStatusScreen> {
           KsListItem(
             title: l.tripProblem,
             subtitle: l.orderProblemSub,
-            onTap: () => KsToast.comingSoon(context),
+            onTap: () => context.push(Routes.report(orderId: d.orderId)),
           ),
           const SizedBox(
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),

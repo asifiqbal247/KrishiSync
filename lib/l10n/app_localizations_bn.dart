@@ -2173,4 +2173,361 @@ class AppLocalizationsBn extends AppLocalizations {
   String nTripDelivered(String no) {
     return 'ডেলিভারি সম্পন্ন: $no';
   }
+
+  @override
+  String get reportTitle => 'সমস্যা জানান';
+
+  @override
+  String get reportGeneralTitle => 'অর্ডার বা ট্রিপ';
+
+  @override
+  String get reportGeneralSub => 'যে কাজ নিয়ে সমস্যা হয়েছে';
+
+  @override
+  String get reportWhat => 'কী সমস্যা হয়েছে?';
+
+  @override
+  String get reason_driver_behavior => 'চালকের আচরণ';
+
+  @override
+  String get reason_late_delivery => 'দেরিতে ডেলিভারি';
+
+  @override
+  String get reason_app_problem => 'অ্যাপে সমস্যা';
+
+  @override
+  String get reason_other => 'অন্যান্য';
+
+  @override
+  String get reportPhoto => 'ছবি দিন (ঐচ্ছিক)';
+
+  @override
+  String get reportDetails => 'বিস্তারিত (ঐচ্ছিক)';
+
+  @override
+  String get reportDetailsHint => 'লিখুন বা ভয়েস রেকর্ড করুন';
+
+  @override
+  String get reportNote =>
+      'কী হয়েছে লিখুন বা ভয়েসে বলুন। আমরা ২৪ ঘণ্টার মধ্যে উত্তর দেব। অভিযোগ করলে পেমেন্টের নিয়ম বদলায় না।';
+
+  @override
+  String get reportSubmit => 'অভিযোগ জমা দিন';
+
+  @override
+  String get reportSent => 'অভিযোগ জমা হয়েছে';
+
+  @override
+  String get errPickReason => 'সমস্যার ধরন বেছে নিন';
+
+  @override
+  String get safePayTitle => 'নিরাপদ লেনদেন';
+
+  @override
+  String get safePayExplain =>
+      'মাল গাড়িতে উঠলে কৃষক, আর আপনার কাছে পৌঁছালে ট্রান্সপোর্টার নিরাপদ লেনদেন থেকে টাকা পাবেন। ১% ফি শুধু ক্রেতা দেবেন, লোড হলে কাটা হবে। ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি সব গোলাঘর থেকে ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়।';
+
+  @override
+  String get payBank => 'ব্যাংক ট্রান্সফার';
+
+  @override
+  String get payBkash => 'বিকাশ / নগদ';
+
+  @override
+  String get payDemoSub => 'ডেমো — আসল টাকা কাটা হবে না';
+
+  @override
+  String get payAddMethod => 'অন্য মাধ্যম যোগ করুন';
+
+  @override
+  String get payAddMethodSub => 'বিকাশ, নগদ, রকেট বা ব্যাংক';
+
+  @override
+  String payNow(String amount) {
+    return '$amount পরিশোধ করুন';
+  }
+
+  @override
+  String orderLine(String no, String crop) {
+    return '$no · $crop';
+  }
+
+  @override
+  String get newOrderLabel => 'নতুন অর্ডার';
+
+  @override
+  String get modStatReports => 'খোলা অভিযোগ';
+
+  @override
+  String get modStatVerify => 'যাচাই বাকি';
+
+  @override
+  String get modReportsTitle => 'অভিযোগ';
+
+  @override
+  String get rs_open => 'নতুন';
+
+  @override
+  String get rs_inReview => 'পর্যালোচনায়';
+
+  @override
+  String get rs_resolved => 'সমাধান';
+
+  @override
+  String get rs_dismissed => 'খারিজ';
+
+  @override
+  String get noReports => 'কোনো অভিযোগ নেই';
+
+  @override
+  String get reportDetailTitle => 'অভিযোগের বিবরণ';
+
+  @override
+  String get rowReason => 'সমস্যা';
+
+  @override
+  String get rowReporter => 'অভিযোগকারী';
+
+  @override
+  String get rowDate => 'তারিখ';
+
+  @override
+  String get rowDetails => 'বিস্তারিত';
+
+  @override
+  String get rowModNote => 'মডারেটরের বার্তা';
+
+  @override
+  String nameRole(String name, String role) {
+    return '$name ($role)';
+  }
+
+  @override
+  String get startReview => 'পর্যালোচনা শুরু করুন';
+
+  @override
+  String get resolveReport => 'সমাধান হয়েছে';
+
+  @override
+  String get dismissReport => 'খারিজ করুন';
+
+  @override
+  String get escalateReport => 'অ্যাডমিনকে জানান';
+
+  @override
+  String get escalatedBadge => 'অ্যাডমিনকে জানানো হয়েছে';
+
+  @override
+  String get noteSheetTitle => 'অভিযোগকারীকে বার্তা (ঐচ্ছিক)';
+
+  @override
+  String get noteHint => 'কী ব্যবস্থা নেওয়া হলো লিখুন';
+
+  @override
+  String get sendBtn => 'পাঠান';
+
+  @override
+  String get doneToast => 'সম্পন্ন হয়েছে';
+
+  @override
+  String get verifyTitle => 'পরিচয় যাচাই';
+
+  @override
+  String get verifyEmpty => 'যাচাইয়ের অপেক্ষায় কেউ নেই';
+
+  @override
+  String get rowNid => 'NID নম্বর';
+
+  @override
+  String get rowJoined => 'যোগদান';
+
+  @override
+  String get verifyApprove => 'যাচাই করুন';
+
+  @override
+  String get verifyRejectBtn => 'প্রত্যাখ্যান';
+
+  @override
+  String get verifyRejectTitle => 'যাচাই প্রত্যাখ্যান করবেন?';
+
+  @override
+  String get verifyRejectBody => 'ব্যবহারকারীকে আবার সঠিক NID দিতে বলা হবে।';
+
+  @override
+  String nameRolePhone(String role, String phone) {
+    return '$role · $phone';
+  }
+
+  @override
+  String get nVerifyOk => 'আপনার পরিচয় যাচাই হয়েছে';
+
+  @override
+  String get nVerifyOkBody => 'এখন আপনার প্রোফাইলে যাচাইকৃত চিহ্ন দেখাবে।';
+
+  @override
+  String get nVerifyRejected => 'পরিচয় যাচাই হয়নি';
+
+  @override
+  String get nVerifyRejectedBody => 'সঠিক NID নম্বর দিয়ে আবার চেষ্টা করুন।';
+
+  @override
+  String get nReportResolved => 'আপনার অভিযোগের সমাধান হয়েছে';
+
+  @override
+  String get nReportDismissed => 'আপনার অভিযোগ খারিজ হয়েছে';
+
+  @override
+  String get navUsers => 'ব্যবহারকারী';
+
+  @override
+  String get navModeration => 'মডারেশন';
+
+  @override
+  String get navPrices => 'দাম';
+
+  @override
+  String get adminUsersSection => 'ব্যবহারকারী';
+
+  @override
+  String get statTotalUsers => 'মোট ব্যবহারকারী';
+
+  @override
+  String get adminListingsSection => 'তালিকা';
+
+  @override
+  String get adminOrdersSection => 'অর্ডার ও অভিযোগ';
+
+  @override
+  String get statCompletedOrders => 'সম্পন্ন অর্ডার';
+
+  @override
+  String get usersTitle => 'ব্যবহারকারী';
+
+  @override
+  String get userSearchHint => 'নাম বা মোবাইল নম্বর খুঁজুন';
+
+  @override
+  String get noUsers => 'কেউ পাওয়া যায়নি';
+
+  @override
+  String get noRoleYet => 'ভূমিকা নেই';
+
+  @override
+  String get suspendedBadge => 'স্থগিত';
+
+  @override
+  String get userDetailTitle => 'ব্যবহারকারীর বিবরণ';
+
+  @override
+  String get statusActiveUser => 'সক্রিয়';
+
+  @override
+  String get rowVerification => 'যাচাই';
+
+  @override
+  String get vNone => 'করা হয়নি';
+
+  @override
+  String get vPending => 'অপেক্ষায়';
+
+  @override
+  String get vVerified => 'যাচাইকৃত';
+
+  @override
+  String get vRejected => 'প্রত্যাখ্যাত';
+
+  @override
+  String get rowRating => 'রেটিং';
+
+  @override
+  String ratingLine(String avg, String n) {
+    return '$avg ($nটি রেটিং)';
+  }
+
+  @override
+  String get suspendUser => 'স্থগিত করুন';
+
+  @override
+  String get activateUser => 'সক্রিয় করুন';
+
+  @override
+  String get suspendTitle => 'ব্যবহারকারী স্থগিত করবেন?';
+
+  @override
+  String get suspendBody =>
+      'স্থগিত থাকলে তিনি নতুন তালিকা, অফার বা অর্ডার করতে পারবেন না।';
+
+  @override
+  String get changeRole => 'ভূমিকা পরিবর্তন';
+
+  @override
+  String get roleChanged => 'ভূমিকা পরিবর্তন হয়েছে';
+
+  @override
+  String get cantEditSelf => 'নিজের অ্যাকাউন্ট এখানে বদলানো যাবে না';
+
+  @override
+  String get moderationTitle => 'মডারেশন';
+
+  @override
+  String get pricesTitle => 'বাজার দর';
+
+  @override
+  String priceSub(String price, String min, String max) {
+    return 'আজ ৳ $price/কেজি · ৳ $min–$max';
+  }
+
+  @override
+  String get noPrice => 'দাম দেওয়া হয়নি';
+
+  @override
+  String get fieldTodayPrice => 'আজকের দাম';
+
+  @override
+  String get fieldMinPrice => 'সর্বনিম্ন দাম';
+
+  @override
+  String get fieldMaxPrice => 'সর্বোচ্চ দাম';
+
+  @override
+  String get priceSaved => 'দাম সংরক্ষণ হয়েছে';
+
+  @override
+  String get errPriceRange => 'সর্বনিম্ন ≤ আজকের দাম ≤ সর্বোচ্চ হতে হবে';
+
+  @override
+  String get cropsTitle => 'ফসলের তালিকা';
+
+  @override
+  String get addCrop => '+ নতুন ফসল';
+
+  @override
+  String get cropNameBn => 'নাম (বাংলা)';
+
+  @override
+  String get cropNameEn => 'নাম (English)';
+
+  @override
+  String get cropCategory => 'ধরন';
+
+  @override
+  String get catOther => 'অন্যান্য';
+
+  @override
+  String get cropOn => 'চালু';
+
+  @override
+  String get cropOff => 'বন্ধ';
+
+  @override
+  String get customCrop => 'নতুন যোগ করা';
+
+  @override
+  String get cropSaved => 'সংরক্ষণ হয়েছে';
+
+  @override
+  String get cropsSub => 'বিক্রির তালিকায় কোন ফসল দেখাবে';
+
+  @override
+  String get pricesSub => 'প্রতিদিনের বাজার দর দিন';
 }

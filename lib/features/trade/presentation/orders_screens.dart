@@ -367,7 +367,7 @@ class OrderDetailsScreen extends ConsumerWidget {
           KsListItem(
             title: l.orderProblem,
             subtitle: l.orderProblemSub,
-            onTap: soon,
+            onTap: () => context.push(Routes.report(orderId: o.id)),
           ),
           const SizedBox(
             height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,

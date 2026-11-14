@@ -19,14 +19,13 @@ import '../../../shared/widgets/ks_input.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_option_card.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
 import '../../farmer/data/listing_repository.dart';
-import '../data/payment_service.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
+import 'safe_payment_screen.dart';
 
 /// 78 Place Order (Figma 292:1058), buyer. Pays with the placeholder
 /// PaymentService (version 1) and creates the order.
@@ -46,7 +45,6 @@ class _PlaceOrderScreenState extends ConsumerState<PlaceOrderScreen> {
   final _qty = TextEditingController();
   TransportMode _mode = TransportMode.platform;
   UserLocation? _dropoff;
-  bool _paying = false;
   String? _qtyErr;
   String? _addrErr;
 
@@ -110,8 +108,6 @@ class _PlaceOrderScreenState extends ConsumerState<PlaceOrderScreen> {
     final total = cropTotal + fare + fee;
 
     Future<void> pay() async {
-      final me = ref.read(currentUserProvider).value;
-      if (me == null) return;
       setState(() {
         _qtyErr = (qty <= 0)
             ? l.errQtyInvalid
@@ -119,43 +115,28 @@ class _PlaceOrderScreenState extends ConsumerState<PlaceOrderScreen> {
         _addrErr = _dropoff == null ? l.errAddressRequired : null;
       });
       if (_qtyErr != null || _addrErr != null) return;
-      setState(() => _paying = true);
-      try {
-        final pay = await ref.read(paymentServiceProvider).holdForOrder(
-              orderNo: listing.id,
-              amountBdt: total,
-              payerUid: me.uid,
-            );
-        if (!pay.success) throw Exception('payment');
-        final order = await ref.read(tradeRepositoryProvider).placeOrder(
-              buyer: me,
-              listing: listing,
-              offer: offer,
-              quantityKg: qty,
-              pricePerKg: price,
-              mode: _mode,
-              transportFare: fare,
-              dropoff: _dropoff!,
-              paymentRef: pay.reference ?? '',
-            );
-        if (!mounted) return;
-        await showKsSuccessModal(
-          this.context,
-          title: l.orderPlacedTitle,
-          body: l.orderPlacedBody,
-          cta: l.seeOrder,
-          onCta: () => this.context.pushReplacement(Routes.order(order.id)),
-        );
-      } on TradeException catch (e) {
-        if (mounted) {
-          KsToast.show(this.context,
-              e.code == 'qty_too_much' ? l.errQtyTooMuch : l.errorGeneric);
-        }
-      } catch (_) {
-        if (mounted) KsToast.show(this.context, l.errorGeneric);
-      } finally {
-        if (mounted) setState(() => _paying = false);
-      }
+      // 82 Safe Payment holds the money (placeholder) and creates the order.
+      final orderId = await context.push<String>(Routes.safePayment,
+          extra: OrderDraft(
+            listing: listing,
+            offer: offer,
+            quantityKg: qty,
+            pricePerKg: price,
+            mode: _mode,
+            transportFare: fare,
+            dropoff: _dropoff!,
+            cropTotal: cropTotal,
+            fee: fee,
+            total: total,
+          ));
+      if (orderId == null || !mounted) return;
+      await showKsSuccessModal(
+        this.context,
+        title: l.orderPlacedTitle,
+        body: l.orderPlacedBody,
+        cta: l.seeOrder,
+        onCta: () => this.context.pushReplacement(Routes.order(orderId)),
+      );
     }
 
     return Scaffold(
@@ -231,7 +212,7 @@ class _PlaceOrderScreenState extends ConsumerState<PlaceOrderScreen> {
           ]),
           const SizedBox(
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-          KsButton(label: l.payWithSafe, loading: _paying, onPressed: pay),
+          KsButton(label: l.payWithSafe, onPressed: pay),
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/l10n/locale_controller.dart';
+import '../features/admin/presentation/admin_screens.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/user_repository.dart';
 import '../features/auth/domain/app_user.dart';
@@ -23,12 +24,15 @@ import '../features/farmer/presentation/listing_details_screen.dart';
 import '../features/farmer/presentation/my_listings_screen.dart';
 import '../features/farmer/presentation/sell_crop_screen.dart';
 import '../features/moderator/presentation/moderator_screens.dart';
+import '../features/moderator/presentation/report_screens.dart';
+import '../features/moderator/presentation/verify_screens.dart';
 import '../features/trade/presentation/make_offer_screen.dart';
 import '../features/trade/presentation/negotiate_screen.dart';
 import '../features/trade/presentation/notifications_screen.dart';
 import '../features/trade/presentation/offers_screen.dart';
 import '../features/trade/presentation/orders_screens.dart';
 import '../features/trade/presentation/place_order_screen.dart';
+import '../features/trade/presentation/safe_payment_screen.dart';
 import '../features/transport/presentation/buyer_transport_screens.dart';
 import '../features/transport/presentation/loads_screens.dart';
 import '../features/transport/presentation/rate_screens.dart';
@@ -92,8 +96,21 @@ abstract final class Routes {
   static String trRate(String id) => '/transporter/trip/$id/rate';
   static const trVehicle = '/transporter/vehicle';
 
+  static const safePayment = '/buyer/pay';
+  static String report({String? orderId}) =>
+      '/report${orderId == null ? '' : '?order=$orderId'}';
+
   // Moderator (Admin may open these too)
   static String moderatorReview(String id) => '/moderator/review/$id';
+  static const moderatorQueue = '/moderator/queue';
+  static const moderatorReports = '/moderator/reports';
+  static String moderatorReport(String id) => '/moderator/report/$id';
+  static const moderatorVerify = '/moderator/verify';
+  static String moderatorVerifyUser(String uid) => '/moderator/verify/$uid';
+
+  // Admin
+  static String adminUser(String uid) => '/admin/user/$uid';
+  static const adminCrops = '/admin/crops';
 
   static String homeFor(UserRole role) => switch (role) {
         UserRole.farmer => farmerHome,
@@ -251,6 +268,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const NotificationsScreen(),
       ),
       GoRoute(
+        path: '/report',
+        builder: (_, s) =>
+            ReportIssueScreen(orderId: s.uri.queryParameters['order']),
+      ),
+      GoRoute(
         path: Routes.moderatorHome,
         builder: (_, _) => const ModeratorShell(),
         routes: [
@@ -259,11 +281,41 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, s) =>
                 ListingReviewScreen(listingId: s.pathParameters['id']!),
           ),
+          GoRoute(
+              path: 'queue', builder: (_, _) => const ListingsQueuePage()),
+          GoRoute(
+              path: 'reports',
+              builder: (_, _) => const ReportsQueue(showBack: true)),
+          GoRoute(
+            path: 'report/:id',
+            builder: (_, s) =>
+                ReportDetailScreen(reportId: s.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'verify',
+            builder: (_, _) => const VerificationQueue(showBack: true),
+            routes: [
+              GoRoute(
+                path: ':uid',
+                builder: (_, s) =>
+                    VerifyReviewScreen(uid: s.pathParameters['uid']!),
+              ),
+            ],
+          ),
         ],
       ),
-      // Admin uses the moderator tools until A1–A7 are built (Part 7).
       GoRoute(
-          path: Routes.adminHome, builder: (_, _) => const ModeratorShell()),
+        path: Routes.adminHome,
+        builder: (_, _) => const AdminShell(),
+        routes: [
+          GoRoute(
+            path: 'user/:uid',
+            builder: (_, s) => UserDetailScreen(uid: s.pathParameters['uid']!),
+          ),
+          GoRoute(
+              path: 'crops', builder: (_, _) => const CropCatalogScreen()),
+        ],
+      ),
       GoRoute(
         path: Routes.buyerHome,
         builder: (_, _) => const BuyerShell(),
@@ -280,6 +332,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                     MakeOfferScreen(listingId: s.pathParameters['id']!),
               ),
             ],
+          ),
+          GoRoute(
+            path: 'pay',
+            builder: (_, s) =>
+                SafePaymentScreen(draft: s.extra! as OrderDraft),
           ),
           GoRoute(
             path: 'order/:listingId',

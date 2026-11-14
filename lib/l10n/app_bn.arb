@@ -1561,5 +1561,179 @@
         "type": "String"
       }
     }
-  }
+  },
+  "reportTitle": "সমস্যা জানান",
+  "reportGeneralTitle": "অর্ডার বা ট্রিপ",
+  "reportGeneralSub": "যে কাজ নিয়ে সমস্যা হয়েছে",
+  "reportWhat": "কী সমস্যা হয়েছে?",
+  "reason_driver_behavior": "চালকের আচরণ",
+  "reason_late_delivery": "দেরিতে ডেলিভারি",
+  "reason_app_problem": "অ্যাপে সমস্যা",
+  "reason_other": "অন্যান্য",
+  "reportPhoto": "ছবি দিন (ঐচ্ছিক)",
+  "reportDetails": "বিস্তারিত (ঐচ্ছিক)",
+  "reportDetailsHint": "লিখুন বা ভয়েস রেকর্ড করুন",
+  "reportNote": "কী হয়েছে লিখুন বা ভয়েসে বলুন। আমরা ২৪ ঘণ্টার মধ্যে উত্তর দেব। অভিযোগ করলে পেমেন্টের নিয়ম বদলায় না।",
+  "reportSubmit": "অভিযোগ জমা দিন",
+  "reportSent": "অভিযোগ জমা হয়েছে",
+  "errPickReason": "সমস্যার ধরন বেছে নিন",
+  "safePayTitle": "নিরাপদ লেনদেন",
+  "safePayExplain": "মাল গাড়িতে উঠলে কৃষক, আর আপনার কাছে পৌঁছালে ট্রান্সপোর্টার নিরাপদ লেনদেন থেকে টাকা পাবেন। ১% ফি শুধু ক্রেতা দেবেন, লোড হলে কাটা হবে। ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি সব গোলাঘর থেকে ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়।",
+  "payBank": "ব্যাংক ট্রান্সফার",
+  "payBkash": "বিকাশ / নগদ",
+  "payDemoSub": "ডেমো — আসল টাকা কাটা হবে না",
+  "payAddMethod": "অন্য মাধ্যম যোগ করুন",
+  "payAddMethodSub": "বিকাশ, নগদ, রকেট বা ব্যাংক",
+  "payNow": "{amount} পরিশোধ করুন",
+  "@payNow": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "orderLine": "{no} · {crop}",
+  "@orderLine": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "newOrderLabel": "নতুন অর্ডার",
+  "modStatReports": "খোলা অভিযোগ",
+  "modStatVerify": "যাচাই বাকি",
+  "modReportsTitle": "অভিযোগ",
+  "rs_open": "নতুন",
+  "rs_inReview": "পর্যালোচনায়",
+  "rs_resolved": "সমাধান",
+  "rs_dismissed": "খারিজ",
+  "noReports": "কোনো অভিযোগ নেই",
+  "reportDetailTitle": "অভিযোগের বিবরণ",
+  "rowReason": "সমস্যা",
+  "rowReporter": "অভিযোগকারী",
+  "rowDate": "তারিখ",
+  "rowDetails": "বিস্তারিত",
+  "rowModNote": "মডারেটরের বার্তা",
+  "nameRole": "{name} ({role})",
+  "@nameRole": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "startReview": "পর্যালোচনা শুরু করুন",
+  "resolveReport": "সমাধান হয়েছে",
+  "dismissReport": "খারিজ করুন",
+  "escalateReport": "অ্যাডমিনকে জানান",
+  "escalatedBadge": "অ্যাডমিনকে জানানো হয়েছে",
+  "noteSheetTitle": "অভিযোগকারীকে বার্তা (ঐচ্ছিক)",
+  "noteHint": "কী ব্যবস্থা নেওয়া হলো লিখুন",
+  "sendBtn": "পাঠান",
+  "doneToast": "সম্পন্ন হয়েছে",
+  "verifyTitle": "পরিচয় যাচাই",
+  "verifyEmpty": "যাচাইয়ের অপেক্ষায় কেউ নেই",
+  "rowNid": "NID নম্বর",
+  "rowJoined": "যোগদান",
+  "verifyApprove": "যাচাই করুন",
+  "verifyRejectBtn": "প্রত্যাখ্যান",
+  "verifyRejectTitle": "যাচাই প্রত্যাখ্যান করবেন?",
+  "verifyRejectBody": "ব্যবহারকারীকে আবার সঠিক NID দিতে বলা হবে।",
+  "nameRolePhone": "{role} · {phone}",
+  "@nameRolePhone": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      },
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "nVerifyOk": "আপনার পরিচয় যাচাই হয়েছে",
+  "nVerifyOkBody": "এখন আপনার প্রোফাইলে যাচাইকৃত চিহ্ন দেখাবে।",
+  "nVerifyRejected": "পরিচয় যাচাই হয়নি",
+  "nVerifyRejectedBody": "সঠিক NID নম্বর দিয়ে আবার চেষ্টা করুন।",
+  "nReportResolved": "আপনার অভিযোগের সমাধান হয়েছে",
+  "nReportDismissed": "আপনার অভিযোগ খারিজ হয়েছে",
+  "navUsers": "ব্যবহারকারী",
+  "navModeration": "মডারেশন",
+  "navPrices": "দাম",
+  "adminUsersSection": "ব্যবহারকারী",
+  "statTotalUsers": "মোট ব্যবহারকারী",
+  "adminListingsSection": "তালিকা",
+  "adminOrdersSection": "অর্ডার ও অভিযোগ",
+  "statCompletedOrders": "সম্পন্ন অর্ডার",
+  "usersTitle": "ব্যবহারকারী",
+  "userSearchHint": "নাম বা মোবাইল নম্বর খুঁজুন",
+  "noUsers": "কেউ পাওয়া যায়নি",
+  "noRoleYet": "ভূমিকা নেই",
+  "suspendedBadge": "স্থগিত",
+  "userDetailTitle": "ব্যবহারকারীর বিবরণ",
+  "statusActiveUser": "সক্রিয়",
+  "rowVerification": "যাচাই",
+  "vNone": "করা হয়নি",
+  "vPending": "অপেক্ষায়",
+  "vVerified": "যাচাইকৃত",
+  "vRejected": "প্রত্যাখ্যাত",
+  "rowRating": "রেটিং",
+  "ratingLine": "{avg} ({n}টি রেটিং)",
+  "@ratingLine": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "suspendUser": "স্থগিত করুন",
+  "activateUser": "সক্রিয় করুন",
+  "suspendTitle": "ব্যবহারকারী স্থগিত করবেন?",
+  "suspendBody": "স্থগিত থাকলে তিনি নতুন তালিকা, অফার বা অর্ডার করতে পারবেন না।",
+  "changeRole": "ভূমিকা পরিবর্তন",
+  "roleChanged": "ভূমিকা পরিবর্তন হয়েছে",
+  "cantEditSelf": "নিজের অ্যাকাউন্ট এখানে বদলানো যাবে না",
+  "moderationTitle": "মডারেশন",
+  "pricesTitle": "বাজার দর",
+  "priceSub": "আজ ৳ {price}/কেজি · ৳ {min}–{max}",
+  "@priceSub": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "noPrice": "দাম দেওয়া হয়নি",
+  "fieldTodayPrice": "আজকের দাম",
+  "fieldMinPrice": "সর্বনিম্ন দাম",
+  "fieldMaxPrice": "সর্বোচ্চ দাম",
+  "priceSaved": "দাম সংরক্ষণ হয়েছে",
+  "errPriceRange": "সর্বনিম্ন ≤ আজকের দাম ≤ সর্বোচ্চ হতে হবে",
+  "cropsTitle": "ফসলের তালিকা",
+  "addCrop": "+ নতুন ফসল",
+  "cropNameBn": "নাম (বাংলা)",
+  "cropNameEn": "নাম (English)",
+  "cropCategory": "ধরন",
+  "catOther": "অন্যান্য",
+  "cropOn": "চালু",
+  "cropOff": "বন্ধ",
+  "customCrop": "নতুন যোগ করা",
+  "cropSaved": "সংরক্ষণ হয়েছে",
+  "cropsSub": "বিক্রির তালিকায় কোন ফসল দেখাবে",
+  "pricesSub": "প্রতিদিনের বাজার দর দিন"
 }

@@ -2176,4 +2176,363 @@ class AppLocalizationsEn extends AppLocalizations {
   String nTripDelivered(String no) {
     return 'Delivered: $no';
   }
+
+  @override
+  String get reportTitle => 'Report a problem';
+
+  @override
+  String get reportGeneralTitle => 'Order or trip';
+
+  @override
+  String get reportGeneralSub => 'The job you had a problem with';
+
+  @override
+  String get reportWhat => 'What went wrong?';
+
+  @override
+  String get reason_driver_behavior => 'Driver behaviour';
+
+  @override
+  String get reason_late_delivery => 'Late delivery';
+
+  @override
+  String get reason_app_problem => 'App problem';
+
+  @override
+  String get reason_other => 'Other';
+
+  @override
+  String get reportPhoto => 'Add a photo (optional)';
+
+  @override
+  String get reportDetails => 'Details (optional)';
+
+  @override
+  String get reportDetailsHint => 'Write or record voice';
+
+  @override
+  String get reportNote =>
+      'Tell us what happened. We reply within 24 hours. Reporting does not change the payment rules.';
+
+  @override
+  String get reportSubmit => 'Submit report';
+
+  @override
+  String get reportSent => 'Report submitted';
+
+  @override
+  String get errPickReason => 'Choose what went wrong';
+
+  @override
+  String get safePayTitle => 'Safe payment';
+
+  @override
+  String get safePayExplain =>
+      'The farmer is paid from safe payment when the crop is loaded, and the transporter when it reaches you. Only the buyer pays the 1% fee, taken at loading. Cancel before the truck leaves and 10% of the fare is kept; Golaghor refunds the rest. After that, a cancelled load refunds the crop price and fee, not the fare.';
+
+  @override
+  String get payBank => 'Bank transfer';
+
+  @override
+  String get payBkash => 'bKash / Nagad';
+
+  @override
+  String get payDemoSub => 'Demo — no real money is taken';
+
+  @override
+  String get payAddMethod => 'Add another method';
+
+  @override
+  String get payAddMethodSub => 'bKash, Nagad, Rocket or bank';
+
+  @override
+  String payNow(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String orderLine(String no, String crop) {
+    return '$no · $crop';
+  }
+
+  @override
+  String get newOrderLabel => 'New order';
+
+  @override
+  String get modStatReports => 'Open reports';
+
+  @override
+  String get modStatVerify => 'Pending verification';
+
+  @override
+  String get modReportsTitle => 'Reports';
+
+  @override
+  String get rs_open => 'New';
+
+  @override
+  String get rs_inReview => 'In review';
+
+  @override
+  String get rs_resolved => 'Resolved';
+
+  @override
+  String get rs_dismissed => 'Dismissed';
+
+  @override
+  String get noReports => 'No reports';
+
+  @override
+  String get reportDetailTitle => 'Report details';
+
+  @override
+  String get rowReason => 'Problem';
+
+  @override
+  String get rowReporter => 'Reported by';
+
+  @override
+  String get rowDate => 'Date';
+
+  @override
+  String get rowDetails => 'Details';
+
+  @override
+  String get rowModNote => 'Moderator note';
+
+  @override
+  String nameRole(String name, String role) {
+    return '$name ($role)';
+  }
+
+  @override
+  String get startReview => 'Start review';
+
+  @override
+  String get resolveReport => 'Mark resolved';
+
+  @override
+  String get dismissReport => 'Dismiss';
+
+  @override
+  String get escalateReport => 'Escalate to admin';
+
+  @override
+  String get escalatedBadge => 'Escalated to admin';
+
+  @override
+  String get noteSheetTitle => 'Message to reporter (optional)';
+
+  @override
+  String get noteHint => 'Write what was done';
+
+  @override
+  String get sendBtn => 'Send';
+
+  @override
+  String get doneToast => 'Done';
+
+  @override
+  String get verifyTitle => 'Identity verification';
+
+  @override
+  String get verifyEmpty => 'No one is waiting for verification';
+
+  @override
+  String get rowNid => 'NID number';
+
+  @override
+  String get rowJoined => 'Joined';
+
+  @override
+  String get verifyApprove => 'Verify';
+
+  @override
+  String get verifyRejectBtn => 'Reject';
+
+  @override
+  String get verifyRejectTitle => 'Reject verification?';
+
+  @override
+  String get verifyRejectBody =>
+      'The user will be asked to give a correct NID again.';
+
+  @override
+  String nameRolePhone(String role, String phone) {
+    return '$role · $phone';
+  }
+
+  @override
+  String get nVerifyOk => 'Your identity is verified';
+
+  @override
+  String get nVerifyOkBody => 'Your profile now shows the verified mark.';
+
+  @override
+  String get nVerifyRejected => 'Identity not verified';
+
+  @override
+  String get nVerifyRejectedBody =>
+      'Please try again with a correct NID number.';
+
+  @override
+  String get nReportResolved => 'Your report was resolved';
+
+  @override
+  String get nReportDismissed => 'Your report was dismissed';
+
+  @override
+  String get navUsers => 'Users';
+
+  @override
+  String get navModeration => 'Moderation';
+
+  @override
+  String get navPrices => 'Prices';
+
+  @override
+  String get adminUsersSection => 'Users';
+
+  @override
+  String get statTotalUsers => 'Total users';
+
+  @override
+  String get adminListingsSection => 'Listings';
+
+  @override
+  String get adminOrdersSection => 'Orders & reports';
+
+  @override
+  String get statCompletedOrders => 'Completed orders';
+
+  @override
+  String get usersTitle => 'Users';
+
+  @override
+  String get userSearchHint => 'Search name or mobile number';
+
+  @override
+  String get noUsers => 'No one found';
+
+  @override
+  String get noRoleYet => 'No role yet';
+
+  @override
+  String get suspendedBadge => 'Suspended';
+
+  @override
+  String get userDetailTitle => 'User details';
+
+  @override
+  String get statusActiveUser => 'Active';
+
+  @override
+  String get rowVerification => 'Verification';
+
+  @override
+  String get vNone => 'Not done';
+
+  @override
+  String get vPending => 'Pending';
+
+  @override
+  String get vVerified => 'Verified';
+
+  @override
+  String get vRejected => 'Rejected';
+
+  @override
+  String get rowRating => 'Rating';
+
+  @override
+  String ratingLine(String avg, String n) {
+    return '$avg ($n ratings)';
+  }
+
+  @override
+  String get suspendUser => 'Suspend';
+
+  @override
+  String get activateUser => 'Activate';
+
+  @override
+  String get suspendTitle => 'Suspend this user?';
+
+  @override
+  String get suspendBody =>
+      'While suspended they can\'t create listings, offers or orders.';
+
+  @override
+  String get changeRole => 'Change role';
+
+  @override
+  String get roleChanged => 'Role changed';
+
+  @override
+  String get cantEditSelf => 'You can\'t change your own account here';
+
+  @override
+  String get moderationTitle => 'Moderation';
+
+  @override
+  String get pricesTitle => 'Market prices';
+
+  @override
+  String priceSub(String price, String min, String max) {
+    return 'Today ৳ $price/kg · ৳ $min–$max';
+  }
+
+  @override
+  String get noPrice => 'No price yet';
+
+  @override
+  String get fieldTodayPrice => 'Today\'s price';
+
+  @override
+  String get fieldMinPrice => 'Lowest price';
+
+  @override
+  String get fieldMaxPrice => 'Highest price';
+
+  @override
+  String get priceSaved => 'Price saved';
+
+  @override
+  String get errPriceRange => 'Lowest ≤ today ≤ highest';
+
+  @override
+  String get cropsTitle => 'Crop catalog';
+
+  @override
+  String get addCrop => '+ New crop';
+
+  @override
+  String get cropNameBn => 'Name (Bangla)';
+
+  @override
+  String get cropNameEn => 'Name (English)';
+
+  @override
+  String get cropCategory => 'Category';
+
+  @override
+  String get catOther => 'Other';
+
+  @override
+  String get cropOn => 'On';
+
+  @override
+  String get cropOff => 'Off';
+
+  @override
+  String get customCrop => 'Added by admin';
+
+  @override
+  String get cropSaved => 'Saved';
+
+  @override
+  String get cropsSub => 'Which crops farmers can sell';
+
+  @override
+  String get pricesSub => 'Enter today\'s market prices';
 }

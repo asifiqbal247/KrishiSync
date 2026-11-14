@@ -309,6 +309,28 @@ service cloud.firestore {
         && request.resource.data.stars >= 1 && request.resource.data.stars <= 5;
     }
 
+    // ---------- reports/{id} (Report Issue 203/204 → M4/M5) ----------
+    match /reports/{id} {
+      allow read: if isMod() || (signedIn() && resource.data.reporterId == uid());
+      allow create: if isActive()
+        && request.resource.data.reporterId == uid()
+        && request.resource.data.status == 'open'
+        && request.resource.data.escalated == false
+        && request.resource.data.reason is string
+        && request.resource.data.details is string
+        && request.resource.data.details.size() <= 1000;
+      allow update: if isMod()
+        && onlyChanges(['status', 'handledBy', 'modNote', 'escalated', 'updatedAt'])
+        && request.resource.data.status in ['open', 'inReview', 'resolved', 'dismissed']
+        && request.resource.data.handledBy == uid();
+    }
+
+    // ---------- crops/{key} (catalog, A6) ----------
+    match /crops/{key} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
     // Everything else is closed until its Part adds rules.
     match /{document=**} {
       allow read, write: if false;

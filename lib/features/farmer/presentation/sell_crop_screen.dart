@@ -26,6 +26,7 @@ import '../../../shared/widgets/ks_upload_box.dart';
 import '../../../shared/widgets/photo_source_sheet.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
+import '../../admin/data/admin_repository.dart';
 import '../data/listing_repository.dart';
 import '../domain/listing.dart';
 
@@ -101,7 +102,8 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
       final n = _otherName.text.trim();
       return (n, n, CropCategory.other.name);
     }
-    final c = CropCatalog.byKey(_cropKey)!;
+    final c = catalogCrop(ref.read(catalogProvider), _cropKey) ??
+        CropCatalog.sellChips.first;
     return (c.bn, c.en, c.category.name);
   }
 
@@ -266,7 +268,7 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
 
   List<Widget> _step1(AppLocalizations l) {
     final chips = [
-      for (final c in CropCatalog.sellChips) (c.key, c.name(_lang)),
+      for (final c in ref.watch(sellCropsProvider)) (c.key, c.name(_lang)),
       (CropCatalog.other, l.cropOther),
     ];
     return [

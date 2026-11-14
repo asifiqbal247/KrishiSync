@@ -22,11 +22,15 @@ import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_toast.dart';
+import '../../admin/data/admin_repository.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
 import '../../farmer/domain/listing.dart';
 import '../../farmer/presentation/listing_widgets.dart';
 import '../../trade/data/trade_repository.dart';
+import '../data/report_repository.dart';
+import 'report_screens.dart';
+import 'verify_screens.dart';
 
 /// Moderator area (no Figma — built from HF components in the same theme).
 /// Nav: Home · Listings · Reports · Verify · Profile.
@@ -42,21 +46,24 @@ class _ModeratorShellState extends State<ModeratorShell> {
   ListingStatus _queueFilter = ListingStatus.pending;
 
   void _openQueue(ListingStatus s) => setState(() {
-        _queueFilter = s;
-        _index = 1;
-      });
+    _queueFilter = s;
+    _index = 1;
+  });
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final pages = [
-      ModeratorHome(onOpenQueue: _openQueue),
+      ModeratorHome(
+        onOpenQueue: _openQueue,
+        onOpenTab: (i) => setState(() => _index = i),
+      ),
       ListingsQueue(
         filter: _queueFilter,
         onFilter: (s) => setState(() => _queueFilter = s),
       ),
-      ComingTab(title: l.navReports),
-      ComingTab(title: l.navVerify),
+      const ReportsQueue(),
+      const VerificationQueue(),
       const SimpleProfileTab(),
     ];
     return Scaffold(
@@ -78,8 +85,9 @@ class _ModeratorShellState extends State<ModeratorShell> {
 
 /// M1 Moderator Home: stat cards + pending queue preview.
 class ModeratorHome extends ConsumerWidget {
-  const ModeratorHome({super.key, required this.onOpenQueue});
+  const ModeratorHome({super.key, required this.onOpenQueue, this.onOpenTab});
   final void Function(ListingStatus) onOpenQueue;
+  final ValueChanged<int>? onOpenTab;
 
   static const _preview = 5;
 
@@ -87,23 +95,26 @@ class ModeratorHome extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final me = ref.watch(currentUserProvider).value;
-    String count(ListingStatus s) => Fmt.digits(
-        context, '${ref.watch(listingCountProvider(s)).value ?? 0}');
-    final pending =
-        ref.watch(listingsByStatusProvider(ListingStatus.pending));
+    String count(ListingStatus s) =>
+        Fmt.digits(context, '${ref.watch(listingCountProvider(s)).value ?? 0}');
+    final pending = ref.watch(listingsByStatusProvider(ListingStatus.pending));
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsHomeHeader(
         name: me?.name ?? '',
         photoUrl: me?.photoUrl,
-        onBell: () => KsToast.comingSoon(context),
+        onBell: () => context.push(Routes.notifications),
         onChat: () => KsToast.comingSoon(context),
         onAvatar: () {},
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.s2xl),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.s2xl,
+        ),
         children: [
           Row(
             children: [
@@ -135,6 +146,32 @@ class ModeratorHome extends ConsumerWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: KsStatCard(
+                  label: l.modStatReports,
+                  value: Fmt.digits(
+                    context,
+                    '${ref.watch(openReportsCountProvider).value ?? 0}',
+                  ),
+                  onTap: () => onOpenTab?.call(2),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.block),
+          Row(
+            children: [
+              Expanded(
+                child: KsStatCard(
+                  label: l.modStatVerify,
+                  value: Fmt.digits(
+                    context,
+                    '${ref.watch(pendingVerificationProvider).value?.length ?? 0}',
+                  ),
+                  onTap: () => onOpenTab?.call(3),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
               const Expanded(child: SizedBox.shrink()),
             ],
           ),
@@ -146,24 +183,26 @@ class ModeratorHome extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.block),
           ...pending.when(
-            loading: () =>
-                [const Center(child: CircularProgressIndicator())],
+            loading: () => [const Center(child: CircularProgressIndicator())],
             error: (_, _) => [Text(l.errorGeneric)],
             data: (list) => list.isEmpty
                 ? [
-                    Text(l.modQueueEmpty,
-                        textAlign: TextAlign.center,
-                        style: AppTypography.bodyMedium.normal
-                            .withColor(AppColors.textSecondary)),
+                    Text(
+                      l.modQueueEmpty,
+                      textAlign: TextAlign.center,
+                      style: AppTypography.bodyMedium.normal.withColor(
+                        AppColors.textSecondary,
+                      ),
+                    ),
                   ]
                 : [
                     for (final x in list.take(_preview)) ...[
                       ListingTile(
                         listing: x,
-                        subtitle: '${x.farmerName} · '
+                        subtitle:
+                            '${x.farmerName} · '
                             '${l.listingSubtitle(Fmt.number(context, x.quantityKg), Fmt.number(context, x.pricePerKg))}',
-                        onTap: () =>
-                            context.push(Routes.moderatorReview(x.id)),
+                        onTap: () => context.push(Routes.moderatorReview(x.id)),
                       ),
                       const SizedBox(height: AppSpacing.md),
                     ],
@@ -177,9 +216,15 @@ class ModeratorHome extends ConsumerWidget {
 
 /// M2 Listings Queue with status pills.
 class ListingsQueue extends ConsumerWidget {
-  const ListingsQueue({super.key, required this.filter, required this.onFilter});
+  const ListingsQueue({
+    super.key,
+    required this.filter,
+    required this.onFilter,
+    this.showBack = false,
+  });
   final ListingStatus filter;
   final ValueChanged<ListingStatus> onFilter;
+  final bool showBack;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -192,10 +237,14 @@ class ListingsQueue extends ConsumerWidget {
     ];
     return Scaffold(
       backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: l.modListingsTitle, showBack: false),
+      appBar: KsAppBar(title: l.modListingsTitle, showBack: showBack),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(
-            AppSpacing.screen, AppSpacing.contentTop, AppSpacing.screen, 0),
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -207,9 +256,10 @@ class ListingsQueue extends ConsumerWidget {
                     if (s != ListingStatus.pending)
                       const SizedBox(width: AppSpacing.sm),
                     KsPill(
-                        label: label,
-                        selected: filter == s,
-                        onTap: () => onFilter(s)),
+                      label: label,
+                      selected: filter == s,
+                      onTap: () => onFilter(s),
+                    ),
                   ],
                 ],
               ),
@@ -217,27 +267,28 @@ class ListingsQueue extends ConsumerWidget {
             const SizedBox(height: AppSpacing.block),
             Expanded(
               child: async.when(
-                loading: () =>
-                    const Center(child: CircularProgressIndicator()),
+                loading: () => const Center(child: CircularProgressIndicator()),
                 error: (_, _) => Center(child: Text(l.errorGeneric)),
                 data: (list) => list.isEmpty
                     ? Align(
                         alignment: Alignment.topCenter,
-                        child: Text(l.emptyFilter,
-                            style: AppTypography.bodyMedium.normal
-                                .withColor(AppColors.textSecondary)),
+                        child: Text(
+                          l.emptyFilter,
+                          style: AppTypography.bodyMedium.normal.withColor(
+                            AppColors.textSecondary,
+                          ),
+                        ),
                       )
                     : ListView.separated(
-                        padding:
-                            const EdgeInsets.only(bottom: AppSpacing.s2xl),
+                        padding: const EdgeInsets.only(bottom: AppSpacing.s2xl),
                         itemCount: list.length,
                         separatorBuilder: (_, _) =>
                             const SizedBox(height: AppSpacing.md),
                         itemBuilder: (_, i) => ListingTile(
                           listing: list[i],
                           subtitle: list[i].farmerName,
-                          onTap: () => context
-                              .push(Routes.moderatorReview(list[i].id)),
+                          onTap: () =>
+                              context.push(Routes.moderatorReview(list[i].id)),
                         ),
                       ),
               ),
@@ -247,6 +298,25 @@ class ListingsQueue extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// M2 as its own page (Admin → Moderation).
+class ListingsQueuePage extends StatefulWidget {
+  const ListingsQueuePage({super.key});
+
+  @override
+  State<ListingsQueuePage> createState() => _ListingsQueuePageState();
+}
+
+class _ListingsQueuePageState extends State<ListingsQueuePage> {
+  ListingStatus _f = ListingStatus.pending;
+
+  @override
+  Widget build(BuildContext context) => ListingsQueue(
+    filter: _f,
+    onFilter: (s) => setState(() => _f = s),
+    showBack: true,
+  );
 }
 
 /// M3 Listing Review: listing like screen 23 + farmer + Approve / Reject.
@@ -272,12 +342,15 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
       await ref.read(listingRepositoryProvider).approve(widget.listingId, uid);
       final x = ref.read(listingProvider(widget.listingId)).value;
       if (x != null) {
-        await ref.read(tradeRepositoryProvider).notify(
-            toUid: x.farmerId,
-            fromUid: uid,
-            type: 'listing_approved',
-            params: {'cropBn': x.cropNameBn, 'cropEn': x.cropNameEn},
-            link: 'listing:${x.id}');
+        await ref
+            .read(tradeRepositoryProvider)
+            .notify(
+              toUid: x.farmerId,
+              fromUid: uid,
+              type: 'listing_approved',
+              params: {'cropBn': x.cropNameBn, 'cropEn': x.cropNameEn},
+              link: 'listing:${x.id}',
+            );
       }
       if (!mounted) return;
       KsToast.show(context, l.modApproved);
@@ -306,16 +379,19 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
           .reject(widget.listingId, uid, note.trim());
       final x = ref.read(listingProvider(widget.listingId)).value;
       if (x != null) {
-        await ref.read(tradeRepositoryProvider).notify(
-            toUid: x.farmerId,
-            fromUid: uid,
-            type: 'listing_rejected',
-            params: {
-              'cropBn': x.cropNameBn,
-              'cropEn': x.cropNameEn,
-              'note': note.trim(),
-            },
-            link: 'listing:${x.id}');
+        await ref
+            .read(tradeRepositoryProvider)
+            .notify(
+              toUid: x.farmerId,
+              fromUid: uid,
+              type: 'listing_rejected',
+              params: {
+                'cropBn': x.cropNameBn,
+                'cropEn': x.cropNameEn,
+                'note': note.trim(),
+              },
+              link: 'listing:${x.id}',
+            );
       }
       if (!mounted) return;
       KsToast.show(context, l.modRejected);
@@ -345,44 +421,56 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
           return SafeArea(
             top: false,
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-                  AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.screen,
+                AppSpacing.contentTop,
+                AppSpacing.screen,
+                AppSpacing.lg,
+              ),
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(AppRadius.xl),
                   child: SizedBox(
                     height: _imageHeight,
                     child: KsNetImage(
-                        url: x.photo,
-                        fallbackAsset: CropCatalog.imageFor(x.cropKey)),
+                      url: x.photo,
+                      fallbackAsset: CropCatalog.imageFor(x.cropKey),
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.block),
                 Row(
                   children: [
                     Expanded(
-                      child: Text(l.cropWithGrade(x.cropName(lang), x.grade),
-                          style: AppTypography.headingBold20.normal),
+                      child: Text(
+                        l.cropWithGrade(x.cropName(lang), x.grade),
+                        style: AppTypography.headingBold20.normal,
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.x10,
-                          vertical: AppSpacing.badgeV),
+                        horizontal: AppSpacing.x10,
+                        vertical: AppSpacing.badgeV,
+                      ),
                       decoration: BoxDecoration(
-                          color: bg,
-                          borderRadius:
-                              BorderRadius.circular(AppRadius.badge)),
-                      child: Text(badge,
-                          style: AppTypography.bodySmallEmphasis.normal
-                              .withColor(fg)),
+                        color: bg,
+                        borderRadius: BorderRadius.circular(AppRadius.badge),
+                      ),
+                      child: Text(
+                        badge,
+                        style: AppTypography.bodySmallEmphasis.normal.withColor(
+                          fg,
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.block),
                 KsListItem(
                   thumb: KsNetImage(
-                      url: farmer?.photoUrl,
-                      fallbackAsset: AppUi.avatarFarmer),
+                    url: farmer?.photoUrl,
+                    fallbackAsset: AppUi.avatarFarmer,
+                  ),
                   title: x.farmerName,
                   subtitle: [
                     l.modFarmer,
@@ -392,38 +480,50 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
                   showChevron: false,
                 ),
                 const SizedBox(height: AppSpacing.block),
-                KsInfoCard(rows: [
-                  (l.fieldQuantity,
-                      l.qtyKg(Fmt.number(context, x.quantityKg))),
-                  (l.fieldPrice,
-                      l.priceLine(Fmt.number(context, x.pricePerKg))),
-                  (
-                    l.fieldAvailability,
-                    l.availableFromDate(Fmt.date(context, x.availableFrom))
-                  ),
-                  (
-                    l.fieldPickup,
-                    [
-                      BdPlace.display(x.pickup.upazila, lang),
-                      BdPlace.display(x.pickup.district, lang),
-                    ].where((s) => s.isNotEmpty).join(', ')
-                  ),
-                ]),
+                KsInfoCard(
+                  rows: [
+                    (
+                      l.fieldQuantity,
+                      l.qtyKg(Fmt.number(context, x.quantityKg)),
+                    ),
+                    (
+                      l.fieldPrice,
+                      l.priceLine(Fmt.number(context, x.pricePerKg)),
+                    ),
+                    (
+                      l.fieldAvailability,
+                      l.availableFromDate(Fmt.date(context, x.availableFrom)),
+                    ),
+                    (
+                      l.fieldPickup,
+                      [
+                        BdPlace.display(x.pickup.upazila, lang),
+                        BdPlace.display(x.pickup.district, lang),
+                      ].where((s) => s.isNotEmpty).join(', '),
+                    ),
+                  ],
+                ),
                 if (x.createdAt != null) ...[
                   const SizedBox(height: AppSpacing.sm),
-                  Text(l.submittedOn(Fmt.date(context, x.createdAt!)),
-                      style: AppTypography.caption
-                          .withColor(AppColors.textSecondary)),
+                  Text(
+                    l.submittedOn(Fmt.date(context, x.createdAt!)),
+                    style: AppTypography.caption.withColor(
+                      AppColors.textSecondary,
+                    ),
+                  ),
                 ],
                 if ((x.moderationNote ?? '').isNotEmpty) ...[
                   const SizedBox(height: AppSpacing.block),
-                  Text(l.moderationNote(x.moderationNote!),
-                      style: AppTypography.bodySmall
-                          .withColor(AppColors.textError)),
+                  Text(
+                    l.moderationNote(x.moderationNote!),
+                    style: AppTypography.bodySmall.withColor(
+                      AppColors.textError,
+                    ),
+                  ),
                 ],
                 const SizedBox(
-                    height:
-                        AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+                  height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+                ),
                 Row(
                   children: [
                     if (x.status != ListingStatus.hidden)
@@ -475,9 +575,12 @@ class _RejectSheetState extends State<_RejectSheet> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return Padding(
-      padding: EdgeInsets.fromLTRB(AppSpacing.screen, AppSpacing.s2xl,
-          AppSpacing.screen,
-          AppSpacing.screen + MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.fromLTRB(
+        AppSpacing.screen,
+        AppSpacing.s2xl,
+        AppSpacing.screen,
+        AppSpacing.screen + MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

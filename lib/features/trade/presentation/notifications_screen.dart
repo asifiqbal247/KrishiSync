@@ -56,6 +56,10 @@ class NotificationsScreen extends ConsumerWidget {
               double.tryParse(p['fare'] ?? '') ?? 0))
         ),
       'job_assigned' => (l.nJobAssigned(p['no'] ?? ''), crop),
+      'verify_ok' => (l.nVerifyOk, l.nVerifyOkBody),
+      'verify_rejected' => (l.nVerifyRejected, l.nVerifyRejectedBody),
+      'report_resolved' => (l.nReportResolved, p['note'] ?? ''),
+      'report_dismissed' => (l.nReportDismissed, p['note'] ?? ''),
       'trip_picked' => (l.nTripPicked(p['no'] ?? ''), crop),
       'trip_delivered' => (l.nTripDelivered(p['no'] ?? ''), crop),
       _ => (n.type, ''),

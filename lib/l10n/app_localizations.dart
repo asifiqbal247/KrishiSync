@@ -3949,6 +3949,690 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ডেলিভারি সম্পন্ন: {no}'**
   String nTripDelivered(String no);
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমস্যা জানান'**
+  String get reportTitle;
+
+  /// No description provided for @reportGeneralTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বা ট্রিপ'**
+  String get reportGeneralTitle;
+
+  /// No description provided for @reportGeneralSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'যে কাজ নিয়ে সমস্যা হয়েছে'**
+  String get reportGeneralSub;
+
+  /// No description provided for @reportWhat.
+  ///
+  /// In bn, this message translates to:
+  /// **'কী সমস্যা হয়েছে?'**
+  String get reportWhat;
+
+  /// No description provided for @reason_driver_behavior.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালকের আচরণ'**
+  String get reason_driver_behavior;
+
+  /// No description provided for @reason_late_delivery.
+  ///
+  /// In bn, this message translates to:
+  /// **'দেরিতে ডেলিভারি'**
+  String get reason_late_delivery;
+
+  /// No description provided for @reason_app_problem.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাপে সমস্যা'**
+  String get reason_app_problem;
+
+  /// No description provided for @reason_other.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্যান্য'**
+  String get reason_other;
+
+  /// No description provided for @reportPhoto.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি দিন (ঐচ্ছিক)'**
+  String get reportPhoto;
+
+  /// No description provided for @reportDetails.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিস্তারিত (ঐচ্ছিক)'**
+  String get reportDetails;
+
+  /// No description provided for @reportDetailsHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'লিখুন বা ভয়েস রেকর্ড করুন'**
+  String get reportDetailsHint;
+
+  /// No description provided for @reportNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'কী হয়েছে লিখুন বা ভয়েসে বলুন। আমরা ২৪ ঘণ্টার মধ্যে উত্তর দেব। অভিযোগ করলে পেমেন্টের নিয়ম বদলায় না।'**
+  String get reportNote;
+
+  /// No description provided for @reportSubmit.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিযোগ জমা দিন'**
+  String get reportSubmit;
+
+  /// No description provided for @reportSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিযোগ জমা হয়েছে'**
+  String get reportSent;
+
+  /// No description provided for @errPickReason.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমস্যার ধরন বেছে নিন'**
+  String get errPickReason;
+
+  /// No description provided for @safePayTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেন'**
+  String get safePayTitle;
+
+  /// No description provided for @safePayExplain.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাল গাড়িতে উঠলে কৃষক, আর আপনার কাছে পৌঁছালে ট্রান্সপোর্টার নিরাপদ লেনদেন থেকে টাকা পাবেন। ১% ফি শুধু ক্রেতা দেবেন, লোড হলে কাটা হবে। ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি সব গোলাঘর থেকে ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়।'**
+  String get safePayExplain;
+
+  /// No description provided for @payBank.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাংক ট্রান্সফার'**
+  String get payBank;
+
+  /// No description provided for @payBkash.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকাশ / নগদ'**
+  String get payBkash;
+
+  /// No description provided for @payDemoSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেমো — আসল টাকা কাটা হবে না'**
+  String get payDemoSub;
+
+  /// No description provided for @payAddMethod.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্য মাধ্যম যোগ করুন'**
+  String get payAddMethod;
+
+  /// No description provided for @payAddMethodSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকাশ, নগদ, রকেট বা ব্যাংক'**
+  String get payAddMethodSub;
+
+  /// No description provided for @payNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'{amount} পরিশোধ করুন'**
+  String payNow(String amount);
+
+  /// No description provided for @orderLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} · {crop}'**
+  String orderLine(String no, String crop);
+
+  /// No description provided for @newOrderLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন অর্ডার'**
+  String get newOrderLabel;
+
+  /// No description provided for @modStatReports.
+  ///
+  /// In bn, this message translates to:
+  /// **'খোলা অভিযোগ'**
+  String get modStatReports;
+
+  /// No description provided for @modStatVerify.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই বাকি'**
+  String get modStatVerify;
+
+  /// No description provided for @modReportsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিযোগ'**
+  String get modReportsTitle;
+
+  /// No description provided for @rs_open.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন'**
+  String get rs_open;
+
+  /// No description provided for @rs_inReview.
+  ///
+  /// In bn, this message translates to:
+  /// **'পর্যালোচনায়'**
+  String get rs_inReview;
+
+  /// No description provided for @rs_resolved.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমাধান'**
+  String get rs_resolved;
+
+  /// No description provided for @rs_dismissed.
+  ///
+  /// In bn, this message translates to:
+  /// **'খারিজ'**
+  String get rs_dismissed;
+
+  /// No description provided for @noReports.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো অভিযোগ নেই'**
+  String get noReports;
+
+  /// No description provided for @reportDetailTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিযোগের বিবরণ'**
+  String get reportDetailTitle;
+
+  /// No description provided for @rowReason.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমস্যা'**
+  String get rowReason;
+
+  /// No description provided for @rowReporter.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিযোগকারী'**
+  String get rowReporter;
+
+  /// No description provided for @rowDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'তারিখ'**
+  String get rowDate;
+
+  /// No description provided for @rowDetails.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিস্তারিত'**
+  String get rowDetails;
+
+  /// No description provided for @rowModNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'মডারেটরের বার্তা'**
+  String get rowModNote;
+
+  /// No description provided for @nameRole.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} ({role})'**
+  String nameRole(String name, String role);
+
+  /// No description provided for @startReview.
+  ///
+  /// In bn, this message translates to:
+  /// **'পর্যালোচনা শুরু করুন'**
+  String get startReview;
+
+  /// No description provided for @resolveReport.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমাধান হয়েছে'**
+  String get resolveReport;
+
+  /// No description provided for @dismissReport.
+  ///
+  /// In bn, this message translates to:
+  /// **'খারিজ করুন'**
+  String get dismissReport;
+
+  /// No description provided for @escalateReport.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাডমিনকে জানান'**
+  String get escalateReport;
+
+  /// No description provided for @escalatedBadge.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাডমিনকে জানানো হয়েছে'**
+  String get escalatedBadge;
+
+  /// No description provided for @noteSheetTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিযোগকারীকে বার্তা (ঐচ্ছিক)'**
+  String get noteSheetTitle;
+
+  /// No description provided for @noteHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'কী ব্যবস্থা নেওয়া হলো লিখুন'**
+  String get noteHint;
+
+  /// No description provided for @sendBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠান'**
+  String get sendBtn;
+
+  /// No description provided for @doneToast.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন হয়েছে'**
+  String get doneToast;
+
+  /// No description provided for @verifyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিচয় যাচাই'**
+  String get verifyTitle;
+
+  /// No description provided for @verifyEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইয়ের অপেক্ষায় কেউ নেই'**
+  String get verifyEmpty;
+
+  /// No description provided for @rowNid.
+  ///
+  /// In bn, this message translates to:
+  /// **'NID নম্বর'**
+  String get rowNid;
+
+  /// No description provided for @rowJoined.
+  ///
+  /// In bn, this message translates to:
+  /// **'যোগদান'**
+  String get rowJoined;
+
+  /// No description provided for @verifyApprove.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই করুন'**
+  String get verifyApprove;
+
+  /// No description provided for @verifyRejectBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাখ্যান'**
+  String get verifyRejectBtn;
+
+  /// No description provided for @verifyRejectTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই প্রত্যাখ্যান করবেন?'**
+  String get verifyRejectTitle;
+
+  /// No description provided for @verifyRejectBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবহারকারীকে আবার সঠিক NID দিতে বলা হবে।'**
+  String get verifyRejectBody;
+
+  /// No description provided for @nameRolePhone.
+  ///
+  /// In bn, this message translates to:
+  /// **'{role} · {phone}'**
+  String nameRolePhone(String role, String phone);
+
+  /// No description provided for @nVerifyOk.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার পরিচয় যাচাই হয়েছে'**
+  String get nVerifyOk;
+
+  /// No description provided for @nVerifyOkBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন আপনার প্রোফাইলে যাচাইকৃত চিহ্ন দেখাবে।'**
+  String get nVerifyOkBody;
+
+  /// No description provided for @nVerifyRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিচয় যাচাই হয়নি'**
+  String get nVerifyRejected;
+
+  /// No description provided for @nVerifyRejectedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক NID নম্বর দিয়ে আবার চেষ্টা করুন।'**
+  String get nVerifyRejectedBody;
+
+  /// No description provided for @nReportResolved.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার অভিযোগের সমাধান হয়েছে'**
+  String get nReportResolved;
+
+  /// No description provided for @nReportDismissed.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার অভিযোগ খারিজ হয়েছে'**
+  String get nReportDismissed;
+
+  /// No description provided for @navUsers.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবহারকারী'**
+  String get navUsers;
+
+  /// No description provided for @navModeration.
+  ///
+  /// In bn, this message translates to:
+  /// **'মডারেশন'**
+  String get navModeration;
+
+  /// No description provided for @navPrices.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম'**
+  String get navPrices;
+
+  /// No description provided for @adminUsersSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবহারকারী'**
+  String get adminUsersSection;
+
+  /// No description provided for @statTotalUsers.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট ব্যবহারকারী'**
+  String get statTotalUsers;
+
+  /// No description provided for @adminListingsSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকা'**
+  String get adminListingsSection;
+
+  /// No description provided for @adminOrdersSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার ও অভিযোগ'**
+  String get adminOrdersSection;
+
+  /// No description provided for @statCompletedOrders.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন অর্ডার'**
+  String get statCompletedOrders;
+
+  /// No description provided for @usersTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবহারকারী'**
+  String get usersTitle;
+
+  /// No description provided for @userSearchHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম বা মোবাইল নম্বর খুঁজুন'**
+  String get userSearchHint;
+
+  /// No description provided for @noUsers.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেউ পাওয়া যায়নি'**
+  String get noUsers;
+
+  /// No description provided for @noRoleYet.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভূমিকা নেই'**
+  String get noRoleYet;
+
+  /// No description provided for @suspendedBadge.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্থগিত'**
+  String get suspendedBadge;
+
+  /// No description provided for @userDetailTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবহারকারীর বিবরণ'**
+  String get userDetailTitle;
+
+  /// No description provided for @statusActiveUser.
+  ///
+  /// In bn, this message translates to:
+  /// **'সক্রিয়'**
+  String get statusActiveUser;
+
+  /// No description provided for @rowVerification.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই'**
+  String get rowVerification;
+
+  /// No description provided for @vNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'করা হয়নি'**
+  String get vNone;
+
+  /// No description provided for @vPending.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপেক্ষায়'**
+  String get vPending;
+
+  /// No description provided for @vVerified.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত'**
+  String get vVerified;
+
+  /// No description provided for @vRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাখ্যাত'**
+  String get vRejected;
+
+  /// No description provided for @rowRating.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেটিং'**
+  String get rowRating;
+
+  /// No description provided for @ratingLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{avg} ({n}টি রেটিং)'**
+  String ratingLine(String avg, String n);
+
+  /// No description provided for @suspendUser.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্থগিত করুন'**
+  String get suspendUser;
+
+  /// No description provided for @activateUser.
+  ///
+  /// In bn, this message translates to:
+  /// **'সক্রিয় করুন'**
+  String get activateUser;
+
+  /// No description provided for @suspendTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবহারকারী স্থগিত করবেন?'**
+  String get suspendTitle;
+
+  /// No description provided for @suspendBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্থগিত থাকলে তিনি নতুন তালিকা, অফার বা অর্ডার করতে পারবেন না।'**
+  String get suspendBody;
+
+  /// No description provided for @changeRole.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভূমিকা পরিবর্তন'**
+  String get changeRole;
+
+  /// No description provided for @roleChanged.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভূমিকা পরিবর্তন হয়েছে'**
+  String get roleChanged;
+
+  /// No description provided for @cantEditSelf.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিজের অ্যাকাউন্ট এখানে বদলানো যাবে না'**
+  String get cantEditSelf;
+
+  /// No description provided for @moderationTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মডারেশন'**
+  String get moderationTitle;
+
+  /// No description provided for @pricesTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজার দর'**
+  String get pricesTitle;
+
+  /// No description provided for @priceSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজ ৳ {price}/কেজি · ৳ {min}–{max}'**
+  String priceSub(String price, String min, String max);
+
+  /// No description provided for @noPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম দেওয়া হয়নি'**
+  String get noPrice;
+
+  /// No description provided for @fieldTodayPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজকের দাম'**
+  String get fieldTodayPrice;
+
+  /// No description provided for @fieldMinPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বনিম্ন দাম'**
+  String get fieldMinPrice;
+
+  /// No description provided for @fieldMaxPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বোচ্চ দাম'**
+  String get fieldMaxPrice;
+
+  /// No description provided for @priceSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম সংরক্ষণ হয়েছে'**
+  String get priceSaved;
+
+  /// No description provided for @errPriceRange.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বনিম্ন ≤ আজকের দাম ≤ সর্বোচ্চ হতে হবে'**
+  String get errPriceRange;
+
+  /// No description provided for @cropsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের তালিকা'**
+  String get cropsTitle;
+
+  /// No description provided for @addCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'+ নতুন ফসল'**
+  String get addCrop;
+
+  /// No description provided for @cropNameBn.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম (বাংলা)'**
+  String get cropNameBn;
+
+  /// No description provided for @cropNameEn.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম (English)'**
+  String get cropNameEn;
+
+  /// No description provided for @cropCategory.
+  ///
+  /// In bn, this message translates to:
+  /// **'ধরন'**
+  String get cropCategory;
+
+  /// No description provided for @catOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্যান্য'**
+  String get catOther;
+
+  /// No description provided for @cropOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালু'**
+  String get cropOn;
+
+  /// No description provided for @cropOff.
+  ///
+  /// In bn, this message translates to:
+  /// **'বন্ধ'**
+  String get cropOff;
+
+  /// No description provided for @customCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন যোগ করা'**
+  String get customCrop;
+
+  /// No description provided for @cropSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংরক্ষণ হয়েছে'**
+  String get cropSaved;
+
+  /// No description provided for @cropsSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিক্রির তালিকায় কোন ফসল দেখাবে'**
+  String get cropsSub;
+
+  /// No description provided for @pricesSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিদিনের বাজার দর দিন'**
+  String get pricesSub;
 }
 
 class _AppLocalizationsDelegate

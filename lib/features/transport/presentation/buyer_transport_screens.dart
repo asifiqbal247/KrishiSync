@@ -449,7 +449,8 @@ class _ReceiveState extends ConsumerState<ReceiveDeliveryScreen> {
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
           KsButton.secondary(
               label: l.otherProblem,
-              onPressed: () => KsToast.comingSoon(context)),
+              onPressed: () =>
+                  context.push(Routes.report(orderId: d.orderId))),
           const SizedBox(height: AppSpacing.block),
           KsButton(
               label: l.otpGiven,
