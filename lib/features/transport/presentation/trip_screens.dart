@@ -451,7 +451,7 @@ class TripCompleteScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: l.tripDoneTitle, showBack: false),
+      appBar: KsAppBar(title: l.tripDoneTitle),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
             AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),

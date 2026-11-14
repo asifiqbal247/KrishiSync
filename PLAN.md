@@ -1,10 +1,11 @@
 # KrishiSync — Plan
 
-## Current status
-- **Phase:** Part 6 (transport) built + E2E-tested 2026-11-14. Rules + indexes deployed.
-- **Built in Part 6:** Transporter: 141 Home (real earnings/jobs/loads, weekly chart), 143 Available Loads (+ return loads), 144 Load Details, 145 Fare Offer, 152 My Jobs (Trip tab), 153 Pickup Schedule, 159 Trip Status, 167 Proof of Delivery (OTP checked by rules), 168 Trip Complete, 169 Rate Customer, 194 Vehicle & Capacity (+ 211 success), vehicle link in profile. Buyer: 115 Transport, 116 Book Truck (bids), 117 Assigned Transport (call + route map), 110 Receive Delivery (OTP), 111 Rate farmer + driver → order completed. Order details show the next real action per role (book truck / receive / rate / self-transport handed over + received).
-- **Tested on emulator (E2E):** buyer orders 100 kg (KS-1049, platform truck) → load opens → new transporter (01700000003, Kamal Hossain) sets up vehicle → sees load → offers ৳1,800 → buyer notified → books → order total updated → driver loads (farmer paid) → wrong OTP rejected by rules → right OTP → delivered → driver rates buyer → buyer rates farmer (5★) + driver (4★) → order completed. Weekly chart shows ৳1,800 on Saturday.
-- **Next step:** Part 7 — Admin A1–A7 + Moderator M4–M7 + Safe Payment UI (82). Then Part 8 polish.
+## Current status (2026-11-14)
+- **Tier A: built and E2E-tested on emulator.** Parts 1–7 done, Part 8 mostly done.
+- **Part 7 (tested):** Report Issue 203/204 → Moderator Reports M4/M5 (resolve with note → reporter notified); Safe Payment 82 (placeholder) between 78 and order; NID verification M6 (user with NID → moderator verifies → notified, verified badge); Admin A1 dashboard (count queries), A2 users search/filter, A3 suspend/activate + change role, A4 moderation hub, A5 market prices (feeds home price cards + listing ranges), A6 crop catalog (new crops appear in Sell Crop; on/off). Self-transport flow tested (farmer handed over → buyer received → rate → completed).
+- **Part 8 (done):** profiles 68/138/193 with real data, 196 language sheet, D4 logout confirm, 215 skeletons, English plural-safe strings, Golaghor launcher icon (Android 12 launch screen uses it), release APK builds and runs (signed with debug key — fine for demo install).
+- **Test accounts:** 01700000001 farmer (Abdul Rahman), …02 buyer (Farhan Ahmed), …03 transporter (Kamal Hossain), …04 moderator (Rafiq), …05 admin (Tonmoy Admin). OTP 123456.
+- **Next step:** demo data (more listings/prices), Tier B extras if time allows (price trends, earnings list, payment history), final Figma pass.
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -304,4 +305,6 @@ counters/orders    next: int
 | 2026-11-14 | One order = one pickup + one delivery (no pooling). "Return load" sections show real open loads that start in the driver's drop district; hidden when none. Pill "একাধিক পিকআপ" kept (Figma) but shows empty state (pooling = Tier C). |
 | 2026-11-14 | Delivery confirmation: buyer sees a 4-digit OTP (stored in `deliveries/{id}/private/otp`, readable only by the buyer). Driver enters it (+ optional photo) on 167; Firestore rules compare the code. Then buyer rates farmer + driver (111), driver rates buyer (169). |
 | 2026-11-14 | Self-transport orders: farmer taps "handed over" (pickedUp), buyer taps "received" (delivered) → buyer rates farmer → completed. |
-
+| 2026-11-14 | Reports: user reasons from Figma 203/204 (driver behaviour, late delivery, app problem, other); moderator can resolve/dismiss with a note or escalate to admin. |
+| 2026-11-14 | Admin A6: crops collection overrides bundled catalog (on/off) and adds new crops; Sell Crop shows Figma chips + admin-added crops. |
+| 2026-11-14 | Profile rows for Tier B/C features (contracts, payment methods, help, share track record, edit profile) are visible as in Figma and show "শীঘ্রই আসছে". |
