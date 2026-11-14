@@ -332,7 +332,11 @@ class _UsersScreenState extends ConsumerState<UsersScreen> {
                         badge: u.isSuspended ? l.suspendedBadge : null,
                         badgeColor: AppColors.bgErrorSubtle,
                         badgeTextColor: AppColors.textError,
-                        onTap: () => context.push(Routes.adminUser(u.uid)),
+                        onTap: () {
+                            // Don't reopen the keyboard when coming back.
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            context.push(Routes.adminUser(u.uid));
+                          },
                       ),
                       const SizedBox(height: AppSpacing.block),
                     ],

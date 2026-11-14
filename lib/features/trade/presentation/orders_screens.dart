@@ -343,7 +343,11 @@ class OrderDetailsScreen extends ConsumerWidget {
             title: o.transportMode == TransportMode.self
                 ? l.stepTruckBookedSelf
                 : l.stepTruckBooked,
-            subtitle: when(o.timeline['transportBooked']),
+            // Self transport has no booking step: show the order time.
+            subtitle: when(o.timeline['transportBooked'] ??
+                (o.transportMode == TransportMode.self
+                    ? o.timeline['confirmed']
+                    : null)),
             done: done(OrderStatus.transportBooked),
             onTap: !iAmFarmer &&
                     o.transportMode == TransportMode.platform &&
