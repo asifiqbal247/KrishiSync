@@ -51,6 +51,7 @@ import '../features/chat/presentation/chat_screens.dart';
 import '../features/profile/presentation/payment_method_screens.dart';
 import '../features/trade/presentation/history_screens.dart';
 import '../features/contract/presentation/contract_screens.dart';
+import '../features/transport/presentation/load_screens.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -75,6 +76,12 @@ abstract final class Routes {
   static const shareRecord = '/share-record';
   static const history = '/history';
   static const contracts = '/contracts';
+  // Loading & weighing (45/48/51/52 farmer, 162 driver, 132–134 buyer).
+  static String farmerLoad(String id) => '/load/$id';
+  static String weightDiff(String id) => '/weight/$id';
+  static String extraWeight(String id) => '/extra/$id';
+  static String refund(String id) => '/refund/$id';
+  static String track(String id) => '/track/$id';
   static const newContract = '/contracts/new';
   static String contractDetails(String id) => '/contracts/$id/details';
   static String contractStatus(String id) => '/contracts/$id';
@@ -143,6 +150,7 @@ abstract final class Routes {
   static String trJob(String id) => '/transporter/job/$id';
   static String trTrip(String id) => '/transporter/trip/$id';
   static String trDeliver(String id) => '/transporter/trip/$id/deliver';
+  static String trWeigh(String id) => '/transporter/trip/$id/weigh';
   static String trDone(String id) => '/transporter/trip/$id/done';
   static String trRate(String id) => '/transporter/trip/$id/rate';
   static const trVehicle = '/transporter/vehicle';
@@ -345,6 +353,23 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: 'guide', builder: (_, _) => const ExportGuideScreen()),
         ],
       ),
+      GoRoute(
+          path: '/load/:id',
+          builder: (_, s) => FarmerLoadScreen(orderId: s.pathParameters['id']!)),
+      GoRoute(
+          path: '/weight/:id',
+          builder: (_, s) => WeightLessScreen(orderId: s.pathParameters['id']!)),
+      GoRoute(
+          path: '/extra/:id',
+          builder: (_, s) =>
+              ExtraWeightScreen(orderId: s.pathParameters['id']!)),
+      GoRoute(
+          path: '/refund/:id',
+          builder: (_, s) => RefundScreen(orderId: s.pathParameters['id']!)),
+      GoRoute(
+          path: '/track/:id',
+          builder: (_, s) =>
+              TrackingScreen(deliveryId: s.pathParameters['id']!)),
       GoRoute(
         path: Routes.contracts,
         builder: (_, _) => const ContractsScreen(),
@@ -599,6 +624,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: 'deliver',
                 builder: (_, s) =>
                     ProofOfDeliveryScreen(deliveryId: s.pathParameters['id']!),
+              ),
+              GoRoute(
+                path: 'weigh',
+                builder: (_, s) =>
+                    LoadWeighScreen(deliveryId: s.pathParameters['id']!),
               ),
               GoRoute(
                 path: 'done',

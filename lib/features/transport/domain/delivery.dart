@@ -43,6 +43,7 @@ class Delivery {
     this.vehicle,
     this.fare,
     this.deliveredKg,
+    this.loadedKg,
     this.proofPhotoUrl,
     this.transporterRated = false,
     this.timeline = const {},
@@ -73,6 +74,9 @@ class Delivery {
   final Vehicle? vehicle;
   final num? fare;
   final num? deliveredKg;
+
+  /// Weighed at loading (162).
+  final num? loadedKg;
   final String? proofPhotoUrl;
   final bool transporterRated;
   final Map<String, DateTime> timeline;
@@ -117,6 +121,7 @@ class Delivery {
           : Vehicle.fromMap(m['vehicle'] as Map<String, dynamic>),
       fare: m['fare'] as num?,
       deliveredKg: m['deliveredKg'] as num?,
+      loadedKg: m['loadedKg'] as num?,
       proofPhotoUrl: m['proofPhotoUrl'] as String?,
       transporterRated: m['transporterRated'] as bool? ?? false,
       timeline: tl,

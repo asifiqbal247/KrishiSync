@@ -77,6 +77,18 @@ class NotificationsScreen extends ConsumerWidget {
           l.nContractOrder(p['no'] ?? ''),
           l.nOrderNewBody(p['buyer'] ?? '', crop, l.qtyKg(num(p['qty'])))
         ),
+      'truck_booked' => (
+          l.nTruckBooked(p['no'] ?? ''),
+          l.nTruckBookedBody(p['name'] ?? '')
+        ),
+      'extra_request' => (
+          l.nExtraRequest(p['no'] ?? ''),
+          l.nExtraRequestBody(l.qtyKg(num(p['qty'])))
+        ),
+      'extra_approved' => (l.nExtraApproved(p['no'] ?? ''), ''),
+      'extra_declined' => (l.nExtraDeclined(p['no'] ?? ''), ''),
+      'weight_less' => (l.nWeightLess(p['no'] ?? ''), crop),
+      'loaded_paid' => (l.nLoadedPaid(p['no'] ?? ''), crop),
       'price_alert' => (
           l.nPriceAlert(crop),
           l.nPriceAlertBody(
@@ -102,6 +114,9 @@ class NotificationsScreen extends ConsumerWidget {
       'demand' => Routes.demandOffers(id),
       'price' => Routes.priceTrend(id),
       'contract' => Routes.contractStatus(id),
+      'truck' || 'loaded' => Routes.farmerLoad(id),
+      'extra' => Routes.extraWeight(id),
+      'weight' => Routes.weightDiff(id),
       _ => null,
     };
   }

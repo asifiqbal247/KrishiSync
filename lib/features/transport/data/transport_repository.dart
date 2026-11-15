@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -152,32 +154,133 @@ class TransportRepository {
       params: {'no': d.orderNo, 'cropBn': d.cropNameBn, 'cropEn': d.cropNameEn},
       link: 'job:${d.id}',
     );
+    // 45: the farmer sees the truck and the loading code.
+    await _trade.notify(
+      toUid: d.farmerId,
+      fromUid: d.buyerId,
+      type: 'truck_booked',
+      params: {'no': d.orderNo, 'name': bid.name},
+      link: 'truck:${order.id}',
+    );
+  }
+
+  // ---------------- loading code (45 / 162) ----------------
+
+  DocumentReference<Map<String, dynamic>> _loadCode(String deliveryId) =>
+      _deliveries.doc(deliveryId).collection('load').doc('code');
+
+  /// Farmer's 4-digit loading code; made on first view. Only the farmer can
+  /// read it (rules); the driver must type it to confirm the load.
+  Stream<String?> watchLoadCode(String deliveryId) =>
+      _loadCode(deliveryId).snapshots().map((d) => d.data()?['code'] as String?);
+
+  Future<void> ensureLoadCode(String deliveryId) async {
+    final ref = _loadCode(deliveryId);
+    if ((await ref.get()).exists) return;
+    final code = (1000 + Random.secure().nextInt(9000)).toString();
+    await ref.set({'code': code});
+  }
+
+  // ---------------- extra weight (52 / 134) ----------------
+
+  /// Scale shows more than ordered: ask the buyer first.
+  Future<void> requestExtra(TradeOrder o, num weighedKg, String byUid) async {
+    await _order(o.id).update({
+      'extraKg': weighedKg - o.quantityKg,
+      'extraStatus': 'pending',
+      'extraAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+    await _trade.notify(
+      toUid: o.buyerId,
+      fromUid: byUid,
+      type: 'extra_request',
+      params: {
+        'no': o.orderNo,
+        'qty': '${weighedKg - o.quantityKg}',
+        'cropBn': o.cropNameBn,
+        'cropEn': o.cropNameEn,
+      },
+      link: 'extra:${o.id}',
+    );
+  }
+
+  /// Buyer approves (pays the extra, placeholder) or keeps the ordered amount.
+  Future<void> answerExtra(TradeOrder o, bool approve) async {
+    await _order(o.id).update({
+      'extraStatus': approve ? 'approved' : 'declined',
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+    if (o.transporterId == null) return;
+    await _trade.notify(
+      toUid: o.transporterId!,
+      fromUid: o.buyerId,
+      type: approve ? 'extra_approved' : 'extra_declined',
+      params: {'no': o.orderNo},
+      link: 'job:${o.id}',
+    );
+  }
+
+  /// Order amounts for [kg] at the order's price (fare stays the same).
+  static Map<String, num> amountsFor(TradeOrder o, num kg) {
+    final crop = kg * o.pricePerKg;
+    final fee = (crop * TradeRepository.platformFeePct / 100).round();
+    return {
+      'quantityKg': kg,
+      'cropTotal': crop,
+      'platformFee': fee,
+      'total': crop + o.transportFare + fee,
+    };
   }
 
   // ---------------- transporter: trip ----------------
 
-  /// Loaded at the farm (159 → "load at pickup"). Farmer is paid here.
-  Future<void> markPickedUp(Delivery d, String byUid) async {
+  /// 162: weighed and loaded at the farm with the farmer's code. Farmer is
+  /// paid for the weighed amount; if less, the buyer gets the rest back.
+  Future<void> markPickedUp(
+    Delivery d,
+    TradeOrder o,
+    String byUid, {
+    required num loadedKg,
+    required String otp,
+    List<String> photos = const [],
+  }) async {
     final b = _db.batch();
     final now = FieldValue.serverTimestamp();
     b.update(_deliveries.doc(d.id), {
       'status': DeliveryStatus.pickedUp.name,
+      'loadedKg': loadedKg,
+      'loadOtpInput': otp,
+      'loadPhotos': photos,
       'timeline.pickedUp': now,
       'updatedAt': now,
     });
+    final amounts = amountsFor(o, loadedKg);
     b.update(_order(d.orderId), {
       'status': OrderStatus.pickedUp.name,
+      'orderedKg': o.quantityKg,
+      ...amounts,
+      'weightRefund': loadedKg < o.quantityKg ? o.total - amounts['total']! : 0,
+      'loadPhotos': photos,
       'timeline.pickedUp': now,
       'updatedAt': now,
     });
-    await b.commit();
+    try {
+      await b.commit();
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') throw TransportException('wrong_otp');
+      rethrow;
+    }
     final params = {'no': d.orderNo, 'cropBn': d.cropNameBn, 'cropEn': d.cropNameEn};
+    final less = loadedKg < o.quantityKg;
     await _trade.notify(
-        toUid: d.buyerId, fromUid: byUid, type: 'trip_picked',
-        params: params, link: 'order:${d.orderId}');
+        toUid: d.buyerId, fromUid: byUid,
+        type: less ? 'weight_less' : 'trip_picked',
+        params: params,
+        link: less ? 'weight:${d.orderId}' : 'order:${d.orderId}');
     await _trade.notify(
-        toUid: d.farmerId, fromUid: byUid, type: 'trip_picked',
-        params: params, link: 'order:${d.orderId}');
+        toUid: d.farmerId, fromUid: byUid, type: 'loaded_paid',
+        params: params, link: 'loaded:${d.orderId}');
   }
 
   /// Proof of delivery (167). Rules compare [otp] with the buyer's code.
@@ -319,3 +422,6 @@ final myDeliveriesProvider = StreamProvider<List<Delivery>>((ref) {
   return ref.watch(transportRepositoryProvider).watchFor(
       me.role == UserRole.transporter ? 'transporterId' : 'buyerId', me.uid);
 });
+
+final loadCodeProvider = StreamProvider.family<String?, String>(
+    (ref, id) => ref.watch(transportRepositoryProvider).watchLoadCode(id));

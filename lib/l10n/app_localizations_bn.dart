@@ -4087,4 +4087,407 @@ class AppLocalizationsBn extends AppLocalizations {
   String nContractOrder(String no) {
     return 'চুক্তির ডেলিভারি অর্ডার: $no';
   }
+
+  @override
+  String get truckComingTitle => 'আপনার মাল নিতে ট্রাক';
+
+  @override
+  String get truckBookedByBuyer => 'ক্রেতা ট্রাক বুক করেছেন';
+
+  @override
+  String truckBookedBody(String name) {
+    return '$name এই ট্রাক পাঠাচ্ছেন। ভাড়া ক্রেতা দেবেন, আপনাকে কিছু বুক করতে বা দিতে হবে না।';
+  }
+
+  @override
+  String get truckNotBooked => 'এখনো ট্রাক বুক হয়নি';
+
+  @override
+  String get truckNotBookedBody =>
+      'ক্রেতা ট্রাক বুক করলে এখানে ড্রাইভার ও আপনার OTP দেখাবে।';
+
+  @override
+  String get rowWhenComes => 'কখন আসবে';
+
+  @override
+  String get rowWhereComes => 'কোথায় আসবে';
+
+  @override
+  String cropQtyComma(String a, String b) {
+    return '$a, $b';
+  }
+
+  @override
+  String nameDistrict(String name, String district) {
+    return '$name, $district';
+  }
+
+  @override
+  String get truckComingSection => 'যে ট্রাক আসছে';
+
+  @override
+  String yourLoadOtp(String code) {
+    return 'আপনার OTP: $code';
+  }
+
+  @override
+  String get yourLoadOtpBody =>
+      'মাল প্রস্তুত রাখুন। ওজন দেখে তবেই ড্রাইভারকে এই OTP দিন, সাথে সাথে টাকা পাবেন।';
+
+  @override
+  String get weightMoreTitle => 'বেশি ওজন';
+
+  @override
+  String get waitingBuyer => 'ক্রেতার উত্তরের অপেক্ষা';
+
+  @override
+  String waitingBuyerBody(String qty) {
+    return 'স্কেলে $qty বেশি এসেছে। ক্রেতা অনুমোদন দিলে বাড়তি মালের টাকাও পাবেন।';
+  }
+
+  @override
+  String get rowWeighed => 'মাপা হয়েছে';
+
+  @override
+  String get rowExtraPrice => 'বাড়তি দাম';
+
+  @override
+  String get rowReplyTime => 'উত্তরের সময়';
+
+  @override
+  String minutes(String n) {
+    return '$n মিনিট';
+  }
+
+  @override
+  String get ifNoReply => 'উত্তর না এলে';
+
+  @override
+  String ifNoReplyBody(String n, String qty) {
+    return 'ক্রেতা $n মিনিটে উত্তর না দিলে শুধু $qty লোড হবে।';
+  }
+
+  @override
+  String get trackChalan => 'চালান ট্র্যাক করুন';
+
+  @override
+  String get goHome => 'হোমে যান';
+
+  @override
+  String get weightLessTitle => 'ওজন কম';
+
+  @override
+  String get loadedTitle => 'মাল লোড হয়েছে';
+
+  @override
+  String get weightLessHeading => 'ওজন কম ধরা পড়েছে';
+
+  @override
+  String get weightLessBody =>
+      'ডিজিটাল স্কেলে যত কেজি মাপা হয়েছে, আপনি ততটুকুর টাকা পেয়েছেন।';
+
+  @override
+  String get moneySent => 'টাকা পাঠানো হয়েছে!';
+
+  @override
+  String get moneySentBody =>
+      'মাল গাড়িতে ওঠার সাথে সাথে আপনার টাকা ছাড় হয়েছে।';
+
+  @override
+  String get rowWeightDigital => 'ওজন (ডিজিটাল)';
+
+  @override
+  String get rowReceivedTotal => 'মোট পেয়েছেন';
+
+  @override
+  String get rowMethod => 'মাধ্যম';
+
+  @override
+  String get moneyFinal => 'এই টাকা চূড়ান্ত';
+
+  @override
+  String get moneyFinalBody =>
+      'পরে কোনো সমস্যা হলেও এই টাকা আটকানো বা ফেরত নেওয়া যাবে না।';
+
+  @override
+  String get moneyFinalLessBody =>
+      'ওজন ও ছবি সংরক্ষিত আছে। বাকি টাকা ক্রেতা ফেরত পাবেন।';
+
+  @override
+  String get seePayments => 'পেমেন্ট দেখুন';
+
+  @override
+  String get weighTitle => 'পিকআপ: লোড ও ওজন';
+
+  @override
+  String nameDot(String a, String b) {
+    return '$a · $b';
+  }
+
+  @override
+  String gradeStop(String grade, String i, String n) {
+    return 'গ্রেড $grade · স্টপ $i/$n';
+  }
+
+  @override
+  String get oneMon => '১ মন';
+
+  @override
+  String monFixed(String kg) {
+    return '$kg কেজি (নির্ধারিত)';
+  }
+
+  @override
+  String get scaleNote => 'ডিজিটাল স্কেল · সময় ও লোকেশনসহ সংরক্ষিত';
+
+  @override
+  String scalePhotos(String n, String max) {
+    return 'স্কেল ও মালের ছবি তুলুন ($n/$max)';
+  }
+
+  @override
+  String get farmerOtp => 'কৃষকের OTP';
+
+  @override
+  String get weighNote =>
+      'কৃষক OTP দিলে লোড নিশ্চিত ও টাকা ছাড় হবে। কম হলে বাকি টাকা ক্রেতা পাবেন, বেশি হলে আগে অনুমোদন লাগবে।';
+
+  @override
+  String get notLoadedReport => 'লোড হয়নি? বাতিল জানান';
+
+  @override
+  String get otpAndLoad => 'OTP দিন ও লোড নিশ্চিত করুন';
+
+  @override
+  String extraWaitNote(String extra, String qty) {
+    return '$extra বেশি — ক্রেতার উত্তরের অপেক্ষা। উত্তর না এলে শুধু $qty লোড হবে।';
+  }
+
+  @override
+  String extraLoadOrdered(String qty) {
+    return 'শুধু অর্ডারের $qty লোড করুন';
+  }
+
+  @override
+  String extraApprovedNote(String qty) {
+    return 'ক্রেতা অনুমোদন দিয়েছেন — $qty লোড করুন';
+  }
+
+  @override
+  String loadDone(String qty) {
+    return '$qty লোড নিশ্চিত হয়েছে';
+  }
+
+  @override
+  String get weightDiffTitle => 'ওজনের পার্থক্য';
+
+  @override
+  String weightLessRefund(String amount) {
+    return 'ওজন কম হয়েছে: $amount ফেরত পাবেন';
+  }
+
+  @override
+  String weightLessRefundBody(String no, String crop) {
+    return '$no · $crop। ডিজিটাল স্কেলে যত কেজি মাপা হয়েছে, আপনি শুধু ততটুকুর দাম দেবেন।';
+  }
+
+  @override
+  String get rowOrderedKg => 'অর্ডার করেছিলেন';
+
+  @override
+  String get rowLoadWeighed => 'লোডে মাপা হয়েছে';
+
+  @override
+  String get rowLess => 'কম';
+
+  @override
+  String rowCropRefund(String price) {
+    return 'ফসলের দাম ফেরত (৳ $price/কেজি)';
+  }
+
+  @override
+  String rowFeeRefund(String pct) {
+    return 'ফি ফেরত ($pct%)';
+  }
+
+  @override
+  String get rowTotalRefund => 'মোট ফেরত';
+
+  @override
+  String weightLessNote(String qty) {
+    return 'কৃষক $qty-এর দাম পেয়েছেন। পরিবহন ভাড়া একই থাকবে। টাকা ৩ কর্মদিবসের মধ্যে একই মাধ্যমে ফেরত যাবে।';
+  }
+
+  @override
+  String get seeWeighReport => 'ওজন ও ছবির রিপোর্ট দেখুন';
+
+  @override
+  String get seeRefundStatus => 'রিফান্ডের অবস্থা দেখুন';
+
+  @override
+  String get noLoadPhotos => 'লোডের সময় কোনো ছবি তোলা হয়নি';
+
+  @override
+  String weighReportTitle(String qty) {
+    return 'ওজন রিপোর্ট · $qty';
+  }
+
+  @override
+  String extraNeedApproval(String qty) {
+    return 'অনুমোদন দরকার: $qty বেশি';
+  }
+
+  @override
+  String extraNeedApprovalBody(String farmer, String crop) {
+    return '$farmer · $crop। বাড়তি মাল নিতে চাইলে বাড়তি টাকা দিন, তারপর লোড নিশ্চিত হবে।';
+  }
+
+  @override
+  String get rowScaleWeighed => 'স্কেলে মাপা হয়েছে';
+
+  @override
+  String get rowMore => 'বেশি';
+
+  @override
+  String rowExtraPriceAt(String price) {
+    return 'বাড়তি দাম (৳ $price/কেজি)';
+  }
+
+  @override
+  String rowFeePct(String pct) {
+    return 'ফি ($pct%)';
+  }
+
+  @override
+  String get rowTotalToPay => 'মোট দিতে হবে';
+
+  @override
+  String extraNote(String n) {
+    return '$n মিনিটের মধ্যে উত্তর না দিলে শুধু অর্ডারের পরিমাণ লোড হবে। অনুমোদনের পর লোড হলে এই টাকা কৃষক পেয়ে যাবেন, তখন আর ফেরত হবে না।';
+  }
+
+  @override
+  String approveAndPay(String amount) {
+    return 'অনুমোদন ও $amount দিন';
+  }
+
+  @override
+  String keepOrdered(String qty) {
+    return 'না, $qty-ই থাক';
+  }
+
+  @override
+  String get extraApproved => 'বাড়তি ওজন অনুমোদন করা হয়েছে';
+
+  @override
+  String get extraDeclined => 'শুধু অর্ডারের পরিমাণ লোড হবে';
+
+  @override
+  String extraExpiredNote(String qty) {
+    return 'সময় পেরিয়ে গেছে — শুধু $qty লোড হবে';
+  }
+
+  @override
+  String get refundTitle => 'রিফান্ড';
+
+  @override
+  String refundSubCancel(String crop, String qty) {
+    return '$crop – $qty · অর্ডার বাতিল হয়েছে (ট্রাক রওনার আগে)';
+  }
+
+  @override
+  String refundSubWeight(String crop, String qty) {
+    return '$crop · ওজনে $qty কম ধরা পড়েছে';
+  }
+
+  @override
+  String get rowCropValue => 'ফসলের মূল্য';
+
+  @override
+  String get rowTransportCut => 'পরিবহন (১০% কেটে)';
+
+  @override
+  String rowPlatformFeePct(String pct) {
+    return 'প্ল্যাটফর্ম ফি ($pct%)';
+  }
+
+  @override
+  String get refundStepCancelled => 'অর্ডার বাতিল হয়েছে';
+
+  @override
+  String get refundStepWeighed => 'ওজন কম ধরা পড়েছে';
+
+  @override
+  String get refundStepProcessing => 'টাকা ফেরতের প্রক্রিয়া চলছে';
+
+  @override
+  String get refundWithin3Days => '৩ কর্মদিবসের মধ্যে';
+
+  @override
+  String get refundStepArrived => 'টাকা ফেরত এসেছে';
+
+  @override
+  String get rowRefundTo => 'কোথায় ফেরত যাবে';
+
+  @override
+  String get refundSameMethod => 'যে মাধ্যমে দিয়েছিলেন';
+
+  @override
+  String get refundNote =>
+      'গোলাঘর থেকে, যে মাধ্যমে টাকা দিয়েছিলেন সেই মাধ্যমেই ফেরত যাবে।';
+
+  @override
+  String get getHelp => 'সাহায্য নিন';
+
+  @override
+  String get rowWeightDiff => 'ওজনের পার্থক্য';
+
+  @override
+  String get rowRefundLink => 'রিফান্ড';
+
+  @override
+  String get answerExtraBtn => 'বাড়তি ওজন: উত্তর দিন';
+
+  @override
+  String get startWeighing => 'লোড ও ওজন শুরু করুন';
+
+  @override
+  String nTruckBooked(String no) {
+    return 'ট্রাক বুক হয়েছে: $no';
+  }
+
+  @override
+  String nTruckBookedBody(String name) {
+    return '$name আসছেন — আপনার OTP দেখুন';
+  }
+
+  @override
+  String nExtraRequest(String no) {
+    return 'বাড়তি ওজন: $no';
+  }
+
+  @override
+  String nExtraRequestBody(String qty) {
+    return 'স্কেলে $qty বেশি — অনুমোদন দেবেন?';
+  }
+
+  @override
+  String nExtraApproved(String no) {
+    return 'বাড়তি ওজন অনুমোদিত: $no';
+  }
+
+  @override
+  String nExtraDeclined(String no) {
+    return 'শুধু অর্ডারের পরিমাণ লোড করুন: $no';
+  }
+
+  @override
+  String nWeightLess(String no) {
+    return 'ওজন কম, টাকা ফেরত পাবেন: $no';
+  }
+
+  @override
+  String nLoadedPaid(String no) {
+    return 'মাল লোড হয়েছে, টাকা পাঠানো হয়েছে: $no';
+  }
 }

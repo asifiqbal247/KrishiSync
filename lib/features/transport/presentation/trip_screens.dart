@@ -118,7 +118,7 @@ class _MyJobsScreenState extends ConsumerState<MyJobsScreen> {
                   thumbSize: KsListItem.thumbSize.round(),
                   fallbackAsset: CropCatalog.imageFor(j.cropKey)),
               title: l.jobTitle(
-                  j.orderNo, j.cropName(lang), tonsText(context, j.weightKg)),
+                  j.orderNo, j.cropName(lang), tonsText(context, j.loadedKg ?? j.weightKg)),
               subtitle: j.pickupDate == null
                   ? routeOf(context, j)
                   : l.placeDate(
@@ -211,27 +211,7 @@ class TripStatusScreen extends ConsumerStatefulWidget {
 }
 
 class _TripStatusScreenState extends ConsumerState<TripStatusScreen> {
-  bool _busy = false;
   static const _mapH = 138.0;
-
-  Future<void> _loaded(Delivery d, String uid) async {
-    final l = AppLocalizations.of(context);
-    final ok = await showKsConfirm(context,
-        title: l.loadConfirmTitle,
-        body: l.loadConfirmBody,
-        noLabel: l.commonCancel,
-        yesLabel: l.yesLoaded,
-        positive: true);
-    if (!ok || !mounted) return;
-    setState(() => _busy = true);
-    try {
-      await ref.read(transportRepositoryProvider).markPickedUp(d, uid);
-    } catch (_) {
-      if (mounted) KsToast.show(context, l.errorGeneric);
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -296,9 +276,8 @@ class _TripStatusScreenState extends ConsumerState<TripStatusScreen> {
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
           switch (d.status) {
             DeliveryStatus.assigned => KsButton(
-                label: l.startLoading,
-                loading: _busy,
-                onPressed: () => _loaded(d, me.uid)),
+                label: l.startWeighing,
+                onPressed: () => context.push(Routes.trWeigh(d.id))),
             DeliveryStatus.pickedUp => KsButton(
                 label: l.deliverNow,
                 onPressed: () => context.push(Routes.trDeliver(d.id))),

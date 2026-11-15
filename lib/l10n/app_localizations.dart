@@ -7363,6 +7363,636 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'চুক্তির ডেলিভারি অর্ডার: {no}'**
   String nContractOrder(String no);
+
+  /// No description provided for @truckComingTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার মাল নিতে ট্রাক'**
+  String get truckComingTitle;
+
+  /// No description provided for @truckBookedByBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা ট্রাক বুক করেছেন'**
+  String get truckBookedByBuyer;
+
+  /// No description provided for @truckBookedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} এই ট্রাক পাঠাচ্ছেন। ভাড়া ক্রেতা দেবেন, আপনাকে কিছু বুক করতে বা দিতে হবে না।'**
+  String truckBookedBody(String name);
+
+  /// No description provided for @truckNotBooked.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো ট্রাক বুক হয়নি'**
+  String get truckNotBooked;
+
+  /// No description provided for @truckNotBookedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা ট্রাক বুক করলে এখানে ড্রাইভার ও আপনার OTP দেখাবে।'**
+  String get truckNotBookedBody;
+
+  /// No description provided for @rowWhenComes.
+  ///
+  /// In bn, this message translates to:
+  /// **'কখন আসবে'**
+  String get rowWhenComes;
+
+  /// No description provided for @rowWhereComes.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোথায় আসবে'**
+  String get rowWhereComes;
+
+  /// No description provided for @cropQtyComma.
+  ///
+  /// In bn, this message translates to:
+  /// **'{a}, {b}'**
+  String cropQtyComma(String a, String b);
+
+  /// No description provided for @nameDistrict.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name}, {district}'**
+  String nameDistrict(String name, String district);
+
+  /// No description provided for @truckComingSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'যে ট্রাক আসছে'**
+  String get truckComingSection;
+
+  /// No description provided for @yourLoadOtp.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার OTP: {code}'**
+  String yourLoadOtp(String code);
+
+  /// No description provided for @yourLoadOtpBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাল প্রস্তুত রাখুন। ওজন দেখে তবেই ড্রাইভারকে এই OTP দিন, সাথে সাথে টাকা পাবেন।'**
+  String get yourLoadOtpBody;
+
+  /// No description provided for @weightMoreTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বেশি ওজন'**
+  String get weightMoreTitle;
+
+  /// No description provided for @waitingBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার উত্তরের অপেক্ষা'**
+  String get waitingBuyer;
+
+  /// No description provided for @waitingBuyerBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্কেলে {qty} বেশি এসেছে। ক্রেতা অনুমোদন দিলে বাড়তি মালের টাকাও পাবেন।'**
+  String waitingBuyerBody(String qty);
+
+  /// No description provided for @rowWeighed.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাপা হয়েছে'**
+  String get rowWeighed;
+
+  /// No description provided for @rowExtraPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাড়তি দাম'**
+  String get rowExtraPrice;
+
+  /// No description provided for @rowReplyTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'উত্তরের সময়'**
+  String get rowReplyTime;
+
+  /// No description provided for @minutes.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} মিনিট'**
+  String minutes(String n);
+
+  /// No description provided for @ifNoReply.
+  ///
+  /// In bn, this message translates to:
+  /// **'উত্তর না এলে'**
+  String get ifNoReply;
+
+  /// No description provided for @ifNoReplyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা {n} মিনিটে উত্তর না দিলে শুধু {qty} লোড হবে।'**
+  String ifNoReplyBody(String n, String qty);
+
+  /// No description provided for @trackChalan.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালান ট্র্যাক করুন'**
+  String get trackChalan;
+
+  /// No description provided for @goHome.
+  ///
+  /// In bn, this message translates to:
+  /// **'হোমে যান'**
+  String get goHome;
+
+  /// No description provided for @weightLessTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন কম'**
+  String get weightLessTitle;
+
+  /// No description provided for @loadedTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাল লোড হয়েছে'**
+  String get loadedTitle;
+
+  /// No description provided for @weightLessHeading.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন কম ধরা পড়েছে'**
+  String get weightLessHeading;
+
+  /// No description provided for @weightLessBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিজিটাল স্কেলে যত কেজি মাপা হয়েছে, আপনি ততটুকুর টাকা পেয়েছেন।'**
+  String get weightLessBody;
+
+  /// No description provided for @moneySent.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকা পাঠানো হয়েছে!'**
+  String get moneySent;
+
+  /// No description provided for @moneySentBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাল গাড়িতে ওঠার সাথে সাথে আপনার টাকা ছাড় হয়েছে।'**
+  String get moneySentBody;
+
+  /// No description provided for @rowWeightDigital.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন (ডিজিটাল)'**
+  String get rowWeightDigital;
+
+  /// No description provided for @rowReceivedTotal.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট পেয়েছেন'**
+  String get rowReceivedTotal;
+
+  /// No description provided for @rowMethod.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাধ্যম'**
+  String get rowMethod;
+
+  /// No description provided for @moneyFinal.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই টাকা চূড়ান্ত'**
+  String get moneyFinal;
+
+  /// No description provided for @moneyFinalBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরে কোনো সমস্যা হলেও এই টাকা আটকানো বা ফেরত নেওয়া যাবে না।'**
+  String get moneyFinalBody;
+
+  /// No description provided for @moneyFinalLessBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন ও ছবি সংরক্ষিত আছে। বাকি টাকা ক্রেতা ফেরত পাবেন।'**
+  String get moneyFinalLessBody;
+
+  /// No description provided for @seePayments.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট দেখুন'**
+  String get seePayments;
+
+  /// No description provided for @weighTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিকআপ: লোড ও ওজন'**
+  String get weighTitle;
+
+  /// No description provided for @nameDot.
+  ///
+  /// In bn, this message translates to:
+  /// **'{a} · {b}'**
+  String nameDot(String a, String b);
+
+  /// No description provided for @gradeStop.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড {grade} · স্টপ {i}/{n}'**
+  String gradeStop(String grade, String i, String n);
+
+  /// No description provided for @oneMon.
+  ///
+  /// In bn, this message translates to:
+  /// **'১ মন'**
+  String get oneMon;
+
+  /// No description provided for @monFixed.
+  ///
+  /// In bn, this message translates to:
+  /// **'{kg} কেজি (নির্ধারিত)'**
+  String monFixed(String kg);
+
+  /// No description provided for @scaleNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিজিটাল স্কেল · সময় ও লোকেশনসহ সংরক্ষিত'**
+  String get scaleNote;
+
+  /// No description provided for @scalePhotos.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্কেল ও মালের ছবি তুলুন ({n}/{max})'**
+  String scalePhotos(String n, String max);
+
+  /// No description provided for @farmerOtp.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষকের OTP'**
+  String get farmerOtp;
+
+  /// No description provided for @weighNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক OTP দিলে লোড নিশ্চিত ও টাকা ছাড় হবে। কম হলে বাকি টাকা ক্রেতা পাবেন, বেশি হলে আগে অনুমোদন লাগবে।'**
+  String get weighNote;
+
+  /// No description provided for @notLoadedReport.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড হয়নি? বাতিল জানান'**
+  String get notLoadedReport;
+
+  /// No description provided for @otpAndLoad.
+  ///
+  /// In bn, this message translates to:
+  /// **'OTP দিন ও লোড নিশ্চিত করুন'**
+  String get otpAndLoad;
+
+  /// No description provided for @extraWaitNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'{extra} বেশি — ক্রেতার উত্তরের অপেক্ষা। উত্তর না এলে শুধু {qty} লোড হবে।'**
+  String extraWaitNote(String extra, String qty);
+
+  /// No description provided for @extraLoadOrdered.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু অর্ডারের {qty} লোড করুন'**
+  String extraLoadOrdered(String qty);
+
+  /// No description provided for @extraApprovedNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা অনুমোদন দিয়েছেন — {qty} লোড করুন'**
+  String extraApprovedNote(String qty);
+
+  /// No description provided for @loadDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} লোড নিশ্চিত হয়েছে'**
+  String loadDone(String qty);
+
+  /// No description provided for @weightDiffTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজনের পার্থক্য'**
+  String get weightDiffTitle;
+
+  /// No description provided for @weightLessRefund.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন কম হয়েছে: {amount} ফেরত পাবেন'**
+  String weightLessRefund(String amount);
+
+  /// No description provided for @weightLessRefundBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} · {crop}। ডিজিটাল স্কেলে যত কেজি মাপা হয়েছে, আপনি শুধু ততটুকুর দাম দেবেন।'**
+  String weightLessRefundBody(String no, String crop);
+
+  /// No description provided for @rowOrderedKg.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার করেছিলেন'**
+  String get rowOrderedKg;
+
+  /// No description provided for @rowLoadWeighed.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোডে মাপা হয়েছে'**
+  String get rowLoadWeighed;
+
+  /// No description provided for @rowLess.
+  ///
+  /// In bn, this message translates to:
+  /// **'কম'**
+  String get rowLess;
+
+  /// No description provided for @rowCropRefund.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের দাম ফেরত (৳ {price}/কেজি)'**
+  String rowCropRefund(String price);
+
+  /// No description provided for @rowFeeRefund.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি ফেরত ({pct}%)'**
+  String rowFeeRefund(String pct);
+
+  /// No description provided for @rowTotalRefund.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট ফেরত'**
+  String get rowTotalRefund;
+
+  /// No description provided for @weightLessNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক {qty}-এর দাম পেয়েছেন। পরিবহন ভাড়া একই থাকবে। টাকা ৩ কর্মদিবসের মধ্যে একই মাধ্যমে ফেরত যাবে।'**
+  String weightLessNote(String qty);
+
+  /// No description provided for @seeWeighReport.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন ও ছবির রিপোর্ট দেখুন'**
+  String get seeWeighReport;
+
+  /// No description provided for @seeRefundStatus.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিফান্ডের অবস্থা দেখুন'**
+  String get seeRefundStatus;
+
+  /// No description provided for @noLoadPhotos.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোডের সময় কোনো ছবি তোলা হয়নি'**
+  String get noLoadPhotos;
+
+  /// No description provided for @weighReportTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন রিপোর্ট · {qty}'**
+  String weighReportTitle(String qty);
+
+  /// No description provided for @extraNeedApproval.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদন দরকার: {qty} বেশি'**
+  String extraNeedApproval(String qty);
+
+  /// No description provided for @extraNeedApprovalBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{farmer} · {crop}। বাড়তি মাল নিতে চাইলে বাড়তি টাকা দিন, তারপর লোড নিশ্চিত হবে।'**
+  String extraNeedApprovalBody(String farmer, String crop);
+
+  /// No description provided for @rowScaleWeighed.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্কেলে মাপা হয়েছে'**
+  String get rowScaleWeighed;
+
+  /// No description provided for @rowMore.
+  ///
+  /// In bn, this message translates to:
+  /// **'বেশি'**
+  String get rowMore;
+
+  /// No description provided for @rowExtraPriceAt.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাড়তি দাম (৳ {price}/কেজি)'**
+  String rowExtraPriceAt(String price);
+
+  /// No description provided for @rowFeePct.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি ({pct}%)'**
+  String rowFeePct(String pct);
+
+  /// No description provided for @rowTotalToPay.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট দিতে হবে'**
+  String get rowTotalToPay;
+
+  /// No description provided for @extraNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} মিনিটের মধ্যে উত্তর না দিলে শুধু অর্ডারের পরিমাণ লোড হবে। অনুমোদনের পর লোড হলে এই টাকা কৃষক পেয়ে যাবেন, তখন আর ফেরত হবে না।'**
+  String extraNote(String n);
+
+  /// No description provided for @approveAndPay.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদন ও {amount} দিন'**
+  String approveAndPay(String amount);
+
+  /// No description provided for @keepOrdered.
+  ///
+  /// In bn, this message translates to:
+  /// **'না, {qty}-ই থাক'**
+  String keepOrdered(String qty);
+
+  /// No description provided for @extraApproved.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাড়তি ওজন অনুমোদন করা হয়েছে'**
+  String get extraApproved;
+
+  /// No description provided for @extraDeclined.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু অর্ডারের পরিমাণ লোড হবে'**
+  String get extraDeclined;
+
+  /// No description provided for @extraExpiredNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময় পেরিয়ে গেছে — শুধু {qty} লোড হবে'**
+  String extraExpiredNote(String qty);
+
+  /// No description provided for @refundTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিফান্ড'**
+  String get refundTitle;
+
+  /// No description provided for @refundSubCancel.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {qty} · অর্ডার বাতিল হয়েছে (ট্রাক রওনার আগে)'**
+  String refundSubCancel(String crop, String qty);
+
+  /// No description provided for @refundSubWeight.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} · ওজনে {qty} কম ধরা পড়েছে'**
+  String refundSubWeight(String crop, String qty);
+
+  /// No description provided for @rowCropValue.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের মূল্য'**
+  String get rowCropValue;
+
+  /// No description provided for @rowTransportCut.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবহন (১০% কেটে)'**
+  String get rowTransportCut;
+
+  /// No description provided for @rowPlatformFeePct.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্ল্যাটফর্ম ফি ({pct}%)'**
+  String rowPlatformFeePct(String pct);
+
+  /// No description provided for @refundStepCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বাতিল হয়েছে'**
+  String get refundStepCancelled;
+
+  /// No description provided for @refundStepWeighed.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন কম ধরা পড়েছে'**
+  String get refundStepWeighed;
+
+  /// No description provided for @refundStepProcessing.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকা ফেরতের প্রক্রিয়া চলছে'**
+  String get refundStepProcessing;
+
+  /// No description provided for @refundWithin3Days.
+  ///
+  /// In bn, this message translates to:
+  /// **'৩ কর্মদিবসের মধ্যে'**
+  String get refundWithin3Days;
+
+  /// No description provided for @refundStepArrived.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকা ফেরত এসেছে'**
+  String get refundStepArrived;
+
+  /// No description provided for @rowRefundTo.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোথায় ফেরত যাবে'**
+  String get rowRefundTo;
+
+  /// No description provided for @refundSameMethod.
+  ///
+  /// In bn, this message translates to:
+  /// **'যে মাধ্যমে দিয়েছিলেন'**
+  String get refundSameMethod;
+
+  /// No description provided for @refundNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর থেকে, যে মাধ্যমে টাকা দিয়েছিলেন সেই মাধ্যমেই ফেরত যাবে।'**
+  String get refundNote;
+
+  /// No description provided for @getHelp.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাহায্য নিন'**
+  String get getHelp;
+
+  /// No description provided for @rowWeightDiff.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজনের পার্থক্য'**
+  String get rowWeightDiff;
+
+  /// No description provided for @rowRefundLink.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিফান্ড'**
+  String get rowRefundLink;
+
+  /// No description provided for @answerExtraBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাড়তি ওজন: উত্তর দিন'**
+  String get answerExtraBtn;
+
+  /// No description provided for @startWeighing.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড ও ওজন শুরু করুন'**
+  String get startWeighing;
+
+  /// No description provided for @nTruckBooked.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক বুক হয়েছে: {no}'**
+  String nTruckBooked(String no);
+
+  /// No description provided for @nTruckBookedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} আসছেন — আপনার OTP দেখুন'**
+  String nTruckBookedBody(String name);
+
+  /// No description provided for @nExtraRequest.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাড়তি ওজন: {no}'**
+  String nExtraRequest(String no);
+
+  /// No description provided for @nExtraRequestBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্কেলে {qty} বেশি — অনুমোদন দেবেন?'**
+  String nExtraRequestBody(String qty);
+
+  /// No description provided for @nExtraApproved.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাড়তি ওজন অনুমোদিত: {no}'**
+  String nExtraApproved(String no);
+
+  /// No description provided for @nExtraDeclined.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু অর্ডারের পরিমাণ লোড করুন: {no}'**
+  String nExtraDeclined(String no);
+
+  /// No description provided for @nWeightLess.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন কম, টাকা ফেরত পাবেন: {no}'**
+  String nWeightLess(String no);
+
+  /// No description provided for @nLoadedPaid.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাল লোড হয়েছে, টাকা পাঠানো হয়েছে: {no}'**
+  String nLoadedPaid(String no);
 }
 
 class _AppLocalizationsDelegate

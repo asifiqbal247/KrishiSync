@@ -225,10 +225,37 @@ service cloud.firestore {
                           'total', 'timeline', 'updatedAt'])
           && delAfter().transporterId == request.resource.data.transporterId
           && delAfter().fare == request.resource.data.transportFare)
-        // Transporter loads at the farm / delivers (delivery doc moves too).
+        // Transporter delivers (delivery doc moves too).
         || (resource.data.get('transporterId', null) == uid() && statusOnly()
-          && ((from('transportBooked') && to('pickedUp') && delAfter().status == 'pickedUp')
-              || (from('pickedUp') && to('delivered') && delAfter().status == 'delivered')))
+          && from('pickedUp') && to('delivered') && delAfter().status == 'delivered')
+        // Transporter loads at the farm after weighing (162). Amounts become
+        // the weighed amount; more than ordered only if the buyer approved.
+        || (resource.data.get('transporterId', null) == uid()
+          && from('transportBooked') && to('pickedUp') && delAfter().status == 'pickedUp'
+          && onlyChanges(['status', 'timeline', 'updatedAt', 'orderedKg', 'quantityKg',
+                          'cropTotal', 'platformFee', 'total', 'weightRefund', 'loadPhotos'])
+          && request.resource.data.orderedKg == resource.data.quantityKg
+          && request.resource.data.quantityKg == delAfter().loadedKg
+          && request.resource.data.quantityKg > 0
+          && (request.resource.data.quantityKg <= resource.data.quantityKg
+              || (resource.data.get('extraStatus', '') == 'approved'
+                  && request.resource.data.quantityKg
+                     <= resource.data.quantityKg + resource.data.extraKg))
+          && request.resource.data.cropTotal
+             == request.resource.data.quantityKg * resource.data.pricePerKg
+          && request.resource.data.total == request.resource.data.cropTotal
+             + resource.data.transportFare + request.resource.data.platformFee
+          && request.resource.data.weightRefund >= 0)
+        // Scale shows more than ordered: transporter asks the buyer (52/134).
+        || (resource.data.get('transporterId', null) == uid() && from('transportBooked')
+          && resource.data.get('extraStatus', null) == null
+          && onlyChanges(['extraKg', 'extraStatus', 'extraAt', 'updatedAt'])
+          && request.resource.data.extraStatus == 'pending'
+          && request.resource.data.extraKg is number && request.resource.data.extraKg > 0)
+        // Buyer answers the extra-weight request.
+        || (resource.data.buyerId == uid() && resource.data.get('extraStatus', null) == 'pending'
+          && onlyChanges(['extraStatus', 'updatedAt'])
+          && request.resource.data.extraStatus in ['approved', 'declined'])
         // Self transport: farmer hands over, buyer receives.
         || (isSelf() && resource.data.farmerId == uid() && statusOnly()
           && from('confirmed') && to('pickedUp'))
@@ -291,9 +318,13 @@ service cloud.firestore {
           && onlyChanges(['status', 'transporterId', 'transporterName',
                           'transporterPhotoUrl', 'vehicle', 'fare', 'timeline', 'updatedAt'])
           && nd().fare == get(/databases/$(database)/documents/deliveries/$(id)/bids/$(nd().transporterId)).data.fare)
-        // Assigned transporter: loaded at pickup.
+        // Assigned transporter: weighed and loaded with the farmer's code (162).
         || (d().get('transporterId', null) == uid() && d().status == 'assigned'
-          && nd().status == 'pickedUp' && onlyChanges(['status', 'timeline', 'updatedAt']))
+          && nd().status == 'pickedUp'
+          && onlyChanges(['status', 'loadedKg', 'loadOtpInput', 'loadPhotos',
+                          'timeline', 'updatedAt'])
+          && nd().loadedKg is number && nd().loadedKg > 0
+          && nd().loadOtpInput == get(/databases/$(database)/documents/deliveries/$(id)/load/code).data.code)
         // Assigned transporter: delivered with the buyer's OTP.
         || (d().get('transporterId', null) == uid() && d().status == 'pickedUp'
           && nd().status == 'delivered'
@@ -308,6 +339,16 @@ service cloud.firestore {
           && nd().status == 'cancelled'
           && onlyChanges(['status', 'timeline', 'updatedAt']))
       );
+
+      // 4-digit loading code (45): only the farmer may read or make it.
+      match /load/{doc} {
+        allow read: if signedIn()
+          && get(/databases/$(database)/documents/deliveries/$(id)).data.farmerId == uid();
+        allow create: if isActive() && doc == 'code'
+          && get(/databases/$(database)/documents/deliveries/$(id)).data.farmerId == uid()
+          && request.resource.data.keys().hasOnly(['code'])
+          && request.resource.data.code is string && request.resource.data.code.size() == 4;
+      }
 
       // 4-digit delivery code: only the buyer may read it.
       match /private/{doc} {

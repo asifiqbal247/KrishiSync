@@ -159,6 +159,14 @@ class TradeOrder {
     this.transporterId,
     this.transporterName,
     this.paymentRef = '',
+    this.orderedKg,
+    this.weightRefund = 0,
+    this.refund,
+    this.cancelFee = 0,
+    this.extraKg,
+    this.extraStatus,
+    this.extraAt,
+    this.loadPhotos = const [],
   });
 
   final String id;
@@ -193,6 +201,32 @@ class TradeOrder {
 
   /// "bank:…" / "bkash:…" from Safe Payment (82); placeholder reference.
   final String paymentRef;
+
+  /// Digital weighing at loading (162). [quantityKg] / totals become the
+  /// loaded amount; [orderedKg] keeps what the buyer ordered.
+  final num? orderedKg;
+  final num weightRefund;
+
+  /// Cancel before pickup (D5).
+  final num? refund;
+  final num cancelFee;
+
+  /// Scale showed more than ordered (52 / 134): pending | approved | declined.
+  final num? extraKg;
+  final String? extraStatus;
+  final DateTime? extraAt;
+  final List<String> loadPhotos;
+
+  bool get weighedLess => orderedKg != null && quantityKg < orderedKg!;
+  bool get weighedMore => orderedKg != null && quantityKg > orderedKg!;
+  bool get extraPending => extraStatus == 'pending';
+
+  /// Buyer did not answer within 30 minutes → only the ordered amount loads.
+  static const extraWait = Duration(minutes: 30);
+  bool get extraExpired =>
+      extraPending &&
+      extraAt != null &&
+      DateTime.now().isAfter(extraAt!.add(extraWait));
 
   String cropName(String lang) => lang == 'bn' ? cropNameBn : cropNameEn;
 
@@ -235,6 +269,16 @@ class TradeOrder {
       transporterId: m['transporterId'] as String?,
       transporterName: m['transporterName'] as String?,
       paymentRef: m['paymentRef'] as String? ?? '',
+      orderedKg: m['orderedKg'] as num?,
+      weightRefund: m['weightRefund'] as num? ?? 0,
+      refund: m['refund'] as num?,
+      cancelFee: m['cancelFee'] as num? ?? 0,
+      extraKg: m['extraKg'] as num?,
+      extraStatus: m['extraStatus'] as String?,
+      extraAt: (m['extraAt'] as Timestamp?)?.toDate(),
+      loadPhotos: [
+        for (final u in (m['loadPhotos'] as List? ?? const [])) '$u',
+      ],
     );
   }
 }

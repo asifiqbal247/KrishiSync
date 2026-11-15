@@ -239,6 +239,10 @@ class OrderDetailsScreen extends ConsumerWidget {
       }
       return null;
     }
+    // 134: driver's scale shows more than ordered.
+    if (o.extraPending && !o.extraExpired) {
+      return go(l.answerExtraBtn, Routes.extraWeight(o.id));
+    }
     return switch (o.status) {
       OrderStatus.confirmed when platform =>
         go(l.orderBookTruck, Routes.buyerBook(o.id)),
@@ -281,7 +285,6 @@ class OrderDetailsScreen extends ConsumerWidget {
         o.timeline.containsKey(s.name) ||
         (o.status != OrderStatus.cancelled &&
             reached >= OrderStatus.values.indexOf(s));
-    void soon() => KsToast.comingSoon(context);
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -329,10 +332,31 @@ class OrderDetailsScreen extends ConsumerWidget {
                 o.paymentStatus == 'unpaid' ? l.paymentPending : l.paymentHeld,
               ),
               if (o.pickupDate != null)
+                iAmFarmer && o.transportMode == TransportMode.platform
+                    ? KsLinkRow(
+                        label: l.rowLoadAndMoney,
+                        value: Fmt.date(context, o.pickupDate!),
+                        onTap: () => context.push(Routes.farmerLoad(o.id)),
+                      )
+                    : KsInfoRow(
+                        iAmFarmer ? l.rowLoadAndMoney : l.rowPickupDate,
+                        Fmt.date(context, o.pickupDate!),
+                      ),
+              // 133: crop weighed less at loading → part of the money back.
+              if (!iAmFarmer && o.weighedLess)
                 KsLinkRow(
-                  label: iAmFarmer ? l.rowLoadAndMoney : l.rowPickupDate,
-                  value: Fmt.date(context, o.pickupDate!),
-                  onTap: soon,
+                  label: l.rowWeightDiff,
+                  value: Fmt.taka(context, o.weightRefund),
+                  onTap: () => context.push(Routes.weightDiff(o.id)),
+                ),
+              // 132: refund after a cancel.
+              if (!iAmFarmer &&
+                  o.status == OrderStatus.cancelled &&
+                  o.refund != null)
+                KsLinkRow(
+                  label: l.rowRefundLink,
+                  value: Fmt.taka(context, o.refund!),
+                  onTap: () => context.push(Routes.refund(o.id)),
                 ),
             ],
           ),

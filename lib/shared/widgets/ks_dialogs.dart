@@ -179,22 +179,29 @@ class KsInfoBox extends StatelessWidget {
 
 /// Plain info row: Regular 13 secondary label | Medium 14 value.
 class KsInfoRow extends StatelessWidget {
-  const KsInfoRow(this.label, this.value, {super.key});
+  const KsInfoRow(this.label, this.value, {super.key, this.strong = false});
   final String label;
   final String value;
+
+  /// Total rows (e.g. "মোট ফেরত"): label and value in bold.
+  final bool strong;
 
   @override
   Widget build(BuildContext context) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label,
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+              style: strong
+                  ? AppTypography.bodyMediumStrong.normal
+                  : AppTypography.bodySmall.normal
+                      .withColor(AppColors.textSecondary)),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(value,
                 textAlign: TextAlign.right,
-                style: AppTypography.bodyMediumEmphasis.normal),
+                style: strong
+                    ? AppTypography.bodyMediumStrong.normal
+                    : AppTypography.bodyMediumEmphasis.normal),
           ),
         ],
       );
