@@ -2116,5 +2116,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "editProfileTitle": "প্রোফাইল সম্পাদনা",
+  "profileSaved": "প্রোফাইল সংরক্ষণ হয়েছে"
 }

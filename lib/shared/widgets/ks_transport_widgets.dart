@@ -11,6 +11,7 @@ import '../../core/theme/app_typography.dart';
 import 'app_icon.dart';
 import 'ks_list_item.dart';
 import 'ks_map_preview.dart';
+import 'ks_search_bar.dart';
 
 LatLng? _ll(GeoPoint? g) => g == null ? null : LatLng(g.latitude, g.longitude);
 
@@ -248,41 +249,59 @@ Future<T?> showKsOptionsSheet<T>(
   BuildContext context, {
   required String title,
   required List<(T, String)> options,
+  String? searchHint,
 }) async {
   FocusManager.instance.primaryFocus?.unfocus();
+  final q = TextEditingController();
   final r = await showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
-    builder: (ctx) => DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.6,
-      maxChildSize: 0.95,
-      builder: (_, scroll) => Padding(
-        padding: const EdgeInsets.fromLTRB(
-            AppSpacing.screen, AppSpacing.lg, AppSpacing.screen, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: AppTypography.h3.normal),
-            const SizedBox(height: AppSpacing.md),
-            Expanded(
-              child: ListView.separated(
-                controller: scroll,
-                padding: const EdgeInsets.only(bottom: AppSpacing.s2xl),
-                itemCount: options.length,
-                separatorBuilder: (_, _) =>
-                    const SizedBox(height: AppSpacing.md),
-                itemBuilder: (_, i) => KsListItem(
-                  title: options[i].$2,
-                  onTap: () => Navigator.pop(ctx, options[i].$1),
+    builder: (ctx) => StatefulBuilder(
+      builder: (ctx, setS) {
+        final term = q.text.trim().toLowerCase();
+        final shown = term.isEmpty
+            ? options
+            : options.where((o) => o.$2.toLowerCase().contains(term)).toList();
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: searchHint == null ? 0.6 : 0.9,
+          maxChildSize: 0.95,
+          builder: (_, scroll) => Padding(
+            padding: const EdgeInsets.fromLTRB(
+                AppSpacing.screen, AppSpacing.lg, AppSpacing.screen, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: AppTypography.h3.normal),
+                const SizedBox(height: AppSpacing.md),
+                if (searchHint != null) ...[
+                  KsSearchBar(
+                      hint: searchHint,
+                      controller: q,
+                      onChanged: (_) => setS(() {})),
+                  const SizedBox(height: AppSpacing.md),
+                ],
+                Expanded(
+                  child: ListView.separated(
+                    controller: scroll,
+                    padding: const EdgeInsets.only(bottom: AppSpacing.s2xl),
+                    itemCount: shown.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.md),
+                    itemBuilder: (_, i) => KsListItem(
+                      title: shown[i].$2,
+                      onTap: () => Navigator.pop(ctx, shown[i].$1),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     ),
   );
+  q.dispose();
   FocusManager.instance.primaryFocus?.unfocus();
   return r;
 }

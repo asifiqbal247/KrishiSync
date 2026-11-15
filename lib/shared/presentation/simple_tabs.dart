@@ -142,8 +142,7 @@ class SimpleProfileTab extends ConsumerWidget {
                 ? roleName
                 : l.roleDistrict(roleName, district),
             badge: me.isVerified ? l.verifiedBadge : null,
-            // Edit profile is Tier B.
-            onTap: soon,
+            onTap: () => context.push(Routes.editProfile),
           ),
           if (trader) ...[
             const SizedBox(height: AppSpacing.block),

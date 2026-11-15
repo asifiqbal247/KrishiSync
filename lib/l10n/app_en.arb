@@ -920,5 +920,7 @@
   "cancelOrderBodyNoFee": "If you cancel, Golaghor refunds the full {refund}.",
   "yesCancel": "Yes, cancel",
   "orderCancelled": "Order cancelled",
-  "nOrderCancelled": "Order cancelled: {no}"
+  "nOrderCancelled": "Order cancelled: {no}",
+  "editProfileTitle": "Edit profile",
+  "profileSaved": "Profile saved"
 }

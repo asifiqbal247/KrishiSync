@@ -3093,4 +3093,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String nOrderCancelled(String no) {
     return 'Order cancelled: $no';
   }
+
+  @override
+  String get editProfileTitle => 'Edit profile';
+
+  @override
+  String get profileSaved => 'Profile saved';
 }

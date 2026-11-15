@@ -91,6 +91,7 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
     ]..sort((a, b) => a.name(lang).compareTo(b.name(lang)));
     final picked = await showKsOptionsSheet<BdPlace>(context,
         title: l.preferredRoute,
+        searchHint: l.commonSearch,
         options: [for (final d in districts) (d, d.name(lang))]);
     if (picked != null) setState(() => _routeTo = picked.stored);
   }

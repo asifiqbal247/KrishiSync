@@ -5623,6 +5623,18 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'অর্ডার বাতিল: {no}'**
   String nOrderCancelled(String no);
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রোফাইল সম্পাদনা'**
+  String get editProfileTitle;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রোফাইল সংরক্ষণ হয়েছে'**
+  String get profileSaved;
 }
 
 class _AppLocalizationsDelegate

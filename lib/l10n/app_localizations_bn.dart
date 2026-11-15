@@ -3087,4 +3087,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String nOrderCancelled(String no) {
     return 'অর্ডার বাতিল: $no';
   }
+
+  @override
+  String get editProfileTitle => 'প্রোফাইল সম্পাদনা';
+
+  @override
+  String get profileSaved => 'প্রোফাইল সংরক্ষণ হয়েছে';
 }

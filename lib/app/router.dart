@@ -61,6 +61,7 @@ abstract final class Routes {
   static String priceTrend(String crop) => '/prices/$crop';
   static const payments = '/payments';
   static const verification = '/verification';
+  static const editProfile = '/profile/edit';
   static const ratings = '/ratings';
   static const verifyAndRatings = '/ratings?verify=1';
   static String buyerTrack(String id) => '/buyer/track/$id';
@@ -256,6 +257,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
           path: Routes.payments, builder: (_, _) => const PaymentsScreen()),
+      GoRoute(
+          path: Routes.editProfile,
+          builder: (_, _) => const ProfileSetupScreen(editing: true)),
       GoRoute(
           path: Routes.verification,
           builder: (_, _) => const VerificationScreen()),

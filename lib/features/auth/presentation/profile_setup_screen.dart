@@ -14,6 +14,7 @@ import '../../../shared/services/image_storage_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_input.dart';
+import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_upload_box.dart';
 import '../../../shared/widgets/photo_source_sheet.dart';
 import '../data/auth_repository.dart';
@@ -22,7 +23,10 @@ import '../domain/app_user.dart';
 
 /// 08 Profile Setup (Figma 292:371).
 class ProfileSetupScreen extends ConsumerStatefulWidget {
-  const ProfileSetupScreen({super.key});
+  const ProfileSetupScreen({super.key, this.editing = false});
+
+  /// Opened from the profile tab to edit name, photo and address.
+  final bool editing;
 
   @override
   ConsumerState<ProfileSetupScreen> createState() =>
@@ -103,9 +107,14 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
             name: _name.text,
             location: _location!,
             photoUrl: photoUrl,
-            nidNumber: _nid.text,
+            // Verification has its own screen (69/139) when editing.
+            nidNumber: widget.editing ? null : _nid.text,
           );
-      // Router moves to the role home when the profile is complete.
+      if (widget.editing && mounted) {
+        KsToast.show(context, l.profileSaved);
+        context.pop();
+      }
+      // First setup: router moves to the role home once complete.
     } on ImageUploadException {
       setState(() => _error = l.errorUpload);
     } catch (_) {
@@ -130,8 +139,10 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(
-        title: l.profileSetupTitle,
-        onBack: () => ref.read(authRepositoryProvider).signOut(),
+        title: widget.editing ? l.editProfileTitle : l.profileSetupTitle,
+        onBack: widget.editing
+            ? null
+            : () => ref.read(authRepositoryProvider).signOut(),
       ),
       body: SafeArea(
         top: false,
@@ -142,7 +153,11 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
             KsUploadBox(
               label: l.profileAddPhoto,
               file: _photo,
-              height: _photo == null
+              networkUrl: _photo == null
+                  ? ref.read(currentUserProvider).value?.photoUrl
+                  : null,
+              height: _photo == null &&
+                      ref.read(currentUserProvider).value?.photoUrl == null
                   ? KsUploadBox.defaultHeight
                   : KsUploadBox.previewHeight,
               onTap: _pickPhoto,
@@ -177,14 +192,16 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
               value: loc?.village,
               onTap: _pickLocation,
             ),
-            const SizedBox(height: AppSpacing.block),
-            KsTextField(
-              label: l.profileNid,
-              hint: l.profileNidHint,
-              controller: _nid,
-              keyboardType: TextInputType.number,
-              maxLength: 17,
-            ),
+            if (!widget.editing) ...[
+              const SizedBox(height: AppSpacing.block),
+              KsTextField(
+                label: l.profileNid,
+                hint: l.profileNidHint,
+                controller: _nid,
+                keyboardType: TextInputType.number,
+                maxLength: 17,
+              ),
+            ],
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(_error!,
