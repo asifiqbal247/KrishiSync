@@ -69,6 +69,11 @@ class NotificationsScreen extends ConsumerWidget {
       'report_dismissed' => (l.nReportDismissed, p['note'] ?? ''),
       'trip_picked' => (l.nTripPicked(p['no'] ?? ''), crop),
       'trip_delivered' => (l.nTripDelivered(p['no'] ?? ''), crop),
+      'price_alert' => (
+          l.nPriceAlert(crop),
+          l.nPriceAlertBody(
+              Fmt.taka(context, double.tryParse(p['price'] ?? '') ?? 0))
+        ),
       _ => (n.type, ''),
     };
   }
@@ -87,6 +92,7 @@ class NotificationsScreen extends ConsumerWidget {
       'book' => Routes.buyerBook(id),
       'job' => Routes.trJob(id),
       'demand' => Routes.demandOffers(id),
+      'price' => Routes.priceTrend(id),
       _ => null,
     };
   }

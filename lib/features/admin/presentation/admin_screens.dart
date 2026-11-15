@@ -662,6 +662,10 @@ class PricesScreen extends ConsumerWidget {
                           max: hi,
                           day: day,
                           prevPrice: old?.price ?? p,
+                          cropBn: crop.bn,
+                          cropEn: crop.en,
+                          fromUid:
+                              ref.read(currentUserProvider).value?.uid ?? '',
                         );
                     if (ctx.mounted) Navigator.pop(ctx);
                     if (context.mounted) KsToast.show(context, l.priceSaved);

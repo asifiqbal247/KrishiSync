@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
+import '../../../shared/widgets/ks_input.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_search_bar.dart';
@@ -192,6 +194,74 @@ class _PriceTrendState extends ConsumerState<PriceTrendScreen> {
     return (values, labels);
   }
 
+  Future<void> _setAlert(
+      BuildContext context, String uid, bool buyer, num suggest) async {
+    final l = AppLocalizations.of(context);
+    final c = TextEditingController(text: suggest > 0 ? '$suggest' : '');
+    String? err;
+    var busy = false;
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setS) => Padding(
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.screen,
+            AppSpacing.xl,
+            AppSpacing.screen,
+            AppSpacing.s2xl + MediaQuery.of(ctx).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l.priceAlertTitle, style: AppTypography.headingBold20.normal),
+              const SizedBox(height: AppSpacing.sm),
+              Text(buyer ? l.priceAlertHintDown : l.priceAlertHintUp,
+                  style: AppTypography.bodySmall.normal
+                      .withColor(AppColors.textSecondary)),
+              const SizedBox(height: AppSpacing.block),
+              KsTextField(
+                label: l.fieldTargetPrice,
+                controller: c,
+                suffixText: l.sellPriceUnit,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
+                ],
+                errorText: err,
+              ),
+              const SizedBox(height: AppSpacing.block),
+              KsButton(
+                label: l.commonConfirm,
+                loading: busy,
+                onPressed: () async {
+                  final n = num.tryParse(Fmt.latinDigits(c.text.trim())) ?? 0;
+                  if (n <= 0) {
+                    setS(() => err = l.errPriceInvalid);
+                    return;
+                  }
+                  setS(() => busy = true);
+                  try {
+                    await ref.read(marketPriceRepositoryProvider).setAlert(
+                        uid, widget.cropKey,
+                        target: n, above: !buyer);
+                    if (ctx.mounted) Navigator.pop(ctx);
+                    if (context.mounted) KsToast.show(context, l.priceAlertSet);
+                  } catch (_) {
+                    setS(() => busy = false);
+                    if (context.mounted) KsToast.show(context, l.errorGeneric);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    c.dispose();
+  }
+
   static String weekdayShort(AppLocalizations l, DateTime d) => switch (d.weekday) {
         DateTime.saturday => l.wdSat,
         DateTime.sunday => l.wdSun,
@@ -209,6 +279,7 @@ class _PriceTrendState extends ConsumerState<PriceTrendScreen> {
     final me = ref.watch(currentUserProvider).value;
     final crop = catalogCrop(ref.watch(catalogProvider), widget.cropKey);
     final current = ref.watch(marketPriceProvider(widget.cropKey)).value;
+    final alert = ref.watch(priceAlertProvider(widget.cropKey)).value;
     final hist =
         ref.watch(priceHistoryProvider((widget.cropKey, _days))).value ?? const [];
     // Prices entered before history existed: count today's current price.
@@ -272,11 +343,31 @@ class _PriceTrendState extends ConsumerState<PriceTrendScreen> {
             ]),
           const SizedBox(
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-          // Price alerts need push notifications (Tier C).
-          KsButton.secondary(
-            label: l.priceAlert(tk(current?.max ?? price)),
-            onPressed: () => KsToast.comingSoon(context),
-          ),
+          // In-app price alert: fired when the admin saves a price that
+          // crosses the target (no push notifications on the free plan).
+          if (alert != null)
+            KsButton.secondary(
+              label: l.priceAlertOn(tk(alert.target)),
+              onPressed: () async {
+                final ok = await showKsConfirm(context,
+                    title: l.priceAlertRemoveQ,
+                    body: l.priceAlertRemoveBody,
+                    noLabel: l.commonCancel,
+                    yesLabel: l.priceAlertRemove);
+                if (!ok || me == null) return;
+                await ref
+                    .read(marketPriceRepositoryProvider)
+                    .removeAlert(me.uid, widget.cropKey);
+              },
+            )
+          else
+            KsButton.secondary(
+              label: l.priceAlert(tk(current?.max ?? price)),
+              onPressed: me == null
+                  ? null
+                  : () => _setAlert(context, me.uid, me.role == UserRole.buyer,
+                      current?.max ?? price),
+            ),
           const SizedBox(height: AppSpacing.block),
           if (me?.role == UserRole.farmer)
             KsButton(

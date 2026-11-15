@@ -9,7 +9,8 @@
 - **Tier B done (2026-11-15):** 29 Market Prices + 30 Price Trend (daily history in marketPrices/{crop}/history; admin can enter past days), 56/124 Payments, 58/125 Receipts, 178 Earnings tab. Login: +880 on the left, Terms & Privacy page. Tomato has 7 days of demo history.
 - **2026-11-15 (later):** verification upload 69/139/195, ratings 70/140, tracking 108, farmer Market tab 28 + Search 17 (shared screens), buyer profile 27, cancel order D5 (stock back, 10% fare fee recorded), edit profile, searchable route list, **Buyer Demands** (96/98 post, buyer list, 99 accept → real orders through the normal truck/OTP/rating flow; farmer 31 list, 32 details with pooling progress, 33 commit). Phone testing pending.
 - **Chat + Help (2026-11-15):** real-time chat (65/66, chats/{a_b} + messages, opened from home chat icons, farmer/buyer profiles, tracking); Help & Support 205 + FAQ 206 (bn/en answers, helpline call, support chat with admin). Voice messages, attachments, video calls = Tier C.
-- **Next step:** Asif tests on phone; then remaining Tier C (chat, contracts, live GPS, push alerts, PDF).
+- **2026-11-16:** payment methods 197–201, share track record 64/131/188 (QR + share), tips/global buyers/export guide 36/37, **transaction history 62/129/186 + statement 63/130/187** (real orders/trips, month groups, filters, statement shared as text), **in-app price alerts on 30** (tested on emulator: buyer target ৳40 → admin saves ৳34 → buyer notified → alert removed).
+- **Next step:** Asif tests on phone; then remaining Tier C (contracts, live GPS, PDF, voice messages).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -312,7 +313,9 @@ counters/orders    next: int
 | 2026-11-14 | Reports: user reasons from Figma 203/204 (driver behaviour, late delivery, app problem, other); moderator can resolve/dismiss with a note or escalate to admin. |
 | 2026-11-14 | Admin A6: crops collection overrides bundled catalog (on/off) and adds new crops; Sell Crop shows Figma chips + admin-added crops. |
 | 2026-11-14 | Profile rows for Tier B/C features (contracts, payment methods, help, share track record, edit profile) are visible as in Figma and show "শীঘ্রই আসছে". |
-| 2026-11-15 | Market prices are national wholesale prices (admin enters one per crop), so the district pills on 29 are left out. Price alert button shows "শীঘ্রই আসছে" (needs push notifications). PDF download on receipts = Tier C. |
+| 2026-11-15 | Market prices are national wholesale prices (admin enters one per crop), so the district pills on 29 are left out. Price alert: see 2026-11-16. PDF download on receipts = Tier C. |
 | 2026-11-15 | Buyer demands: every farmer supplies at the buyer's target price; buyer accepts commitments → one platform-truck order per farmer (placeholder payment). Quality-standard screen 97 and future-harvest commitments are Tier C. Buyer home "সংগ্রহ ড্যাশবোর্ড" opens the buyer's demand list. |
 | 2026-11-15 | Helpline number for 205 is the admin test line (+8801700000005) for the demo — change `helplineNumber` in chat_screens.dart before release. Support chat opens a thread with the first admin user. |
 | 2026-11-15 | Payment methods 197–201: saved for real (users.payoutMethods, default method shown on Payments/profile). Wallet check (200) = name match with profile; OTP to the wallet needs the payment gateway (placeholder in v1). |
+| 2026-11-16 | Price alerts (30) are in-app only (no Cloud Functions/push on Spark): priceAlerts/{uid}_{crop}; farmer/transporter alerts fire when the price rises to the target, buyer alerts when it falls to it. The admin's app checks alerts when saving today's price, sends the notification and deletes the alert (one-time). |
+| 2026-11-16 | Statement 63: shared as text through the phone's share menu (all 4 buttons open the share sheet); "PDF ডাউনলোড" = Tier C (needs `pdf` package). |

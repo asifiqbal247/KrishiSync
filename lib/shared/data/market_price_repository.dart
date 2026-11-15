@@ -65,7 +65,10 @@ class MarketPriceRepository {
       required num min,
       required num max,
       required num prevPrice,
-      DateTime? day}) async {
+      DateTime? day,
+      String cropBn = '',
+      String cropEn = '',
+      String fromUid = ''}) async {
     final d = day ?? DateTime.now();
     final now = DateTime.now();
     final isToday =
@@ -87,6 +90,61 @@ class MarketPriceRepository {
       });
     }
     await b.commit();
+    if (isToday && fromUid.isNotEmpty) {
+      await _fireAlerts(cropKey, price, cropBn, cropEn, fromUid);
+    }
+  }
+
+  // ---------------- price alerts (30) ----------------
+  // priceAlerts/{uid}_{crop}: the user is told once when the admin's price
+  // reaches the target (up for sellers, down for buyers), then it is removed.
+
+  CollectionReference<Map<String, dynamic>> get _alerts =>
+      _db.collection('priceAlerts');
+
+  Stream<PriceAlert?> watchAlert(String uid, String cropKey) => _alerts
+      .doc('${uid}_$cropKey')
+      .snapshots()
+      .map((d) => d.exists ? PriceAlert.fromDoc(d) : null);
+
+  Future<void> setAlert(String uid, String cropKey,
+          {required num target, required bool above}) =>
+      _alerts.doc('${uid}_$cropKey').set({
+        'uid': uid,
+        'cropKey': cropKey,
+        'target': target,
+        'above': above,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+  Future<void> removeAlert(String uid, String cropKey) =>
+      _alerts.doc('${uid}_$cropKey').delete();
+
+  Future<void> _fireAlerts(String cropKey, num price, String cropBn,
+      String cropEn, String fromUid) async {
+    final q = await _alerts.where('cropKey', isEqualTo: cropKey).get();
+    final b = _db.batch();
+    var any = false;
+    for (final d in q.docs) {
+      final a = PriceAlert.fromDoc(d);
+      if (!(a.above ? price >= a.target : price <= a.target)) continue;
+      any = true;
+      b.set(_db.collection('notifications').doc(a.uid).collection('items').doc(), {
+        'type': 'price_alert',
+        'params': {
+          'cropBn': cropBn,
+          'cropEn': cropEn,
+          'price': '$price',
+          'target': '${a.target}',
+        },
+        'link': 'price:$cropKey',
+        'fromUid': fromUid,
+        'read': false,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+      b.delete(d.reference);
+    }
+    if (any) await b.commit();
   }
 
   /// Last [days] days of history, oldest first.
@@ -110,6 +168,20 @@ class MarketPriceRepository {
   }
 }
 
+class PriceAlert {
+  const PriceAlert(this.uid, this.cropKey, this.target, this.above);
+  final String uid;
+  final String cropKey;
+  final num target;
+  final bool above;
+
+  factory PriceAlert.fromDoc(DocumentSnapshot<Map<String, dynamic>> d) {
+    final m = d.data() ?? const {};
+    return PriceAlert(m['uid'] as String? ?? '', m['cropKey'] as String? ?? '',
+        m['target'] as num? ?? 0, m['above'] as bool? ?? true);
+  }
+}
+
 /// One day's price (Price Trend 30).
 class PricePoint {
   const PricePoint(this.date, this.price);
@@ -129,3 +201,10 @@ final marketPriceProvider = StreamProvider.family<MarketPrice?, String>(
 final priceHistoryProvider =
     StreamProvider.family<List<PricePoint>, (String, int)>((ref, k) =>
         ref.watch(marketPriceRepositoryProvider).watchHistory(k.$1, k.$2));
+
+final priceAlertProvider =
+    StreamProvider.family<PriceAlert?, String>((ref, cropKey) {
+  final uid = ref.watch(currentUserProvider).value?.uid;
+  if (uid == null) return Stream.value(null);
+  return ref.watch(marketPriceRepositoryProvider).watchAlert(uid, cropKey);
+});

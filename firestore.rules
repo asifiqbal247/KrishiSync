@@ -244,6 +244,20 @@ service cloud.firestore {
       ));
     }
 
+    // ---------- priceAlerts/{uid}_{crop} (Price Trend 30) ----------
+    // Owner manages their own; admin reads/removes them when saving a price.
+    match /priceAlerts/{id} {
+      allow read: if signedIn() && (resource == null
+        || resource.data.uid == uid() || isAdmin());
+      allow create, update: if isActive()
+        && id == uid() + '_' + request.resource.data.cropKey
+        && request.resource.data.uid == uid()
+        && request.resource.data.target is number
+        && request.resource.data.target > 0
+        && request.resource.data.above is bool;
+      allow delete: if signedIn() && (resource.data.uid == uid() || isAdmin());
+    }
+
     // ---------- notifications/{uid}/items/{id} ----------
     match /notifications/{owner}/items/{id} {
       allow read: if signedIn() && owner == uid();
