@@ -75,7 +75,7 @@ class KsButton extends StatelessWidget {
   /// Smaller side padding (16) for two buttons side by side in dialogs.
   final bool compact;
 
-  double get _px => compact ? AppSpacing.lg : AppSpacing.s2xl;
+  double get _px => compact ? AppSpacing.sm : AppSpacing.s2xl;
 
   bool get _enabled => onPressed != null && !loading;
 

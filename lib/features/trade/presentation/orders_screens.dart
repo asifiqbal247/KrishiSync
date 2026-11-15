@@ -276,9 +276,11 @@ class OrderDetailsScreen extends ConsumerWidget {
     }
 
     final reached = OrderStatus.values.indexOf(o.status);
+    // A step is done if it happened, even when the order was cancelled later.
     bool done(OrderStatus s) =>
-        o.status != OrderStatus.cancelled &&
-        reached >= OrderStatus.values.indexOf(s);
+        o.timeline.containsKey(s.name) ||
+        (o.status != OrderStatus.cancelled &&
+            reached >= OrderStatus.values.indexOf(s));
     void soon() => KsToast.comingSoon(context);
 
     return Scaffold(
