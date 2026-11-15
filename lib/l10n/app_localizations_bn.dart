@@ -3093,4 +3093,213 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get profileSaved => 'প্রোফাইল সংরক্ষণ হয়েছে';
+
+  @override
+  String get postDemandTitle => 'চাহিদা পোস্ট করুন';
+
+  @override
+  String get stepProductQty => 'পণ্য ও পরিমাণ';
+
+  @override
+  String get stepDelivery => 'ডেলিভারি';
+
+  @override
+  String get fieldCropName => 'ফসল';
+
+  @override
+  String get fieldGradeSize => 'গ্রেড / মান';
+
+  @override
+  String get fieldTargetPrice => 'লক্ষ্য দাম';
+
+  @override
+  String marketRateLine(String min, String max) {
+    return 'বাজার দর: ৳ $min–$max / কেজি';
+  }
+
+  @override
+  String get deliveryLocation => 'ডেলিভারি লোকেশন';
+
+  @override
+  String get deliveryDate => 'ডেলিভারি তারিখ';
+
+  @override
+  String get repeatOnce => 'একবার';
+
+  @override
+  String get repeatOnceSub => 'শুধু এই অর্ডার';
+
+  @override
+  String get repeatMonthly => 'নিয়মিত (রিপিট)';
+
+  @override
+  String get repeatMonthlySub => 'প্রতি মাসে';
+
+  @override
+  String get publishDemand => 'চাহিদা প্রকাশ করুন';
+
+  @override
+  String get demandPosted => 'চাহিদা প্রকাশ হয়েছে';
+
+  @override
+  String get myDemandsTitle => 'আমার চাহিদা';
+
+  @override
+  String get noDemands => 'কোনো চাহিদা নেই';
+
+  @override
+  String demandLine(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String demandSubTarget(String date, String price) {
+    return '$date · লক্ষ্য ৳ $price';
+  }
+
+  @override
+  String offersReceived(String n) {
+    return 'প্রাপ্ত অফার ($n)';
+  }
+
+  @override
+  String get sortPrice => 'দাম';
+
+  @override
+  String get sortQuality => 'মান';
+
+  @override
+  String get sortRating => 'রেটিং';
+
+  @override
+  String commitSub(String qty, String grade, String rating) {
+    return '$qty · গ্রেড $grade · $rating';
+  }
+
+  @override
+  String get selectedTotal => 'নির্বাচিত মোট';
+
+  @override
+  String ofKg(String a, String b) {
+    return '$a / $b কেজি';
+  }
+
+  @override
+  String get acceptSelected => 'নির্বাচিত অফার গ্রহণ';
+
+  @override
+  String get noCommits => 'এখনো কোনো কৃষক অফার দেননি';
+
+  @override
+  String get commitsAccepted => 'অফার গ্রহণ হয়েছে, অর্ডার তৈরি হয়েছে';
+
+  @override
+  String get selectCommit => 'অন্তত একটি অফার বেছে নিন';
+
+  @override
+  String get acceptedBadge => 'গৃহীত';
+
+  @override
+  String get closeDemand => 'চাহিদা বন্ধ করুন';
+
+  @override
+  String get demandClosed => 'বন্ধ';
+
+  @override
+  String get demandOpen => 'চলমান';
+
+  @override
+  String get demandFilled => 'পূর্ণ';
+
+  @override
+  String get buyerDemandsTitle => 'ক্রেতার চাহিদা';
+
+  @override
+  String get demandSearchHint => 'ফসল বা এলাকা খুঁজুন';
+
+  @override
+  String get filterBigOrder => 'বড় অর্ডার';
+
+  @override
+  String get filterExport => 'বিদেশি';
+
+  @override
+  String demandRowSub(String buyer, String date) {
+    return '$buyer · $date';
+  }
+
+  @override
+  String poolingSub(String pct) {
+    return 'পুলিং চলছে · $pct% পূর্ণ';
+  }
+
+  @override
+  String get demandDetailsTitle => 'চাহিদার বিবরণ';
+
+  @override
+  String get rowNeed => 'প্রয়োজন';
+
+  @override
+  String get rowDelivery => 'ডেলিভারি';
+
+  @override
+  String ratingTrades(String avg, String n) {
+    return '$avg ($n লেনদেন)';
+  }
+
+  @override
+  String get poolingProgress => 'পুলিং অগ্রগতি';
+
+  @override
+  String get poolingNote => 'একাধিক কৃষক মিলে এই অর্ডার পূরণ করা যাবে।';
+
+  @override
+  String get futureHarvest => 'ভবিষ্যৎ ফসল থেকে দেব (হারভেস্ট)';
+
+  @override
+  String get wantToSupply => 'সরবরাহ দিতে চাই';
+
+  @override
+  String get howMuchSupply => 'কত কেজি দিতে পারবেন?';
+
+  @override
+  String get readyFrom => 'প্রস্তুত থাকবে';
+
+  @override
+  String get estTotal => 'মোট পাবেন (আনুমানিক)';
+
+  @override
+  String get commitSent => 'সরবরাহের প্রস্তাব পাঠানো হয়েছে';
+
+  @override
+  String myCommitLine(String qty, String status) {
+    return 'আপনার প্রস্তাব: $qty · $status';
+  }
+
+  @override
+  String get commitPending => 'অপেক্ষমাণ';
+
+  @override
+  String errQtyLeft(String qty) {
+    return 'বাকি আছে $qty';
+  }
+
+  @override
+  String nCommitNew(String crop) {
+    return 'নতুন সরবরাহ প্রস্তাব: $crop';
+  }
+
+  @override
+  String nCommitNewBody(String farmer, String qty) {
+    return '$farmer · $qty';
+  }
+
+  @override
+  String nCommitAccepted(String no) {
+    return 'আপনার সরবরাহ গৃহীত: $no';
+  }
+
+  @override
+  String get closeDemandBody =>
+      'চাহিদা বন্ধ করলে কৃষকরা আর সরবরাহ প্রস্তাব দিতে পারবেন না। গৃহীত অর্ডার চলবে।';
 }

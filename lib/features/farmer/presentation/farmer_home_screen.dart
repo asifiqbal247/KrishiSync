@@ -131,7 +131,7 @@ class FarmerHomeScreen extends ConsumerWidget {
                   icon: AppUi.glyphTrendUp,
                   title: l.homeBuyerDemand,
                   hint: l.homeBuyerDemandSub,
-                  onTap: soon,
+                  onTap: () => context.push(Routes.buyerDemands),
                 ),
               ),
               const SizedBox(width: AppSpacing.lg),

@@ -7,7 +7,8 @@
 - **Test accounts:** 01700000001 farmer (Abdul Rahman), …02 buyer (Farhan Ahmed), …03 transporter (Kamal Hossain), …04 moderator (Rafiq), …05 admin (Tonmoy Admin). OTP 123456.
 - **Demo data (2026-11-15):** farmers Karim Mia (…06, Mymensingh: potato 2 t, onion 1.5 t), Salma Begum (…07, Dinajpur: rice 5 t), Rahim Uddin (…08, Bagerhat: eggplant 800 kg) + Abdul Rahman tomato — all approved. Market prices set for all 7 crops.
 - **Tier B done (2026-11-15):** 29 Market Prices + 30 Price Trend (daily history in marketPrices/{crop}/history; admin can enter past days), 56/124 Payments, 58/125 Receipts, 178 Earnings tab. Login: +880 on the left, Terms & Privacy page. Tomato has 7 days of demo history.
-- **Next step:** final Figma pass; more Tier B if time allows (NID/business verification upload 69/139, ratings list 70/140, shipment tracking 46/108).
+- **2026-11-15 (later):** verification upload 69/139/195, ratings 70/140, tracking 108, farmer Market tab 28 + Search 17 (shared screens), buyer profile 27, cancel order D5 (stock back, 10% fare fee recorded), edit profile, searchable route list, **Buyer Demands** (96/98 post, buyer list, 99 accept → real orders through the normal truck/OTP/rating flow; farmer 31 list, 32 details with pooling progress, 33 commit). Phone testing pending.
+- **Next step:** Asif tests on phone; then remaining Tier C (chat, contracts, live GPS, push alerts, PDF).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -311,3 +312,4 @@ counters/orders    next: int
 | 2026-11-14 | Admin A6: crops collection overrides bundled catalog (on/off) and adds new crops; Sell Crop shows Figma chips + admin-added crops. |
 | 2026-11-14 | Profile rows for Tier B/C features (contracts, payment methods, help, share track record, edit profile) are visible as in Figma and show "শীঘ্রই আসছে". |
 | 2026-11-15 | Market prices are national wholesale prices (admin enters one per crop), so the district pills on 29 are left out. Price alert button shows "শীঘ্রই আসছে" (needs push notifications). PDF download on receipts = Tier C. |
+| 2026-11-15 | Buyer demands: every farmer supplies at the buyer's target price; buyer accepts commitments → one platform-truck order per farmer (placeholder payment). Quality-standard screen 97 and future-harvest commitments are Tier C. Buyer home "সংগ্রহ ড্যাশবোর্ড" opens the buyer's demand list. |

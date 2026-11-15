@@ -3099,4 +3099,213 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileSaved => 'Profile saved';
+
+  @override
+  String get postDemandTitle => 'Post a demand';
+
+  @override
+  String get stepProductQty => 'Product & quantity';
+
+  @override
+  String get stepDelivery => 'Delivery';
+
+  @override
+  String get fieldCropName => 'Crop';
+
+  @override
+  String get fieldGradeSize => 'Grade / quality';
+
+  @override
+  String get fieldTargetPrice => 'Target price';
+
+  @override
+  String marketRateLine(String min, String max) {
+    return 'Market rate: ৳ $min–$max / kg';
+  }
+
+  @override
+  String get deliveryLocation => 'Delivery location';
+
+  @override
+  String get deliveryDate => 'Delivery date';
+
+  @override
+  String get repeatOnce => 'Once';
+
+  @override
+  String get repeatOnceSub => 'This order only';
+
+  @override
+  String get repeatMonthly => 'Regular (repeat)';
+
+  @override
+  String get repeatMonthlySub => 'Every month';
+
+  @override
+  String get publishDemand => 'Publish demand';
+
+  @override
+  String get demandPosted => 'Demand published';
+
+  @override
+  String get myDemandsTitle => 'My demands';
+
+  @override
+  String get noDemands => 'No demands';
+
+  @override
+  String demandLine(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String demandSubTarget(String date, String price) {
+    return '$date · target ৳ $price';
+  }
+
+  @override
+  String offersReceived(String n) {
+    return 'Offers received ($n)';
+  }
+
+  @override
+  String get sortPrice => 'Price';
+
+  @override
+  String get sortQuality => 'Quality';
+
+  @override
+  String get sortRating => 'Rating';
+
+  @override
+  String commitSub(String qty, String grade, String rating) {
+    return '$qty · grade $grade · $rating';
+  }
+
+  @override
+  String get selectedTotal => 'Selected total';
+
+  @override
+  String ofKg(String a, String b) {
+    return '$a / $b kg';
+  }
+
+  @override
+  String get acceptSelected => 'Accept selected offers';
+
+  @override
+  String get noCommits => 'No farmer offers yet';
+
+  @override
+  String get commitsAccepted => 'Offers accepted, orders created';
+
+  @override
+  String get selectCommit => 'Pick at least one offer';
+
+  @override
+  String get acceptedBadge => 'Accepted';
+
+  @override
+  String get closeDemand => 'Close demand';
+
+  @override
+  String get demandClosed => 'Closed';
+
+  @override
+  String get demandOpen => 'Open';
+
+  @override
+  String get demandFilled => 'Filled';
+
+  @override
+  String get buyerDemandsTitle => 'Buyer demands';
+
+  @override
+  String get demandSearchHint => 'Search crop or area';
+
+  @override
+  String get filterBigOrder => 'Large orders';
+
+  @override
+  String get filterExport => 'Export';
+
+  @override
+  String demandRowSub(String buyer, String date) {
+    return '$buyer · $date';
+  }
+
+  @override
+  String poolingSub(String pct) {
+    return 'Pooling · $pct% filled';
+  }
+
+  @override
+  String get demandDetailsTitle => 'Demand details';
+
+  @override
+  String get rowNeed => 'Needed';
+
+  @override
+  String get rowDelivery => 'Delivery';
+
+  @override
+  String ratingTrades(String avg, String n) {
+    return '$avg ($n trades)';
+  }
+
+  @override
+  String get poolingProgress => 'Pooling progress';
+
+  @override
+  String get poolingNote => 'Several farmers together can fill this order.';
+
+  @override
+  String get futureHarvest => 'Supply from future harvest';
+
+  @override
+  String get wantToSupply => 'I want to supply';
+
+  @override
+  String get howMuchSupply => 'How many kg can you supply?';
+
+  @override
+  String get readyFrom => 'Ready on';
+
+  @override
+  String get estTotal => 'You\'ll get (approx.)';
+
+  @override
+  String get commitSent => 'Supply offer sent';
+
+  @override
+  String myCommitLine(String qty, String status) {
+    return 'Your offer: $qty · $status';
+  }
+
+  @override
+  String get commitPending => 'Pending';
+
+  @override
+  String errQtyLeft(String qty) {
+    return 'Only $qty left';
+  }
+
+  @override
+  String nCommitNew(String crop) {
+    return 'New supply offer: $crop';
+  }
+
+  @override
+  String nCommitNewBody(String farmer, String qty) {
+    return '$farmer · $qty';
+  }
+
+  @override
+  String nCommitAccepted(String no) {
+    return 'Your supply accepted: $no';
+  }
+
+  @override
+  String get closeDemandBody =>
+      'Farmers can\'t offer supply after you close it. Accepted orders continue.';
 }

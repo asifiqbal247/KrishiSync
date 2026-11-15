@@ -355,6 +355,35 @@ service cloud.firestore {
         && request.resource.data.handledBy == uid();
     }
 
+    // ---------- demands/{id} (Buyer demands 96–99 / 31–33) ----------
+    match /demands/{id} {
+      allow read: if signedIn();
+      allow create: if isActive() && myRole() == 'buyer'
+        && request.resource.data.buyerId == uid()
+        && request.resource.data.status == 'open'
+        && request.resource.data.quantityKg is number && request.resource.data.quantityKg > 0
+        && request.resource.data.targetPrice is number && request.resource.data.targetPrice > 0;
+      allow update: if isActive() && resource.data.buyerId == uid()
+        && onlyChanges(['status', 'updatedAt'])
+        && request.resource.data.status in ['open', 'filled', 'closed'];
+
+      // One commitment per farmer.
+      match /commits/{fid} {
+        function demand() { return get(/databases/$(database)/documents/demands/$(id)).data; }
+        allow read: if signedIn();
+        allow create, update: if isActive() && fid == uid() && myRole() == 'farmer'
+          && demand().status == 'open'
+          && (resource == null || resource.data.status == 'pending')
+          && request.resource.data.status == 'pending'
+          && request.resource.data.quantityKg is number
+          && request.resource.data.quantityKg > 0;
+        // Buyer accepts (an order is created for it) or rejects.
+        allow update: if isActive() && demand().buyerId == uid()
+          && onlyChanges(['status', 'orderId'])
+          && request.resource.data.status in ['accepted', 'rejected'];
+      }
+    }
+
     // ---------- crops/{key} (catalog, A6) ----------
     match /crops/{key} {
       allow read: if signedIn();

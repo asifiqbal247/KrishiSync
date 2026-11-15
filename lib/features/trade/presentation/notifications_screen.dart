@@ -58,6 +58,11 @@ class NotificationsScreen extends ConsumerWidget {
         ),
       'job_assigned' => (l.nJobAssigned(p['no'] ?? ''), crop),
       'order_cancelled' => (l.nOrderCancelled(p['no'] ?? ''), crop),
+      'commit_new' => (
+          l.nCommitNew(crop),
+          l.nCommitNewBody(p['farmer'] ?? '', l.qtyKg(num(p['qty'])))
+        ),
+      'commit_accepted' => (l.nCommitAccepted(p['no'] ?? ''), crop),
       'verify_ok' => (l.nVerifyOk, l.nVerifyOkBody),
       'verify_rejected' => (l.nVerifyRejected, l.nVerifyRejectedBody),
       'report_resolved' => (l.nReportResolved, p['note'] ?? ''),
@@ -81,6 +86,7 @@ class NotificationsScreen extends ConsumerWidget {
       'listing' => Routes.farmerListingDetails(id),
       'book' => Routes.buyerBook(id),
       'job' => Routes.trJob(id),
+      'demand' => Routes.demandOffers(id),
       _ => null,
     };
   }

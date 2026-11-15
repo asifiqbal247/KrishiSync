@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../app/router.dart';
 import '../../../core/theme/app_assets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/presentation/simple_tabs.dart';
 import '../../../shared/widgets/ks_bottom_nav.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../trade/presentation/orders_screens.dart';
 import 'buyer_common.dart';
 import 'buyer_home_screen.dart';
@@ -32,8 +33,7 @@ class BuyerShell extends ConsumerWidget {
         index: index,
         onTap: (i) => ref.read(buyerTabProvider.notifier).go(i),
         fabLabel: l.navDemand,
-        // Post Demand (96–99) is Tier C.
-        onFab: () => KsToast.comingSoon(context),
+        onFab: () => context.push(Routes.postDemand),
         items: [
           KsNavItem.images(l.navHome, AppUi.navOnHome, AppUi.navOffHome),
           KsNavItem.images(l.navMarket, AppUi.navOnMarket, AppUi.navOffMarket),

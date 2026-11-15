@@ -2118,5 +2118,193 @@
     }
   },
   "editProfileTitle": "প্রোফাইল সম্পাদনা",
-  "profileSaved": "প্রোফাইল সংরক্ষণ হয়েছে"
+  "profileSaved": "প্রোফাইল সংরক্ষণ হয়েছে",
+  "postDemandTitle": "চাহিদা পোস্ট করুন",
+  "stepProductQty": "পণ্য ও পরিমাণ",
+  "stepDelivery": "ডেলিভারি",
+  "fieldCropName": "ফসল",
+  "fieldGradeSize": "গ্রেড / মান",
+  "fieldTargetPrice": "লক্ষ্য দাম",
+  "marketRateLine": "বাজার দর: ৳ {min}–{max} / কেজি",
+  "@marketRateLine": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryLocation": "ডেলিভারি লোকেশন",
+  "deliveryDate": "ডেলিভারি তারিখ",
+  "repeatOnce": "একবার",
+  "repeatOnceSub": "শুধু এই অর্ডার",
+  "repeatMonthly": "নিয়মিত (রিপিট)",
+  "repeatMonthlySub": "প্রতি মাসে",
+  "publishDemand": "চাহিদা প্রকাশ করুন",
+  "demandPosted": "চাহিদা প্রকাশ হয়েছে",
+  "myDemandsTitle": "আমার চাহিদা",
+  "noDemands": "কোনো চাহিদা নেই",
+  "demandLine": "{crop} – {qty}",
+  "@demandLine": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "demandSubTarget": "{date} · লক্ষ্য ৳ {price}",
+  "@demandSubTarget": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "offersReceived": "প্রাপ্ত অফার ({n})",
+  "@offersReceived": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "sortPrice": "দাম",
+  "sortQuality": "মান",
+  "sortRating": "রেটিং",
+  "commitSub": "{qty} · গ্রেড {grade} · {rating}",
+  "@commitSub": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "grade": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "selectedTotal": "নির্বাচিত মোট",
+  "ofKg": "{a} / {b} কেজি",
+  "@ofKg": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "acceptSelected": "নির্বাচিত অফার গ্রহণ",
+  "noCommits": "এখনো কোনো কৃষক অফার দেননি",
+  "commitsAccepted": "অফার গ্রহণ হয়েছে, অর্ডার তৈরি হয়েছে",
+  "selectCommit": "অন্তত একটি অফার বেছে নিন",
+  "acceptedBadge": "গৃহীত",
+  "closeDemand": "চাহিদা বন্ধ করুন",
+  "demandClosed": "বন্ধ",
+  "demandOpen": "চলমান",
+  "demandFilled": "পূর্ণ",
+  "buyerDemandsTitle": "ক্রেতার চাহিদা",
+  "demandSearchHint": "ফসল বা এলাকা খুঁজুন",
+  "filterBigOrder": "বড় অর্ডার",
+  "filterExport": "বিদেশি",
+  "demandRowSub": "{buyer} · {date}",
+  "@demandRowSub": {
+    "placeholders": {
+      "buyer": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "poolingSub": "পুলিং চলছে · {pct}% পূর্ণ",
+  "@poolingSub": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "demandDetailsTitle": "চাহিদার বিবরণ",
+  "rowNeed": "প্রয়োজন",
+  "rowDelivery": "ডেলিভারি",
+  "ratingTrades": "{avg} ({n} লেনদেন)",
+  "@ratingTrades": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "poolingProgress": "পুলিং অগ্রগতি",
+  "poolingNote": "একাধিক কৃষক মিলে এই অর্ডার পূরণ করা যাবে।",
+  "futureHarvest": "ভবিষ্যৎ ফসল থেকে দেব (হারভেস্ট)",
+  "wantToSupply": "সরবরাহ দিতে চাই",
+  "howMuchSupply": "কত কেজি দিতে পারবেন?",
+  "readyFrom": "প্রস্তুত থাকবে",
+  "estTotal": "মোট পাবেন (আনুমানিক)",
+  "commitSent": "সরবরাহের প্রস্তাব পাঠানো হয়েছে",
+  "myCommitLine": "আপনার প্রস্তাব: {qty} · {status}",
+  "@myCommitLine": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "commitPending": "অপেক্ষমাণ",
+  "errQtyLeft": "বাকি আছে {qty}",
+  "@errQtyLeft": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "nCommitNew": "নতুন সরবরাহ প্রস্তাব: {crop}",
+  "@nCommitNew": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nCommitNewBody": "{farmer} · {qty}",
+  "@nCommitNewBody": {
+    "placeholders": {
+      "farmer": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "nCommitAccepted": "আপনার সরবরাহ গৃহীত: {no}",
+  "@nCommitAccepted": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "closeDemandBody": "চাহিদা বন্ধ করলে কৃষকরা আর সরবরাহ প্রস্তাব দিতে পারবেন না। গৃহীত অর্ডার চলবে।"
 }

@@ -21,6 +21,7 @@ import '../features/buyer/presentation/buyer_profile_screen.dart';
 import '../features/buyer/presentation/buyer_shell.dart';
 import '../features/buyer/presentation/farmer_profile_screen.dart';
 import '../features/buyer/presentation/search_screen.dart';
+import '../features/demand/presentation/demand_screens.dart';
 import '../features/farmer/presentation/farmer_shell.dart';
 import '../features/farmer/presentation/listing_details_screen.dart';
 import '../features/farmer/presentation/my_listings_screen.dart';
@@ -62,6 +63,13 @@ abstract final class Routes {
   static const payments = '/payments';
   static const verification = '/verification';
   static const editProfile = '/profile/edit';
+
+  // Buyer demands (96–99) and farmer side (31–33).
+  static const postDemand = '/demand/new';
+  static const myDemands = '/demand/mine';
+  static String demandOffers(String id) => '/demand/$id/offers';
+  static const buyerDemands = '/demands';
+  static String demandDetails(String id) => '/demands/$id';
   static const ratings = '/ratings';
   static const verifyAndRatings = '/ratings?verify=1';
   static String buyerTrack(String id) => '/buyer/track/$id';
@@ -257,6 +265,27 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
           path: Routes.payments, builder: (_, _) => const PaymentsScreen()),
+      GoRoute(
+          path: Routes.postDemand,
+          builder: (_, _) => const PostDemandScreen()),
+      GoRoute(
+          path: Routes.myDemands, builder: (_, _) => const MyDemandsScreen()),
+      GoRoute(
+        path: '/demand/:id/offers',
+        builder: (_, s) =>
+            DemandOffersScreen(demandId: s.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: Routes.buyerDemands,
+        builder: (_, _) => const BuyerDemandsScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            builder: (_, s) =>
+                DemandDetailsScreen(demandId: s.pathParameters['id']!),
+          ),
+        ],
+      ),
       GoRoute(
           path: Routes.editProfile,
           builder: (_, _) => const ProfileSetupScreen(editing: true)),
