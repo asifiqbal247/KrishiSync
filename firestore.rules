@@ -384,6 +384,31 @@ service cloud.firestore {
       }
     }
 
+    // ---------- chats/{a_b} (65/66 messages) ----------
+    match /chats/{id} {
+      function member() { return signedIn() && uid() in resource.data.members; }
+      // A not-yet-created thread can be checked by either person (id = a_b).
+      allow read: if member()
+        || (signedIn() && resource == null && id.split('_').hasAny([uid()]));
+      allow create: if isActive()
+        && uid() in request.resource.data.members
+        && request.resource.data.members.size() == 2
+        && id == request.resource.data.members[0] + '_' + request.resource.data.members[1];
+      allow update: if isActive() && member() && onlyChanges(['lastText', 'lastAt']);
+
+      match /messages/{mid} {
+        function inChat() {
+          return signedIn() && uid() in get(/databases/$(database)/documents/chats/$(id)).data.members;
+        }
+        allow read: if inChat();
+        allow create: if isActive() && inChat()
+          && request.resource.data.from == uid()
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 2000;
+      }
+    }
+
     // ---------- crops/{key} (catalog, A6) ----------
     match /crops/{key} {
       allow read: if signedIn();

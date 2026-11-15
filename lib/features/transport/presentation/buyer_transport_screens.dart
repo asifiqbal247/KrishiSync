@@ -32,6 +32,7 @@ import '../../auth/data/user_repository.dart';
 import '../../trade/data/trade_repository.dart';
 import '../data/transport_repository.dart';
 import '../domain/delivery.dart';
+import '../../chat/presentation/chat_screens.dart';
 import 'transport_common.dart';
 
 Widget _loading(String title) => Scaffold(
@@ -601,7 +602,8 @@ class TrackingScreen extends ConsumerWidget {
                 // In-app chat is Tier C.
                 child: KsButton.outline(
                   label: l.messageBtn,
-                  onPressed: () => KsToast.comingSoon(context),
+                  onPressed: () =>
+                      openChatWith(context, ref, d.transporterId!),
                 ),
               ),
             ],

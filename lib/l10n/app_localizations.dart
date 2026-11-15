@@ -5995,6 +5995,198 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'চাহিদা বন্ধ করলে কৃষকরা আর সরবরাহ প্রস্তাব দিতে পারবেন না। গৃহীত অর্ডার চলবে।'**
   String get closeDemandBody;
+
+  /// No description provided for @messagesTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বার্তা'**
+  String get messagesTitle;
+
+  /// No description provided for @searchNameHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম খুঁজুন'**
+  String get searchNameHint;
+
+  /// No description provided for @noChats.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো বার্তা নেই'**
+  String get noChats;
+
+  /// No description provided for @typeMessage.
+  ///
+  /// In bn, this message translates to:
+  /// **'বার্তা লিখুন…'**
+  String get typeMessage;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In bn, this message translates to:
+  /// **'গতকাল'**
+  String get yesterday;
+
+  /// No description provided for @chatStart.
+  ///
+  /// In bn, this message translates to:
+  /// **'কথা শুরু করুন'**
+  String get chatStart;
+
+  /// No description provided for @nameWithRole.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} ({role})'**
+  String nameWithRole(String name, String role);
+
+  /// No description provided for @roleDriverShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালক'**
+  String get roleDriverShort;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাহায্য ও সহায়তা'**
+  String get helpTitle;
+
+  /// No description provided for @callHelpline.
+  ///
+  /// In bn, this message translates to:
+  /// **'হেল্পলাইনে কল করুন'**
+  String get callHelpline;
+
+  /// No description provided for @commonQuestions.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাধারণ প্রশ্ন'**
+  String get commonQuestions;
+
+  /// No description provided for @listenTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুনুন · {t}'**
+  String listenTime(String t);
+
+  /// No description provided for @chatHelp.
+  ///
+  /// In bn, this message translates to:
+  /// **'চ্যাটে সাহায্য নিন'**
+  String get chatHelp;
+
+  /// No description provided for @faqTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রশ্ন ও উত্তর'**
+  String get faqTitle;
+
+  /// No description provided for @faqUseful.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই উত্তর কি কাজে লেগেছে?'**
+  String get faqUseful;
+
+  /// No description provided for @faqYes.
+  ///
+  /// In bn, this message translates to:
+  /// **'হ্যাঁ 👍'**
+  String get faqYes;
+
+  /// No description provided for @faqNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'না 👎'**
+  String get faqNo;
+
+  /// No description provided for @faqThanks.
+  ///
+  /// In bn, this message translates to:
+  /// **'মতামতের জন্য ধন্যবাদ'**
+  String get faqThanks;
+
+  /// No description provided for @supportName.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর সহায়তা'**
+  String get supportName;
+
+  /// No description provided for @q1.
+  ///
+  /// In bn, this message translates to:
+  /// **'কীভাবে ফসল বিক্রি করবেন'**
+  String get q1;
+
+  /// No description provided for @q1Farmer.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিচের \"বিক্রি\" বোতাম চাপুন → ফসল, মান, পরিমাণ ও ছবি দিন → দাম, তারিখ ও পিকআপ ঠিকানা দিন → প্রকাশ করুন। মডারেটর অনুমোদনের পর ক্রেতারা দেখতে ও অফার দিতে পারবেন।'**
+  String get q1Farmer;
+
+  /// No description provided for @q2.
+  ///
+  /// In bn, this message translates to:
+  /// **'কীভাবে পেমেন্ট পাবেন'**
+  String get q2;
+
+  /// No description provided for @q2Farmer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাকে মাল লোড শেষ হলেই আপনার টাকা নিরাপদ লেনদেন থেকে ছাড় হয়। এই পেমেন্ট চূড়ান্ত — পরে আটকানো বা ফেরত নেওয়া যাবে না।'**
+  String get q2Farmer;
+
+  /// No description provided for @q2Transporter.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার কাছে মাল পৌঁছে ক্রেতার OTP দিলে ভাড়া পাবেন। রওনার আগে অর্ডার বাতিল হলে ভাড়ার ১০% পাবেন।'**
+  String get q2Transporter;
+
+  /// No description provided for @q2Buyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডারের টাকা নিরাপদ লেনদেনে জমা থাকে। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়, তাই লোডের আগে দেখে নিন।'**
+  String get q2Buyer;
+
+  /// No description provided for @q3.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক কে বুক করেন?'**
+  String get q3;
+
+  /// No description provided for @q3Buyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডারে \"প্ল্যাটফর্মের ট্রাক\" বাছলে ট্রাকচালকরা ভাড়ার প্রস্তাব দেন, আপনি একটি বেছে বুক করেন। \"নিজে পরিবহন করব\" বাছলে আপনি নিজে মাল নিয়ে যাবেন।'**
+  String get q3Buyer;
+
+  /// No description provided for @q4.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেন কী?'**
+  String get q4;
+
+  /// No description provided for @q4Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার টাকা গোলাঘরে জমা থাকে। মাল লোড হলে কৃষক এবং ডেলিভারি হলে পরিবহনকারী টাকা পান। এতে কেউ ঠকেন না।'**
+  String get q4Body;
+
+  /// No description provided for @q5.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার বাতিল করলে কী হবে?'**
+  String get q5;
+
+  /// No description provided for @q5Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাখ্যাত অফার আর গ্রহণ করা যায় না, তবে ক্রেতা নতুন অফার দিতে পারেন। অর্ডার হওয়ার আগে কোনো টাকা কাটা হয় না।'**
+  String get q5Body;
+
+  /// No description provided for @voiceGuideTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভয়েস গাইড'**
+  String get voiceGuideTitle;
 }
 
 class _AppLocalizationsDelegate

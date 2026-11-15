@@ -3302,4 +3302,111 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get closeDemandBody =>
       'চাহিদা বন্ধ করলে কৃষকরা আর সরবরাহ প্রস্তাব দিতে পারবেন না। গৃহীত অর্ডার চলবে।';
+
+  @override
+  String get messagesTitle => 'বার্তা';
+
+  @override
+  String get searchNameHint => 'নাম খুঁজুন';
+
+  @override
+  String get noChats => 'এখনো কোনো বার্তা নেই';
+
+  @override
+  String get typeMessage => 'বার্তা লিখুন…';
+
+  @override
+  String get yesterday => 'গতকাল';
+
+  @override
+  String get chatStart => 'কথা শুরু করুন';
+
+  @override
+  String nameWithRole(String name, String role) {
+    return '$name ($role)';
+  }
+
+  @override
+  String get roleDriverShort => 'চালক';
+
+  @override
+  String get helpTitle => 'সাহায্য ও সহায়তা';
+
+  @override
+  String get callHelpline => 'হেল্পলাইনে কল করুন';
+
+  @override
+  String get commonQuestions => 'সাধারণ প্রশ্ন';
+
+  @override
+  String listenTime(String t) {
+    return 'শুনুন · $t';
+  }
+
+  @override
+  String get chatHelp => 'চ্যাটে সাহায্য নিন';
+
+  @override
+  String get faqTitle => 'প্রশ্ন ও উত্তর';
+
+  @override
+  String get faqUseful => 'এই উত্তর কি কাজে লেগেছে?';
+
+  @override
+  String get faqYes => 'হ্যাঁ 👍';
+
+  @override
+  String get faqNo => 'না 👎';
+
+  @override
+  String get faqThanks => 'মতামতের জন্য ধন্যবাদ';
+
+  @override
+  String get supportName => 'গোলাঘর সহায়তা';
+
+  @override
+  String get q1 => 'কীভাবে ফসল বিক্রি করবেন';
+
+  @override
+  String get q1Farmer =>
+      'নিচের \"বিক্রি\" বোতাম চাপুন → ফসল, মান, পরিমাণ ও ছবি দিন → দাম, তারিখ ও পিকআপ ঠিকানা দিন → প্রকাশ করুন। মডারেটর অনুমোদনের পর ক্রেতারা দেখতে ও অফার দিতে পারবেন।';
+
+  @override
+  String get q2 => 'কীভাবে পেমেন্ট পাবেন';
+
+  @override
+  String get q2Farmer =>
+      'ট্রাকে মাল লোড শেষ হলেই আপনার টাকা নিরাপদ লেনদেন থেকে ছাড় হয়। এই পেমেন্ট চূড়ান্ত — পরে আটকানো বা ফেরত নেওয়া যাবে না।';
+
+  @override
+  String get q2Transporter =>
+      'ক্রেতার কাছে মাল পৌঁছে ক্রেতার OTP দিলে ভাড়া পাবেন। রওনার আগে অর্ডার বাতিল হলে ভাড়ার ১০% পাবেন।';
+
+  @override
+  String get q2Buyer =>
+      'অর্ডারের টাকা নিরাপদ লেনদেনে জমা থাকে। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়, তাই লোডের আগে দেখে নিন।';
+
+  @override
+  String get q3 => 'ট্রাক কে বুক করেন?';
+
+  @override
+  String get q3Buyer =>
+      'অর্ডারে \"প্ল্যাটফর্মের ট্রাক\" বাছলে ট্রাকচালকরা ভাড়ার প্রস্তাব দেন, আপনি একটি বেছে বুক করেন। \"নিজে পরিবহন করব\" বাছলে আপনি নিজে মাল নিয়ে যাবেন।';
+
+  @override
+  String get q4 => 'নিরাপদ লেনদেন কী?';
+
+  @override
+  String get q4Body =>
+      'ক্রেতার টাকা গোলাঘরে জমা থাকে। মাল লোড হলে কৃষক এবং ডেলিভারি হলে পরিবহনকারী টাকা পান। এতে কেউ ঠকেন না।';
+
+  @override
+  String get q5 => 'অফার বাতিল করলে কী হবে?';
+
+  @override
+  String get q5Body =>
+      'প্রত্যাখ্যাত অফার আর গ্রহণ করা যায় না, তবে ক্রেতা নতুন অফার দিতে পারেন। অর্ডার হওয়ার আগে কোনো টাকা কাটা হয় না।';
+
+  @override
+  String get voiceGuideTitle => 'ভয়েস গাইড';
 }

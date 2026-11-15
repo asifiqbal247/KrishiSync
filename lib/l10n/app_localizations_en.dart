@@ -3308,4 +3308,111 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get closeDemandBody =>
       'Farmers can\'t offer supply after you close it. Accepted orders continue.';
+
+  @override
+  String get messagesTitle => 'Messages';
+
+  @override
+  String get searchNameHint => 'Search name';
+
+  @override
+  String get noChats => 'No messages yet';
+
+  @override
+  String get typeMessage => 'Type a message…';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get chatStart => 'Start the conversation';
+
+  @override
+  String nameWithRole(String name, String role) {
+    return '$name ($role)';
+  }
+
+  @override
+  String get roleDriverShort => 'driver';
+
+  @override
+  String get helpTitle => 'Help & support';
+
+  @override
+  String get callHelpline => 'Call helpline';
+
+  @override
+  String get commonQuestions => 'Common questions';
+
+  @override
+  String listenTime(String t) {
+    return 'Listen · $t';
+  }
+
+  @override
+  String get chatHelp => 'Get help in chat';
+
+  @override
+  String get faqTitle => 'Questions & answers';
+
+  @override
+  String get faqUseful => 'Was this answer useful?';
+
+  @override
+  String get faqYes => 'Yes 👍';
+
+  @override
+  String get faqNo => 'No 👎';
+
+  @override
+  String get faqThanks => 'Thanks for your feedback';
+
+  @override
+  String get supportName => 'Golaghor support';
+
+  @override
+  String get q1 => 'How to sell your crop';
+
+  @override
+  String get q1Farmer =>
+      'Tap the \"Sell\" button → add crop, grade, quantity and photo → set price, date and pickup address → publish. After a moderator approves it, buyers can see it and make offers.';
+
+  @override
+  String get q2 => 'How you get paid';
+
+  @override
+  String get q2Farmer =>
+      'As soon as the crop is loaded on the truck, your money is released from safe payment. This payment is final — it can\'t be held or taken back later.';
+
+  @override
+  String get q2Transporter =>
+      'You get the fare when the crop reaches the buyer and you enter the buyer\'s OTP. If the order is cancelled before you leave, you get 10% of the fare.';
+
+  @override
+  String get q2Buyer =>
+      'Your order money is held in safe payment. Quality and quantity are final at loading, so check before loading.';
+
+  @override
+  String get q3 => 'Who books the truck?';
+
+  @override
+  String get q3Buyer =>
+      'If you choose \"platform truck\", drivers offer fares and you book one. If you choose \"own transport\", you collect the crop yourself.';
+
+  @override
+  String get q4 => 'What is safe payment?';
+
+  @override
+  String get q4Body =>
+      'The buyer\'s money is held by Golaghor. The farmer is paid when the crop is loaded and the transporter when it is delivered, so no one is cheated.';
+
+  @override
+  String get q5 => 'What happens if an offer is rejected?';
+
+  @override
+  String get q5Body =>
+      'A rejected offer can\'t be accepted again, but the buyer can make a new one. No money is taken before an order is placed.';
+
+  @override
+  String get voiceGuideTitle => 'Voice guide';
 }

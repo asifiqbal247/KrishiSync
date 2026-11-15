@@ -201,7 +201,7 @@ class SimpleProfileTab extends ConsumerWidget {
               l.languageSub(lang == 'bn' ? l.langBangla : l.langEnglish),
               () => showLanguageSheet(context, ref)),
           if (role == UserRole.farmer || role == UserRole.buyer)
-            row(l.rowHelp, l.helpSub, soon),
+            row(l.rowHelp, l.helpSub, () => context.push(Routes.help)),
           row(l.logout, null, logout),
         ],
       ),

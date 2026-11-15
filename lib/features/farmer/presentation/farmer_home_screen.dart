@@ -49,7 +49,7 @@ class FarmerHomeScreen extends ConsumerWidget {
         name: me?.name ?? '',
         photoUrl: me?.photoUrl,
         onBell: () => context.push(Routes.notifications),
-        onChat: soon,
+        onChat: () => context.push(Routes.messages),
         onAvatar: () {},
       ),
       body: ListView(

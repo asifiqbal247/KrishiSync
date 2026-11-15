@@ -15,7 +15,6 @@ import '../../../shared/widgets/ks_cards.dart';
 import '../../../shared/widgets/ks_home_header.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_search_bar.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
 import '../../trade/data/trade_repository.dart';
@@ -40,7 +39,6 @@ class BuyerHomeScreen extends ConsumerWidget {
     final suppliers = (ref.watch(topFarmersProvider).value ?? const [])
         .where((u) => u.ratingCount > 0)
         .toList();
-    void soon() => KsToast.comingSoon(context);
     String n(int v) => l.countTi(Fmt.digits(context, '$v'));
     final orders = ref.watch(myOrdersProvider).value ?? const <TradeOrder>[];
     final offers = ref.watch(myOffersProvider).value ?? const <Offer>[];
@@ -70,7 +68,7 @@ class BuyerHomeScreen extends ConsumerWidget {
         photoUrl: me?.photoUrl,
         fallbackAvatar: AppUi.avatarBuyer,
         onBell: () => context.push(Routes.notifications),
-        onChat: soon,
+        onChat: () => context.push(Routes.messages),
         onAvatar: () => ref.read(buyerTabProvider.notifier).go(3),
       ),
       body: ListView(

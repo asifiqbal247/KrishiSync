@@ -16,6 +16,7 @@ abstract final class AppIcons {
   static const starOff = '$_p/star_off.svg';
   /// Transporter bottom-nav FAB (HF/Bottom Nav / Transporter, 292:263).
   static const loadBox = '$_p/load_box.svg';
+  static const video = '$_p/video.svg';
   static const chevronDown = '$_p/chevron_down.svg';
   static const camera = '$_p/camera.svg';
   static const truck = '$_p/truck.svg';
@@ -133,6 +134,9 @@ abstract final class AppUi {
   static const thumbTrip = '$_p/thumb_trip.webp';
   static const thumbLoad = '$_p/thumb_load.webp';
   static const avatarDriver = '$_p/avatar_driver.webp';
+  // Chat composer (66): 44px voice + send buttons.
+  static const chatVoice = '$_p/chat_voice.webp';
+  static const chatSend = '$_p/chat_send.webp';
 }
 
 abstract final class AppData {

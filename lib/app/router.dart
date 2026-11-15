@@ -45,6 +45,7 @@ import '../features/transport/presentation/rate_screens.dart';
 import '../features/transport/presentation/transporter_shell.dart';
 import '../features/transport/presentation/trip_screens.dart';
 import '../features/transport/presentation/vehicle_screen.dart';
+import '../features/chat/presentation/chat_screens.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -63,6 +64,10 @@ abstract final class Routes {
   static const payments = '/payments';
   static const verification = '/verification';
   static const editProfile = '/profile/edit';
+  static const messages = '/messages';
+  static String chat(String id) => '/messages/$id';
+  static const help = '/help';
+  static String faq(int i) => '/help/$i';
 
   // Buyer demands (96–99) and farmer side (31–33).
   static const postDemand = '/demand/new';
@@ -283,6 +288,27 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: ':id',
             builder: (_, s) =>
                 DemandDetailsScreen(demandId: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Routes.messages,
+        builder: (_, _) => const MessagesScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            builder: (_, s) => ChatScreen(chatId: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Routes.help,
+        builder: (_, _) => const HelpScreen(),
+        routes: [
+          GoRoute(
+            path: ':i',
+            builder: (_, s) =>
+                FaqScreen(index: int.tryParse(s.pathParameters['i']!) ?? 0),
           ),
         ],
       ),

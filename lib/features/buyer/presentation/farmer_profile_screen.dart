@@ -15,9 +15,9 @@ import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
+import '../../chat/presentation/chat_screens.dart';
 import 'buyer_common.dart';
 
 /// 76 Farmer Profile (Figma 292:1026), seen by buyers.
@@ -114,7 +114,7 @@ class FarmerProfileScreen extends ConsumerWidget {
                 // Chat is Tier C.
                 KsButton.outline(
                   label: l.sendMessage,
-                  onPressed: () => KsToast.comingSoon(context),
+                  onPressed: () => openChatWith(context, ref, farmerId),
                 ),
               ],
             ),

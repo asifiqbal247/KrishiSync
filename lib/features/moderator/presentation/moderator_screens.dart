@@ -106,7 +106,7 @@ class ModeratorHome extends ConsumerWidget {
         name: me?.name ?? '',
         photoUrl: me?.photoUrl,
         onBell: () => context.push(Routes.notifications),
-        onChat: () => KsToast.comingSoon(context),
+        onChat: () => context.push(Routes.messages),
         onAvatar: () {},
       ),
       body: ListView(

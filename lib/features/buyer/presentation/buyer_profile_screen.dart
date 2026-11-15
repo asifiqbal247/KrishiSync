@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_assets.dart';
 import '../../../core/theme/app_colors.dart';
@@ -13,8 +15,8 @@ import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
+import '../../chat/presentation/chat_screens.dart';
 import '../../profile/presentation/verification_screens.dart';
 
 /// 27 Buyer Business Profile (farmer's view, Figma 292:3105). Stats a farmer
@@ -37,7 +39,6 @@ class BuyerProfileScreen extends ConsumerWidget {
         ? l.notAvailable
         : l.ratingShort(Fmt.number(context, u.ratingAvg, decimals: 1),
             Fmt.digits(context, '${u.ratingCount}'));
-    void soon() => KsToast.comingSoon(context);
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -86,11 +87,15 @@ class BuyerProfileScreen extends ConsumerWidget {
           const SizedBox(
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
           Row(children: [
-            // Chat (Tier C) and buyer demands (31/32, Tier C).
             Expanded(
-                child: KsButton.outline(label: l.messageShort, onPressed: soon)),
+                child: KsButton.outline(
+                    label: l.messageShort,
+                    onPressed: () => openChatWith(context, ref, uid))),
             const SizedBox(width: AppSpacing.md),
-            Expanded(child: KsButton(label: l.seeDemands, onPressed: soon)),
+            Expanded(
+                child: KsButton(
+                    label: l.seeDemands,
+                    onPressed: () => context.push(Routes.buyerDemands))),
           ]),
         ],
       ),

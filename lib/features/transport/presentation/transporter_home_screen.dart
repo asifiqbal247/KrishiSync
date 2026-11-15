@@ -12,7 +12,6 @@ import '../../../shared/utils/geo.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_home_header.dart';
 import '../../../shared/widgets/ks_list_item.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_transport_widgets.dart';
 import '../../auth/data/user_repository.dart';
 import '../data/transport_repository.dart';
@@ -62,7 +61,7 @@ class TransporterHomeScreen extends ConsumerWidget {
         photoUrl: me?.photoUrl,
         fallbackAvatar: AppUi.avatarDriver,
         onBell: () => context.push(Routes.notifications),
-        onChat: () => KsToast.comingSoon(context),
+        onChat: () => context.push(Routes.messages),
         onAvatar: () => tab(3),
       ),
       body: ListView(
