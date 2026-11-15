@@ -108,6 +108,8 @@ class AppUser {
     this.onTimeRate,
     this.complaintCount = 0,
     this.vehicle,
+    this.verificationDocs = const {},
+    this.business,
   });
 
   final String uid;
@@ -132,6 +134,13 @@ class AppUser {
 
   /// Transporters only (Figma 194). Null until the vehicle form is saved.
   final Vehicle? vehicle;
+
+  /// Photo URLs for verification (69/139): nidFront, nidBack, selfie,
+  /// license.
+  final Map<String, String> verificationDocs;
+
+  /// Buyer business info (139): name, licenseNo, tin.
+  final Map<String, String>? business;
 
   bool get isVerified => verification == VerificationStatus.verified;
 
@@ -162,6 +171,16 @@ class AppUser {
       completedOrders: (m['completedOrders'] as num?)?.toInt() ?? 0,
       onTimeRate: (m['onTimeRate'] as num?)?.toInt(),
       complaintCount: (m['complaintCount'] as num?)?.toInt() ?? 0,
+      verificationDocs: {
+        for (final e in (m['verificationDocs'] as Map<String, dynamic>? ?? const {}).entries)
+          e.key: '${e.value}',
+      },
+      business: m['business'] == null
+          ? null
+          : {
+              for (final e in (m['business'] as Map<String, dynamic>).entries)
+                e.key: '${e.value}',
+            },
       vehicle: m['vehicle'] == null
           ? null
           : Vehicle.fromMap(m['vehicle'] as Map<String, dynamic>),

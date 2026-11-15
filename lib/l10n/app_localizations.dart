@@ -5257,6 +5257,288 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'এখনো কোনো আয় নেই'**
   String get earnEmpty;
+
+  /// No description provided for @nidVerifyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'NID যাচাইকরণ'**
+  String get nidVerifyTitle;
+
+  /// No description provided for @nidVerifyIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত প্রোফাইল ক্রেতার আস্থা বাড়ায়।'**
+  String get nidVerifyIntro;
+
+  /// No description provided for @nidNumberLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'NID নম্বর'**
+  String get nidNumberLabel;
+
+  /// No description provided for @nidNumberHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'১০ বা ১৭ সংখ্যা'**
+  String get nidNumberHint;
+
+  /// No description provided for @nidFront.
+  ///
+  /// In bn, this message translates to:
+  /// **'NID কার্ডের সামনের ছবি'**
+  String get nidFront;
+
+  /// No description provided for @nidBack.
+  ///
+  /// In bn, this message translates to:
+  /// **'NID কার্ডের পেছনের ছবি'**
+  String get nidBack;
+
+  /// No description provided for @selfie.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার সেলফি'**
+  String get selfie;
+
+  /// No description provided for @submitVerify.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইয়ের জন্য জমা দিন'**
+  String get submitVerify;
+
+  /// No description provided for @errNid.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক NID নম্বর দিন (১০ বা ১৭ সংখ্যা)'**
+  String get errNid;
+
+  /// No description provided for @errPhotoNeeded.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি দিন'**
+  String get errPhotoNeeded;
+
+  /// No description provided for @verifySent.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইয়ের জন্য জমা হয়েছে'**
+  String get verifySent;
+
+  /// No description provided for @bizVerifyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবসা যাচাইকরণ'**
+  String get bizVerifyTitle;
+
+  /// No description provided for @bizVerifyIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত ব্যবসা কৃষকদের আস্থা বাড়ায়।'**
+  String get bizVerifyIntro;
+
+  /// No description provided for @bizName.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিষ্ঠানের নাম'**
+  String get bizName;
+
+  /// No description provided for @bizAddress.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যবসার ঠিকানা'**
+  String get bizAddress;
+
+  /// No description provided for @bizAddressHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিভাগ › জেলা › উপজেলা › এলাকা'**
+  String get bizAddressHint;
+
+  /// No description provided for @tradeLicense.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রেড লাইসেন্স নম্বর'**
+  String get tradeLicense;
+
+  /// No description provided for @tinLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'TIN / BIN নম্বর'**
+  String get tinLabel;
+
+  /// No description provided for @tinHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'১২ সংখ্যা'**
+  String get tinHint;
+
+  /// No description provided for @licensePhoto.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রেড লাইসেন্সের ছবি'**
+  String get licensePhoto;
+
+  /// No description provided for @verifyStatusTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকরণ ও রেটিং'**
+  String get verifyStatusTitle;
+
+  /// No description provided for @drivingLicense.
+  ///
+  /// In bn, this message translates to:
+  /// **'ড্রাইভিং লাইসেন্স'**
+  String get drivingLicense;
+
+  /// No description provided for @vehiclePapers.
+  ///
+  /// In bn, this message translates to:
+  /// **'গাড়ির কাগজপত্র (ফিটনেস)'**
+  String get vehiclePapers;
+
+  /// No description provided for @inReview.
+  ///
+  /// In bn, this message translates to:
+  /// **'পর্যালোচনায়'**
+  String get inReview;
+
+  /// No description provided for @rowDocs.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাগজপত্র'**
+  String get rowDocs;
+
+  /// No description provided for @rowBizName.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিষ্ঠান'**
+  String get rowBizName;
+
+  /// No description provided for @ratingsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেটিং ও রিভিউ'**
+  String get ratingsTitle;
+
+  /// No description provided for @outOf5.
+  ///
+  /// In bn, this message translates to:
+  /// **'{avg} / ৫'**
+  String outOf5(String avg);
+
+  /// No description provided for @outOf5Count.
+  ///
+  /// In bn, this message translates to:
+  /// **'{avg} / ৫ ({n}টি রিভিউ)'**
+  String outOf5Count(String avg, String n);
+
+  /// No description provided for @reviewsOnlyDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}টি রিভিউ · শুধু সম্পন্ন লেনদেন থেকে'**
+  String reviewsOnlyDone(String n);
+
+  /// No description provided for @noReviews.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো রিভিউ নেই'**
+  String get noReviews;
+
+  /// No description provided for @tag_good_quality.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভালো মান'**
+  String get tag_good_quality;
+
+  /// No description provided for @tag_right_weight.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক ওজন'**
+  String get tag_right_weight;
+
+  /// No description provided for @tag_on_time.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়মতো'**
+  String get tag_on_time;
+
+  /// No description provided for @tag_on_time_load.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়মতো লোড'**
+  String get tag_on_time_load;
+
+  /// No description provided for @tag_correct_info.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক তথ্য'**
+  String get tag_correct_info;
+
+  /// No description provided for @tag_fast_pay.
+  ///
+  /// In bn, this message translates to:
+  /// **'দ্রুত পেমেন্ট'**
+  String get tag_fast_pay;
+
+  /// No description provided for @trackTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালান ট্র্যাকিং'**
+  String get trackTitle;
+
+  /// No description provided for @truckCapRating.
+  ///
+  /// In bn, this message translates to:
+  /// **'{type} · {cap} · {rating}'**
+  String truckCapRating(String type, String cap, String rating);
+
+  /// No description provided for @rowEta.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার কাছে পৌঁছাবে'**
+  String get rowEta;
+
+  /// No description provided for @rowStatus.
+  ///
+  /// In bn, this message translates to:
+  /// **'অবস্থা'**
+  String get rowStatus;
+
+  /// No description provided for @rowRemaining.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট দূরত্ব'**
+  String get rowRemaining;
+
+  /// No description provided for @kmOnly.
+  ///
+  /// In bn, this message translates to:
+  /// **'{km} কিমি'**
+  String kmOnly(String km);
+
+  /// No description provided for @tsWaitingPickup.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিকআপের অপেক্ষায়'**
+  String get tsWaitingPickup;
+
+  /// No description provided for @tsOnWay.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার দিকে আসছে'**
+  String get tsOnWay;
+
+  /// No description provided for @tsDelivered.
+  ///
+  /// In bn, this message translates to:
+  /// **'পৌঁছেছে'**
+  String get tsDelivered;
+
+  /// No description provided for @messageBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'বার্তা'**
+  String get messageBtn;
 }
 
 class _AppLocalizationsDelegate

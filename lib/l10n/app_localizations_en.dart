@@ -2894,4 +2894,155 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get earnEmpty => 'No earnings yet';
+
+  @override
+  String get nidVerifyTitle => 'NID verification';
+
+  @override
+  String get nidVerifyIntro => 'A verified profile builds buyers\' trust.';
+
+  @override
+  String get nidNumberLabel => 'NID number';
+
+  @override
+  String get nidNumberHint => '10 or 17 digits';
+
+  @override
+  String get nidFront => 'Front of NID card';
+
+  @override
+  String get nidBack => 'Back of NID card';
+
+  @override
+  String get selfie => 'Your selfie';
+
+  @override
+  String get submitVerify => 'Submit for verification';
+
+  @override
+  String get errNid => 'Enter a valid NID (10 or 17 digits)';
+
+  @override
+  String get errPhotoNeeded => 'Add a photo';
+
+  @override
+  String get verifySent => 'Submitted for verification';
+
+  @override
+  String get bizVerifyTitle => 'Business verification';
+
+  @override
+  String get bizVerifyIntro => 'A verified business builds farmers\' trust.';
+
+  @override
+  String get bizName => 'Business name';
+
+  @override
+  String get bizAddress => 'Business address';
+
+  @override
+  String get bizAddressHint => 'Division › District › Upazila › Area';
+
+  @override
+  String get tradeLicense => 'Trade license number';
+
+  @override
+  String get tinLabel => 'TIN / BIN number';
+
+  @override
+  String get tinHint => '12 digits';
+
+  @override
+  String get licensePhoto => 'Trade license photo';
+
+  @override
+  String get verifyStatusTitle => 'Verification & rating';
+
+  @override
+  String get drivingLicense => 'Driving license';
+
+  @override
+  String get vehiclePapers => 'Vehicle papers (fitness)';
+
+  @override
+  String get inReview => 'In review';
+
+  @override
+  String get rowDocs => 'Documents';
+
+  @override
+  String get rowBizName => 'Business';
+
+  @override
+  String get ratingsTitle => 'Ratings & reviews';
+
+  @override
+  String outOf5(String avg) {
+    return '$avg / 5';
+  }
+
+  @override
+  String outOf5Count(String avg, String n) {
+    return '$avg / 5 (reviews: $n)';
+  }
+
+  @override
+  String reviewsOnlyDone(String n) {
+    return 'Reviews: $n · only from completed trades';
+  }
+
+  @override
+  String get noReviews => 'No reviews yet';
+
+  @override
+  String get tag_good_quality => 'Good quality';
+
+  @override
+  String get tag_right_weight => 'Correct weight';
+
+  @override
+  String get tag_on_time => 'On time';
+
+  @override
+  String get tag_on_time_load => 'On-time loading';
+
+  @override
+  String get tag_correct_info => 'Correct info';
+
+  @override
+  String get tag_fast_pay => 'Fast payment';
+
+  @override
+  String get trackTitle => 'Shipment tracking';
+
+  @override
+  String truckCapRating(String type, String cap, String rating) {
+    return '$type · $cap · $rating';
+  }
+
+  @override
+  String get rowEta => 'Reaches you';
+
+  @override
+  String get rowStatus => 'Status';
+
+  @override
+  String get rowRemaining => 'Total distance';
+
+  @override
+  String kmOnly(String km) {
+    return '$km km';
+  }
+
+  @override
+  String get tsWaitingPickup => 'Waiting for pickup';
+
+  @override
+  String get tsOnWay => 'Coming to you';
+
+  @override
+  String get tsDelivered => 'Delivered';
+
+  @override
+  String get messageBtn => 'Message';
 }

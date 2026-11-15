@@ -2888,4 +2888,155 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get earnEmpty => 'এখনো কোনো আয় নেই';
+
+  @override
+  String get nidVerifyTitle => 'NID যাচাইকরণ';
+
+  @override
+  String get nidVerifyIntro => 'যাচাইকৃত প্রোফাইল ক্রেতার আস্থা বাড়ায়।';
+
+  @override
+  String get nidNumberLabel => 'NID নম্বর';
+
+  @override
+  String get nidNumberHint => '১০ বা ১৭ সংখ্যা';
+
+  @override
+  String get nidFront => 'NID কার্ডের সামনের ছবি';
+
+  @override
+  String get nidBack => 'NID কার্ডের পেছনের ছবি';
+
+  @override
+  String get selfie => 'আপনার সেলফি';
+
+  @override
+  String get submitVerify => 'যাচাইয়ের জন্য জমা দিন';
+
+  @override
+  String get errNid => 'সঠিক NID নম্বর দিন (১০ বা ১৭ সংখ্যা)';
+
+  @override
+  String get errPhotoNeeded => 'ছবি দিন';
+
+  @override
+  String get verifySent => 'যাচাইয়ের জন্য জমা হয়েছে';
+
+  @override
+  String get bizVerifyTitle => 'ব্যবসা যাচাইকরণ';
+
+  @override
+  String get bizVerifyIntro => 'যাচাইকৃত ব্যবসা কৃষকদের আস্থা বাড়ায়।';
+
+  @override
+  String get bizName => 'প্রতিষ্ঠানের নাম';
+
+  @override
+  String get bizAddress => 'ব্যবসার ঠিকানা';
+
+  @override
+  String get bizAddressHint => 'বিভাগ › জেলা › উপজেলা › এলাকা';
+
+  @override
+  String get tradeLicense => 'ট্রেড লাইসেন্স নম্বর';
+
+  @override
+  String get tinLabel => 'TIN / BIN নম্বর';
+
+  @override
+  String get tinHint => '১২ সংখ্যা';
+
+  @override
+  String get licensePhoto => 'ট্রেড লাইসেন্সের ছবি';
+
+  @override
+  String get verifyStatusTitle => 'যাচাইকরণ ও রেটিং';
+
+  @override
+  String get drivingLicense => 'ড্রাইভিং লাইসেন্স';
+
+  @override
+  String get vehiclePapers => 'গাড়ির কাগজপত্র (ফিটনেস)';
+
+  @override
+  String get inReview => 'পর্যালোচনায়';
+
+  @override
+  String get rowDocs => 'কাগজপত্র';
+
+  @override
+  String get rowBizName => 'প্রতিষ্ঠান';
+
+  @override
+  String get ratingsTitle => 'রেটিং ও রিভিউ';
+
+  @override
+  String outOf5(String avg) {
+    return '$avg / ৫';
+  }
+
+  @override
+  String outOf5Count(String avg, String n) {
+    return '$avg / ৫ ($nটি রিভিউ)';
+  }
+
+  @override
+  String reviewsOnlyDone(String n) {
+    return '$nটি রিভিউ · শুধু সম্পন্ন লেনদেন থেকে';
+  }
+
+  @override
+  String get noReviews => 'এখনো কোনো রিভিউ নেই';
+
+  @override
+  String get tag_good_quality => 'ভালো মান';
+
+  @override
+  String get tag_right_weight => 'সঠিক ওজন';
+
+  @override
+  String get tag_on_time => 'সময়মতো';
+
+  @override
+  String get tag_on_time_load => 'সময়মতো লোড';
+
+  @override
+  String get tag_correct_info => 'সঠিক তথ্য';
+
+  @override
+  String get tag_fast_pay => 'দ্রুত পেমেন্ট';
+
+  @override
+  String get trackTitle => 'চালান ট্র্যাকিং';
+
+  @override
+  String truckCapRating(String type, String cap, String rating) {
+    return '$type · $cap · $rating';
+  }
+
+  @override
+  String get rowEta => 'আপনার কাছে পৌঁছাবে';
+
+  @override
+  String get rowStatus => 'অবস্থা';
+
+  @override
+  String get rowRemaining => 'মোট দূরত্ব';
+
+  @override
+  String kmOnly(String km) {
+    return '$km কিমি';
+  }
+
+  @override
+  String get tsWaitingPickup => 'পিকআপের অপেক্ষায়';
+
+  @override
+  String get tsOnWay => 'আপনার দিকে আসছে';
+
+  @override
+  String get tsDelivered => 'পৌঁছেছে';
+
+  @override
+  String get messageBtn => 'বার্তা';
 }

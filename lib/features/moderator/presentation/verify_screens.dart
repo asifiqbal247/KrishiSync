@@ -88,6 +88,7 @@ class VerifyReviewScreen extends ConsumerStatefulWidget {
 }
 
 class _VerifyReviewState extends ConsumerState<VerifyReviewScreen> {
+  static const _docH = 180.0;
   bool _busy = false;
 
   Future<void> _set(AppUser u, VerificationStatus v, String modUid) async {
@@ -146,12 +147,26 @@ class _VerifyReviewState extends ConsumerState<VerifyReviewScreen> {
           KsInfoBox(
             children: [
               KsInfoRow(l.profilePhone, u.phone),
-              KsInfoRow(l.rowNid, u.nidNumber ?? l.notAvailable),
+              if (u.business != null) ...[
+                KsInfoRow(l.rowBizName, u.business!['name'] ?? ''),
+                KsInfoRow(l.tradeLicense, u.business!['licenseNo'] ?? ''),
+                if ((u.business!['tin'] ?? '').isNotEmpty)
+                  KsInfoRow(l.tinLabel, u.business!['tin']!),
+              ] else
+                KsInfoRow(l.rowNid, u.nidNumber ?? l.notAvailable),
               KsInfoRow(l.fieldLocation, placeFull(context, u.location)),
               if (u.createdAt != null)
                 KsInfoRow(l.rowJoined, Fmt.date(context, u.createdAt!)),
             ],
           ),
+          // Uploaded documents (69 / 139).
+          for (final url in u.verificationDocs.values) ...[
+            const SizedBox(height: AppSpacing.block),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.xl),
+              child: SizedBox(height: _docH, child: KsNetImage(url: url)),
+            ),
+          ],
           const SizedBox(
             height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
           ),

@@ -29,6 +29,12 @@ abstract interface class UserRepository {
 
   /// Adds/replaces the saved address with the same tag (max one per tag).
   Future<void> saveAddress(String uid, SavedAddress address, List<SavedAddress> current);
+
+  /// 69/139: documents → verification "pending" for the moderator.
+  Future<void> submitVerification(String uid, Map<String, dynamic> fields);
+
+  /// Raw reviews about [uid], newest first (70/140/195).
+  Stream<List<Map<String, dynamic>>> watchReviewsFor(String uid);
 }
 
 class FirestoreUserRepository implements UserRepository {
@@ -71,6 +77,23 @@ class FirestoreUserRepository implements UserRepository {
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }
+
+  @override
+  Future<void> submitVerification(String uid, Map<String, dynamic> fields) =>
+      _doc(uid).update({
+        ...fields,
+        'verification': 'pending',
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+  @override
+  Stream<List<Map<String, dynamic>>> watchReviewsFor(String uid) => _db
+      .collection('reviews')
+      .where('toUid', isEqualTo: uid)
+      .orderBy('createdAt', descending: true)
+      .limit(100)
+      .snapshots()
+      .map((q) => [for (final d in q.docs) d.data()]);
 
   @override
   Future<void> setRole(String uid, UserRole role) => _doc(uid).update({

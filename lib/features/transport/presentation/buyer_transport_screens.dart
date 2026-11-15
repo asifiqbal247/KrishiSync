@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,21 +35,24 @@ import '../domain/delivery.dart';
 import 'transport_common.dart';
 
 Widget _loading(String title) => Scaffold(
-      appBar: KsAppBar(title: title),
-      body: const Center(child: CircularProgressIndicator()),
-    );
+  appBar: KsAppBar(title: title),
+  body: const Center(child: CircularProgressIndicator()),
+);
 
 const _contentPad = EdgeInsets.fromLTRB(
-    AppSpacing.screen, AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg);
+  AppSpacing.screen,
+  AppSpacing.contentTop,
+  AppSpacing.screen,
+  AppSpacing.lg,
+);
 
 /// Where a buyer's delivery row leads.
 String routeForBuyer(Delivery d) => switch (d.status) {
-      DeliveryStatus.open => Routes.buyerBook(d.id),
-      DeliveryStatus.assigned ||
-      DeliveryStatus.pickedUp =>
-        Routes.buyerAssigned(d.id),
-      _ => Routes.order(d.orderId),
-    };
+  DeliveryStatus.open => Routes.buyerBook(d.id),
+  DeliveryStatus.assigned ||
+  DeliveryStatus.pickedUp => Routes.buyerAssigned(d.id),
+  _ => Routes.order(d.orderId),
+};
 
 enum _TTab { ongoing, booked, done }
 
@@ -64,11 +68,11 @@ class _BuyerTransportState extends ConsumerState<BuyerTransportScreen> {
   _TTab _tab = _TTab.ongoing;
 
   bool _in(Delivery d) => switch (_tab) {
-        _TTab.ongoing => d.status == DeliveryStatus.pickedUp,
-        _TTab.booked =>
-          d.status == DeliveryStatus.open || d.status == DeliveryStatus.assigned,
-        _TTab.done => d.status == DeliveryStatus.delivered,
-      };
+    _TTab.ongoing => d.status == DeliveryStatus.pickedUp,
+    _TTab.booked =>
+      d.status == DeliveryStatus.open || d.status == DeliveryStatus.assigned,
+    _TTab.done => d.status == DeliveryStatus.delivered,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -87,28 +91,33 @@ class _BuyerTransportState extends ConsumerState<BuyerTransportScreen> {
               padding: _contentPad,
               children: [
                 Wrap(
-                    spacing: AppSpacing.sm,
-                    runSpacing: AppSpacing.sm,
-                    children: [
-                      for (final (t, label) in [
-                        (_TTab.ongoing, l.tabOngoing),
-                        (_TTab.booked, l.tabBooked),
-                        (_TTab.done, l.tabDone),
-                      ])
-                        KsPill(
-                            label: label,
-                            selected: _tab == t,
-                            onTap: () => setState(() => _tab = t)),
-                    ]),
+                  spacing: AppSpacing.sm,
+                  runSpacing: AppSpacing.sm,
+                  children: [
+                    for (final (t, label) in [
+                      (_TTab.ongoing, l.tabOngoing),
+                      (_TTab.booked, l.tabBooked),
+                      (_TTab.done, l.tabDone),
+                    ])
+                      KsPill(
+                        label: label,
+                        selected: _tab == t,
+                        onTap: () => setState(() => _tab = t),
+                      ),
+                  ],
+                ),
                 if (all == null) ...[
                   const SizedBox(height: AppSpacing.block),
                   const KsSkeletonList(padded: false),
                 ] else if (shown.isEmpty) ...[
                   const SizedBox(height: AppSpacing.block),
-                  Text(l.noTransport,
-                      textAlign: TextAlign.center,
-                      style: AppTypography.bodyMedium.normal
-                          .withColor(AppColors.textSecondary)),
+                  Text(
+                    l.noTransport,
+                    textAlign: TextAlign.center,
+                    style: AppTypography.bodyMedium.normal.withColor(
+                      AppColors.textSecondary,
+                    ),
+                  ),
                 ],
                 for (final d in shown) ...[
                   const SizedBox(height: AppSpacing.block),
@@ -121,7 +130,11 @@ class _BuyerTransportState extends ConsumerState<BuyerTransportScreen> {
             top: false,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.screen, 0, AppSpacing.screen, AppSpacing.lg),
+                AppSpacing.screen,
+                0,
+                AppSpacing.screen,
+                AppSpacing.lg,
+              ),
               child: KsButton(
                 label: l.bookTruckBtn,
                 onPressed: () {
@@ -156,15 +169,20 @@ class _DeliveryRow extends ConsumerWidget {
         : const <Bid>[];
     return KsListItem(
       thumb: KsNetImage(
-          url: d.photo,
-          thumbSize: KsListItem.thumbSize.round(),
-          fallbackAsset: CropCatalog.imageFor(d.cropKey)),
+        url: d.photo,
+        thumbSize: KsListItem.thumbSize.round(),
+        fallbackAsset: CropCatalog.imageFor(d.cropKey),
+      ),
       title: l.noOrderCrop(d.orderNo, d.cropName(lang)),
       subtitle: d.status == DeliveryStatus.open
-          ? l.nameStatus(l.dsOpen,
-              l.bidsCountLine(Fmt.digits(context, '${bids.length}')))
+          ? l.nameStatus(
+              l.dsOpen,
+              l.bidsCountLine(Fmt.digits(context, '${bids.length}')),
+            )
           : l.nameStatus(
-              d.transporterName ?? '', deliveryStatusLabel(l, d.status)),
+              d.transporterName ?? '',
+              deliveryStatusLabel(l, d.status),
+            ),
       trailingText: Fmt.taka(context, fareOf(d)),
       onTap: () => context.push(routeForBuyer(d)),
     );
@@ -219,31 +237,37 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
         padding: _contentPad,
         children: [
           KsSelectField(
-              label: l.pickupLocation,
-              placeholder: '',
-              value: placeFull(context, d.pickup),
-              onTap: () {}),
+            label: l.pickupLocation,
+            placeholder: '',
+            value: placeFull(context, d.pickup),
+            onTap: () {},
+          ),
           const SizedBox(height: AppSpacing.block),
           KsSelectField(
-              label: l.rowDestination,
-              placeholder: '',
-              value: placeFull(context, d.dropoff),
-              onTap: () {}),
+            label: l.rowDestination,
+            placeholder: '',
+            value: placeFull(context, d.dropoff),
+            onTap: () {},
+          ),
           const SizedBox(height: AppSpacing.block),
           KsSelectField(
-              label: l.goodsWeight,
-              placeholder: '',
-              value: l.loadSub(d.cropName(lang),
-                  l.qtyKg(Fmt.number(context, d.weightKg))),
-              showChevron: false,
-              onTap: () {}),
+            label: l.goodsWeight,
+            placeholder: '',
+            value: l.loadSub(
+              d.cropName(lang),
+              l.qtyKg(Fmt.number(context, d.weightKg)),
+            ),
+            showChevron: false,
+            onTap: () {},
+          ),
           const SizedBox(height: AppSpacing.block),
           KsSelectField(
-              label: l.dateLabel,
-              placeholder: '',
-              value: d.pickupDate == null ? '' : Fmt.date(context, d.pickupDate!),
-              showChevron: false,
-              onTap: () {}),
+            label: l.dateLabel,
+            placeholder: '',
+            value: d.pickupDate == null ? '' : Fmt.date(context, d.pickupDate!),
+            showChevron: false,
+            onTap: () {},
+          ),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.suggestedTrucks),
           if (d.status != DeliveryStatus.open) ...[
@@ -251,17 +275,21 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
             KsNoteBox(title: l.truckBooked),
           ] else if (bids.isEmpty) ...[
             const SizedBox(height: AppSpacing.block),
-            Text(l.waitingBids,
-                style: AppTypography.bodyMedium.normal
-                    .withColor(AppColors.textSecondary)),
+            Text(
+              l.waitingBids,
+              style: AppTypography.bodyMedium.normal.withColor(
+                AppColors.textSecondary,
+              ),
+            ),
           ],
           for (final b in bids) ...[
             const SizedBox(height: AppSpacing.block),
             KsListItem(
               thumb: KsNetImage(
-                  url: b.photoUrl,
-                  thumbSize: KsListItem.thumbSize.round(),
-                  fallbackAsset: AppUi.avatarDriver),
+                url: b.photoUrl,
+                thumbSize: KsListItem.thumbSize.round(),
+                fallbackAsset: AppUi.avatarDriver,
+              ),
               title: b.name,
               subtitle: l.truckSub(
                 vehicleTypeLabel(l, b.vehicle.type),
@@ -278,7 +306,8 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
             ),
           ],
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton(
             label: l.bookBtn,
             loading: _busy,
@@ -320,9 +349,10 @@ class AssignedTransportScreen extends ConsumerWidget {
         children: [
           KsListItem(
             thumb: KsNetImage(
-                url: d.transporterPhotoUrl ?? driver?.photoUrl,
-                thumbSize: KsListItem.thumbSize.round(),
-                fallbackAsset: AppUi.avatarDriver),
+              url: d.transporterPhotoUrl ?? driver?.photoUrl,
+              thumbSize: KsListItem.thumbSize.round(),
+              fallbackAsset: AppUi.avatarDriver,
+            ),
             title: d.transporterName ?? '',
             subtitle: (driver?.isVerified ?? false)
                 ? l.verifiedDriverRating(rating)
@@ -330,36 +360,44 @@ class AssignedTransportScreen extends ConsumerWidget {
             showChevron: false,
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            if (v != null) ...[
-              KsInfoRow(l.rowTruck, v.plateNo),
-              KsInfoRow(l.rowCapacity, tonsText(context, v.capacityKg)),
+          KsInfoBox(
+            children: [
+              if (v != null) ...[
+                KsInfoRow(l.rowTruck, v.plateNo),
+                KsInfoRow(l.rowCapacity, tonsText(context, v.capacityKg)),
+              ],
+              if (d.pickupDate != null)
+                KsInfoRow(l.fieldPickup, Fmt.date(context, d.pickupDate!)),
+              KsInfoRow(
+                l.rowFare,
+                l.fareSafeLine(Fmt.taka(context, fareOf(d))),
+              ),
             ],
-            if (d.pickupDate != null)
-              KsInfoRow(l.fieldPickup, Fmt.date(context, d.pickupDate!)),
-            KsInfoRow(l.rowFare, l.fareSafeLine(Fmt.taka(context, fareOf(d)))),
-          ]),
+          ),
           const SizedBox(height: AppSpacing.block),
           KsRouteMap(height: _mapH, from: d.pickup.geo, to: d.dropoff.geo),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-          Row(children: [
-            Expanded(
-              child: KsButton.outline(
-                label: l.callBtn,
-                onPressed: driver == null
-                    ? null
-                    : () => launchUrl(Uri(scheme: 'tel', path: driver.phone)),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: KsButton.outline(
+                  label: l.callBtn,
+                  onPressed: driver == null
+                      ? null
+                      : () => launchUrl(Uri(scheme: 'tel', path: driver.phone)),
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: KsButton(
-                label: l.trackBtn,
-                onPressed: () => context.push(Routes.order(d.orderId)),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: KsButton(
+                  label: l.trackBtn,
+                  onPressed: () => context.push(Routes.buyerTrack(d.id)),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ],
       ),
     );
@@ -388,9 +426,11 @@ class _ReceiveState extends ConsumerState<ReceiveDeliveryScreen> {
     setState(() => _busy = true);
     try {
       if (_photo != null) {
-        final url = (await ref.read(imageStorageProvider).upload(_photo!,
-                kind: ImageKind.delivery, ownerUid: uid))
-            .url;
+        final url =
+            (await ref
+                    .read(imageStorageProvider)
+                    .upload(_photo!, kind: ImageKind.delivery, ownerUid: uid))
+                .url;
         await ref.read(transportRepositoryProvider).saveReceiptPhoto(d.id, url);
       }
       if (!mounted) return;
@@ -418,11 +458,13 @@ class _ReceiveState extends ConsumerState<ReceiveDeliveryScreen> {
       body: ListView(
         padding: _contentPad,
         children: [
-          KsInfoBox(children: [
-            KsInfoRow(l.rowOrder, l.noOrderCrop(d.orderNo, d.cropName(lang))),
-            KsInfoRow(l.rowOrdered, kg(d.weightKg)),
-            KsInfoRow(l.rowLoaded, kg(d.deliveredKg ?? d.weightKg)),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(l.rowOrder, l.noOrderCrop(d.orderNo, d.cropName(lang))),
+              KsInfoRow(l.rowOrdered, kg(d.weightKg)),
+              KsInfoRow(l.rowLoaded, kg(d.deliveredKg ?? d.weightKg)),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
           KsNoteBox(
             title: l.yourOtp(Fmt.digits(context, otp ?? '----')),
@@ -431,9 +473,10 @@ class _ReceiveState extends ConsumerState<ReceiveDeliveryScreen> {
           ),
           const SizedBox(height: AppSpacing.block),
           KsNoteBox(
-              title: l.qualityFinalTitle,
-              body: l.qualityFinalBody,
-              warning: true),
+            title: l.qualityFinalTitle,
+            body: l.qualityFinalBody,
+            warning: true,
+          ),
           const SizedBox(height: AppSpacing.block),
           KsUploadBox(
             label: l.deliveryPhotoOpt,
@@ -447,16 +490,122 @@ class _ReceiveState extends ConsumerState<ReceiveDeliveryScreen> {
             },
           ),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton.secondary(
-              label: l.otherProblem,
-              onPressed: () =>
-                  context.push(Routes.report(orderId: d.orderId))),
+            label: l.otherProblem,
+            onPressed: () => context.push(Routes.report(orderId: d.orderId)),
+          ),
           const SizedBox(height: AppSpacing.block),
           KsButton(
-              label: l.otpGiven,
-              loading: _busy,
-              onPressed: () => _done(d, me.uid)),
+            label: l.otpGiven,
+            loading: _busy,
+            onPressed: () => _done(d, me.uid),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// 108 Tracking (buyer, Figma 292:2665). No live GPS in v1: the route map,
+/// trip status and an arrival estimate (pickup date + road time) from the
+/// delivery's real data.
+class TrackingScreen extends ConsumerWidget {
+  const TrackingScreen({super.key, required this.deliveryId});
+  final String deliveryId;
+
+  static const _mapH = 300.0;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context);
+    final d = ref.watch(deliveryProvider(deliveryId)).value;
+    if (d == null || d.transporterId == null) return _loading(l.trackTitle);
+    final driver = ref.watch(userByIdProvider(d.transporterId!)).value;
+    final v = d.vehicle;
+    final rating = driver == null || driver.ratingCount == 0
+        ? l.notAvailable
+        : Fmt.number(context, driver.ratingAvg, decimals: 1);
+    final start = d.timeline['pickedUp'] ?? d.pickupDate;
+    final eta =
+        d.timeline['delivered'] ??
+        (start == null || d.hours == null
+            ? null
+            : start.add(Duration(hours: d.hours!)));
+    final status = switch (d.status) {
+      DeliveryStatus.pickedUp => l.tsOnWay,
+      DeliveryStatus.delivered => l.tsDelivered,
+      _ => l.tsWaitingPickup,
+    };
+
+    return Scaffold(
+      backgroundColor: AppColors.bgPage,
+      appBar: KsAppBar(title: l.trackTitle),
+      body: ListView(
+        padding: _contentPad,
+        children: [
+          KsRouteMap(height: _mapH, from: d.pickup.geo, to: d.dropoff.geo),
+          const SizedBox(height: AppSpacing.block),
+          KsListItem(
+            thumb: KsNetImage(
+              url: d.transporterPhotoUrl ?? driver?.photoUrl,
+              thumbSize: KsListItem.thumbSize.round(),
+              fallbackAsset: AppUi.avatarDriver,
+            ),
+            title: d.transporterName ?? '',
+            subtitle: v == null
+                ? rating
+                : l.truckCapRating(
+                    vehicleTypeLabel(l, v.type),
+                    v.plateNo,
+                    rating,
+                  ),
+            badge: (driver?.isVerified ?? false) ? l.verifiedBadge : null,
+            showChevron: false,
+          ),
+          const SizedBox(height: AppSpacing.block),
+          KsInfoBox(
+            children: [
+              KsInfoRow(l.rowStatus, status),
+              if (eta != null)
+                KsInfoRow(
+                  l.rowEta,
+                  l.dateTime(
+                    Fmt.date(context, eta),
+                    Fmt.digits(context, DateFormat('H:mm').format(eta)),
+                  ),
+                ),
+              if (d.roadKm != null)
+                KsInfoRow(
+                  l.rowRemaining,
+                  l.kmOnly(Fmt.number(context, d.roadKm!)),
+                ),
+            ],
+          ),
+          const SizedBox(
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: KsButton.outline(
+                  label: l.callBtn,
+                  onPressed: driver == null
+                      ? null
+                      : () => launchUrl(Uri(scheme: 'tel', path: driver.phone)),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                // In-app chat is Tier C.
+                child: KsButton.outline(
+                  label: l.messageBtn,
+                  onPressed: () => KsToast.comingSoon(context),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

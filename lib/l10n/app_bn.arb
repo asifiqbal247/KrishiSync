@@ -1987,5 +1987,96 @@
   "earnHistory": "আয়ের ইতিহাস",
   "earnHeldSub": "নিরাপদ লেনদেনে জমা",
   "earnPaidSub": "পরিশোধিত · বিকাশ",
-  "earnEmpty": "এখনো কোনো আয় নেই"
+  "earnEmpty": "এখনো কোনো আয় নেই",
+  "nidVerifyTitle": "NID যাচাইকরণ",
+  "nidVerifyIntro": "যাচাইকৃত প্রোফাইল ক্রেতার আস্থা বাড়ায়।",
+  "nidNumberLabel": "NID নম্বর",
+  "nidNumberHint": "১০ বা ১৭ সংখ্যা",
+  "nidFront": "NID কার্ডের সামনের ছবি",
+  "nidBack": "NID কার্ডের পেছনের ছবি",
+  "selfie": "আপনার সেলফি",
+  "submitVerify": "যাচাইয়ের জন্য জমা দিন",
+  "errNid": "সঠিক NID নম্বর দিন (১০ বা ১৭ সংখ্যা)",
+  "errPhotoNeeded": "ছবি দিন",
+  "verifySent": "যাচাইয়ের জন্য জমা হয়েছে",
+  "bizVerifyTitle": "ব্যবসা যাচাইকরণ",
+  "bizVerifyIntro": "যাচাইকৃত ব্যবসা কৃষকদের আস্থা বাড়ায়।",
+  "bizName": "প্রতিষ্ঠানের নাম",
+  "bizAddress": "ব্যবসার ঠিকানা",
+  "bizAddressHint": "বিভাগ › জেলা › উপজেলা › এলাকা",
+  "tradeLicense": "ট্রেড লাইসেন্স নম্বর",
+  "tinLabel": "TIN / BIN নম্বর",
+  "tinHint": "১২ সংখ্যা",
+  "licensePhoto": "ট্রেড লাইসেন্সের ছবি",
+  "verifyStatusTitle": "যাচাইকরণ ও রেটিং",
+  "drivingLicense": "ড্রাইভিং লাইসেন্স",
+  "vehiclePapers": "গাড়ির কাগজপত্র (ফিটনেস)",
+  "inReview": "পর্যালোচনায়",
+  "rowDocs": "কাগজপত্র",
+  "rowBizName": "প্রতিষ্ঠান",
+  "ratingsTitle": "রেটিং ও রিভিউ",
+  "outOf5": "{avg} / ৫",
+  "@outOf5": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "outOf5Count": "{avg} / ৫ ({n}টি রিভিউ)",
+  "@outOf5Count": {
+    "placeholders": {
+      "avg": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "reviewsOnlyDone": "{n}টি রিভিউ · শুধু সম্পন্ন লেনদেন থেকে",
+  "@reviewsOnlyDone": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "noReviews": "এখনো কোনো রিভিউ নেই",
+  "tag_good_quality": "ভালো মান",
+  "tag_right_weight": "সঠিক ওজন",
+  "tag_on_time": "সময়মতো",
+  "tag_on_time_load": "সময়মতো লোড",
+  "tag_correct_info": "সঠিক তথ্য",
+  "tag_fast_pay": "দ্রুত পেমেন্ট",
+  "trackTitle": "চালান ট্র্যাকিং",
+  "truckCapRating": "{type} · {cap} · {rating}",
+  "@truckCapRating": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "cap": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "String"
+      }
+    }
+  },
+  "rowEta": "আপনার কাছে পৌঁছাবে",
+  "rowStatus": "অবস্থা",
+  "rowRemaining": "মোট দূরত্ব",
+  "kmOnly": "{km} কিমি",
+  "@kmOnly": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "tsWaitingPickup": "পিকআপের অপেক্ষায়",
+  "tsOnWay": "আপনার দিকে আসছে",
+  "tsDelivered": "পৌঁছেছে",
+  "messageBtn": "বার্তা"
 }

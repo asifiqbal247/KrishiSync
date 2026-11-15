@@ -28,6 +28,7 @@ import '../features/market/presentation/price_screens.dart';
 import '../features/moderator/presentation/moderator_screens.dart';
 import '../features/moderator/presentation/report_screens.dart';
 import '../features/moderator/presentation/verify_screens.dart';
+import '../features/profile/presentation/verification_screens.dart';
 import '../features/trade/presentation/make_offer_screen.dart';
 import '../features/trade/presentation/negotiate_screen.dart';
 import '../features/trade/presentation/notifications_screen.dart';
@@ -58,6 +59,10 @@ abstract final class Routes {
   static const marketPrices = '/prices';
   static String priceTrend(String crop) => '/prices/$crop';
   static const payments = '/payments';
+  static const verification = '/verification';
+  static const ratings = '/ratings';
+  static const verifyAndRatings = '/ratings?verify=1';
+  static String buyerTrack(String id) => '/buyer/track/$id';
   static String receipt(String orderId) => '/receipt/$orderId';
 
   static const farmerHome = '/farmer';
@@ -249,6 +254,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
           path: Routes.payments, builder: (_, _) => const PaymentsScreen()),
       GoRoute(
+          path: Routes.verification,
+          builder: (_, _) => const VerificationScreen()),
+      GoRoute(
+        path: Routes.ratings,
+        builder: (_, s) => RatingsScreen(
+            withVerification: s.uri.queryParameters['verify'] == '1'),
+      ),
+      GoRoute(
         path: '/receipt/:id',
         builder: (_, s) => ReceiptScreen(orderId: s.pathParameters['id']!),
       ),
@@ -392,6 +405,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'assigned/:id',
             builder: (_, s) =>
                 AssignedTransportScreen(deliveryId: s.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: 'track/:id',
+            builder: (_, s) =>
+                TrackingScreen(deliveryId: s.pathParameters['id']!),
           ),
           GoRoute(
             path: 'receive/:id',
