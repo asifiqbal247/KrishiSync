@@ -55,16 +55,66 @@ class MarketPriceRepository {
       .snapshots()
       .map((d) => d.exists ? MarketPrice.fromDoc(d) : null);
 
-  /// Admin only (enforced by rules).
+  static String dayKey(DateTime d) =>
+      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  /// Admin only (enforced by rules). Saves the day's price in history;
+  /// today's price also becomes the current price shown everywhere.
   Future<void> set(String cropKey,
-          {required num price, required num min, required num max, required num prevPrice}) =>
-      _col.doc(cropKey).set({
+      {required num price,
+      required num min,
+      required num max,
+      required num prevPrice,
+      DateTime? day}) async {
+    final d = day ?? DateTime.now();
+    final now = DateTime.now();
+    final isToday =
+        d.year == now.year && d.month == now.month && d.day == now.day;
+    final b = _db.batch();
+    b.set(_col.doc(cropKey).collection('history').doc(dayKey(d)), {
+      'price': price,
+      'min': min,
+      'max': max,
+      'date': Timestamp.fromDate(DateTime(d.year, d.month, d.day)),
+    });
+    if (isToday) {
+      b.set(_col.doc(cropKey), {
         'price': price,
         'min': min,
         'max': max,
         'prevPrice': prevPrice,
         'updatedAt': FieldValue.serverTimestamp(),
       });
+    }
+    await b.commit();
+  }
+
+  /// Last [days] days of history, oldest first.
+  Stream<List<PricePoint>> watchHistory(String cropKey, int days) {
+    final from = DateTime.now().subtract(Duration(days: days));
+    return _col
+        .doc(cropKey)
+        .collection('history')
+        .where('date',
+            isGreaterThanOrEqualTo:
+                Timestamp.fromDate(DateTime(from.year, from.month, from.day)))
+        .orderBy('date')
+        .snapshots()
+        .map((q) => [
+              for (final d in q.docs)
+                PricePoint(
+                  (d.data()['date'] as Timestamp).toDate(),
+                  d.data()['price'] as num? ?? 0,
+                ),
+            ]);
+  }
+}
+
+/// One day's price (Price Trend 30).
+class PricePoint {
+  const PricePoint(this.date, this.price);
+  final DateTime date;
+  final num price;
 }
 
 final marketPriceRepositoryProvider = Provider<MarketPriceRepository>(
@@ -75,3 +125,7 @@ final marketPricesProvider = StreamProvider<List<MarketPrice>>(
 
 final marketPriceProvider = StreamProvider.family<MarketPrice?, String>(
     (ref, key) => ref.watch(marketPriceRepositoryProvider).watch(key));
+
+final priceHistoryProvider =
+    StreamProvider.family<List<PricePoint>, (String, int)>((ref, k) =>
+        ref.watch(marketPriceRepositoryProvider).watchHistory(k.$1, k.$2));

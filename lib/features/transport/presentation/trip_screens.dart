@@ -447,7 +447,6 @@ class TripCompleteScreen extends ConsumerWidget {
     if (d == null) return _loading(l.tripDoneTitle);
     final fare = Fmt.taka(context, fareOf(d));
     final returns = returnLoads(open, d.dropoff.district);
-    void soon() => KsToast.comingSoon(context);
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -468,7 +467,9 @@ class TripCompleteScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           // Receipts / payouts are Tier B.
           KsListItem(
-              title: l.seeReceipt, subtitle: l.receiptSub(fare), onTap: soon),
+              title: l.seeReceipt,
+              subtitle: l.receiptSub(fare),
+              onTap: () => context.push(Routes.receipt(d.orderId))),
           const SizedBox(height: AppSpacing.block),
           KsListItem(
             title: d.transporterRated ? l.alreadyRated : l.rateCustomer,

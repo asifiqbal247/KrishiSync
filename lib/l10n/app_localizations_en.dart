@@ -2644,4 +2644,254 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get langSheetNote =>
       'You can change the language again from your profile.';
+
+  @override
+  String get loginTermsPre => 'By continuing you agree to the ';
+
+  @override
+  String get loginTermsLink => 'Terms and Privacy Policy';
+
+  @override
+  String get loginTermsPost => '.';
+
+  @override
+  String get termsTitle => 'Terms and Privacy Policy';
+
+  @override
+  String get termsUpdated => 'Last updated: November 2026';
+
+  @override
+  String get termsS1Title => '1. What Golaghor is';
+
+  @override
+  String get termsS1Body =>
+      'Golaghor connects farmers, buyers and transporters directly, so crops are traded at fair prices without middlemen. You sign up with your mobile number and OTP; one account per number.';
+
+  @override
+  String get termsS2Title => '2. Listings and moderation';
+
+  @override
+  String get termsS2Body =>
+      'Farmers must give the correct crop, grade, quantity, price and photo. Buyers see a listing only after a moderator approves it. Wrong or misleading listings may be hidden, and repeated cases can lead to suspension.';
+
+  @override
+  String get termsS3Title => '3. Safe payment and fees';
+
+  @override
+  String get termsS3Body =>
+      'The buyer\'s money is held in safe payment. The farmer is paid when the crop is loaded, and the transporter when the delivery OTP is given. Only the buyer pays the 1% platform fee. Quality and quantity are final at loading.';
+
+  @override
+  String get termsS4Title => '4. Cancellation and refunds';
+
+  @override
+  String get termsS4Body =>
+      'If you cancel before the truck leaves, 10% of the fare is kept and the rest is refunded. After that, a cancelled load refunds the crop price and fee, not the fare. Report problems in the app; we reply within 24 hours.';
+
+  @override
+  String get termsS5Title => '5. Transport and delivery';
+
+  @override
+  String get termsS5Body =>
+      'Transporters must give correct vehicle details and can\'t mark a delivery done without the buyer\'s OTP. Buyers should give the OTP only when the truck has arrived.';
+
+  @override
+  String get termsS6Title => '6. Your data';
+
+  @override
+  String get termsS6Body =>
+      'We keep your name, mobile number, address, photos, NID number (optional) and trade records only to run the app, verify users and settle disputes. Trade partners see only what they need (name, area, rating). We never sell your data.';
+
+  @override
+  String get termsS7Title => '7. Conduct and ratings';
+
+  @override
+  String get termsS7Body =>
+      'Everyone must act honestly and respectfully. Ratings can be given after each trade; fake ratings or harassment can lead to suspension.';
+
+  @override
+  String get mpTitle => 'Market prices';
+
+  @override
+  String get mpSearchHint => 'Search crops';
+
+  @override
+  String get mpWholesale => 'Wholesale market prices';
+
+  @override
+  String mpUpdated(String when) {
+    return 'Updated: $when';
+  }
+
+  @override
+  String pctChange(String sign, String pct) {
+    return '$sign$pct%';
+  }
+
+  @override
+  String get mpEmpty => 'No prices yet';
+
+  @override
+  String trendTitle(String crop) {
+    return '$crop – price trend';
+  }
+
+  @override
+  String get period7 => '7 days';
+
+  @override
+  String get period30 => '30 days';
+
+  @override
+  String get period90 => '3 months';
+
+  @override
+  String sinceWeek(String pct) {
+    return '$pct since last week';
+  }
+
+  @override
+  String sinceMonth(String pct) {
+    return '$pct since last month';
+  }
+
+  @override
+  String since3Months(String pct) {
+    return '$pct since 3 months ago';
+  }
+
+  @override
+  String get rowHighest => 'Highest';
+
+  @override
+  String get rowLowest => 'Lowest';
+
+  @override
+  String get rowAverage => 'Average';
+
+  @override
+  String priceAlert(String price) {
+    return 'Set price alert (notify at $price)';
+  }
+
+  @override
+  String get sellAtPrice => 'Sell crop at this price';
+
+  @override
+  String get findInMarket => 'Find in market';
+
+  @override
+  String get trendNoData => 'No price data for this period yet';
+
+  @override
+  String get payTitle => 'Payments';
+
+  @override
+  String get payHeldFarmer => 'Held in safe payment';
+
+  @override
+  String get payReceivedMonth => 'Received this month';
+
+  @override
+  String get payHeldBuyer => 'In safe payment';
+
+  @override
+  String get payPaidMonth => 'Paid this month';
+
+  @override
+  String get payReceiveMethod => 'Payout method';
+
+  @override
+  String payMethodSub(String phone) {
+    return 'bKash · $phone';
+  }
+
+  @override
+  String get changeLink => 'Change';
+
+  @override
+  String get payHistory => 'Transaction history';
+
+  @override
+  String payItemTitle(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String payHeldSub(String date) {
+    return 'Safe payment · $date';
+  }
+
+  @override
+  String paySentSub(String date) {
+    return 'Sent to bKash · $date';
+  }
+
+  @override
+  String payPaidSub(String date) {
+    return 'Paid · $date';
+  }
+
+  @override
+  String payTransportTitle(String name) {
+    return 'Transport – $name';
+  }
+
+  @override
+  String get payEmpty => 'No transactions yet';
+
+  @override
+  String get receiptTitle => 'Receipt';
+
+  @override
+  String receiptPaid(String method) {
+    return 'Payment successful · $method';
+  }
+
+  @override
+  String get receiptHeld => 'Held in safe payment';
+
+  @override
+  String get methodBkash => 'bKash';
+
+  @override
+  String get methodBank => 'Bank';
+
+  @override
+  String get rowReceiptNo => 'Receipt no.';
+
+  @override
+  String get rowCrop => 'Crop';
+
+  @override
+  String get rowPrice => 'Price';
+
+  @override
+  String get rowFareLabel => 'Transport fare';
+
+  @override
+  String get rowRoute => 'Route';
+
+  @override
+  String get pdfDownload => 'Download PDF';
+
+  @override
+  String cropQty(String crop, String qty) {
+    return '$crop, $qty';
+  }
+
+  @override
+  String get earnTitle => 'Earnings';
+
+  @override
+  String get earnHistory => 'Earnings history';
+
+  @override
+  String get earnHeldSub => 'Held in safe payment';
+
+  @override
+  String get earnPaidSub => 'Paid · bKash';
+
+  @override
+  String get earnEmpty => 'No earnings yet';
 }

@@ -38,6 +38,8 @@ class KsTextField extends StatefulWidget {
     this.controller,
     this.suffixText,
     this.suffixColor = AppColors.textSecondary,
+    this.prefixText,
+    this.prefixColor = AppColors.textSecondary,
     this.keyboardType,
     this.inputFormatters,
     this.textInputAction,
@@ -54,6 +56,10 @@ class KsTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? suffixText;
   final Color suffixColor;
+
+  /// Fixed text before the input, e.g. country code "+880".
+  final String? prefixText;
+  final Color prefixColor;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
@@ -98,6 +104,14 @@ class _KsTextFieldState extends State<KsTextField> {
           decoration: _fieldBox(focused: _focus.hasFocus, error: hasError),
           child: Row(
             children: [
+              if (widget.prefixText != null) ...[
+                Text(
+                  widget.prefixText!,
+                  style: AppTypography.bodyMediumEmphasis.normal
+                      .withColor(widget.prefixColor),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+              ],
               Expanded(
                 child: TextField(
                   controller: widget.controller,

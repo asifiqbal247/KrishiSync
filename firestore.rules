@@ -140,6 +140,14 @@ service cloud.firestore {
         && request.resource.data.min is number
         && request.resource.data.max is number
         && request.resource.data.min <= request.resource.data.max;
+
+      // Daily history for Price Trend (30), one doc per date (yyyy-MM-dd).
+      match /history/{day} {
+        allow read: if signedIn();
+        allow write: if isAdmin()
+          && request.resource.data.price is number
+          && request.resource.data.min <= request.resource.data.max;
+      }
     }
 
     // ---------- offers/{id} ----------

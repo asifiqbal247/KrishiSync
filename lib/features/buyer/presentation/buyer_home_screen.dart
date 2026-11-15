@@ -102,7 +102,7 @@ class BuyerHomeScreen extends ConsumerWidget {
                 child: KsStatCard(
                     label: l.statSafePay,
                     value: Fmt.taka(context, held),
-                    onTap: () => ref.read(buyerTabProvider.notifier).go(2))),
+                    onTap: () => context.push(Routes.payments))),
             const SizedBox(width: AppSpacing.lg),
             Expanded(
                 child: KsStatCard(
@@ -181,10 +181,13 @@ class BuyerHomeScreen extends ConsumerWidget {
             KsSectionHeader(
                 title: l.homeTodayPrices,
                 actionLabel: l.commonSeeAll,
-                onAction: soon),
+                onAction: () => context.push(Routes.marketPrices)),
             const SizedBox(height: AppSpacing.block),
             KsCarousel(children: [
-              for (final p in prices) KsPriceCard(price: p),
+              for (final p in prices)
+                KsPriceCard(
+                    price: p,
+                    onTap: () => context.push(Routes.priceTrend(p.cropKey))),
             ]),
           ],
           if (suppliers.isNotEmpty) ...[

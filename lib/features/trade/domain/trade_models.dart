@@ -158,6 +158,7 @@ class TradeOrder {
     this.createdAt,
     this.transporterId,
     this.transporterName,
+    this.paymentRef = '',
   });
 
   final String id;
@@ -189,6 +190,9 @@ class TradeOrder {
   final DateTime? createdAt;
   final String? transporterId;
   final String? transporterName;
+
+  /// "bank:…" / "bkash:…" from Safe Payment (82); placeholder reference.
+  final String paymentRef;
 
   String cropName(String lang) => lang == 'bn' ? cropNameBn : cropNameEn;
 
@@ -230,6 +234,7 @@ class TradeOrder {
       createdAt: (m['createdAt'] as Timestamp?)?.toDate(),
       transporterId: m['transporterId'] as String?,
       transporterName: m['transporterName'] as String?,
+      paymentRef: m['paymentRef'] as String? ?? '',
     );
   }
 }

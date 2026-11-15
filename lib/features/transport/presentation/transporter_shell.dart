@@ -9,6 +9,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/presentation/simple_tabs.dart';
 import '../../../shared/widgets/ks_bottom_nav.dart';
 import '../../auth/data/auth_repository.dart';
+import 'earnings_screen.dart';
 import 'transporter_home_screen.dart';
 import 'trip_screens.dart';
 
@@ -41,8 +42,7 @@ class TransporterShell extends ConsumerWidget {
     final pages = [
       const TransporterHomeScreen(),
       const MyJobsScreen(),
-      // Earnings list / payouts (178) are Tier B.
-      ComingTab(title: l.navEarnings),
+      const EarningsScreen(),
       const SimpleProfileTab(),
     ];
     return Scaffold(

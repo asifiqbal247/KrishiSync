@@ -1802,5 +1802,190 @@
   "langSheetTitle": "ভাষা পরিবর্তন / Change language",
   "langBnSub": "Bangla",
   "langEnSub": "ইংরেজি",
-  "langSheetNote": "পরে প্রোফাইল থেকে আবার ভাষা বদলাতে পারবেন।"
+  "langSheetNote": "পরে প্রোফাইল থেকে আবার ভাষা বদলাতে পারবেন।",
+  "loginTermsPre": "চালিয়ে গেলে আপনি ",
+  "loginTermsLink": "শর্তাবলী ও গোপনীয়তা নীতিতে",
+  "loginTermsPost": " সম্মত হচ্ছেন।",
+  "termsTitle": "শর্তাবলী ও গোপনীয়তা নীতি",
+  "termsUpdated": "সর্বশেষ হালনাগাদ: নভেম্বর ২০২৬",
+  "termsS1Title": "১. গোলাঘর কী",
+  "termsS1Body": "গোলাঘর কৃষক, ক্রেতা ও পরিবহনকারীকে সরাসরি যুক্ত করে, যাতে মধ্যস্বত্বভোগী ছাড়াই ন্যায্য দামে ফসল কেনা-বেচা হয়। মোবাইল নম্বর ও OTP দিয়ে অ্যাকাউন্ট খুলতে হয়; একটি নম্বরে একটি অ্যাকাউন্ট।",
+  "termsS2Title": "২. তালিকা ও মডারেশন",
+  "termsS2Body": "কৃষক সঠিক ফসল, মান, পরিমাণ, দাম ও ছবি দেবেন। মডারেটর অনুমোদনের পরই তালিকা ক্রেতারা দেখতে পান। ভুল বা প্রতারণামূলক তালিকা লুকানো হতে পারে এবং বারবার হলে অ্যাকাউন্ট স্থগিত হতে পারে।",
+  "termsS3Title": "৩. নিরাপদ লেনদেন ও ফি",
+  "termsS3Body": "ক্রেতার টাকা নিরাপদ লেনদেনে জমা থাকে। মাল গাড়িতে উঠলে কৃষক এবং ডেলিভারি OTP দিলে পরিবহনকারী টাকা পান। ১% প্ল্যাটফর্ম ফি শুধু ক্রেতা দেন। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়।",
+  "termsS4Title": "৪. বাতিল ও ফেরত",
+  "termsS4Body": "ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি টাকা ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়। সমস্যা হলে অ্যাপ থেকে অভিযোগ করুন; আমরা ২৪ ঘণ্টার মধ্যে উত্তর দিই।",
+  "termsS5Title": "৫. পরিবহন ও ডেলিভারি",
+  "termsS5Body": "পরিবহনকারী সঠিক গাড়ির তথ্য দেবেন এবং ক্রেতার OTP ছাড়া ডেলিভারি সম্পন্ন দেখাবেন না। ক্রেতা ট্রাক পৌঁছালে তবেই OTP দেবেন।",
+  "termsS6Title": "৬. আপনার তথ্য",
+  "termsS6Body": "আমরা নাম, মোবাইল নম্বর, ঠিকানা, ছবি, NID নম্বর (ঐচ্ছিক) ও লেনদেনের তথ্য রাখি শুধু অ্যাপ চালাতে, যাচাই করতে ও বিরোধ মেটাতে। ব্যবসার অংশীদার শুধু প্রয়োজনীয় তথ্য (নাম, এলাকা, রেটিং) দেখেন। আমরা আপনার তথ্য বিক্রি করি না।",
+  "termsS7Title": "৭. আচরণ ও রেটিং",
+  "termsS7Body": "সব ব্যবহারকারী সৎ ও সম্মানজনক আচরণ করবেন। প্রতিটি লেনদেনের পর রেটিং দেওয়া যায়; ভুয়া রেটিং বা হয়রানি করলে অ্যাকাউন্ট স্থগিত হতে পারে।",
+  "mpTitle": "বাজার দর",
+  "mpSearchHint": "ফসল খুঁজুন",
+  "mpWholesale": "পাইকারি বাজার দর",
+  "mpUpdated": "আপডেট: {when}",
+  "@mpUpdated": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "pctChange": "{sign}{pct}%",
+  "@pctChange": {
+    "placeholders": {
+      "sign": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "mpEmpty": "এখনো দাম দেওয়া হয়নি",
+  "trendTitle": "{crop} – দামের প্রবণতা",
+  "@trendTitle": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "period7": "৭ দিন",
+  "period30": "৩০ দিন",
+  "period90": "৩ মাস",
+  "sinceWeek": "গত সপ্তাহ থেকে {pct}",
+  "@sinceWeek": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "sinceMonth": "গত মাস থেকে {pct}",
+  "@sinceMonth": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "since3Months": "৩ মাস আগে থেকে {pct}",
+  "@since3Months": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "rowHighest": "সর্বোচ্চ",
+  "rowLowest": "সর্বনিম্ন",
+  "rowAverage": "গড়",
+  "priceAlert": "দাম এলার্ট সেট করুন ({price} হলে জানাবে)",
+  "@priceAlert": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "sellAtPrice": "এই দামে ফসল বিক্রি করুন",
+  "findInMarket": "বাজারে খুঁজুন",
+  "trendNoData": "এই সময়ের দামের তথ্য এখনো নেই",
+  "payTitle": "পেমেন্ট",
+  "payHeldFarmer": "নিরাপদ লেনদেনে জমা",
+  "payReceivedMonth": "এ মাসে পেয়েছেন",
+  "payHeldBuyer": "নিরাপদ লেনদেনে",
+  "payPaidMonth": "এ মাসে পরিশোধ",
+  "payReceiveMethod": "টাকা গ্রহণের মাধ্যম",
+  "payMethodSub": "বিকাশ · {phone}",
+  "@payMethodSub": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "changeLink": "পরিবর্তন",
+  "payHistory": "লেনদেন ইতিহাস",
+  "payItemTitle": "{crop} – {qty}",
+  "@payItemTitle": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "payHeldSub": "নিরাপদ লেনদেনে · {date}",
+  "@payHeldSub": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paySentSub": "বিকাশে পাঠানো · {date}",
+  "@paySentSub": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "payPaidSub": "পরিশোধিত · {date}",
+  "@payPaidSub": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "payTransportTitle": "পরিবহন – {name}",
+  "@payTransportTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "payEmpty": "এখনো কোনো লেনদেন নেই",
+  "receiptTitle": "রসিদ",
+  "receiptPaid": "পেমেন্ট সফল · {method}",
+  "@receiptPaid": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      }
+    }
+  },
+  "receiptHeld": "নিরাপদ লেনদেনে জমা আছে",
+  "methodBkash": "বিকাশ",
+  "methodBank": "ব্যাংক",
+  "rowReceiptNo": "রসিদ নং",
+  "rowCrop": "ফসল",
+  "rowPrice": "দাম",
+  "rowFareLabel": "পরিবহন ভাড়া",
+  "rowRoute": "রুট",
+  "pdfDownload": "PDF ডাউনলোড",
+  "cropQty": "{crop}, {qty}",
+  "@cropQty": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "earnTitle": "আয়",
+  "earnHistory": "আয়ের ইতিহাস",
+  "earnHeldSub": "নিরাপদ লেনদেনে জমা",
+  "earnPaidSub": "পরিশোধিত · বিকাশ",
+  "earnEmpty": "এখনো কোনো আয় নেই"
 }

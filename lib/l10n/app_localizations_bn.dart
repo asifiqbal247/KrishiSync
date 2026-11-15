@@ -2638,4 +2638,254 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get langSheetNote => 'পরে প্রোফাইল থেকে আবার ভাষা বদলাতে পারবেন।';
+
+  @override
+  String get loginTermsPre => 'চালিয়ে গেলে আপনি ';
+
+  @override
+  String get loginTermsLink => 'শর্তাবলী ও গোপনীয়তা নীতিতে';
+
+  @override
+  String get loginTermsPost => ' সম্মত হচ্ছেন।';
+
+  @override
+  String get termsTitle => 'শর্তাবলী ও গোপনীয়তা নীতি';
+
+  @override
+  String get termsUpdated => 'সর্বশেষ হালনাগাদ: নভেম্বর ২০২৬';
+
+  @override
+  String get termsS1Title => '১. গোলাঘর কী';
+
+  @override
+  String get termsS1Body =>
+      'গোলাঘর কৃষক, ক্রেতা ও পরিবহনকারীকে সরাসরি যুক্ত করে, যাতে মধ্যস্বত্বভোগী ছাড়াই ন্যায্য দামে ফসল কেনা-বেচা হয়। মোবাইল নম্বর ও OTP দিয়ে অ্যাকাউন্ট খুলতে হয়; একটি নম্বরে একটি অ্যাকাউন্ট।';
+
+  @override
+  String get termsS2Title => '২. তালিকা ও মডারেশন';
+
+  @override
+  String get termsS2Body =>
+      'কৃষক সঠিক ফসল, মান, পরিমাণ, দাম ও ছবি দেবেন। মডারেটর অনুমোদনের পরই তালিকা ক্রেতারা দেখতে পান। ভুল বা প্রতারণামূলক তালিকা লুকানো হতে পারে এবং বারবার হলে অ্যাকাউন্ট স্থগিত হতে পারে।';
+
+  @override
+  String get termsS3Title => '৩. নিরাপদ লেনদেন ও ফি';
+
+  @override
+  String get termsS3Body =>
+      'ক্রেতার টাকা নিরাপদ লেনদেনে জমা থাকে। মাল গাড়িতে উঠলে কৃষক এবং ডেলিভারি OTP দিলে পরিবহনকারী টাকা পান। ১% প্ল্যাটফর্ম ফি শুধু ক্রেতা দেন। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়।';
+
+  @override
+  String get termsS4Title => '৪. বাতিল ও ফেরত';
+
+  @override
+  String get termsS4Body =>
+      'ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি টাকা ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়। সমস্যা হলে অ্যাপ থেকে অভিযোগ করুন; আমরা ২৪ ঘণ্টার মধ্যে উত্তর দিই।';
+
+  @override
+  String get termsS5Title => '৫. পরিবহন ও ডেলিভারি';
+
+  @override
+  String get termsS5Body =>
+      'পরিবহনকারী সঠিক গাড়ির তথ্য দেবেন এবং ক্রেতার OTP ছাড়া ডেলিভারি সম্পন্ন দেখাবেন না। ক্রেতা ট্রাক পৌঁছালে তবেই OTP দেবেন।';
+
+  @override
+  String get termsS6Title => '৬. আপনার তথ্য';
+
+  @override
+  String get termsS6Body =>
+      'আমরা নাম, মোবাইল নম্বর, ঠিকানা, ছবি, NID নম্বর (ঐচ্ছিক) ও লেনদেনের তথ্য রাখি শুধু অ্যাপ চালাতে, যাচাই করতে ও বিরোধ মেটাতে। ব্যবসার অংশীদার শুধু প্রয়োজনীয় তথ্য (নাম, এলাকা, রেটিং) দেখেন। আমরা আপনার তথ্য বিক্রি করি না।';
+
+  @override
+  String get termsS7Title => '৭. আচরণ ও রেটিং';
+
+  @override
+  String get termsS7Body =>
+      'সব ব্যবহারকারী সৎ ও সম্মানজনক আচরণ করবেন। প্রতিটি লেনদেনের পর রেটিং দেওয়া যায়; ভুয়া রেটিং বা হয়রানি করলে অ্যাকাউন্ট স্থগিত হতে পারে।';
+
+  @override
+  String get mpTitle => 'বাজার দর';
+
+  @override
+  String get mpSearchHint => 'ফসল খুঁজুন';
+
+  @override
+  String get mpWholesale => 'পাইকারি বাজার দর';
+
+  @override
+  String mpUpdated(String when) {
+    return 'আপডেট: $when';
+  }
+
+  @override
+  String pctChange(String sign, String pct) {
+    return '$sign$pct%';
+  }
+
+  @override
+  String get mpEmpty => 'এখনো দাম দেওয়া হয়নি';
+
+  @override
+  String trendTitle(String crop) {
+    return '$crop – দামের প্রবণতা';
+  }
+
+  @override
+  String get period7 => '৭ দিন';
+
+  @override
+  String get period30 => '৩০ দিন';
+
+  @override
+  String get period90 => '৩ মাস';
+
+  @override
+  String sinceWeek(String pct) {
+    return 'গত সপ্তাহ থেকে $pct';
+  }
+
+  @override
+  String sinceMonth(String pct) {
+    return 'গত মাস থেকে $pct';
+  }
+
+  @override
+  String since3Months(String pct) {
+    return '৩ মাস আগে থেকে $pct';
+  }
+
+  @override
+  String get rowHighest => 'সর্বোচ্চ';
+
+  @override
+  String get rowLowest => 'সর্বনিম্ন';
+
+  @override
+  String get rowAverage => 'গড়';
+
+  @override
+  String priceAlert(String price) {
+    return 'দাম এলার্ট সেট করুন ($price হলে জানাবে)';
+  }
+
+  @override
+  String get sellAtPrice => 'এই দামে ফসল বিক্রি করুন';
+
+  @override
+  String get findInMarket => 'বাজারে খুঁজুন';
+
+  @override
+  String get trendNoData => 'এই সময়ের দামের তথ্য এখনো নেই';
+
+  @override
+  String get payTitle => 'পেমেন্ট';
+
+  @override
+  String get payHeldFarmer => 'নিরাপদ লেনদেনে জমা';
+
+  @override
+  String get payReceivedMonth => 'এ মাসে পেয়েছেন';
+
+  @override
+  String get payHeldBuyer => 'নিরাপদ লেনদেনে';
+
+  @override
+  String get payPaidMonth => 'এ মাসে পরিশোধ';
+
+  @override
+  String get payReceiveMethod => 'টাকা গ্রহণের মাধ্যম';
+
+  @override
+  String payMethodSub(String phone) {
+    return 'বিকাশ · $phone';
+  }
+
+  @override
+  String get changeLink => 'পরিবর্তন';
+
+  @override
+  String get payHistory => 'লেনদেন ইতিহাস';
+
+  @override
+  String payItemTitle(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String payHeldSub(String date) {
+    return 'নিরাপদ লেনদেনে · $date';
+  }
+
+  @override
+  String paySentSub(String date) {
+    return 'বিকাশে পাঠানো · $date';
+  }
+
+  @override
+  String payPaidSub(String date) {
+    return 'পরিশোধিত · $date';
+  }
+
+  @override
+  String payTransportTitle(String name) {
+    return 'পরিবহন – $name';
+  }
+
+  @override
+  String get payEmpty => 'এখনো কোনো লেনদেন নেই';
+
+  @override
+  String get receiptTitle => 'রসিদ';
+
+  @override
+  String receiptPaid(String method) {
+    return 'পেমেন্ট সফল · $method';
+  }
+
+  @override
+  String get receiptHeld => 'নিরাপদ লেনদেনে জমা আছে';
+
+  @override
+  String get methodBkash => 'বিকাশ';
+
+  @override
+  String get methodBank => 'ব্যাংক';
+
+  @override
+  String get rowReceiptNo => 'রসিদ নং';
+
+  @override
+  String get rowCrop => 'ফসল';
+
+  @override
+  String get rowPrice => 'দাম';
+
+  @override
+  String get rowFareLabel => 'পরিবহন ভাড়া';
+
+  @override
+  String get rowRoute => 'রুট';
+
+  @override
+  String get pdfDownload => 'PDF ডাউনলোড';
+
+  @override
+  String cropQty(String crop, String qty) {
+    return '$crop, $qty';
+  }
+
+  @override
+  String get earnTitle => 'আয়';
+
+  @override
+  String get earnHistory => 'আয়ের ইতিহাস';
+
+  @override
+  String get earnHeldSub => 'নিরাপদ লেনদেনে জমা';
+
+  @override
+  String get earnPaidSub => 'পরিশোধিত · বিকাশ';
+
+  @override
+  String get earnEmpty => 'এখনো কোনো আয় নেই';
 }

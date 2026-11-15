@@ -15,6 +15,7 @@ import '../features/auth/presentation/otp_screen.dart';
 import '../features/auth/presentation/profile_setup_screen.dart';
 import '../features/auth/presentation/role_screen.dart';
 import '../features/auth/presentation/splash_screen.dart';
+import '../features/auth/presentation/terms_screen.dart';
 import '../features/buyer/presentation/buyer_listing_screen.dart';
 import '../features/buyer/presentation/buyer_shell.dart';
 import '../features/buyer/presentation/farmer_profile_screen.dart';
@@ -23,6 +24,7 @@ import '../features/farmer/presentation/farmer_shell.dart';
 import '../features/farmer/presentation/listing_details_screen.dart';
 import '../features/farmer/presentation/my_listings_screen.dart';
 import '../features/farmer/presentation/sell_crop_screen.dart';
+import '../features/market/presentation/price_screens.dart';
 import '../features/moderator/presentation/moderator_screens.dart';
 import '../features/moderator/presentation/report_screens.dart';
 import '../features/moderator/presentation/verify_screens.dart';
@@ -31,6 +33,7 @@ import '../features/trade/presentation/negotiate_screen.dart';
 import '../features/trade/presentation/notifications_screen.dart';
 import '../features/trade/presentation/offers_screen.dart';
 import '../features/trade/presentation/orders_screens.dart';
+import '../features/trade/presentation/payment_screens.dart';
 import '../features/trade/presentation/place_order_screen.dart';
 import '../features/trade/presentation/safe_payment_screen.dart';
 import '../features/transport/presentation/buyer_transport_screens.dart';
@@ -49,6 +52,13 @@ abstract final class Routes {
   static const role = '/role';
   static const profileSetup = '/profile-setup';
   static const locationPicker = '/location';
+  static const terms = '/terms';
+
+  // Shared: market prices (29/30), payments (56/124), receipt (58/125)
+  static const marketPrices = '/prices';
+  static String priceTrend(String crop) => '/prices/$crop';
+  static const payments = '/payments';
+  static String receipt(String orderId) => '/receipt/$orderId';
 
   static const farmerHome = '/farmer';
   static const buyerHome = '/buyer';
@@ -162,6 +172,8 @@ final routerProvider = Provider<GoRouter>((ref) {
     if (!ref.read(onboardingDoneProvider)) {
       return loc == Routes.onboarding ? null : Routes.onboarding;
     }
+    // Terms page is open to everyone.
+    if (loc == Routes.terms) return null;
     // 4. Signed out → login / otp only.
     final fbUser = auth.value;
     if (fbUser == null) {
@@ -222,6 +234,24 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: Routes.onboarding, builder: (_, _) => const OnboardingScreen()),
       GoRoute(path: Routes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(path: Routes.otp, builder: (_, _) => const OtpScreen()),
+      GoRoute(path: Routes.terms, builder: (_, _) => const TermsScreen()),
+      GoRoute(
+        path: Routes.marketPrices,
+        builder: (_, _) => const MarketPricesScreen(),
+        routes: [
+          GoRoute(
+            path: ':crop',
+            builder: (_, s) =>
+                PriceTrendScreen(cropKey: s.pathParameters['crop']!),
+          ),
+        ],
+      ),
+      GoRoute(
+          path: Routes.payments, builder: (_, _) => const PaymentsScreen()),
+      GoRoute(
+        path: '/receipt/:id',
+        builder: (_, s) => ReceiptScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(path: Routes.role, builder: (_, _) => const RoleScreen()),
       GoRoute(
           path: Routes.profileSetup,

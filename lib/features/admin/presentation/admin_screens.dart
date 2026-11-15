@@ -562,6 +562,8 @@ class PricesScreen extends ConsumerWidget {
     final min = TextEditingController(text: fmt(old?.min));
     final max = TextEditingController(text: fmt(old?.max));
     String? err;
+    // Day of the price: today by default; past days fill the trend (30).
+    var day = DateTime.now();
     final digits = [FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]'))];
     num? parse(TextEditingController c) =>
         num.tryParse(Fmt.latinDigits(c.text.trim()));
@@ -581,7 +583,28 @@ class PricesScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(crop.name(lang), style: AppTypography.h3.normal),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(crop.name(lang), style: AppTypography.h3.normal),
+                  ),
+                  KsPill(
+                    label: Fmt.date(ctx, day),
+                    selected: true,
+                    onTap: () async {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      final now = DateTime.now();
+                      final d = await showDatePicker(
+                        context: ctx,
+                        firstDate: now.subtract(const Duration(days: 90)),
+                        lastDate: now,
+                        initialDate: day,
+                      );
+                      if (d != null) setS(() => day = d);
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(height: AppSpacing.md),
               KsTextField(
                 label: l.fieldTodayPrice,
@@ -637,6 +660,7 @@ class PricesScreen extends ConsumerWidget {
                           price: p,
                           min: lo,
                           max: hi,
+                          day: day,
                           prevPrice: old?.price ?? p,
                         );
                     if (ctx.mounted) Navigator.pop(ctx);

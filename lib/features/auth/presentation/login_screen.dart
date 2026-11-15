@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,12 +28,15 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _phone = TextEditingController();
   String? _fieldError;
+  late final _termsTap = TapGestureRecognizer()
+    ..onTap = () => context.push(Routes.terms);
 
   static const _imageHeight = 260.0;
 
   @override
   void dispose() {
     _phone.dispose();
+    _termsTap.dispose();
     super.dispose();
   }
 
@@ -89,8 +93,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 label: l.loginPhoneLabel,
                 hint: l.loginPhoneHint,
                 controller: _phone,
-                suffixText: l.loginCountryCode,
-                suffixColor: AppColors.textSuccess,
+                prefixText: l.loginCountryCode,
+                prefixColor: AppColors.textSuccess,
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.done,
                 maxLength: 14,
@@ -102,9 +106,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               const SizedBox(
                   height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-              Text(l.loginTerms,
+              Text.rich(
+                TextSpan(
                   style: AppTypography.caption.normal
-                      .withColor(AppColors.textSecondary)),
+                      .withColor(AppColors.textSecondary),
+                  children: [
+                    TextSpan(text: l.loginTermsPre),
+                    TextSpan(
+                      text: l.loginTermsLink,
+                      style: const TextStyle(
+                        color: AppColors.textBrand,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppColors.textBrand,
+                      ),
+                      recognizer: _termsTap,
+                    ),
+                    TextSpan(text: l.loginTermsPost),
+                  ],
+                ),
+              ),
               const SizedBox(height: AppSpacing.block),
               KsButton(
                 label: l.loginSendCode,

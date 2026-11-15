@@ -4831,6 +4831,432 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'পরে প্রোফাইল থেকে আবার ভাষা বদলাতে পারবেন।'**
   String get langSheetNote;
+
+  /// No description provided for @loginTermsPre.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালিয়ে গেলে আপনি '**
+  String get loginTermsPre;
+
+  /// No description provided for @loginTermsLink.
+  ///
+  /// In bn, this message translates to:
+  /// **'শর্তাবলী ও গোপনীয়তা নীতিতে'**
+  String get loginTermsLink;
+
+  /// No description provided for @loginTermsPost.
+  ///
+  /// In bn, this message translates to:
+  /// **' সম্মত হচ্ছেন।'**
+  String get loginTermsPost;
+
+  /// No description provided for @termsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'শর্তাবলী ও গোপনীয়তা নীতি'**
+  String get termsTitle;
+
+  /// No description provided for @termsUpdated.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বশেষ হালনাগাদ: নভেম্বর ২০২৬'**
+  String get termsUpdated;
+
+  /// No description provided for @termsS1Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'১. গোলাঘর কী'**
+  String get termsS1Title;
+
+  /// No description provided for @termsS1Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর কৃষক, ক্রেতা ও পরিবহনকারীকে সরাসরি যুক্ত করে, যাতে মধ্যস্বত্বভোগী ছাড়াই ন্যায্য দামে ফসল কেনা-বেচা হয়। মোবাইল নম্বর ও OTP দিয়ে অ্যাকাউন্ট খুলতে হয়; একটি নম্বরে একটি অ্যাকাউন্ট।'**
+  String get termsS1Body;
+
+  /// No description provided for @termsS2Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'২. তালিকা ও মডারেশন'**
+  String get termsS2Title;
+
+  /// No description provided for @termsS2Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক সঠিক ফসল, মান, পরিমাণ, দাম ও ছবি দেবেন। মডারেটর অনুমোদনের পরই তালিকা ক্রেতারা দেখতে পান। ভুল বা প্রতারণামূলক তালিকা লুকানো হতে পারে এবং বারবার হলে অ্যাকাউন্ট স্থগিত হতে পারে।'**
+  String get termsS2Body;
+
+  /// No description provided for @termsS3Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'৩. নিরাপদ লেনদেন ও ফি'**
+  String get termsS3Title;
+
+  /// No description provided for @termsS3Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার টাকা নিরাপদ লেনদেনে জমা থাকে। মাল গাড়িতে উঠলে কৃষক এবং ডেলিভারি OTP দিলে পরিবহনকারী টাকা পান। ১% প্ল্যাটফর্ম ফি শুধু ক্রেতা দেন। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়।'**
+  String get termsS3Body;
+
+  /// No description provided for @termsS4Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'৪. বাতিল ও ফেরত'**
+  String get termsS4Title;
+
+  /// No description provided for @termsS4Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি টাকা ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়। সমস্যা হলে অ্যাপ থেকে অভিযোগ করুন; আমরা ২৪ ঘণ্টার মধ্যে উত্তর দিই।'**
+  String get termsS4Body;
+
+  /// No description provided for @termsS5Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'৫. পরিবহন ও ডেলিভারি'**
+  String get termsS5Title;
+
+  /// No description provided for @termsS5Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবহনকারী সঠিক গাড়ির তথ্য দেবেন এবং ক্রেতার OTP ছাড়া ডেলিভারি সম্পন্ন দেখাবেন না। ক্রেতা ট্রাক পৌঁছালে তবেই OTP দেবেন।'**
+  String get termsS5Body;
+
+  /// No description provided for @termsS6Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'৬. আপনার তথ্য'**
+  String get termsS6Title;
+
+  /// No description provided for @termsS6Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমরা নাম, মোবাইল নম্বর, ঠিকানা, ছবি, NID নম্বর (ঐচ্ছিক) ও লেনদেনের তথ্য রাখি শুধু অ্যাপ চালাতে, যাচাই করতে ও বিরোধ মেটাতে। ব্যবসার অংশীদার শুধু প্রয়োজনীয় তথ্য (নাম, এলাকা, রেটিং) দেখেন। আমরা আপনার তথ্য বিক্রি করি না।'**
+  String get termsS6Body;
+
+  /// No description provided for @termsS7Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'৭. আচরণ ও রেটিং'**
+  String get termsS7Title;
+
+  /// No description provided for @termsS7Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব ব্যবহারকারী সৎ ও সম্মানজনক আচরণ করবেন। প্রতিটি লেনদেনের পর রেটিং দেওয়া যায়; ভুয়া রেটিং বা হয়রানি করলে অ্যাকাউন্ট স্থগিত হতে পারে।'**
+  String get termsS7Body;
+
+  /// No description provided for @mpTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজার দর'**
+  String get mpTitle;
+
+  /// No description provided for @mpSearchHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল খুঁজুন'**
+  String get mpSearchHint;
+
+  /// No description provided for @mpWholesale.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাইকারি বাজার দর'**
+  String get mpWholesale;
+
+  /// No description provided for @mpUpdated.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপডেট: {when}'**
+  String mpUpdated(String when);
+
+  /// No description provided for @pctChange.
+  ///
+  /// In bn, this message translates to:
+  /// **'{sign}{pct}%'**
+  String pctChange(String sign, String pct);
+
+  /// No description provided for @mpEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো দাম দেওয়া হয়নি'**
+  String get mpEmpty;
+
+  /// No description provided for @trendTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – দামের প্রবণতা'**
+  String trendTitle(String crop);
+
+  /// No description provided for @period7.
+  ///
+  /// In bn, this message translates to:
+  /// **'৭ দিন'**
+  String get period7;
+
+  /// No description provided for @period30.
+  ///
+  /// In bn, this message translates to:
+  /// **'৩০ দিন'**
+  String get period30;
+
+  /// No description provided for @period90.
+  ///
+  /// In bn, this message translates to:
+  /// **'৩ মাস'**
+  String get period90;
+
+  /// No description provided for @sinceWeek.
+  ///
+  /// In bn, this message translates to:
+  /// **'গত সপ্তাহ থেকে {pct}'**
+  String sinceWeek(String pct);
+
+  /// No description provided for @sinceMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'গত মাস থেকে {pct}'**
+  String sinceMonth(String pct);
+
+  /// No description provided for @since3Months.
+  ///
+  /// In bn, this message translates to:
+  /// **'৩ মাস আগে থেকে {pct}'**
+  String since3Months(String pct);
+
+  /// No description provided for @rowHighest.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বোচ্চ'**
+  String get rowHighest;
+
+  /// No description provided for @rowLowest.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বনিম্ন'**
+  String get rowLowest;
+
+  /// No description provided for @rowAverage.
+  ///
+  /// In bn, this message translates to:
+  /// **'গড়'**
+  String get rowAverage;
+
+  /// No description provided for @priceAlert.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম এলার্ট সেট করুন ({price} হলে জানাবে)'**
+  String priceAlert(String price);
+
+  /// No description provided for @sellAtPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই দামে ফসল বিক্রি করুন'**
+  String get sellAtPrice;
+
+  /// No description provided for @findInMarket.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজারে খুঁজুন'**
+  String get findInMarket;
+
+  /// No description provided for @trendNoData.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই সময়ের দামের তথ্য এখনো নেই'**
+  String get trendNoData;
+
+  /// No description provided for @payTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট'**
+  String get payTitle;
+
+  /// No description provided for @payHeldFarmer.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে জমা'**
+  String get payHeldFarmer;
+
+  /// No description provided for @payReceivedMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাসে পেয়েছেন'**
+  String get payReceivedMonth;
+
+  /// No description provided for @payHeldBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে'**
+  String get payHeldBuyer;
+
+  /// No description provided for @payPaidMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাসে পরিশোধ'**
+  String get payPaidMonth;
+
+  /// No description provided for @payReceiveMethod.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকা গ্রহণের মাধ্যম'**
+  String get payReceiveMethod;
+
+  /// No description provided for @payMethodSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকাশ · {phone}'**
+  String payMethodSub(String phone);
+
+  /// No description provided for @changeLink.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবর্তন'**
+  String get changeLink;
+
+  /// No description provided for @payHistory.
+  ///
+  /// In bn, this message translates to:
+  /// **'লেনদেন ইতিহাস'**
+  String get payHistory;
+
+  /// No description provided for @payItemTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {qty}'**
+  String payItemTitle(String crop, String qty);
+
+  /// No description provided for @payHeldSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে · {date}'**
+  String payHeldSub(String date);
+
+  /// No description provided for @paySentSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকাশে পাঠানো · {date}'**
+  String paySentSub(String date);
+
+  /// No description provided for @payPaidSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিশোধিত · {date}'**
+  String payPaidSub(String date);
+
+  /// No description provided for @payTransportTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবহন – {name}'**
+  String payTransportTitle(String name);
+
+  /// No description provided for @payEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো লেনদেন নেই'**
+  String get payEmpty;
+
+  /// No description provided for @receiptTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ'**
+  String get receiptTitle;
+
+  /// No description provided for @receiptPaid.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট সফল · {method}'**
+  String receiptPaid(String method);
+
+  /// No description provided for @receiptHeld.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে জমা আছে'**
+  String get receiptHeld;
+
+  /// No description provided for @methodBkash.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকাশ'**
+  String get methodBkash;
+
+  /// No description provided for @methodBank.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাংক'**
+  String get methodBank;
+
+  /// No description provided for @rowReceiptNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ নং'**
+  String get rowReceiptNo;
+
+  /// No description provided for @rowCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল'**
+  String get rowCrop;
+
+  /// No description provided for @rowPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম'**
+  String get rowPrice;
+
+  /// No description provided for @rowFareLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবহন ভাড়া'**
+  String get rowFareLabel;
+
+  /// No description provided for @rowRoute.
+  ///
+  /// In bn, this message translates to:
+  /// **'রুট'**
+  String get rowRoute;
+
+  /// No description provided for @pdfDownload.
+  ///
+  /// In bn, this message translates to:
+  /// **'PDF ডাউনলোড'**
+  String get pdfDownload;
+
+  /// No description provided for @cropQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop}, {qty}'**
+  String cropQty(String crop, String qty);
+
+  /// No description provided for @earnTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আয়'**
+  String get earnTitle;
+
+  /// No description provided for @earnHistory.
+  ///
+  /// In bn, this message translates to:
+  /// **'আয়ের ইতিহাস'**
+  String get earnHistory;
+
+  /// No description provided for @earnHeldSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে জমা'**
+  String get earnHeldSub;
+
+  /// No description provided for @earnPaidSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিশোধিত · বিকাশ'**
+  String get earnPaidSub;
+
+  /// No description provided for @earnEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো আয় নেই'**
+  String get earnEmpty;
 }
 
 class _AppLocalizationsDelegate

@@ -86,10 +86,13 @@ class FarmerHomeScreen extends ConsumerWidget {
             KsSectionHeader(
                 title: l.homeTodayPrices,
                 actionLabel: l.commonSeeAll,
-                onAction: soon),
+                onAction: () => context.push(Routes.marketPrices)),
             const SizedBox(height: AppSpacing.block),
             KsCarousel(children: [
-              for (final p in prices) KsPriceCard(price: p),
+              for (final p in prices)
+                KsPriceCard(
+                    price: p,
+                    onTap: () => context.push(Routes.priceTrend(p.cropKey))),
             ]),
           ],
           const SizedBox(height: AppSpacing.block),
@@ -149,7 +152,7 @@ class FarmerHomeScreen extends ConsumerWidget {
                                 o.createdAt!.month == now.month)
                             .fold<num>(0, (a, o) => a + o.cropTotal);
                       }())),
-                  onTap: soon,
+                  onTap: () => context.push(Routes.payments),
                 ),
               ),
             ],
