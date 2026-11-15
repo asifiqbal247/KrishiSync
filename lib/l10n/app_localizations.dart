@@ -6625,6 +6625,132 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'অথবা কৃষক সমবায় সনদ'**
   String get exDoc2Sub;
+
+  /// No description provided for @shareTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্র্যাক রেকর্ড শেয়ার'**
+  String get shareTitle;
+
+  /// No description provided for @statRatingReviews.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেটিং ({n} রিভিউ)'**
+  String statRatingReviews(String n);
+
+  /// No description provided for @memberSince.
+  ///
+  /// In bn, this message translates to:
+  /// **'{year} থেকে'**
+  String memberSince(String year);
+
+  /// No description provided for @memberLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'সদস্য'**
+  String get memberLabel;
+
+  /// No description provided for @shareCode.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর আইডি: {code}'**
+  String shareCode(String code);
+
+  /// No description provided for @shareVerifiedToday.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর যাচাইকৃত · আপডেট: আজ'**
+  String get shareVerifiedToday;
+
+  /// No description provided for @shareQrNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'QR স্ক্যান করলে এই তথ্য দেখা যাবে'**
+  String get shareQrNote;
+
+  /// No description provided for @whatToShow.
+  ///
+  /// In bn, this message translates to:
+  /// **'কী দেখাবেন'**
+  String get whatToShow;
+
+  /// No description provided for @showDeals.
+  ///
+  /// In bn, this message translates to:
+  /// **'লেনদেন সংখ্যা ও সময়মতো %'**
+  String get showDeals;
+
+  /// No description provided for @showRatings.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেটিং ও রিভিউ'**
+  String get showRatings;
+
+  /// No description provided for @showMoney.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকার পরিমাণ'**
+  String get showMoney;
+
+  /// No description provided for @visibleAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাই দেখতে পাবে'**
+  String get visibleAll;
+
+  /// No description provided for @hiddenPrivacy.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোপনীয়তার জন্য বন্ধ'**
+  String get hiddenPrivacy;
+
+  /// No description provided for @onLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালু'**
+  String get onLabel;
+
+  /// No description provided for @offLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'বন্ধ'**
+  String get offLabel;
+
+  /// No description provided for @loanNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাংক বা এনজিওতে দেখিয়ে নিজে লোন নিতে পারবেন (অ্যাপে কোনো লোন নেই)।'**
+  String get loanNote;
+
+  /// No description provided for @copyLink.
+  ///
+  /// In bn, this message translates to:
+  /// **'লিংক কপি'**
+  String get copyLink;
+
+  /// No description provided for @shareNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেয়ার করুন'**
+  String get shareNow;
+
+  /// No description provided for @copied.
+  ///
+  /// In bn, this message translates to:
+  /// **'কপি হয়েছে'**
+  String get copied;
+
+  /// No description provided for @shareHeader.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর ট্র্যাক রেকর্ড'**
+  String get shareHeader;
+
+  /// No description provided for @shareMoneyLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট লেনদেন: {amount}'**
+  String shareMoneyLine(String amount);
 }
 
 class _AppLocalizationsDelegate

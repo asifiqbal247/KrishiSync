@@ -185,7 +185,7 @@ class SimpleProfileTab extends ConsumerWidget {
               title: l.shareTrack,
               subtitle: l.shareTrackSub,
               trailingText: l.shareLink,
-              onTap: soon,
+              onTap: () => context.push(Routes.shareRecord),
             ),
           ],
           if (role == UserRole.transporter) ...[

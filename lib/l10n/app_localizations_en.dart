@@ -981,7 +981,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get statRating => 'Rating';
 
   @override
-  String get statOnTime => 'On-time delivery';
+  String get statOnTime => 'On-time supply';
 
   @override
   String get statCompleted => 'Completed trades';
@@ -3661,4 +3661,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exDoc2Sub => 'Or farmers\' cooperative certificate';
+
+  @override
+  String get shareTitle => 'Share track record';
+
+  @override
+  String statRatingReviews(String n) {
+    return 'Rating ($n reviews)';
+  }
+
+  @override
+  String memberSince(String year) {
+    return 'Since $year';
+  }
+
+  @override
+  String get memberLabel => 'Member';
+
+  @override
+  String shareCode(String code) {
+    return 'Golaghor ID: $code';
+  }
+
+  @override
+  String get shareVerifiedToday => 'Golaghor verified · updated: today';
+
+  @override
+  String get shareQrNote => 'Scan the QR to see this record';
+
+  @override
+  String get whatToShow => 'What to show';
+
+  @override
+  String get showDeals => 'Number of trades & on-time %';
+
+  @override
+  String get showRatings => 'Ratings & reviews';
+
+  @override
+  String get showMoney => 'Money amount';
+
+  @override
+  String get visibleAll => 'Everyone can see';
+
+  @override
+  String get hiddenPrivacy => 'Off for privacy';
+
+  @override
+  String get onLabel => 'On';
+
+  @override
+  String get offLabel => 'Off';
+
+  @override
+  String get loanNote =>
+      'You can show this to a bank or NGO for a loan yourself (the app gives no loans).';
+
+  @override
+  String get copyLink => 'Copy';
+
+  @override
+  String get shareNow => 'Share';
+
+  @override
+  String get copied => 'Copied';
+
+  @override
+  String get shareHeader => 'Golaghor track record';
+
+  @override
+  String shareMoneyLine(String amount) {
+    return 'Total traded: $amount';
+  }
 }

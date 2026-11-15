@@ -3655,4 +3655,76 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get exDoc2Sub => 'অথবা কৃষক সমবায় সনদ';
+
+  @override
+  String get shareTitle => 'ট্র্যাক রেকর্ড শেয়ার';
+
+  @override
+  String statRatingReviews(String n) {
+    return 'রেটিং ($n রিভিউ)';
+  }
+
+  @override
+  String memberSince(String year) {
+    return '$year থেকে';
+  }
+
+  @override
+  String get memberLabel => 'সদস্য';
+
+  @override
+  String shareCode(String code) {
+    return 'গোলাঘর আইডি: $code';
+  }
+
+  @override
+  String get shareVerifiedToday => 'গোলাঘর যাচাইকৃত · আপডেট: আজ';
+
+  @override
+  String get shareQrNote => 'QR স্ক্যান করলে এই তথ্য দেখা যাবে';
+
+  @override
+  String get whatToShow => 'কী দেখাবেন';
+
+  @override
+  String get showDeals => 'লেনদেন সংখ্যা ও সময়মতো %';
+
+  @override
+  String get showRatings => 'রেটিং ও রিভিউ';
+
+  @override
+  String get showMoney => 'টাকার পরিমাণ';
+
+  @override
+  String get visibleAll => 'সবাই দেখতে পাবে';
+
+  @override
+  String get hiddenPrivacy => 'গোপনীয়তার জন্য বন্ধ';
+
+  @override
+  String get onLabel => 'চালু';
+
+  @override
+  String get offLabel => 'বন্ধ';
+
+  @override
+  String get loanNote =>
+      'ব্যাংক বা এনজিওতে দেখিয়ে নিজে লোন নিতে পারবেন (অ্যাপে কোনো লোন নেই)।';
+
+  @override
+  String get copyLink => 'লিংক কপি';
+
+  @override
+  String get shareNow => 'শেয়ার করুন';
+
+  @override
+  String get copied => 'কপি হয়েছে';
+
+  @override
+  String get shareHeader => 'গোলাঘর ট্র্যাক রেকর্ড';
+
+  @override
+  String shareMoneyLine(String amount) {
+    return 'মোট লেনদেন: $amount';
+  }
 }

@@ -31,6 +31,7 @@ import '../features/market/presentation/price_screens.dart';
 import '../features/moderator/presentation/moderator_screens.dart';
 import '../features/moderator/presentation/report_screens.dart';
 import '../features/moderator/presentation/verify_screens.dart';
+import '../features/profile/presentation/share_record_screen.dart';
 import '../features/profile/presentation/verification_screens.dart';
 import '../features/trade/presentation/make_offer_screen.dart';
 import '../features/trade/presentation/negotiate_screen.dart';
@@ -69,6 +70,7 @@ abstract final class Routes {
   static const messages = '/messages';
   static String chat(String id) => '/messages/$id';
   static const help = '/help';
+  static const shareRecord = '/share-record';
   static String tip(int i) => '/tips/$i';
   static const globalBuyers = '/export';
   static const exportGuide = '/export/guide';
@@ -335,6 +337,9 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: 'guide', builder: (_, _) => const ExportGuideScreen()),
         ],
       ),
+      GoRoute(
+          path: Routes.shareRecord,
+          builder: (_, _) => const ShareRecordScreen()),
       GoRoute(
         path: Routes.help,
         builder: (_, _) => const HelpScreen(),

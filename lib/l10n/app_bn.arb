@@ -2476,5 +2476,54 @@
   "exDoc1": "ফাইটোস্যানিটারি সার্টিফিকেট",
   "exDoc1Sub": "কৃষি সম্প্রসারণ অধিদপ্তর",
   "exDoc2": "ট্রেড লাইসেন্স",
-  "exDoc2Sub": "অথবা কৃষক সমবায় সনদ"
+  "exDoc2Sub": "অথবা কৃষক সমবায় সনদ",
+  "shareTitle": "ট্র্যাক রেকর্ড শেয়ার",
+  "statRatingReviews": "রেটিং ({n} রিভিউ)",
+  "@statRatingReviews": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "memberSince": "{year} থেকে",
+  "@memberSince": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "memberLabel": "সদস্য",
+  "shareCode": "গোলাঘর আইডি: {code}",
+  "@shareCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "shareVerifiedToday": "গোলাঘর যাচাইকৃত · আপডেট: আজ",
+  "shareQrNote": "QR স্ক্যান করলে এই তথ্য দেখা যাবে",
+  "whatToShow": "কী দেখাবেন",
+  "showDeals": "লেনদেন সংখ্যা ও সময়মতো %",
+  "showRatings": "রেটিং ও রিভিউ",
+  "showMoney": "টাকার পরিমাণ",
+  "visibleAll": "সবাই দেখতে পাবে",
+  "hiddenPrivacy": "গোপনীয়তার জন্য বন্ধ",
+  "onLabel": "চালু",
+  "offLabel": "বন্ধ",
+  "loanNote": "ব্যাংক বা এনজিওতে দেখিয়ে নিজে লোন নিতে পারবেন (অ্যাপে কোনো লোন নেই)।",
+  "copyLink": "লিংক কপি",
+  "shareNow": "শেয়ার করুন",
+  "copied": "কপি হয়েছে",
+  "shareHeader": "গোলাঘর ট্র্যাক রেকর্ড",
+  "shareMoneyLine": "মোট লেনদেন: {amount}",
+  "@shareMoneyLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
 }
