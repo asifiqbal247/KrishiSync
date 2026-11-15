@@ -5539,6 +5539,90 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বার্তা'**
   String get messageBtn;
+
+  /// No description provided for @buyerProfileTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার প্রোফাইল'**
+  String get buyerProfileTitle;
+
+  /// No description provided for @verifiedBusiness.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত ব্যবসা · ট্রেড লাইসেন্স'**
+  String get verifiedBusiness;
+
+  /// No description provided for @unverifiedBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা (ব্যবসা)'**
+  String get unverifiedBuyer;
+
+  /// No description provided for @statReviews.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিভিউ'**
+  String get statReviews;
+
+  /// No description provided for @statVerification.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই'**
+  String get statVerification;
+
+  /// No description provided for @seeDemands.
+  ///
+  /// In bn, this message translates to:
+  /// **'চাহিদা দেখুন'**
+  String get seeDemands;
+
+  /// No description provided for @messageShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'বার্তা'**
+  String get messageShort;
+
+  /// No description provided for @cancelOrder.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বাতিল করুন'**
+  String get cancelOrder;
+
+  /// No description provided for @cancelOrderTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বাতিল করবেন?'**
+  String get cancelOrderTitle;
+
+  /// No description provided for @cancelOrderBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক রওনার আগে বাতিল করলে ভাড়ার ১০% ({fee}) ট্রান্সপোর্টার পাবেন, বাকি {refund} গোলাঘর থেকে ফেরত পাবেন।'**
+  String cancelOrderBody(String fee, String refund);
+
+  /// No description provided for @cancelOrderBodyNoFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বাতিল করলে পুরো {refund} গোলাঘর থেকে ফেরত পাবেন।'**
+  String cancelOrderBodyNoFee(String refund);
+
+  /// No description provided for @yesCancel.
+  ///
+  /// In bn, this message translates to:
+  /// **'হ্যাঁ, বাতিল করুন'**
+  String get yesCancel;
+
+  /// No description provided for @orderCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বাতিল হয়েছে'**
+  String get orderCancelled;
+
+  /// No description provided for @nOrderCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বাতিল: {no}'**
+  String nOrderCancelled(String no);
 }
 
 class _AppLocalizationsDelegate

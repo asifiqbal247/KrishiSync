@@ -59,7 +59,7 @@ class FarmerHomeScreen extends ConsumerWidget {
           KsSearchBar(
             hint: l.farmerSearchHint,
             readOnly: true,
-            onTap: soon,
+            onTap: () => context.push(Routes.buyerSearch),
           ),
           if (newOffers.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),

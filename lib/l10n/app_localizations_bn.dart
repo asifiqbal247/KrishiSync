@@ -3039,4 +3039,52 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get messageBtn => 'বার্তা';
+
+  @override
+  String get buyerProfileTitle => 'ক্রেতার প্রোফাইল';
+
+  @override
+  String get verifiedBusiness => 'যাচাইকৃত ব্যবসা · ট্রেড লাইসেন্স';
+
+  @override
+  String get unverifiedBuyer => 'ক্রেতা (ব্যবসা)';
+
+  @override
+  String get statReviews => 'রিভিউ';
+
+  @override
+  String get statVerification => 'যাচাই';
+
+  @override
+  String get seeDemands => 'চাহিদা দেখুন';
+
+  @override
+  String get messageShort => 'বার্তা';
+
+  @override
+  String get cancelOrder => 'অর্ডার বাতিল করুন';
+
+  @override
+  String get cancelOrderTitle => 'অর্ডার বাতিল করবেন?';
+
+  @override
+  String cancelOrderBody(String fee, String refund) {
+    return 'ট্রাক রওনার আগে বাতিল করলে ভাড়ার ১০% ($fee) ট্রান্সপোর্টার পাবেন, বাকি $refund গোলাঘর থেকে ফেরত পাবেন।';
+  }
+
+  @override
+  String cancelOrderBodyNoFee(String refund) {
+    return 'অর্ডার বাতিল করলে পুরো $refund গোলাঘর থেকে ফেরত পাবেন।';
+  }
+
+  @override
+  String get yesCancel => 'হ্যাঁ, বাতিল করুন';
+
+  @override
+  String get orderCancelled => 'অর্ডার বাতিল হয়েছে';
+
+  @override
+  String nOrderCancelled(String no) {
+    return 'অর্ডার বাতিল: $no';
+  }
 }

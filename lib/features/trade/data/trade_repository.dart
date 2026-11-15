@@ -330,6 +330,62 @@ class TradeRepository {
     return TradeOrder.fromDoc(await orderRef.get());
   }
 
+  /// 10% of a booked truck fare goes to the transporter on cancel (D5).
+  static num cancelFee(TradeOrder o) =>
+      o.transporterId == null ? 0 : (o.transportFare * 0.1).round();
+
+  /// Buyer cancels before pickup (D5): order + load cancelled, stock back.
+  /// Refund is recorded only (payment is a placeholder).
+  Future<void> cancelOrder(TradeOrder o, String byUid) async {
+    final fee = cancelFee(o);
+    final listingRef = _db.collection('listings').doc(o.listingId);
+    final deliveryRef = _db.collection('deliveries').doc(o.id);
+    await _db.runTransaction((tx) async {
+      final l = await tx.get(listingRef);
+      final d = o.transportMode == TransportMode.platform
+          ? await tx.get(deliveryRef)
+          : null;
+      final now = FieldValue.serverTimestamp();
+      tx.update(_orders.doc(o.id), {
+        'status': OrderStatus.cancelled.name,
+        'timeline.cancelled': now,
+        'refund': o.total - fee,
+        'cancelFee': fee,
+        'updatedAt': now,
+      });
+      if (l.exists) {
+        final avail = (l.data()!['availableKg'] as num? ?? 0) + o.quantityKg;
+        tx.update(listingRef, {
+          'availableKg': avail,
+          if (l.data()!['status'] == ListingStatus.sold.name)
+            'status': ListingStatus.active.name,
+          'lastCancelOrder': o.id,
+          'updatedAt': now,
+        });
+      }
+      if (d != null && d.exists) {
+        tx.update(deliveryRef, {
+          'status': 'cancelled',
+          'timeline.cancelled': now,
+          'updatedAt': now,
+        });
+      }
+    });
+    final params = {
+      'no': o.orderNo,
+      'cropBn': o.cropNameBn,
+      'cropEn': o.cropNameEn,
+    };
+    await notify(
+        toUid: o.farmerId, fromUid: byUid, type: 'order_cancelled',
+        params: params, link: 'order:${o.id}');
+    if (o.transporterId != null) {
+      await notify(
+          toUid: o.transporterId!, fromUid: byUid, type: 'order_cancelled',
+          params: params, link: 'job:${o.id}');
+    }
+  }
+
   Stream<TradeOrder?> watchOrder(String id) => _orders
       .doc(id)
       .snapshots()

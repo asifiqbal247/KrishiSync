@@ -26,7 +26,10 @@ import 'buyer_common.dart';
 /// 74 Marketplace (Figma 292:1006): approved listings with category,
 /// search and filter (area, quantity, price).
 class MarketplaceScreen extends ConsumerWidget {
-  const MarketplaceScreen({super.key});
+  const MarketplaceScreen({super.key, this.onBack});
+
+  /// Farmer's Market tab (28) goes back to the farmer home.
+  final VoidCallback? onBack;
 
   static const _catRowH = 90.0;
 
@@ -41,7 +44,7 @@ class MarketplaceScreen extends ConsumerWidget {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(
         title: l.marketTitle,
-        onBack: () => ref.read(buyerTabProvider.notifier).go(0),
+        onBack: onBack ?? () => ref.read(buyerTabProvider.notifier).go(0),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(AppSpacing.screen,

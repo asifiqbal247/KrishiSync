@@ -2078,5 +2078,43 @@
   "tsWaitingPickup": "পিকআপের অপেক্ষায়",
   "tsOnWay": "আপনার দিকে আসছে",
   "tsDelivered": "পৌঁছেছে",
-  "messageBtn": "বার্তা"
+  "messageBtn": "বার্তা",
+  "buyerProfileTitle": "ক্রেতার প্রোফাইল",
+  "verifiedBusiness": "যাচাইকৃত ব্যবসা · ট্রেড লাইসেন্স",
+  "unverifiedBuyer": "ক্রেতা (ব্যবসা)",
+  "statReviews": "রিভিউ",
+  "statVerification": "যাচাই",
+  "seeDemands": "চাহিদা দেখুন",
+  "messageShort": "বার্তা",
+  "cancelOrder": "অর্ডার বাতিল করুন",
+  "cancelOrderTitle": "অর্ডার বাতিল করবেন?",
+  "cancelOrderBody": "ট্রাক রওনার আগে বাতিল করলে ভাড়ার ১০% ({fee}) ট্রান্সপোর্টার পাবেন, বাকি {refund} গোলাঘর থেকে ফেরত পাবেন।",
+  "@cancelOrderBody": {
+    "placeholders": {
+      "fee": {
+        "type": "String"
+      },
+      "refund": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelOrderBodyNoFee": "অর্ডার বাতিল করলে পুরো {refund} গোলাঘর থেকে ফেরত পাবেন।",
+  "@cancelOrderBodyNoFee": {
+    "placeholders": {
+      "refund": {
+        "type": "String"
+      }
+    }
+  },
+  "yesCancel": "হ্যাঁ, বাতিল করুন",
+  "orderCancelled": "অর্ডার বাতিল হয়েছে",
+  "nOrderCancelled": "অর্ডার বাতিল: {no}",
+  "@nOrderCancelled": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -118,7 +118,21 @@ service cloud.firestore {
       }
 
       // Owner: may only mark an active listing as sold.
-      allow update: if isBuyerStockDecrease() || (isOwner() && isActive()
+      // Buyer cancelled an order (D5): stock goes back by that order's qty.
+      function isCancelRestock() {
+        let oid = request.resource.data.get('lastCancelOrder', '');
+        let before = get(/databases/$(database)/documents/orders/$(oid)).data;
+        let after = getAfter(/databases/$(database)/documents/orders/$(oid)).data;
+        return isActive()
+          && onlyChanges(['availableKg', 'status', 'lastCancelOrder', 'updatedAt'])
+          && before.listingId == id && before.buyerId == uid()
+          && before.status in ['confirmed', 'transportBooked']
+          && after.status == 'cancelled'
+          && request.resource.data.availableKg == resource.data.availableKg + before.quantityKg
+          && request.resource.data.status in ['active', resource.data.status];
+      }
+
+      allow update: if isBuyerStockDecrease() || isCancelRestock() || (isOwner() && isActive()
           && onlyChanges(['status', 'updatedAt'])
           && resource.data.status == 'active'
           && request.resource.data.status == 'sold')
@@ -223,6 +237,10 @@ service cloud.firestore {
         // Buyer completes after rating (111).
         || (resource.data.buyerId == uid() && statusOnly()
           && from('delivered') && to('completed'))
+        // Buyer cancels before pickup (D5).
+        || (resource.data.buyerId == uid()
+          && (from('confirmed') || from('transportBooked')) && to('cancelled')
+          && onlyChanges(['status', 'timeline', 'updatedAt', 'refund', 'cancelFee']))
       ));
     }
 
@@ -271,6 +289,10 @@ service cloud.firestore {
         // Transporter rated the buyer.
         || (d().get('transporterId', null) == uid()
           && onlyChanges(['transporterRated', 'updatedAt']))
+        // Buyer cancels the order before pickup (D5).
+        || (d().buyerId == uid() && d().status in ['open', 'assigned']
+          && nd().status == 'cancelled'
+          && onlyChanges(['status', 'timeline', 'updatedAt']))
       );
 
       // 4-digit delivery code: only the buyer may read it.

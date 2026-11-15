@@ -86,9 +86,9 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
               value: (other?.isVerified ?? false)
                   ? l.verifiedSuffix(otherName)
                   : otherName,
-              onTap: () => iAmFarmer
-                  ? null
-                  : context.push(Routes.buyerFarmer(o.farmerId)),
+              onTap: () => context.push(iAmFarmer
+                  ? Routes.buyerProfile(o.buyerId)
+                  : Routes.buyerFarmer(o.farmerId)),
             ),
             // Buyer's latest price, then the farmer's counter (if any).
             KsInfoRow(iAmFarmer ? l.rowBuyerOffer : l.rowMyOffer,

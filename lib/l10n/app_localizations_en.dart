@@ -3045,4 +3045,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get messageBtn => 'Message';
+
+  @override
+  String get buyerProfileTitle => 'Buyer profile';
+
+  @override
+  String get verifiedBusiness => 'Verified business · trade license';
+
+  @override
+  String get unverifiedBuyer => 'Buyer (business)';
+
+  @override
+  String get statReviews => 'Reviews';
+
+  @override
+  String get statVerification => 'Verification';
+
+  @override
+  String get seeDemands => 'See demands';
+
+  @override
+  String get messageShort => 'Message';
+
+  @override
+  String get cancelOrder => 'Cancel order';
+
+  @override
+  String get cancelOrderTitle => 'Cancel the order?';
+
+  @override
+  String cancelOrderBody(String fee, String refund) {
+    return 'If you cancel before the truck leaves, the transporter gets 10% of the fare ($fee) and Golaghor refunds the rest ($refund).';
+  }
+
+  @override
+  String cancelOrderBodyNoFee(String refund) {
+    return 'If you cancel, Golaghor refunds the full $refund.';
+  }
+
+  @override
+  String get yesCancel => 'Yes, cancel';
+
+  @override
+  String get orderCancelled => 'Order cancelled';
+
+  @override
+  String nOrderCancelled(String no) {
+    return 'Order cancelled: $no';
+  }
 }

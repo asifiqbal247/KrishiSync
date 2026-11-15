@@ -311,9 +311,12 @@ class OrderDetailsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           KsInfoBox(
             children: [
-              KsInfoRow(
-                iAmFarmer ? l.rowBuyer : l.rowFarmer,
-                iAmFarmer ? o.buyerName : o.farmerName,
+              KsLinkRow(
+                label: iAmFarmer ? l.rowBuyer : l.rowFarmer,
+                value: iAmFarmer ? o.buyerName : o.farmerName,
+                onTap: () => context.push(iAmFarmer
+                    ? Routes.buyerProfile(o.buyerId)
+                    : Routes.buyerFarmer(o.farmerId)),
               ),
               KsInfoRow(
                 l.offerTotal,
@@ -378,6 +381,35 @@ class OrderDetailsScreen extends ConsumerWidget {
             height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
           ),
           ?_action(context, ref, l, o, iAmFarmer),
+          // D5: buyer may cancel until the crop is loaded.
+          if (!iAmFarmer &&
+              (o.status == OrderStatus.confirmed ||
+                  o.status == OrderStatus.transportBooked)) ...[
+            const SizedBox(height: AppSpacing.block),
+            KsButton.text(
+              label: l.cancelOrder,
+              onPressed: () async {
+                final fee = TradeRepository.cancelFee(o);
+                final ok = await showKsConfirm(context,
+                    title: l.cancelOrderTitle,
+                    body: fee == 0
+                        ? l.cancelOrderBodyNoFee(Fmt.taka(context, o.total))
+                        : l.cancelOrderBody(Fmt.taka(context, fee),
+                            Fmt.taka(context, o.total - fee)),
+                    noLabel: l.noGoBack,
+                    yesLabel: l.yesCancel);
+                if (!ok) return;
+                try {
+                  await ref
+                      .read(tradeRepositoryProvider)
+                      .cancelOrder(o, me.uid);
+                  if (context.mounted) KsToast.show(context, l.orderCancelled);
+                } catch (_) {
+                  if (context.mounted) KsToast.show(context, l.errorGeneric);
+                }
+              },
+            ),
+          ],
         ],
       ),
     );

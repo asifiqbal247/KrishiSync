@@ -906,5 +906,19 @@
   "tsWaitingPickup": "Waiting for pickup",
   "tsOnWay": "Coming to you",
   "tsDelivered": "Delivered",
-  "messageBtn": "Message"
+  "messageBtn": "Message",
+  "buyerProfileTitle": "Buyer profile",
+  "verifiedBusiness": "Verified business · trade license",
+  "unverifiedBuyer": "Buyer (business)",
+  "statReviews": "Reviews",
+  "statVerification": "Verification",
+  "seeDemands": "See demands",
+  "messageShort": "Message",
+  "cancelOrder": "Cancel order",
+  "cancelOrderTitle": "Cancel the order?",
+  "cancelOrderBody": "If you cancel before the truck leaves, the transporter gets 10% of the fare ({fee}) and Golaghor refunds the rest ({refund}).",
+  "cancelOrderBodyNoFee": "If you cancel, Golaghor refunds the full {refund}.",
+  "yesCancel": "Yes, cancel",
+  "orderCancelled": "Order cancelled",
+  "nOrderCancelled": "Order cancelled: {no}"
 }

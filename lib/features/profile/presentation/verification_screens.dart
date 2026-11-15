@@ -309,8 +309,8 @@ String _tagLabel(AppLocalizations l, String t) => switch (t) {
   _ => t,
 };
 
-class _ReviewTile extends ConsumerWidget {
-  const _ReviewTile(this.r);
+class ReviewTile extends ConsumerWidget {
+  const ReviewTile(this.r, {super.key});
   final Review r;
 
   @override
@@ -414,7 +414,7 @@ class RatingsScreen extends ConsumerWidget {
             AsyncData(value: final list) => [
               for (final r in list) ...[
                 const SizedBox(height: AppSpacing.block),
-                _ReviewTile(r),
+                ReviewTile(r),
               ],
             ],
             AsyncError() => [Text(l.errorGeneric)],

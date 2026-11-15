@@ -20,6 +20,7 @@ import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../auth/data/user_repository.dart';
+import '../../auth/domain/app_user.dart';
 import '../../farmer/data/listing_repository.dart';
 import 'buyer_common.dart';
 
@@ -170,7 +171,8 @@ class BuyerListingScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              // Sticky CTA Bar (292:2563)
+              // Sticky CTA Bar (292:2563) — buyers only (farmers browse 28).
+              if (me?.role == UserRole.buyer)
               Container(
                 height: _ctaBarH + MediaQuery.of(context).padding.bottom,
                 padding: EdgeInsets.fromLTRB(

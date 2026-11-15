@@ -17,6 +17,7 @@ import '../features/auth/presentation/role_screen.dart';
 import '../features/auth/presentation/splash_screen.dart';
 import '../features/auth/presentation/terms_screen.dart';
 import '../features/buyer/presentation/buyer_listing_screen.dart';
+import '../features/buyer/presentation/buyer_profile_screen.dart';
 import '../features/buyer/presentation/buyer_shell.dart';
 import '../features/buyer/presentation/farmer_profile_screen.dart';
 import '../features/buyer/presentation/search_screen.dart';
@@ -77,12 +78,14 @@ abstract final class Routes {
   static String farmerListingDetails(String id) => '/farmer/listings/$id';
 
   // Buyer
-  static const buyerSearch = '/buyer/search';
-  static String buyerListing(String id) => '/buyer/listing/$id';
-  static String buyerFarmer(String uid) => '/buyer/farmer/$uid';
+  // Shared by farmer (28/17) and buyer (74/73).
+  static const buyerSearch = '/search';
+  static String buyerListing(String id) => '/listing/$id';
+  static String buyerFarmer(String uid) => '/people/farmer/$uid';
+  static String buyerProfile(String uid) => '/people/buyer/$uid';
 
   // Trade (farmer + buyer)
-  static String makeOffer(String listingId) => '/buyer/listing/$listingId/offer';
+  static String makeOffer(String listingId) => '/listing/$listingId/offer';
   static String listingOffers(String listingId) =>
       '/farmer/listings/$listingId/offers';
   static String offer(String id) => '/offer/$id';
@@ -306,6 +309,28 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/order/:id',
         builder: (_, s) => OrderDetailsScreen(orderId: s.pathParameters['id']!),
       ),
+      GoRoute(path: '/search', builder: (_, _) => const SearchScreen()),
+      GoRoute(
+        path: '/listing/:id',
+        builder: (_, s) =>
+            BuyerListingScreen(listingId: s.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'offer',
+            builder: (_, s) =>
+                MakeOfferScreen(listingId: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/people/farmer/:uid',
+        builder: (_, s) =>
+            FarmerProfileScreen(farmerId: s.pathParameters['uid']!),
+      ),
+      GoRoute(
+        path: '/people/buyer/:uid',
+        builder: (_, s) => BuyerProfileScreen(uid: s.pathParameters['uid']!),
+      ),
       GoRoute(
         path: Routes.notifications,
         builder: (_, _) => const NotificationsScreen(),
@@ -363,19 +388,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.buyerHome,
         builder: (_, _) => const BuyerShell(),
         routes: [
-          GoRoute(path: 'search', builder: (_, _) => const SearchScreen()),
-          GoRoute(
-            path: 'listing/:id',
-            builder: (_, s) =>
-                BuyerListingScreen(listingId: s.pathParameters['id']!),
-            routes: [
-              GoRoute(
-                path: 'offer',
-                builder: (_, s) =>
-                    MakeOfferScreen(listingId: s.pathParameters['id']!),
-              ),
-            ],
-          ),
           GoRoute(
             path: 'pay',
             builder: (_, s) =>
@@ -387,11 +399,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               listingId: s.pathParameters['listingId']!,
               offerId: s.uri.queryParameters['offer'],
             ),
-          ),
-          GoRoute(
-            path: 'farmer/:uid',
-            builder: (_, s) =>
-                FarmerProfileScreen(farmerId: s.pathParameters['uid']!),
           ),
           GoRoute(
               path: 'transport',

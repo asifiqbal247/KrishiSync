@@ -7,6 +7,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/presentation/simple_tabs.dart';
 import '../../../shared/widgets/ks_bottom_nav.dart';
 import '../../trade/presentation/orders_screens.dart';
+import '../../buyer/presentation/marketplace_screen.dart';
 import 'farmer_home_screen.dart';
 
 /// Farmer area with HF/Bottom Nav / Farmer (Sell FAB) (292:225).
@@ -25,7 +26,8 @@ class _FarmerShellState extends State<FarmerShell> {
     final l = AppLocalizations.of(context);
     final pages = [
       const FarmerHomeScreen(),
-      ComingTab(title: l.navMarket),
+      // 28 Marketplace (farmers compare other listings' prices).
+      MarketplaceScreen(onBack: () => setState(() => _index = 0)),
       const OrdersTab(),
       const SimpleProfileTab(),
     ];
