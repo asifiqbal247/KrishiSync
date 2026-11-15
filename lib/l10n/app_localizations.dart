@@ -6751,6 +6751,258 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'মোট লেনদেন: {amount}'**
   String shareMoneyLine(String amount);
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'লেনদেনের ইতিহাস'**
+  String get historyTitle;
+
+  /// No description provided for @histIncomeMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাসে আয়'**
+  String get histIncomeMonth;
+
+  /// No description provided for @histBuyMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাসে কেনা'**
+  String get histBuyMonth;
+
+  /// No description provided for @histSearchHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার নং, ফসল বা নাম খুঁজুন'**
+  String get histSearchHint;
+
+  /// No description provided for @histReceived.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেয়েছেন'**
+  String get histReceived;
+
+  /// No description provided for @histPaid.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিশোধিত'**
+  String get histPaid;
+
+  /// No description provided for @histHeld.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে'**
+  String get histHeld;
+
+  /// No description provided for @histCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get histCancelled;
+
+  /// No description provided for @monthTotal.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট {amount}'**
+  String monthTotal(String amount);
+
+  /// No description provided for @histRowSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{party} · {date} · {status}'**
+  String histRowSub(String party, String date, String status);
+
+  /// No description provided for @histEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই সময়ে কোনো লেনদেন নেই'**
+  String get histEmpty;
+
+  /// No description provided for @statementBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্টেটমেন্ট ডাউনলোড / শেয়ার'**
+  String get statementBtn;
+
+  /// No description provided for @statementTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্টেটমেন্ট তৈরি'**
+  String get statementTitle;
+
+  /// No description provided for @periodLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়কাল'**
+  String get periodLabel;
+
+  /// No description provided for @periodThisMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাস'**
+  String get periodThisMonth;
+
+  /// No description provided for @periodLast3.
+  ///
+  /// In bn, this message translates to:
+  /// **'গত ৩ মাস'**
+  String get periodLast3;
+
+  /// No description provided for @period12.
+  ///
+  /// In bn, this message translates to:
+  /// **'১২ মাস · ব্যাংকের জন্য'**
+  String get period12;
+
+  /// No description provided for @periodCustom.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিজে বাছুন'**
+  String get periodCustom;
+
+  /// No description provided for @rowPeriod.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়কাল'**
+  String get rowPeriod;
+
+  /// No description provided for @rowTotalDeals.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট লেনদেন'**
+  String get rowTotalDeals;
+
+  /// No description provided for @rowTotalIncome.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট আয়'**
+  String get rowTotalIncome;
+
+  /// No description provided for @rowTotalSpent.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট খরচ'**
+  String get rowTotalSpent;
+
+  /// No description provided for @dateRange.
+  ///
+  /// In bn, this message translates to:
+  /// **'{from} – {to}'**
+  String dateRange(String from, String to);
+
+  /// No description provided for @statementPrivacy.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার ফোন নম্বর ও NID স্টেটমেন্টে লুকানো থাকবে।'**
+  String get statementPrivacy;
+
+  /// No description provided for @shareLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেয়ার করুন'**
+  String get shareLabel;
+
+  /// No description provided for @shareWhatsapp.
+  ///
+  /// In bn, this message translates to:
+  /// **'হোয়াটসঅ্যাপ'**
+  String get shareWhatsapp;
+
+  /// No description provided for @shareEmail.
+  ///
+  /// In bn, this message translates to:
+  /// **'ইমেইল'**
+  String get shareEmail;
+
+  /// No description provided for @shareMessenger.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেসেঞ্জার'**
+  String get shareMessenger;
+
+  /// No description provided for @shareOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্যান্য'**
+  String get shareOther;
+
+  /// No description provided for @pdfDownloadFull.
+  ///
+  /// In bn, this message translates to:
+  /// **'PDF ডাউনলোড করুন'**
+  String get pdfDownloadFull;
+
+  /// No description provided for @statementHeader.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর স্টেটমেন্ট'**
+  String get statementHeader;
+
+  /// No description provided for @statementVerified.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর যাচাইকৃত'**
+  String get statementVerified;
+
+  /// No description provided for @priceAlertOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম সতর্কতা চালু · {price} · বন্ধ করুন'**
+  String priceAlertOn(String price);
+
+  /// No description provided for @priceAlertTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম সতর্কতা'**
+  String get priceAlertTitle;
+
+  /// No description provided for @priceAlertHintUp.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম এই টার্গেটে বা তার বেশি হলে অ্যাপে নোটিফিকেশন পাবেন।'**
+  String get priceAlertHintUp;
+
+  /// No description provided for @priceAlertHintDown.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম এই টার্গেটে বা তার কম হলে অ্যাপে নোটিফিকেশন পাবেন।'**
+  String get priceAlertHintDown;
+
+  /// No description provided for @priceAlertSet.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম সতর্কতা চালু হয়েছে'**
+  String get priceAlertSet;
+
+  /// No description provided for @priceAlertRemoveQ.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম সতর্কতা বন্ধ করবেন?'**
+  String get priceAlertRemoveQ;
+
+  /// No description provided for @priceAlertRemoveBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ফসলের দাম নিয়ে আর নোটিফিকেশন পাবেন না।'**
+  String get priceAlertRemoveBody;
+
+  /// No description provided for @priceAlertRemove.
+  ///
+  /// In bn, this message translates to:
+  /// **'বন্ধ করুন'**
+  String get priceAlertRemove;
+
+  /// No description provided for @nPriceAlert.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop}-এর দাম টার্গেটে পৌঁছেছে'**
+  String nPriceAlert(String crop);
+
+  /// No description provided for @nPriceAlertBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজকের দাম {price}/কেজি'**
+  String nPriceAlertBody(String price);
 }
 
 class _AppLocalizationsDelegate

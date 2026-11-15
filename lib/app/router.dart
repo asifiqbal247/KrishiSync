@@ -49,6 +49,7 @@ import '../features/transport/presentation/trip_screens.dart';
 import '../features/transport/presentation/vehicle_screen.dart';
 import '../features/chat/presentation/chat_screens.dart';
 import '../features/profile/presentation/payment_method_screens.dart';
+import '../features/trade/presentation/history_screens.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -71,6 +72,8 @@ abstract final class Routes {
   static String chat(String id) => '/messages/$id';
   static const help = '/help';
   static const shareRecord = '/share-record';
+  static const history = '/history';
+  static const statement = '/history/statement';
   static String tip(int i) => '/tips/$i';
   static const globalBuyers = '/export';
   static const exportGuide = '/export/guide';
@@ -335,6 +338,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const GlobalBuyersScreen(),
         routes: [
           GoRoute(path: 'guide', builder: (_, _) => const ExportGuideScreen()),
+        ],
+      ),
+      GoRoute(
+        path: Routes.history,
+        builder: (_, _) => const TransactionHistoryScreen(),
+        routes: [
+          GoRoute(
+              path: 'statement', builder: (_, _) => const StatementScreen()),
         ],
       ),
       GoRoute(

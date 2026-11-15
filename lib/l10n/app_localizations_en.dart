@@ -3733,4 +3733,146 @@ class AppLocalizationsEn extends AppLocalizations {
   String shareMoneyLine(String amount) {
     return 'Total traded: $amount';
   }
+
+  @override
+  String get historyTitle => 'Transaction history';
+
+  @override
+  String get histIncomeMonth => 'Income this month';
+
+  @override
+  String get histBuyMonth => 'Bought this month';
+
+  @override
+  String get histSearchHint => 'Search order no., crop or name';
+
+  @override
+  String get histReceived => 'Received';
+
+  @override
+  String get histPaid => 'Paid';
+
+  @override
+  String get histHeld => 'In safe payment';
+
+  @override
+  String get histCancelled => 'Cancelled';
+
+  @override
+  String monthTotal(String amount) {
+    return 'Total $amount';
+  }
+
+  @override
+  String histRowSub(String party, String date, String status) {
+    return '$party · $date · $status';
+  }
+
+  @override
+  String get histEmpty => 'No transactions in this period';
+
+  @override
+  String get statementBtn => 'Statement download / share';
+
+  @override
+  String get statementTitle => 'Create statement';
+
+  @override
+  String get periodLabel => 'Period';
+
+  @override
+  String get periodThisMonth => 'This month';
+
+  @override
+  String get periodLast3 => 'Last 3 months';
+
+  @override
+  String get period12 => '12 months · for bank';
+
+  @override
+  String get periodCustom => 'Choose dates';
+
+  @override
+  String get rowPeriod => 'Period';
+
+  @override
+  String get rowTotalDeals => 'Total trades';
+
+  @override
+  String get rowTotalIncome => 'Total income';
+
+  @override
+  String get rowTotalSpent => 'Total spent';
+
+  @override
+  String dateRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get statementPrivacy =>
+      'Your phone number and NID stay hidden in the statement.';
+
+  @override
+  String get shareLabel => 'Share';
+
+  @override
+  String get shareWhatsapp => 'WhatsApp';
+
+  @override
+  String get shareEmail => 'Email';
+
+  @override
+  String get shareMessenger => 'Messenger';
+
+  @override
+  String get shareOther => 'Other';
+
+  @override
+  String get pdfDownloadFull => 'Download PDF';
+
+  @override
+  String get statementHeader => 'Golaghor statement';
+
+  @override
+  String get statementVerified => 'Golaghor verified';
+
+  @override
+  String priceAlertOn(String price) {
+    return 'Price alert on · $price · turn off';
+  }
+
+  @override
+  String get priceAlertTitle => 'Price alert';
+
+  @override
+  String get priceAlertHintUp =>
+      'You get an in-app notification when the price reaches this target or more.';
+
+  @override
+  String get priceAlertHintDown =>
+      'You get an in-app notification when the price drops to this target or less.';
+
+  @override
+  String get priceAlertSet => 'Price alert set';
+
+  @override
+  String get priceAlertRemoveQ => 'Turn off price alert?';
+
+  @override
+  String get priceAlertRemoveBody =>
+      'You will no longer be notified about this crop\'s price.';
+
+  @override
+  String get priceAlertRemove => 'Turn off';
+
+  @override
+  String nPriceAlert(String crop) {
+    return '$crop price reached your target';
+  }
+
+  @override
+  String nPriceAlertBody(String price) {
+    return 'Today\'s price $price/kg';
+  }
 }

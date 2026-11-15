@@ -61,7 +61,10 @@ class EarningsScreen extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.block),
                 KsBarChart(values: week, labels: weekLabels(l)),
                 const SizedBox(height: AppSpacing.block),
-                KsSectionHeader(title: l.earnHistory),
+                KsSectionHeader(
+                    title: l.earnHistory,
+                    actionLabel: l.seeAllLink,
+                    onAction: () => context.push(Routes.history)),
                 if (history.isEmpty) ...[
                   const SizedBox(height: AppSpacing.block),
                   Text(l.earnEmpty,

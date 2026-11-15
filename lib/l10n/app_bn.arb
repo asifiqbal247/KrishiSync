@@ -2525,5 +2525,98 @@
         "type": "String"
       }
     }
+  },
+  "historyTitle": "লেনদেনের ইতিহাস",
+  "histIncomeMonth": "এ মাসে আয়",
+  "histBuyMonth": "এ মাসে কেনা",
+  "histSearchHint": "অর্ডার নং, ফসল বা নাম খুঁজুন",
+  "histReceived": "পেয়েছেন",
+  "histPaid": "পরিশোধিত",
+  "histHeld": "নিরাপদ লেনদেনে",
+  "histCancelled": "বাতিল",
+  "monthTotal": "মোট {amount}",
+  "@monthTotal": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "histRowSub": "{party} · {date} · {status}",
+  "@histRowSub": {
+    "placeholders": {
+      "party": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "histEmpty": "এই সময়ে কোনো লেনদেন নেই",
+  "statementBtn": "স্টেটমেন্ট ডাউনলোড / শেয়ার",
+  "statementTitle": "স্টেটমেন্ট তৈরি",
+  "periodLabel": "সময়কাল",
+  "periodThisMonth": "এ মাস",
+  "periodLast3": "গত ৩ মাস",
+  "period12": "১২ মাস · ব্যাংকের জন্য",
+  "periodCustom": "নিজে বাছুন",
+  "rowPeriod": "সময়কাল",
+  "rowTotalDeals": "মোট লেনদেন",
+  "rowTotalIncome": "মোট আয়",
+  "rowTotalSpent": "মোট খরচ",
+  "dateRange": "{from} – {to}",
+  "@dateRange": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "statementPrivacy": "আপনার ফোন নম্বর ও NID স্টেটমেন্টে লুকানো থাকবে।",
+  "shareLabel": "শেয়ার করুন",
+  "shareWhatsapp": "হোয়াটসঅ্যাপ",
+  "shareEmail": "ইমেইল",
+  "shareMessenger": "মেসেঞ্জার",
+  "shareOther": "অন্যান্য",
+  "pdfDownloadFull": "PDF ডাউনলোড করুন",
+  "statementHeader": "গোলাঘর স্টেটমেন্ট",
+  "statementVerified": "গোলাঘর যাচাইকৃত",
+  "priceAlertOn": "দাম সতর্কতা চালু · {price} · বন্ধ করুন",
+  "@priceAlertOn": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "priceAlertTitle": "দাম সতর্কতা",
+  "priceAlertHintUp": "দাম এই টার্গেটে বা তার বেশি হলে অ্যাপে নোটিফিকেশন পাবেন।",
+  "priceAlertHintDown": "দাম এই টার্গেটে বা তার কম হলে অ্যাপে নোটিফিকেশন পাবেন।",
+  "priceAlertSet": "দাম সতর্কতা চালু হয়েছে",
+  "priceAlertRemoveQ": "দাম সতর্কতা বন্ধ করবেন?",
+  "priceAlertRemoveBody": "এই ফসলের দাম নিয়ে আর নোটিফিকেশন পাবেন না।",
+  "priceAlertRemove": "বন্ধ করুন",
+  "nPriceAlert": "{crop}-এর দাম টার্গেটে পৌঁছেছে",
+  "@nPriceAlert": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nPriceAlertBody": "আজকের দাম {price}/কেজি",
+  "@nPriceAlertBody": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
   }
 }

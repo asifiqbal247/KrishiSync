@@ -167,7 +167,10 @@ class PaymentsScreen extends ConsumerWidget {
                   ),
                 ],
                 const SizedBox(height: AppSpacing.block),
-                KsSectionHeader(title: l.payHistory),
+                KsSectionHeader(
+                    title: l.payHistory,
+                    actionLabel: l.seeAllLink,
+                    onAction: () => context.push(Routes.history)),
                 if (rows.isEmpty) ...[
                   const SizedBox(height: AppSpacing.block),
                   Text(l.payEmpty,

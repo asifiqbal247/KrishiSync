@@ -3727,4 +3727,146 @@ class AppLocalizationsBn extends AppLocalizations {
   String shareMoneyLine(String amount) {
     return 'মোট লেনদেন: $amount';
   }
+
+  @override
+  String get historyTitle => 'লেনদেনের ইতিহাস';
+
+  @override
+  String get histIncomeMonth => 'এ মাসে আয়';
+
+  @override
+  String get histBuyMonth => 'এ মাসে কেনা';
+
+  @override
+  String get histSearchHint => 'অর্ডার নং, ফসল বা নাম খুঁজুন';
+
+  @override
+  String get histReceived => 'পেয়েছেন';
+
+  @override
+  String get histPaid => 'পরিশোধিত';
+
+  @override
+  String get histHeld => 'নিরাপদ লেনদেনে';
+
+  @override
+  String get histCancelled => 'বাতিল';
+
+  @override
+  String monthTotal(String amount) {
+    return 'মোট $amount';
+  }
+
+  @override
+  String histRowSub(String party, String date, String status) {
+    return '$party · $date · $status';
+  }
+
+  @override
+  String get histEmpty => 'এই সময়ে কোনো লেনদেন নেই';
+
+  @override
+  String get statementBtn => 'স্টেটমেন্ট ডাউনলোড / শেয়ার';
+
+  @override
+  String get statementTitle => 'স্টেটমেন্ট তৈরি';
+
+  @override
+  String get periodLabel => 'সময়কাল';
+
+  @override
+  String get periodThisMonth => 'এ মাস';
+
+  @override
+  String get periodLast3 => 'গত ৩ মাস';
+
+  @override
+  String get period12 => '১২ মাস · ব্যাংকের জন্য';
+
+  @override
+  String get periodCustom => 'নিজে বাছুন';
+
+  @override
+  String get rowPeriod => 'সময়কাল';
+
+  @override
+  String get rowTotalDeals => 'মোট লেনদেন';
+
+  @override
+  String get rowTotalIncome => 'মোট আয়';
+
+  @override
+  String get rowTotalSpent => 'মোট খরচ';
+
+  @override
+  String dateRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get statementPrivacy =>
+      'আপনার ফোন নম্বর ও NID স্টেটমেন্টে লুকানো থাকবে।';
+
+  @override
+  String get shareLabel => 'শেয়ার করুন';
+
+  @override
+  String get shareWhatsapp => 'হোয়াটসঅ্যাপ';
+
+  @override
+  String get shareEmail => 'ইমেইল';
+
+  @override
+  String get shareMessenger => 'মেসেঞ্জার';
+
+  @override
+  String get shareOther => 'অন্যান্য';
+
+  @override
+  String get pdfDownloadFull => 'PDF ডাউনলোড করুন';
+
+  @override
+  String get statementHeader => 'গোলাঘর স্টেটমেন্ট';
+
+  @override
+  String get statementVerified => 'গোলাঘর যাচাইকৃত';
+
+  @override
+  String priceAlertOn(String price) {
+    return 'দাম সতর্কতা চালু · $price · বন্ধ করুন';
+  }
+
+  @override
+  String get priceAlertTitle => 'দাম সতর্কতা';
+
+  @override
+  String get priceAlertHintUp =>
+      'দাম এই টার্গেটে বা তার বেশি হলে অ্যাপে নোটিফিকেশন পাবেন।';
+
+  @override
+  String get priceAlertHintDown =>
+      'দাম এই টার্গেটে বা তার কম হলে অ্যাপে নোটিফিকেশন পাবেন।';
+
+  @override
+  String get priceAlertSet => 'দাম সতর্কতা চালু হয়েছে';
+
+  @override
+  String get priceAlertRemoveQ => 'দাম সতর্কতা বন্ধ করবেন?';
+
+  @override
+  String get priceAlertRemoveBody =>
+      'এই ফসলের দাম নিয়ে আর নোটিফিকেশন পাবেন না।';
+
+  @override
+  String get priceAlertRemove => 'বন্ধ করুন';
+
+  @override
+  String nPriceAlert(String crop) {
+    return '$crop-এর দাম টার্গেটে পৌঁছেছে';
+  }
+
+  @override
+  String nPriceAlertBody(String price) {
+    return 'আজকের দাম $price/কেজি';
+  }
 }
