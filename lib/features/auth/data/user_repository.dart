@@ -33,6 +33,9 @@ abstract interface class UserRepository {
   /// 69/139: documents → verification "pending" for the moderator.
   Future<void> submitVerification(String uid, Map<String, dynamic> fields);
 
+  /// 197–201: replaces the user's payment methods list.
+  Future<void> savePayoutMethods(String uid, List<PayoutMethod> methods);
+
   /// Raw reviews about [uid], newest first (70/140/195).
   Stream<List<Map<String, dynamic>>> watchReviewsFor(String uid);
 }
@@ -77,6 +80,13 @@ class FirestoreUserRepository implements UserRepository {
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }
+
+  @override
+  Future<void> savePayoutMethods(String uid, List<PayoutMethod> methods) =>
+      _doc(uid).update({
+        'payoutMethods': [for (final m in methods) m.toMap()],
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
 
   @override
   Future<void> submitVerification(String uid, Map<String, dynamic> fields) =>

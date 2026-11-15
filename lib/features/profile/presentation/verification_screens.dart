@@ -159,8 +159,8 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
           file: _photos[key],
           networkUrl: _photos[key] == null ? url : null,
           height: has
-            ? KsUploadBox.previewHeight
-            : (key == 'selfie' ? KsUploadBox.defaultHeight : _boxH),
+              ? KsUploadBox.previewHeight
+              : (key == 'selfie' ? KsUploadBox.defaultHeight : _boxH),
           onTap: () => _pick(key),
         ),
         if (_err[key] != null)

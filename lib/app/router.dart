@@ -46,6 +46,7 @@ import '../features/transport/presentation/transporter_shell.dart';
 import '../features/transport/presentation/trip_screens.dart';
 import '../features/transport/presentation/vehicle_screen.dart';
 import '../features/chat/presentation/chat_screens.dart';
+import '../features/profile/presentation/payment_method_screens.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -67,6 +68,10 @@ abstract final class Routes {
   static const messages = '/messages';
   static String chat(String id) => '/messages/$id';
   static const help = '/help';
+  static const paymentMethods = '/payment-methods';
+  static const addPayout = '/payment-methods/add';
+  static const addBank = '/payment-methods/bank';
+  static String addWallet(String type) => '/payment-methods/wallet/$type';
   static String faq(int i) => '/help/$i';
 
   // Buyer demands (96–99) and farmer side (31–33).
@@ -298,6 +303,19 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: ':id',
             builder: (_, s) => ChatScreen(chatId: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: Routes.paymentMethods,
+        builder: (_, _) => const PaymentMethodsScreen(),
+        routes: [
+          GoRoute(
+              path: 'add', builder: (_, _) => const AddPaymentMethodScreen()),
+          GoRoute(path: 'bank', builder: (_, _) => const AddBankScreen()),
+          GoRoute(
+            path: 'wallet/:type',
+            builder: (_, s) => AddWalletScreen(type: s.pathParameters['type']!),
           ),
         ],
       ),

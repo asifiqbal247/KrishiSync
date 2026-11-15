@@ -110,6 +110,7 @@ class AppUser {
     this.vehicle,
     this.verificationDocs = const {},
     this.business,
+    this.payoutMethods = const [],
   });
 
   final String uid;
@@ -141,6 +142,16 @@ class AppUser {
 
   /// Buyer business info (139): name, licenseNo, tin.
   final Map<String, String>? business;
+
+  /// 197–201 payment methods (bkash / nagad / rocket / bank).
+  final List<PayoutMethod> payoutMethods;
+
+  PayoutMethod? get defaultPayout {
+    for (final m in payoutMethods) {
+      if (m.isDefault) return m;
+    }
+    return payoutMethods.isEmpty ? null : payoutMethods.first;
+  }
 
   bool get isVerified => verification == VerificationStatus.verified;
 
@@ -175,6 +186,10 @@ class AppUser {
         for (final e in (m['verificationDocs'] as Map<String, dynamic>? ?? const {}).entries)
           e.key: '${e.value}',
       },
+      payoutMethods: [
+        for (final x in (m['payoutMethods'] as List<dynamic>? ?? const []))
+          PayoutMethod.fromMap(x as Map<String, dynamic>),
+      ],
       business: m['business'] == null
           ? null
           : {
@@ -207,4 +222,61 @@ class SavedAddress {
       );
 
   Map<String, dynamic> toMap() => {'tag': tag.name, 'location': location.toMap()};
+}
+
+/// One saved payment method (users/{uid}.payoutMethods[]).
+class PayoutMethod {
+  const PayoutMethod({
+    required this.type,
+    required this.number,
+    required this.accountName,
+    this.bank,
+    this.branch,
+    this.isDefault = false,
+  });
+
+  /// bkash | nagad | rocket | bank
+  final String type;
+  final String number;
+  final String accountName;
+  final String? bank;
+  final String? branch;
+  final bool isDefault;
+
+  bool get isBank => type == 'bank';
+
+  /// "01712-XXXXXX" for wallets, "****8421" for banks.
+  String get masked {
+    if (isBank) {
+      return number.length <= 4 ? number : '****${number.substring(number.length - 4)}';
+    }
+    return number.length < 5 ? number : '${number.substring(0, 5)}-${'X' * (number.length - 5)}';
+  }
+
+  PayoutMethod copyWith({bool? isDefault}) => PayoutMethod(
+        type: type,
+        number: number,
+        accountName: accountName,
+        bank: bank,
+        branch: branch,
+        isDefault: isDefault ?? this.isDefault,
+      );
+
+  factory PayoutMethod.fromMap(Map<String, dynamic> m) => PayoutMethod(
+        type: m['type'] as String? ?? 'bkash',
+        number: m['number'] as String? ?? '',
+        accountName: m['accountName'] as String? ?? '',
+        bank: m['bank'] as String?,
+        branch: m['branch'] as String?,
+        isDefault: m['isDefault'] as bool? ?? false,
+      );
+
+  Map<String, dynamic> toMap() => {
+        'type': type,
+        'number': number,
+        'accountName': accountName,
+        'bank': bank,
+        'branch': branch,
+        'isDefault': isDefault,
+      };
 }

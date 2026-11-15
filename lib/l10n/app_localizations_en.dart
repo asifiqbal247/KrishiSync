@@ -3415,4 +3415,153 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get voiceGuideTitle => 'Voice guide';
+
+  @override
+  String get pmTitle => 'Payment methods';
+
+  @override
+  String get pmIntro =>
+      'Farmers & transporters: where you get paid · Buyers: where you pay from';
+
+  @override
+  String get pmDefault => 'Default';
+
+  @override
+  String get pmMakeDefault => 'Change';
+
+  @override
+  String pmNameMatched(String name) {
+    return 'Name matched: $name';
+  }
+
+  @override
+  String pmWalletLine(String type, String number) {
+    return '$type · $number';
+  }
+
+  @override
+  String pmBankSub(String name, String branch) {
+    return '$name · $branch branch';
+  }
+
+  @override
+  String get pmAdd => '+ Add a new method';
+
+  @override
+  String get pmSafetyTitle => 'Safety';
+
+  @override
+  String get pmSafetyBody =>
+      'Money never goes to a new method without a name match. After a change, money goes to the old method for 24 hours, so no one can cheat.';
+
+  @override
+  String get pmNone => 'No method added yet';
+
+  @override
+  String get pmAddTitle => 'Add a method';
+
+  @override
+  String get pmWhich => 'Which method?';
+
+  @override
+  String get pmBkash => 'bKash';
+
+  @override
+  String get pmNagad => 'Nagad';
+
+  @override
+  String get pmRocket => 'Rocket';
+
+  @override
+  String get pmBank => 'Bank account';
+
+  @override
+  String get pmWalletInstant => 'Mobile wallet · instant money';
+
+  @override
+  String get pmWallet => 'Mobile wallet';
+
+  @override
+  String get pmBankSlow => 'For large amounts · 1 working day';
+
+  @override
+  String pmNumberTitle(String type) {
+    return '$type number';
+  }
+
+  @override
+  String get pmOwnNumber =>
+      'The number must be in your own name. Money can\'t be sent to someone else\'s number.';
+
+  @override
+  String get pmWhyTitle => 'Why';
+
+  @override
+  String get pmWhyBody =>
+      'To stop money going to a wrong number and to stop fraud.';
+
+  @override
+  String get pmVerifyTitle => 'Verify number';
+
+  @override
+  String pmVerifySub(String type) {
+    return '$type account name and profile name match';
+  }
+
+  @override
+  String pmVerifyIntro(String number) {
+    return '$number will be added under your profile name.';
+  }
+
+  @override
+  String get pmSetDefault => 'Make this the default method';
+
+  @override
+  String get pmSaved => 'Payment method saved';
+
+  @override
+  String get pmBankTitle => 'Bank account';
+
+  @override
+  String get pmBankName => 'Bank';
+
+  @override
+  String get pmBranch => 'Branch';
+
+  @override
+  String get pmAccName => 'Account name';
+
+  @override
+  String get pmAccNameHint => 'Must match your profile name';
+
+  @override
+  String get pmAccNo => 'Account number';
+
+  @override
+  String get pmAccNoHint => '13–17 digits';
+
+  @override
+  String get pmBankNote =>
+      'The routing number comes from the branch. ৳1 is sent to verify (1 working day).';
+
+  @override
+  String get pmStartVerify => 'Start verification';
+
+  @override
+  String get pmErrAccNo => 'Enter a 13–17 digit account number';
+
+  @override
+  String get pmErrName => 'Name doesn\'t match your profile';
+
+  @override
+  String get pmSendCode => 'Send verification code';
+
+  @override
+  String get pmSave => 'Save';
+
+  @override
+  String get pmVerifying => 'Verifying';
+
+  @override
+  String get pmVerifiedShort => 'verified';
 }

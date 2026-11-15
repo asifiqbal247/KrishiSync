@@ -6187,6 +6187,270 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ভয়েস গাইড'**
   String get voiceGuideTitle;
+
+  /// No description provided for @pmTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট মাধ্যম'**
+  String get pmTitle;
+
+  /// No description provided for @pmIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক ও ট্রান্সপোর্টার: টাকা কোথায় পাবেন · ক্রেতা: কোথা থেকে টাকা দেবেন'**
+  String get pmIntro;
+
+  /// No description provided for @pmDefault.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিফল্ট'**
+  String get pmDefault;
+
+  /// No description provided for @pmMakeDefault.
+  ///
+  /// In bn, this message translates to:
+  /// **'বদলান'**
+  String get pmMakeDefault;
+
+  /// No description provided for @pmNameMatched.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম মিলেছে: {name}'**
+  String pmNameMatched(String name);
+
+  /// No description provided for @pmWalletLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{type} · {number}'**
+  String pmWalletLine(String type, String number);
+
+  /// No description provided for @pmBankSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} · {branch} শাখা'**
+  String pmBankSub(String name, String branch);
+
+  /// No description provided for @pmAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'+ নতুন মাধ্যম যোগ করুন'**
+  String get pmAdd;
+
+  /// No description provided for @pmSafetyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপত্তা'**
+  String get pmSafetyTitle;
+
+  /// No description provided for @pmSafetyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম মেলানো ছাড়া নতুন মাধ্যমে টাকা যাবে না। মাধ্যম বদলালে ২৪ ঘণ্টা আগের মাধ্যমেই টাকা যাবে, যাতে কেউ প্রতারণা করতে না পারে।'**
+  String get pmSafetyBody;
+
+  /// No description provided for @pmNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো মাধ্যম যোগ করা হয়নি'**
+  String get pmNone;
+
+  /// No description provided for @pmAddTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাধ্যম যোগ করুন'**
+  String get pmAddTitle;
+
+  /// No description provided for @pmWhich.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোন মাধ্যম যোগ করবেন?'**
+  String get pmWhich;
+
+  /// No description provided for @pmBkash.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকাশ'**
+  String get pmBkash;
+
+  /// No description provided for @pmNagad.
+  ///
+  /// In bn, this message translates to:
+  /// **'নগদ'**
+  String get pmNagad;
+
+  /// No description provided for @pmRocket.
+  ///
+  /// In bn, this message translates to:
+  /// **'রকেট'**
+  String get pmRocket;
+
+  /// No description provided for @pmBank.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাংক অ্যাকাউন্ট'**
+  String get pmBank;
+
+  /// No description provided for @pmWalletInstant.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোবাইল ওয়ালেট · সাথে সাথে টাকা'**
+  String get pmWalletInstant;
+
+  /// No description provided for @pmWallet.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোবাইল ওয়ালেট'**
+  String get pmWallet;
+
+  /// No description provided for @pmBankSlow.
+  ///
+  /// In bn, this message translates to:
+  /// **'বড় অঙ্কের জন্য · ১ কার্যদিবস'**
+  String get pmBankSlow;
+
+  /// No description provided for @pmNumberTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{type} নম্বর'**
+  String pmNumberTitle(String type);
+
+  /// No description provided for @pmOwnNumber.
+  ///
+  /// In bn, this message translates to:
+  /// **'নম্বরটি আপনার নিজের নামে হতে হবে। অন্যের নম্বরে টাকা পাঠানো যাবে না।'**
+  String get pmOwnNumber;
+
+  /// No description provided for @pmWhyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেন'**
+  String get pmWhyTitle;
+
+  /// No description provided for @pmWhyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভুল নম্বরে টাকা চলে যাওয়া ও প্রতারণা ঠেকাতে।'**
+  String get pmWhyBody;
+
+  /// No description provided for @pmVerifyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নম্বর যাচাই'**
+  String get pmVerifyTitle;
+
+  /// No description provided for @pmVerifySub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{type} অ্যাকাউন্টের নাম ও প্রোফাইলের নাম এক'**
+  String pmVerifySub(String type);
+
+  /// No description provided for @pmVerifyIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'{number} নম্বরটি আপনার প্রোফাইলের নামে যোগ হবে।'**
+  String pmVerifyIntro(String number);
+
+  /// No description provided for @pmSetDefault.
+  ///
+  /// In bn, this message translates to:
+  /// **'এটিকে ডিফল্ট মাধ্যম হিসেবে রাখুন'**
+  String get pmSetDefault;
+
+  /// No description provided for @pmSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট মাধ্যম সংরক্ষণ হয়েছে'**
+  String get pmSaved;
+
+  /// No description provided for @pmBankTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাংক অ্যাকাউন্ট'**
+  String get pmBankTitle;
+
+  /// No description provided for @pmBankName.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাংক'**
+  String get pmBankName;
+
+  /// No description provided for @pmBranch.
+  ///
+  /// In bn, this message translates to:
+  /// **'শাখা'**
+  String get pmBranch;
+
+  /// No description provided for @pmAccName.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাকাউন্টের নাম'**
+  String get pmAccName;
+
+  /// No description provided for @pmAccNameHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রোফাইলের নামের সাথে মিলতে হবে'**
+  String get pmAccNameHint;
+
+  /// No description provided for @pmAccNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাকাউন্ট নম্বর'**
+  String get pmAccNo;
+
+  /// No description provided for @pmAccNoHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'১৩–১৭ সংখ্যা'**
+  String get pmAccNoHint;
+
+  /// No description provided for @pmBankNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'রাউটিং নম্বর শাখা থেকে স্বয়ংক্রিয়ভাবে বসবে। যাচাইয়ের জন্য ১ টাকা পাঠানো হবে (১ কার্যদিবস)।'**
+  String get pmBankNote;
+
+  /// No description provided for @pmStartVerify.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই শুরু করুন'**
+  String get pmStartVerify;
+
+  /// No description provided for @pmErrAccNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'১৩–১৭ সংখ্যার অ্যাকাউন্ট নম্বর দিন'**
+  String get pmErrAccNo;
+
+  /// No description provided for @pmErrName.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম প্রোফাইলের সাথে মিলছে না'**
+  String get pmErrName;
+
+  /// No description provided for @pmSendCode.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই কোড পাঠান'**
+  String get pmSendCode;
+
+  /// No description provided for @pmSave.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেভ করুন'**
+  String get pmSave;
+
+  /// No description provided for @pmVerifying.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই হচ্ছে'**
+  String get pmVerifying;
+
+  /// No description provided for @pmVerifiedShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত'**
+  String get pmVerifiedShort;
 }
 
 class _AppLocalizationsDelegate

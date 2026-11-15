@@ -3409,4 +3409,152 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get voiceGuideTitle => 'ভয়েস গাইড';
+
+  @override
+  String get pmTitle => 'পেমেন্ট মাধ্যম';
+
+  @override
+  String get pmIntro =>
+      'কৃষক ও ট্রান্সপোর্টার: টাকা কোথায় পাবেন · ক্রেতা: কোথা থেকে টাকা দেবেন';
+
+  @override
+  String get pmDefault => 'ডিফল্ট';
+
+  @override
+  String get pmMakeDefault => 'বদলান';
+
+  @override
+  String pmNameMatched(String name) {
+    return 'নাম মিলেছে: $name';
+  }
+
+  @override
+  String pmWalletLine(String type, String number) {
+    return '$type · $number';
+  }
+
+  @override
+  String pmBankSub(String name, String branch) {
+    return '$name · $branch শাখা';
+  }
+
+  @override
+  String get pmAdd => '+ নতুন মাধ্যম যোগ করুন';
+
+  @override
+  String get pmSafetyTitle => 'নিরাপত্তা';
+
+  @override
+  String get pmSafetyBody =>
+      'নাম মেলানো ছাড়া নতুন মাধ্যমে টাকা যাবে না। মাধ্যম বদলালে ২৪ ঘণ্টা আগের মাধ্যমেই টাকা যাবে, যাতে কেউ প্রতারণা করতে না পারে।';
+
+  @override
+  String get pmNone => 'এখনো কোনো মাধ্যম যোগ করা হয়নি';
+
+  @override
+  String get pmAddTitle => 'মাধ্যম যোগ করুন';
+
+  @override
+  String get pmWhich => 'কোন মাধ্যম যোগ করবেন?';
+
+  @override
+  String get pmBkash => 'বিকাশ';
+
+  @override
+  String get pmNagad => 'নগদ';
+
+  @override
+  String get pmRocket => 'রকেট';
+
+  @override
+  String get pmBank => 'ব্যাংক অ্যাকাউন্ট';
+
+  @override
+  String get pmWalletInstant => 'মোবাইল ওয়ালেট · সাথে সাথে টাকা';
+
+  @override
+  String get pmWallet => 'মোবাইল ওয়ালেট';
+
+  @override
+  String get pmBankSlow => 'বড় অঙ্কের জন্য · ১ কার্যদিবস';
+
+  @override
+  String pmNumberTitle(String type) {
+    return '$type নম্বর';
+  }
+
+  @override
+  String get pmOwnNumber =>
+      'নম্বরটি আপনার নিজের নামে হতে হবে। অন্যের নম্বরে টাকা পাঠানো যাবে না।';
+
+  @override
+  String get pmWhyTitle => 'কেন';
+
+  @override
+  String get pmWhyBody => 'ভুল নম্বরে টাকা চলে যাওয়া ও প্রতারণা ঠেকাতে।';
+
+  @override
+  String get pmVerifyTitle => 'নম্বর যাচাই';
+
+  @override
+  String pmVerifySub(String type) {
+    return '$type অ্যাকাউন্টের নাম ও প্রোফাইলের নাম এক';
+  }
+
+  @override
+  String pmVerifyIntro(String number) {
+    return '$number নম্বরটি আপনার প্রোফাইলের নামে যোগ হবে।';
+  }
+
+  @override
+  String get pmSetDefault => 'এটিকে ডিফল্ট মাধ্যম হিসেবে রাখুন';
+
+  @override
+  String get pmSaved => 'পেমেন্ট মাধ্যম সংরক্ষণ হয়েছে';
+
+  @override
+  String get pmBankTitle => 'ব্যাংক অ্যাকাউন্ট';
+
+  @override
+  String get pmBankName => 'ব্যাংক';
+
+  @override
+  String get pmBranch => 'শাখা';
+
+  @override
+  String get pmAccName => 'অ্যাকাউন্টের নাম';
+
+  @override
+  String get pmAccNameHint => 'প্রোফাইলের নামের সাথে মিলতে হবে';
+
+  @override
+  String get pmAccNo => 'অ্যাকাউন্ট নম্বর';
+
+  @override
+  String get pmAccNoHint => '১৩–১৭ সংখ্যা';
+
+  @override
+  String get pmBankNote =>
+      'রাউটিং নম্বর শাখা থেকে স্বয়ংক্রিয়ভাবে বসবে। যাচাইয়ের জন্য ১ টাকা পাঠানো হবে (১ কার্যদিবস)।';
+
+  @override
+  String get pmStartVerify => 'যাচাই শুরু করুন';
+
+  @override
+  String get pmErrAccNo => '১৩–১৭ সংখ্যার অ্যাকাউন্ট নম্বর দিন';
+
+  @override
+  String get pmErrName => 'নাম প্রোফাইলের সাথে মিলছে না';
+
+  @override
+  String get pmSendCode => 'যাচাই কোড পাঠান';
+
+  @override
+  String get pmSave => 'সেভ করুন';
+
+  @override
+  String get pmVerifying => 'যাচাই হচ্ছে';
+
+  @override
+  String get pmVerifiedShort => 'যাচাইকৃত';
 }

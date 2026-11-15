@@ -28,6 +28,7 @@ import '../widgets/ks_list_item.dart';
 import '../widgets/ks_net_image.dart';
 import '../widgets/ks_option_card.dart';
 import '../widgets/ks_toast.dart';
+import '../../features/profile/presentation/payment_method_screens.dart';
 
 /// Tab whose real screen is built in a later Part.
 class ComingTab extends StatelessWidget {
@@ -88,13 +89,13 @@ class SimpleProfileTab extends ConsumerWidget {
     final (statLabel, statValue) = switch (role) {
       UserRole.buyer => (l.statTotalOrders, orders.length),
       UserRole.transporter => (
-          l.statDoneTrips,
-          trips.where((t) => t.status == DeliveryStatus.delivered).length
-        ),
+        l.statDoneTrips,
+        trips.where((t) => t.status == DeliveryStatus.delivered).length,
+      ),
       _ => (
-          l.statDoneDeals,
-          orders.where((o) => o.status == OrderStatus.completed).length
-        ),
+        l.statDoneDeals,
+        orders.where((o) => o.status == OrderStatus.completed).length,
+      ),
     };
     final verifySub = switch (me.verification) {
       VerificationStatus.verified => l.verifyDone,
@@ -102,21 +103,24 @@ class SimpleProfileTab extends ConsumerWidget {
       VerificationStatus.rejected => l.verifyRejectedSub,
       VerificationStatus.none => l.verifyNoneSub,
     };
-    final trader = role == UserRole.farmer ||
+    final trader =
+        role == UserRole.farmer ||
         role == UserRole.buyer ||
         role == UserRole.transporter;
 
     Widget row(String title, String? sub, VoidCallback onTap) => Padding(
-          padding: const EdgeInsets.only(top: AppSpacing.block),
-          child: KsListItem(title: title, subtitle: sub, onTap: onTap),
-        );
+      padding: const EdgeInsets.only(top: AppSpacing.block),
+      child: KsListItem(title: title, subtitle: sub, onTap: onTap),
+    );
 
     Future<void> logout() async {
-      final ok = await showKsConfirm(context,
-          title: l.logoutTitle,
-          body: l.logoutBody,
-          noLabel: l.noGoBack,
-          yesLabel: l.logout);
+      final ok = await showKsConfirm(
+        context,
+        title: l.logoutTitle,
+        body: l.logoutBody,
+        noLabel: l.noGoBack,
+        yesLabel: l.logout,
+      );
       if (ok) await ref.read(authRepositoryProvider).signOut();
     }
 
@@ -124,8 +128,12 @@ class SimpleProfileTab extends ConsumerWidget {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.navProfile, showBack: false),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.s2xl),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.s2xl,
+        ),
         children: [
           KsListItem(
             thumb: KsNetImage(
@@ -146,28 +154,34 @@ class SimpleProfileTab extends ConsumerWidget {
           ),
           if (trader) ...[
             const SizedBox(height: AppSpacing.block),
-            Row(children: [
-              Expanded(
-                child: KsStatCard(
-                  label: l.statRating,
-                  value: me.ratingCount == 0
-                      ? l.notAvailable
-                      : l.ratingShort(
-                          Fmt.number(context, me.ratingAvg, decimals: 1),
-                          n(me.ratingCount)),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.lg),
-              Expanded(
+            Row(
+              children: [
+                Expanded(
                   child: KsStatCard(
-                      label: statLabel, value: l.countTi(n(statValue)))),
-            ]),
+                    label: l.statRating,
+                    value: me.ratingCount == 0
+                        ? l.notAvailable
+                        : l.ratingShort(
+                            Fmt.number(context, me.ratingAvg, decimals: 1),
+                            n(me.ratingCount),
+                          ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.lg),
+                Expanded(
+                  child: KsStatCard(
+                    label: statLabel,
+                    value: l.countTi(n(statValue)),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: AppSpacing.block),
             KsListItem(
               highlighted: true,
               thumb: const Center(
-                  child:
-                      AppIcon(AppIcons.verified, color: AppColors.iconBrand)),
+                child: AppIcon(AppIcons.verified, color: AppColors.iconBrand),
+              ),
               title: l.shareTrack,
               subtitle: l.shareTrackSub,
               trailingText: l.shareLink,
@@ -179,27 +193,54 @@ class SimpleProfileTab extends ConsumerWidget {
               l.vehicleTitle,
               me.vehicle == null
                   ? null
-                  : l.placeDate(vehicleTypeLabel(l, me.vehicle!.type),
-                      tonsText(context, me.vehicle!.capacityKg)),
+                  : l.placeDate(
+                      vehicleTypeLabel(l, me.vehicle!.type),
+                      tonsText(context, me.vehicle!.capacityKg),
+                    ),
               () => context.push(Routes.trVehicle),
             ),
-            row(l.rowVerifyRating, verifySub,
-                () => context.push(Routes.verifyAndRatings)),
-            row(l.rowPayAccount, l.comingSoon, soon),
+            row(
+              l.rowVerifyRating,
+              verifySub,
+              () => context.push(Routes.verifyAndRatings),
+            ),
+            row(
+              l.rowPayAccount,
+              me.defaultPayout == null
+                  ? l.pmNone
+                  : payoutLine(l, me.defaultPayout!),
+              () => context.push(Routes.paymentMethods),
+            ),
           ],
           if (role == UserRole.farmer || role == UserRole.buyer) ...[
-            row(role == UserRole.farmer ? l.rowNidVerify : l.rowBizVerify,
-                verifySub, () => context.push(Routes.verification)),
-            row(role == UserRole.farmer ? l.rowMyRatings : l.rowRatings,
-                l.profileReviews(n(me.ratingCount)),
-                () => context.push(Routes.ratings)),
-            row(role == UserRole.farmer ? l.rowMyContracts : l.rowContracts,
-                l.comingSoon, soon),
-            row(l.rowPayMethod, l.comingSoon, soon),
+            row(
+              role == UserRole.farmer ? l.rowNidVerify : l.rowBizVerify,
+              verifySub,
+              () => context.push(Routes.verification),
+            ),
+            row(
+              role == UserRole.farmer ? l.rowMyRatings : l.rowRatings,
+              l.profileReviews(n(me.ratingCount)),
+              () => context.push(Routes.ratings),
+            ),
+            row(
+              role == UserRole.farmer ? l.rowMyContracts : l.rowContracts,
+              l.comingSoon,
+              soon,
+            ),
+            row(
+              l.rowPayMethod,
+              me.defaultPayout == null
+                  ? l.pmNone
+                  : payoutLine(l, me.defaultPayout!),
+              () => context.push(Routes.paymentMethods),
+            ),
           ],
-          row(l.rowLanguage,
-              l.languageSub(lang == 'bn' ? l.langBangla : l.langEnglish),
-              () => showLanguageSheet(context, ref)),
+          row(
+            l.rowLanguage,
+            l.languageSub(lang == 'bn' ? l.langBangla : l.langEnglish),
+            () => showLanguageSheet(context, ref),
+          ),
           if (role == UserRole.farmer || role == UserRole.buyer)
             row(l.rowHelp, l.helpSub, () => context.push(Routes.help)),
           row(l.logout, null, logout),
@@ -216,8 +257,8 @@ Future<void> showLanguageSheet(BuildContext context, WidgetRef ref) async {
     context: context,
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.vertical(top: Radius.circular(AppRadius.x2l))),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.x2l)),
+    ),
     builder: (ctx) => _LanguageSheet(initial: current),
   );
   if (picked == null || picked == current) return;
@@ -246,8 +287,12 @@ class _LanguageSheetState extends State<_LanguageSheet> {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen, AppSpacing.xl,
-            AppSpacing.screen, AppSpacing.s2xl),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.xl,
+          AppSpacing.screen,
+          AppSpacing.s2xl,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -272,13 +317,17 @@ class _LanguageSheetState extends State<_LanguageSheet> {
               onTap: () => setState(() => _code = 'en'),
             ),
             const SizedBox(height: AppSpacing.block),
-            Text(l.langSheetNote,
-                style: AppTypography.bodySmall.normal
-                    .withColor(AppColors.textSecondary)),
+            Text(
+              l.langSheetNote,
+              style: AppTypography.bodySmall.normal.withColor(
+                AppColors.textSecondary,
+              ),
+            ),
             const SizedBox(height: AppSpacing.block),
             KsButton(
-                label: l.commonSave,
-                onPressed: () => Navigator.pop(context, _code)),
+              label: l.commonSave,
+              onPressed: () => Navigator.pop(context, _code),
+            ),
           ],
         ),
       ),

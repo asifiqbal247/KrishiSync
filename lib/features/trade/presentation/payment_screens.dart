@@ -24,6 +24,7 @@ import '../../buyer/presentation/buyer_common.dart';
 import '../../transport/presentation/transport_common.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
+import '../../profile/presentation/payment_method_screens.dart';
 
 const _pad = EdgeInsets.fromLTRB(
     AppSpacing.screen, AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg);
@@ -158,9 +159,11 @@ class PaymentsScreen extends ConsumerWidget {
                       child: Image.asset(AppUi.glyphWallet),
                     ),
                     title: l.payReceiveMethod,
-                    subtitle: l.payMethodSub(maskedPhone(me.phone)),
+                    subtitle: me.defaultPayout == null
+                        ? l.pmNone
+                        : payoutLine(l, me.defaultPayout!),
                     trailingText: l.changeLink,
-                    onTap: () => KsToast.comingSoon(context),
+                    onTap: () => context.push(Routes.paymentMethods),
                   ),
                 ],
                 const SizedBox(height: AppSpacing.block),

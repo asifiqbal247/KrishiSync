@@ -20,6 +20,7 @@ import '../../farmer/domain/listing.dart';
 import '../data/payment_service.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
+import '../../../app/router.dart';
 
 /// Everything Place Order (78) worked out, handed to Safe Payment (82).
 class OrderDraft {
@@ -158,7 +159,7 @@ class _SafePaymentState extends ConsumerState<SafePaymentScreen> {
           KsListItem(
             title: l.payAddMethod,
             subtitle: l.payAddMethodSub,
-            onTap: () => KsToast.comingSoon(context),
+            onTap: () => context.push(Routes.addPayout),
           ),
           const SizedBox(
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),

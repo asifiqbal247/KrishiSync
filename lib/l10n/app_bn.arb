@@ -2355,5 +2355,97 @@
   "q4Body": "ক্রেতার টাকা গোলাঘরে জমা থাকে। মাল লোড হলে কৃষক এবং ডেলিভারি হলে পরিবহনকারী টাকা পান। এতে কেউ ঠকেন না।",
   "q5": "অফার বাতিল করলে কী হবে?",
   "q5Body": "প্রত্যাখ্যাত অফার আর গ্রহণ করা যায় না, তবে ক্রেতা নতুন অফার দিতে পারেন। অর্ডার হওয়ার আগে কোনো টাকা কাটা হয় না।",
-  "voiceGuideTitle": "ভয়েস গাইড"
+  "voiceGuideTitle": "ভয়েস গাইড",
+  "pmTitle": "পেমেন্ট মাধ্যম",
+  "pmIntro": "কৃষক ও ট্রান্সপোর্টার: টাকা কোথায় পাবেন · ক্রেতা: কোথা থেকে টাকা দেবেন",
+  "pmDefault": "ডিফল্ট",
+  "pmMakeDefault": "বদলান",
+  "pmNameMatched": "নাম মিলেছে: {name}",
+  "@pmNameMatched": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pmWalletLine": "{type} · {number}",
+  "@pmWalletLine": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "pmBankSub": "{name} · {branch} শাখা",
+  "@pmBankSub": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "branch": {
+        "type": "String"
+      }
+    }
+  },
+  "pmAdd": "+ নতুন মাধ্যম যোগ করুন",
+  "pmSafetyTitle": "নিরাপত্তা",
+  "pmSafetyBody": "নাম মেলানো ছাড়া নতুন মাধ্যমে টাকা যাবে না। মাধ্যম বদলালে ২৪ ঘণ্টা আগের মাধ্যমেই টাকা যাবে, যাতে কেউ প্রতারণা করতে না পারে।",
+  "pmNone": "এখনো কোনো মাধ্যম যোগ করা হয়নি",
+  "pmAddTitle": "মাধ্যম যোগ করুন",
+  "pmWhich": "কোন মাধ্যম যোগ করবেন?",
+  "pmBkash": "বিকাশ",
+  "pmNagad": "নগদ",
+  "pmRocket": "রকেট",
+  "pmBank": "ব্যাংক অ্যাকাউন্ট",
+  "pmWalletInstant": "মোবাইল ওয়ালেট · সাথে সাথে টাকা",
+  "pmWallet": "মোবাইল ওয়ালেট",
+  "pmBankSlow": "বড় অঙ্কের জন্য · ১ কার্যদিবস",
+  "pmNumberTitle": "{type} নম্বর",
+  "@pmNumberTitle": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "pmOwnNumber": "নম্বরটি আপনার নিজের নামে হতে হবে। অন্যের নম্বরে টাকা পাঠানো যাবে না।",
+  "pmWhyTitle": "কেন",
+  "pmWhyBody": "ভুল নম্বরে টাকা চলে যাওয়া ও প্রতারণা ঠেকাতে।",
+  "pmVerifyTitle": "নম্বর যাচাই",
+  "pmVerifySub": "{type} অ্যাকাউন্টের নাম ও প্রোফাইলের নাম এক",
+  "@pmVerifySub": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "pmVerifyIntro": "{number} নম্বরটি আপনার প্রোফাইলের নামে যোগ হবে।",
+  "@pmVerifyIntro": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "pmSetDefault": "এটিকে ডিফল্ট মাধ্যম হিসেবে রাখুন",
+  "pmSaved": "পেমেন্ট মাধ্যম সংরক্ষণ হয়েছে",
+  "pmBankTitle": "ব্যাংক অ্যাকাউন্ট",
+  "pmBankName": "ব্যাংক",
+  "pmBranch": "শাখা",
+  "pmAccName": "অ্যাকাউন্টের নাম",
+  "pmAccNameHint": "প্রোফাইলের নামের সাথে মিলতে হবে",
+  "pmAccNo": "অ্যাকাউন্ট নম্বর",
+  "pmAccNoHint": "১৩–১৭ সংখ্যা",
+  "pmBankNote": "রাউটিং নম্বর শাখা থেকে স্বয়ংক্রিয়ভাবে বসবে। যাচাইয়ের জন্য ১ টাকা পাঠানো হবে (১ কার্যদিবস)।",
+  "pmStartVerify": "যাচাই শুরু করুন",
+  "pmErrAccNo": "১৩–১৭ সংখ্যার অ্যাকাউন্ট নম্বর দিন",
+  "pmErrName": "নাম প্রোফাইলের সাথে মিলছে না",
+  "pmSendCode": "যাচাই কোড পাঠান",
+  "pmSave": "সেভ করুন",
+  "pmVerifying": "যাচাই হচ্ছে",
+  "pmVerifiedShort": "যাচাইকৃত"
 }
