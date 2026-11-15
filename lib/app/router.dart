@@ -23,6 +23,7 @@ import '../features/buyer/presentation/farmer_profile_screen.dart';
 import '../features/buyer/presentation/search_screen.dart';
 import '../features/demand/presentation/demand_screens.dart';
 import '../features/farmer/presentation/farmer_shell.dart';
+import '../features/farmer/presentation/guide_screens.dart';
 import '../features/farmer/presentation/listing_details_screen.dart';
 import '../features/farmer/presentation/my_listings_screen.dart';
 import '../features/farmer/presentation/sell_crop_screen.dart';
@@ -68,6 +69,9 @@ abstract final class Routes {
   static const messages = '/messages';
   static String chat(String id) => '/messages/$id';
   static const help = '/help';
+  static String tip(int i) => '/tips/$i';
+  static const globalBuyers = '/export';
+  static const exportGuide = '/export/guide';
   static const paymentMethods = '/payment-methods';
   static const addPayout = '/payment-methods/add';
   static const addBank = '/payment-methods/bank';
@@ -317,6 +321,18 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'wallet/:type',
             builder: (_, s) => AddWalletScreen(type: s.pathParameters['type']!),
           ),
+        ],
+      ),
+      GoRoute(
+        path: '/tips/:i',
+        builder: (_, s) =>
+            TipScreen(index: int.tryParse(s.pathParameters['i']!) ?? 0),
+      ),
+      GoRoute(
+        path: Routes.globalBuyers,
+        builder: (_, _) => const GlobalBuyersScreen(),
+        routes: [
+          GoRoute(path: 'guide', builder: (_, _) => const ExportGuideScreen()),
         ],
       ),
       GoRoute(

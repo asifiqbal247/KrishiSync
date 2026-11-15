@@ -6451,6 +6451,180 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'যাচাইকৃত'**
   String get pmVerifiedShort;
+
+  /// No description provided for @tipTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষি টিপস'**
+  String get tipTitle;
+
+  /// No description provided for @tipPriceBody1.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিক্রির আগে \"বাজার দর\" দেখুন। দাম বাজারের সীমার মধ্যে রাখলে ক্রেতা দ্রুত অফার দেন।'**
+  String get tipPriceBody1;
+
+  /// No description provided for @tipPriceBody2.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের পরিষ্কার ছবি দিন — দিনের আলোয়, কাছ থেকে। ভালো ছবিতে বেশি দাম পাওয়া যায়।'**
+  String get tipPriceBody2;
+
+  /// No description provided for @tipPriceBody3.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার চাহিদা দেখে একসাথে বড় চালান দিন; পুলিং করলে পরিবহন খরচ কমে।'**
+  String get tipPriceBody3;
+
+  /// No description provided for @tipPackBody1.
+  ///
+  /// In bn, this message translates to:
+  /// **'টমেটো ও নরম সবজি ২০ কেজির ক্রেটে রাখুন, বস্তায় নয় — এতে কম নষ্ট হয়।'**
+  String get tipPackBody1;
+
+  /// No description provided for @tipPackBody2.
+  ///
+  /// In bn, this message translates to:
+  /// **'আলু ও পেঁয়াজ শুকনো, বাতাস চলাচল করে এমন বস্তায় রাখুন।'**
+  String get tipPackBody2;
+
+  /// No description provided for @tipPackBody3.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোডের আগে ভেজা বা পচা ফসল আলাদা করুন — মান লোডের সময়ই চূড়ান্ত হয়।'**
+  String get tipPackBody3;
+
+  /// No description provided for @tipGradeBody1.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড A: সমান আকার, দাগহীন, পুরো পাকা বা নির্দিষ্ট পাকা।'**
+  String get tipGradeBody1;
+
+  /// No description provided for @tipGradeBody2.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড B: সামান্য দাগ বা আকারে কিছুটা ভিন্ন, তবে খাওয়ার উপযোগী।'**
+  String get tipGradeBody2;
+
+  /// No description provided for @tipGradeBody3.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড C: বেশি দাগ বা ছোট আকার — প্রক্রিয়াজাতকরণের জন্য।'**
+  String get tipGradeBody3;
+
+  /// No description provided for @globalBuyersTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিদেশি ক্রেতা'**
+  String get globalBuyersTitle;
+
+  /// No description provided for @globalBuyersIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিদেশি ক্রেতা ও আমদানিকারকদের কাছে ফসল বিক্রি করুন।'**
+  String get globalBuyersIntro;
+
+  /// No description provided for @noExportDemand.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো বিদেশি ক্রেতার চাহিদা নেই। রপ্তানির প্রস্তুতি নিতে গাইড দেখুন।'**
+  String get noExportDemand;
+
+  /// No description provided for @seeExportGuide.
+  ///
+  /// In bn, this message translates to:
+  /// **'রপ্তানি গাইড দেখুন'**
+  String get seeExportGuide;
+
+  /// No description provided for @exportGuideTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রপ্তানি গাইড'**
+  String get exportGuideTitle;
+
+  /// No description provided for @exportSteps.
+  ///
+  /// In bn, this message translates to:
+  /// **'ধাপসমূহ'**
+  String get exportSteps;
+
+  /// No description provided for @exStep1.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রোফাইল যাচাই'**
+  String get exStep1;
+
+  /// No description provided for @exStep1Sub.
+  ///
+  /// In bn, this message translates to:
+  /// **'NID ও জমির তথ্য'**
+  String get exStep1Sub;
+
+  /// No description provided for @exStep2.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান সনদ'**
+  String get exStep2;
+
+  /// No description provided for @exStep2Sub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাইটোস্যানিটারি সার্টিফিকেট'**
+  String get exStep2Sub;
+
+  /// No description provided for @exStep3.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্যাকেজিং'**
+  String get exStep3;
+
+  /// No description provided for @exStep3Sub.
+  ///
+  /// In bn, this message translates to:
+  /// **'রপ্তানি মান অনুযায়ী'**
+  String get exStep3Sub;
+
+  /// No description provided for @exStep4.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি ও পেমেন্ট'**
+  String get exStep4;
+
+  /// No description provided for @exStep4Sub.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেন বা LC'**
+  String get exStep4Sub;
+
+  /// No description provided for @exDocs.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রয়োজনীয় কাগজপত্র'**
+  String get exDocs;
+
+  /// No description provided for @exDoc1.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাইটোস্যানিটারি সার্টিফিকেট'**
+  String get exDoc1;
+
+  /// No description provided for @exDoc1Sub.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষি সম্প্রসারণ অধিদপ্তর'**
+  String get exDoc1Sub;
+
+  /// No description provided for @exDoc2.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রেড লাইসেন্স'**
+  String get exDoc2;
+
+  /// No description provided for @exDoc2Sub.
+  ///
+  /// In bn, this message translates to:
+  /// **'অথবা কৃষক সমবায় সনদ'**
+  String get exDoc2Sub;
 }
 
 class _AppLocalizationsDelegate

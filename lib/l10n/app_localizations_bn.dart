@@ -3557,4 +3557,102 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get pmVerifiedShort => 'যাচাইকৃত';
+
+  @override
+  String get tipTitle => 'কৃষি টিপস';
+
+  @override
+  String get tipPriceBody1 =>
+      'বিক্রির আগে \"বাজার দর\" দেখুন। দাম বাজারের সীমার মধ্যে রাখলে ক্রেতা দ্রুত অফার দেন।';
+
+  @override
+  String get tipPriceBody2 =>
+      'ফসলের পরিষ্কার ছবি দিন — দিনের আলোয়, কাছ থেকে। ভালো ছবিতে বেশি দাম পাওয়া যায়।';
+
+  @override
+  String get tipPriceBody3 =>
+      'ক্রেতার চাহিদা দেখে একসাথে বড় চালান দিন; পুলিং করলে পরিবহন খরচ কমে।';
+
+  @override
+  String get tipPackBody1 =>
+      'টমেটো ও নরম সবজি ২০ কেজির ক্রেটে রাখুন, বস্তায় নয় — এতে কম নষ্ট হয়।';
+
+  @override
+  String get tipPackBody2 =>
+      'আলু ও পেঁয়াজ শুকনো, বাতাস চলাচল করে এমন বস্তায় রাখুন।';
+
+  @override
+  String get tipPackBody3 =>
+      'লোডের আগে ভেজা বা পচা ফসল আলাদা করুন — মান লোডের সময়ই চূড়ান্ত হয়।';
+
+  @override
+  String get tipGradeBody1 =>
+      'গ্রেড A: সমান আকার, দাগহীন, পুরো পাকা বা নির্দিষ্ট পাকা।';
+
+  @override
+  String get tipGradeBody2 =>
+      'গ্রেড B: সামান্য দাগ বা আকারে কিছুটা ভিন্ন, তবে খাওয়ার উপযোগী।';
+
+  @override
+  String get tipGradeBody3 =>
+      'গ্রেড C: বেশি দাগ বা ছোট আকার — প্রক্রিয়াজাতকরণের জন্য।';
+
+  @override
+  String get globalBuyersTitle => 'বিদেশি ক্রেতা';
+
+  @override
+  String get globalBuyersIntro =>
+      'বিদেশি ক্রেতা ও আমদানিকারকদের কাছে ফসল বিক্রি করুন।';
+
+  @override
+  String get noExportDemand =>
+      'এখনো বিদেশি ক্রেতার চাহিদা নেই। রপ্তানির প্রস্তুতি নিতে গাইড দেখুন।';
+
+  @override
+  String get seeExportGuide => 'রপ্তানি গাইড দেখুন';
+
+  @override
+  String get exportGuideTitle => 'রপ্তানি গাইড';
+
+  @override
+  String get exportSteps => 'ধাপসমূহ';
+
+  @override
+  String get exStep1 => 'প্রোফাইল যাচাই';
+
+  @override
+  String get exStep1Sub => 'NID ও জমির তথ্য';
+
+  @override
+  String get exStep2 => 'মান সনদ';
+
+  @override
+  String get exStep2Sub => 'ফাইটোস্যানিটারি সার্টিফিকেট';
+
+  @override
+  String get exStep3 => 'প্যাকেজিং';
+
+  @override
+  String get exStep3Sub => 'রপ্তানি মান অনুযায়ী';
+
+  @override
+  String get exStep4 => 'চুক্তি ও পেমেন্ট';
+
+  @override
+  String get exStep4Sub => 'নিরাপদ লেনদেন বা LC';
+
+  @override
+  String get exDocs => 'প্রয়োজনীয় কাগজপত্র';
+
+  @override
+  String get exDoc1 => 'ফাইটোস্যানিটারি সার্টিফিকেট';
+
+  @override
+  String get exDoc1Sub => 'কৃষি সম্প্রসারণ অধিদপ্তর';
+
+  @override
+  String get exDoc2 => 'ট্রেড লাইসেন্স';
+
+  @override
+  String get exDoc2Sub => 'অথবা কৃষক সমবায় সনদ';
 }

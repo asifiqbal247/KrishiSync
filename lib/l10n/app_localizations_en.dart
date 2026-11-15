@@ -3564,4 +3564,101 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pmVerifiedShort => 'verified';
+
+  @override
+  String get tipTitle => 'Farming tips';
+
+  @override
+  String get tipPriceBody1 =>
+      'Check \"Market prices\" before selling. A price inside the market range gets offers faster.';
+
+  @override
+  String get tipPriceBody2 =>
+      'Add a clear photo of the crop — in daylight, up close. Good photos get better prices.';
+
+  @override
+  String get tipPriceBody3 =>
+      'Check buyer demands and supply together; pooling with other farmers cuts transport cost.';
+
+  @override
+  String get tipPackBody1 =>
+      'Keep tomatoes and soft vegetables in 20 kg crates, not sacks — less damage.';
+
+  @override
+  String get tipPackBody2 => 'Keep potatoes and onions in dry, airy sacks.';
+
+  @override
+  String get tipPackBody3 =>
+      'Remove wet or rotten produce before loading — quality is final at loading.';
+
+  @override
+  String get tipGradeBody1 =>
+      'Grade A: even size, no marks, ripeness as agreed.';
+
+  @override
+  String get tipGradeBody2 =>
+      'Grade B: small marks or uneven size, but good to eat.';
+
+  @override
+  String get tipGradeBody3 =>
+      'Grade C: more marks or small size — for processing.';
+
+  @override
+  String get globalBuyersTitle => 'Global buyers';
+
+  @override
+  String get globalBuyersIntro =>
+      'Sell your crops to foreign buyers and importers.';
+
+  @override
+  String get noExportDemand =>
+      'No foreign buyer demand yet. See the guide to get ready for export.';
+
+  @override
+  String get seeExportGuide => 'See export guide';
+
+  @override
+  String get exportGuideTitle => 'Export guide';
+
+  @override
+  String get exportSteps => 'Steps';
+
+  @override
+  String get exStep1 => 'Profile verification';
+
+  @override
+  String get exStep1Sub => 'NID and land details';
+
+  @override
+  String get exStep2 => 'Quality certificate';
+
+  @override
+  String get exStep2Sub => 'Phytosanitary certificate';
+
+  @override
+  String get exStep3 => 'Packaging';
+
+  @override
+  String get exStep3Sub => 'To export standard';
+
+  @override
+  String get exStep4 => 'Contract & payment';
+
+  @override
+  String get exStep4Sub => 'Safe payment or LC';
+
+  @override
+  String get exDocs => 'Required documents';
+
+  @override
+  String get exDoc1 => 'Phytosanitary certificate';
+
+  @override
+  String get exDoc1Sub => 'Department of Agricultural Extension';
+
+  @override
+  String get exDoc2 => 'Trade license';
+
+  @override
+  String get exDoc2Sub => 'Or farmers\' cooperative certificate';
 }
