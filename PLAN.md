@@ -6,7 +6,8 @@
 - **Part 8 (done):** profiles 68/138/193 with real data, 196 language sheet, D4 logout confirm, 215 skeletons, English plural-safe strings, Golaghor launcher icon (Android 12 launch screen uses it), release APK builds and runs (signed with debug key — fine for demo install).
 - **Test accounts:** 01700000001 farmer (Abdul Rahman), …02 buyer (Farhan Ahmed), …03 transporter (Kamal Hossain), …04 moderator (Rafiq), …05 admin (Tonmoy Admin). OTP 123456.
 - **Demo data (2026-11-15):** farmers Karim Mia (…06, Mymensingh: potato 2 t, onion 1.5 t), Salma Begum (…07, Dinajpur: rice 5 t), Rahim Uddin (…08, Bagerhat: eggplant 800 kg) + Abdul Rahman tomato — all approved. Market prices set for all 7 crops.
-- **Next step:** Tier B extras if time allows (price trends, earnings list, payment history), final Figma pass.
+- **Tier B done (2026-11-15):** 29 Market Prices + 30 Price Trend (daily history in marketPrices/{crop}/history; admin can enter past days), 56/124 Payments, 58/125 Receipts, 178 Earnings tab. Login: +880 on the left, Terms & Privacy page. Tomato has 7 days of demo history.
+- **Next step:** final Figma pass; more Tier B if time allows (NID/business verification upload 69/139, ratings list 70/140, shipment tracking 46/108).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -309,3 +310,4 @@ counters/orders    next: int
 | 2026-11-14 | Reports: user reasons from Figma 203/204 (driver behaviour, late delivery, app problem, other); moderator can resolve/dismiss with a note or escalate to admin. |
 | 2026-11-14 | Admin A6: crops collection overrides bundled catalog (on/off) and adds new crops; Sell Crop shows Figma chips + admin-added crops. |
 | 2026-11-14 | Profile rows for Tier B/C features (contracts, payment methods, help, share track record, edit profile) are visible as in Figma and show "শীঘ্রই আসছে". |
+| 2026-11-15 | Market prices are national wholesale prices (admin enters one per crop), so the district pills on 29 are left out. Price alert button shows "শীঘ্রই আসছে" (needs push notifications). PDF download on receipts = Tier C. |

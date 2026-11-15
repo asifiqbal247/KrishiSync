@@ -171,10 +171,19 @@ class KsStarRating extends StatelessWidget {
 /// Weekly earnings chart (141): bordered box 172 high, radius 12, 7 brand
 /// bars (radius 4, max 90) with day labels (Regular 11, secondary).
 class KsBarChart extends StatelessWidget {
-  const KsBarChart({super.key, required this.values, required this.labels});
+  const KsBarChart({
+    super.key,
+    required this.values,
+    required this.labels,
+    this.zoom = false,
+  });
 
   final List<num> values;
   final List<String> labels;
+
+  /// Price trend: bars start just below the lowest value so small changes
+  /// are visible. Earnings keep a zero baseline.
+  final bool zoom;
 
   static const _h = 172.0;
   static const _barMax = 90.0;
@@ -184,6 +193,10 @@ class KsBarChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final max = values.fold<num>(0, (a, v) => v > a ? v : a);
+    final positive = values.where((v) => v > 0);
+    final base = zoom && positive.isNotEmpty
+        ? positive.reduce((a, b) => a < b ? a : b) * 0.9
+        : 0;
     return Container(
       height: _h,
       padding: const EdgeInsets.fromLTRB(
@@ -202,9 +215,12 @@ class KsBarChart extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    height: max == 0
+                    height: max <= base || values[i] <= 0
                         ? _barMin
-                        : (_barMin + (_barMax - _barMin) * values[i] / max),
+                        : (_barMin +
+                            (_barMax - _barMin) *
+                                (values[i] - base) /
+                                (max - base)),
                     decoration: BoxDecoration(
                       color: AppColors.bgBrand,
                       borderRadius: BorderRadius.circular(AppRadius.sm),

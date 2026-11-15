@@ -261,7 +261,7 @@ class _PriceTrendState extends ConsumerState<PriceTrendScreen> {
           if (pts.isEmpty)
             KsNoteBox(title: l.trendNoData)
           else
-            KsBarChart(values: values, labels: labels),
+            KsBarChart(values: values, labels: labels, zoom: true),
           const SizedBox(height: AppSpacing.block),
           if (prices.isNotEmpty)
             KsInfoBox(children: [
