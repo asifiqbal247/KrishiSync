@@ -2618,5 +2618,212 @@
         "type": "String"
       }
     }
+  },
+  "contractsTitle": "চুক্তি",
+  "contractNew": "নতুন",
+  "contractActive": "চলমান",
+  "contractPending": "অপেক্ষমাণ",
+  "contractDone": "সম্পন্ন",
+  "contractRejected": "প্রত্যাখ্যাত",
+  "contractCancelled": "বাতিল",
+  "contractsEmpty": "এখানে কোনো চুক্তি নেই",
+  "freqMonthly": "মাসিক",
+  "freqWeekly": "সাপ্তাহিক",
+  "contractFarmerSub": "{freq} {crop} সরবরাহ · {months} মাস",
+  "@contractFarmerSub": {
+    "placeholders": {
+      "freq": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "months": {
+        "type": "String"
+      }
+    }
+  },
+  "contractLine": "{crop} – {freq} {qty}",
+  "@contractLine": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "freq": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "contractBuyerSub": "{name} · {range}",
+  "@contractBuyerSub": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "newContractBtn": "+ নতুন চুক্তি",
+  "contractDetailsTitle": "চুক্তির বিবরণ",
+  "buyerVerifiedLine": "{name} (যাচাইকৃত)",
+  "@buyerVerifiedLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "contractPriceFixed": "{price} / কেজি (নির্ধারিত)",
+  "@contractPriceFixed": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "contractTerms": "চুক্তির শর্ত",
+  "rowTerm": "মেয়াদ",
+  "perMonthQty": "প্রতি মাসে {qty}",
+  "@perMonthQty": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "perWeekQty": "প্রতি সপ্তাহে {qty}",
+  "@perWeekQty": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "contractPayValue": "প্রতি লোডের সময় (নিরাপদ লেনদেন থেকে)",
+  "acceptContract": "চুক্তি গ্রহণ",
+  "rejectContractQ": "চুক্তি প্রত্যাখ্যান করবেন?",
+  "rejectContractBody": "অপর পক্ষকে জানানো হবে। এটি আর গ্রহণ করা যাবে না, তবে তারা নতুন প্রস্তাব দিতে পারবেন।",
+  "cancelContractQ": "চুক্তি বাতিল করবেন?",
+  "cancelContractBody": "বাকি সরবরাহ বন্ধ হবে। আগে লোড হওয়া মালের পেমেন্ট ফেরত হবে না — যা হয়েছে তা চূড়ান্ত।",
+  "yesCancelIt": "হ্যাঁ, বাতিল করুন",
+  "contractAccepted": "চুক্তি গ্রহণ করা হয়েছে",
+  "newContractTitle": "নতুন চুক্তি",
+  "fieldSupplier": "সরবরাহকারী",
+  "fieldCropGrade": "ফসল ও মান",
+  "cropGradeValue": "{crop}, গ্রেড {grade}",
+  "@cropGradeValue": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldQtyPerDelivery": "পরিমাণ (প্রতি ডেলিভারি)",
+  "fieldFixedPrice": "নির্ধারিত দাম",
+  "sendContract": "চুক্তি পাঠান",
+  "contractSent": "চুক্তি পাঠানো হয়েছে",
+  "errSelectSupplier": "সরবরাহকারী বাছুন",
+  "errSelectCrop": "ফসল বাছুন",
+  "searchFarmerHint": "কৃষকের নাম খুঁজুন",
+  "contractStatusTitle": "চুক্তির অবস্থা",
+  "rowContract": "চুক্তি",
+  "rowSupplier": "সরবরাহকারী",
+  "rowBuyerLabel": "ক্রেতা",
+  "deliverySchedule": "ডেলিভারি সূচি",
+  "monthDelivery": "{month} ডেলিভারি",
+  "@monthDelivery": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "weekDelivery": "সপ্তাহ {n} ডেলিভারি",
+  "@weekDelivery": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryOrdered": "{qty} · অর্ডার হয়েছে",
+  "@deliveryOrdered": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryDue": "নির্ধারিত: {date}",
+  "@deliveryDue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelContract": "চুক্তি বাতিল",
+  "renewContract": "নবায়ন করুন",
+  "orderDeliveryQ": "এই ডেলিভারির অর্ডার দেবেন?",
+  "orderDeliveryBody": "{qty} · {amount} নিরাপদ লেনদেনে জমা থাকবে, মাল পৌঁছালে কৃষক পাবেন।",
+  "@orderDeliveryBody": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "orderNow": "অর্ডার দিন",
+  "contractRenewed": "নবায়নের প্রস্তাব পাঠানো হয়েছে",
+  "nContractNew": "নতুন চুক্তির প্রস্তাব: {crop}",
+  "@nContractNew": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nContractActive": "চুক্তি গ্রহণ করেছেন: {crop}",
+  "@nContractActive": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nContractRejected": "চুক্তি প্রত্যাখ্যাত: {crop}",
+  "@nContractRejected": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nContractCancelled": "চুক্তি বাতিল: {crop}",
+  "@nContractCancelled": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "nContractOrder": "চুক্তির ডেলিভারি অর্ডার: {no}",
+  "@nContractOrder": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
   }
 }

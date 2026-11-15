@@ -69,6 +69,14 @@ class NotificationsScreen extends ConsumerWidget {
       'report_dismissed' => (l.nReportDismissed, p['note'] ?? ''),
       'trip_picked' => (l.nTripPicked(p['no'] ?? ''), crop),
       'trip_delivered' => (l.nTripDelivered(p['no'] ?? ''), crop),
+      'contract_new' => (l.nContractNew(crop), p['buyer'] ?? ''),
+      'contract_active' => (l.nContractActive(crop), p['name'] ?? ''),
+      'contract_rejected' => (l.nContractRejected(crop), p['name'] ?? ''),
+      'contract_cancelled' => (l.nContractCancelled(crop), p['name'] ?? ''),
+      'contract_order' => (
+          l.nContractOrder(p['no'] ?? ''),
+          l.nOrderNewBody(p['buyer'] ?? '', crop, l.qtyKg(num(p['qty'])))
+        ),
       'price_alert' => (
           l.nPriceAlert(crop),
           l.nPriceAlertBody(
@@ -93,6 +101,7 @@ class NotificationsScreen extends ConsumerWidget {
       'job' => Routes.trJob(id),
       'demand' => Routes.demandOffers(id),
       'price' => Routes.priceTrend(id),
+      'contract' => Routes.contractStatus(id),
       _ => null,
     };
   }

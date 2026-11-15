@@ -10,7 +10,8 @@
 - **2026-11-15 (later):** verification upload 69/139/195, ratings 70/140, tracking 108, farmer Market tab 28 + Search 17 (shared screens), buyer profile 27, cancel order D5 (stock back, 10% fare fee recorded), edit profile, searchable route list, **Buyer Demands** (96/98 post, buyer list, 99 accept → real orders through the normal truck/OTP/rating flow; farmer 31 list, 32 details with pooling progress, 33 commit). Phone testing pending.
 - **Chat + Help (2026-11-15):** real-time chat (65/66, chats/{a_b} + messages, opened from home chat icons, farmer/buyer profiles, tracking); Help & Support 205 + FAQ 206 (bn/en answers, helpline call, support chat with admin). Voice messages, attachments, video calls = Tier C.
 - **2026-11-16:** payment methods 197–201, share track record 64/131/188 (QR + share), tips/global buyers/export guide 36/37, **transaction history 62/129/186 + statement 63/130/187** (real orders/trips, month groups, filters, statement shared as text), **in-app price alerts on 30** (tested on emulator: buyer target ৳40 → admin saves ৳34 → buyer notified → alert removed).
-- **Next step:** Asif tests on phone; then remaining Tier C (contracts, live GPS, PDF, voice messages).
+- **Contracts (2026-11-16):** 38/39 farmer (new → accept/reject D2), 121–123 buyer (create, delivery schedule, cancel D3, renew). Each planned delivery becomes a real order (normal truck/OTP/rating flow). Tested on emulator: Farhan → Karim Mia potato 200 kg/month → accepted → KS-1053 ordered → cancelled → renew.
+- **Next step:** Asif tests on phone; then remaining Tier C (live GPS, PDF, voice messages).
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -319,3 +320,4 @@ counters/orders    next: int
 | 2026-11-15 | Payment methods 197–201: saved for real (users.payoutMethods, default method shown on Payments/profile). Wallet check (200) = name match with profile; OTP to the wallet needs the payment gateway (placeholder in v1). |
 | 2026-11-16 | Price alerts (30) are in-app only (no Cloud Functions/push on Spark): priceAlerts/{uid}_{crop}; farmer/transporter alerts fire when the price rises to the target, buyer alerts when it falls to it. The admin's app checks alerts when saving today's price, sends the notification and deletes the alert (one-time). |
 | 2026-11-16 | Statement 63: shared as text through the phone's share menu (all 4 buttons open the share sheet); "PDF ডাউনলোড" = Tier C (needs `pdf` package). |
+| 2026-11-16 | Contracts: term is fixed at 3 months (monthly = 3 deliveries, weekly = 12), first delivery one week after sending (Figma 122 has no date field). The buyer orders each delivery in turn from 123; the order is paid/booked like a demand order. Cancel keeps orders already made. Renew = a new pending contract with the same terms (farmer accepts again). |

@@ -3875,4 +3875,222 @@ class AppLocalizationsEn extends AppLocalizations {
   String nPriceAlertBody(String price) {
     return 'Today\'s price $price/kg';
   }
+
+  @override
+  String get contractsTitle => 'Contracts';
+
+  @override
+  String get contractNew => 'New';
+
+  @override
+  String get contractActive => 'Ongoing';
+
+  @override
+  String get contractPending => 'Pending';
+
+  @override
+  String get contractDone => 'Completed';
+
+  @override
+  String get contractRejected => 'Rejected';
+
+  @override
+  String get contractCancelled => 'Cancelled';
+
+  @override
+  String get contractsEmpty => 'No contracts here';
+
+  @override
+  String get freqMonthly => 'Monthly';
+
+  @override
+  String get freqWeekly => 'Weekly';
+
+  @override
+  String contractFarmerSub(String freq, String crop, String months) {
+    return '$freq $crop supply · $months months';
+  }
+
+  @override
+  String contractLine(String crop, String freq, String qty) {
+    return '$crop – $freq $qty';
+  }
+
+  @override
+  String contractBuyerSub(String name, String range) {
+    return '$name · $range';
+  }
+
+  @override
+  String get newContractBtn => '+ New contract';
+
+  @override
+  String get contractDetailsTitle => 'Contract details';
+
+  @override
+  String buyerVerifiedLine(String name) {
+    return '$name (verified)';
+  }
+
+  @override
+  String contractPriceFixed(String price) {
+    return '$price / kg (fixed)';
+  }
+
+  @override
+  String get contractTerms => 'Contract terms';
+
+  @override
+  String get rowTerm => 'Term';
+
+  @override
+  String perMonthQty(String qty) {
+    return '$qty per month';
+  }
+
+  @override
+  String perWeekQty(String qty) {
+    return '$qty per week';
+  }
+
+  @override
+  String get contractPayValue => 'At each load (from safe payment)';
+
+  @override
+  String get acceptContract => 'Accept contract';
+
+  @override
+  String get rejectContractQ => 'Reject the contract?';
+
+  @override
+  String get rejectContractBody =>
+      'The other side will be told. It can\'t be accepted later, but they can send a new offer.';
+
+  @override
+  String get cancelContractQ => 'Cancel the contract?';
+
+  @override
+  String get cancelContractBody =>
+      'The rest of the supply stops. Payment for loads already done is not returned — what happened is final.';
+
+  @override
+  String get yesCancelIt => 'Yes, cancel';
+
+  @override
+  String get contractAccepted => 'Contract accepted';
+
+  @override
+  String get newContractTitle => 'New contract';
+
+  @override
+  String get fieldSupplier => 'Supplier';
+
+  @override
+  String get fieldCropGrade => 'Crop & grade';
+
+  @override
+  String cropGradeValue(String crop, String grade) {
+    return '$crop, grade $grade';
+  }
+
+  @override
+  String get fieldQtyPerDelivery => 'Quantity (per delivery)';
+
+  @override
+  String get fieldFixedPrice => 'Fixed price';
+
+  @override
+  String get sendContract => 'Send contract';
+
+  @override
+  String get contractSent => 'Contract sent';
+
+  @override
+  String get errSelectSupplier => 'Choose a supplier';
+
+  @override
+  String get errSelectCrop => 'Choose a crop';
+
+  @override
+  String get searchFarmerHint => 'Search farmer name';
+
+  @override
+  String get contractStatusTitle => 'Contract status';
+
+  @override
+  String get rowContract => 'Contract';
+
+  @override
+  String get rowSupplier => 'Supplier';
+
+  @override
+  String get rowBuyerLabel => 'Buyer';
+
+  @override
+  String get deliverySchedule => 'Delivery schedule';
+
+  @override
+  String monthDelivery(String month) {
+    return '$month delivery';
+  }
+
+  @override
+  String weekDelivery(String n) {
+    return 'Week $n delivery';
+  }
+
+  @override
+  String deliveryOrdered(String qty) {
+    return '$qty · ordered';
+  }
+
+  @override
+  String deliveryDue(String date) {
+    return 'Scheduled: $date';
+  }
+
+  @override
+  String get cancelContract => 'Cancel contract';
+
+  @override
+  String get renewContract => 'Renew';
+
+  @override
+  String get orderDeliveryQ => 'Order this delivery?';
+
+  @override
+  String orderDeliveryBody(String qty, String amount) {
+    return '$qty · $amount is held in safe payment and goes to the farmer on delivery.';
+  }
+
+  @override
+  String get orderNow => 'Place order';
+
+  @override
+  String get contractRenewed => 'Renewal sent';
+
+  @override
+  String nContractNew(String crop) {
+    return 'New contract offer: $crop';
+  }
+
+  @override
+  String nContractActive(String crop) {
+    return 'Contract accepted: $crop';
+  }
+
+  @override
+  String nContractRejected(String crop) {
+    return 'Contract rejected: $crop';
+  }
+
+  @override
+  String nContractCancelled(String crop) {
+    return 'Contract cancelled: $crop';
+  }
+
+  @override
+  String nContractOrder(String no) {
+    return 'Contract delivery order: $no';
+  }
 }

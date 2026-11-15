@@ -3869,4 +3869,222 @@ class AppLocalizationsBn extends AppLocalizations {
   String nPriceAlertBody(String price) {
     return 'আজকের দাম $price/কেজি';
   }
+
+  @override
+  String get contractsTitle => 'চুক্তি';
+
+  @override
+  String get contractNew => 'নতুন';
+
+  @override
+  String get contractActive => 'চলমান';
+
+  @override
+  String get contractPending => 'অপেক্ষমাণ';
+
+  @override
+  String get contractDone => 'সম্পন্ন';
+
+  @override
+  String get contractRejected => 'প্রত্যাখ্যাত';
+
+  @override
+  String get contractCancelled => 'বাতিল';
+
+  @override
+  String get contractsEmpty => 'এখানে কোনো চুক্তি নেই';
+
+  @override
+  String get freqMonthly => 'মাসিক';
+
+  @override
+  String get freqWeekly => 'সাপ্তাহিক';
+
+  @override
+  String contractFarmerSub(String freq, String crop, String months) {
+    return '$freq $crop সরবরাহ · $months মাস';
+  }
+
+  @override
+  String contractLine(String crop, String freq, String qty) {
+    return '$crop – $freq $qty';
+  }
+
+  @override
+  String contractBuyerSub(String name, String range) {
+    return '$name · $range';
+  }
+
+  @override
+  String get newContractBtn => '+ নতুন চুক্তি';
+
+  @override
+  String get contractDetailsTitle => 'চুক্তির বিবরণ';
+
+  @override
+  String buyerVerifiedLine(String name) {
+    return '$name (যাচাইকৃত)';
+  }
+
+  @override
+  String contractPriceFixed(String price) {
+    return '$price / কেজি (নির্ধারিত)';
+  }
+
+  @override
+  String get contractTerms => 'চুক্তির শর্ত';
+
+  @override
+  String get rowTerm => 'মেয়াদ';
+
+  @override
+  String perMonthQty(String qty) {
+    return 'প্রতি মাসে $qty';
+  }
+
+  @override
+  String perWeekQty(String qty) {
+    return 'প্রতি সপ্তাহে $qty';
+  }
+
+  @override
+  String get contractPayValue => 'প্রতি লোডের সময় (নিরাপদ লেনদেন থেকে)';
+
+  @override
+  String get acceptContract => 'চুক্তি গ্রহণ';
+
+  @override
+  String get rejectContractQ => 'চুক্তি প্রত্যাখ্যান করবেন?';
+
+  @override
+  String get rejectContractBody =>
+      'অপর পক্ষকে জানানো হবে। এটি আর গ্রহণ করা যাবে না, তবে তারা নতুন প্রস্তাব দিতে পারবেন।';
+
+  @override
+  String get cancelContractQ => 'চুক্তি বাতিল করবেন?';
+
+  @override
+  String get cancelContractBody =>
+      'বাকি সরবরাহ বন্ধ হবে। আগে লোড হওয়া মালের পেমেন্ট ফেরত হবে না — যা হয়েছে তা চূড়ান্ত।';
+
+  @override
+  String get yesCancelIt => 'হ্যাঁ, বাতিল করুন';
+
+  @override
+  String get contractAccepted => 'চুক্তি গ্রহণ করা হয়েছে';
+
+  @override
+  String get newContractTitle => 'নতুন চুক্তি';
+
+  @override
+  String get fieldSupplier => 'সরবরাহকারী';
+
+  @override
+  String get fieldCropGrade => 'ফসল ও মান';
+
+  @override
+  String cropGradeValue(String crop, String grade) {
+    return '$crop, গ্রেড $grade';
+  }
+
+  @override
+  String get fieldQtyPerDelivery => 'পরিমাণ (প্রতি ডেলিভারি)';
+
+  @override
+  String get fieldFixedPrice => 'নির্ধারিত দাম';
+
+  @override
+  String get sendContract => 'চুক্তি পাঠান';
+
+  @override
+  String get contractSent => 'চুক্তি পাঠানো হয়েছে';
+
+  @override
+  String get errSelectSupplier => 'সরবরাহকারী বাছুন';
+
+  @override
+  String get errSelectCrop => 'ফসল বাছুন';
+
+  @override
+  String get searchFarmerHint => 'কৃষকের নাম খুঁজুন';
+
+  @override
+  String get contractStatusTitle => 'চুক্তির অবস্থা';
+
+  @override
+  String get rowContract => 'চুক্তি';
+
+  @override
+  String get rowSupplier => 'সরবরাহকারী';
+
+  @override
+  String get rowBuyerLabel => 'ক্রেতা';
+
+  @override
+  String get deliverySchedule => 'ডেলিভারি সূচি';
+
+  @override
+  String monthDelivery(String month) {
+    return '$month ডেলিভারি';
+  }
+
+  @override
+  String weekDelivery(String n) {
+    return 'সপ্তাহ $n ডেলিভারি';
+  }
+
+  @override
+  String deliveryOrdered(String qty) {
+    return '$qty · অর্ডার হয়েছে';
+  }
+
+  @override
+  String deliveryDue(String date) {
+    return 'নির্ধারিত: $date';
+  }
+
+  @override
+  String get cancelContract => 'চুক্তি বাতিল';
+
+  @override
+  String get renewContract => 'নবায়ন করুন';
+
+  @override
+  String get orderDeliveryQ => 'এই ডেলিভারির অর্ডার দেবেন?';
+
+  @override
+  String orderDeliveryBody(String qty, String amount) {
+    return '$qty · $amount নিরাপদ লেনদেনে জমা থাকবে, মাল পৌঁছালে কৃষক পাবেন।';
+  }
+
+  @override
+  String get orderNow => 'অর্ডার দিন';
+
+  @override
+  String get contractRenewed => 'নবায়নের প্রস্তাব পাঠানো হয়েছে';
+
+  @override
+  String nContractNew(String crop) {
+    return 'নতুন চুক্তির প্রস্তাব: $crop';
+  }
+
+  @override
+  String nContractActive(String crop) {
+    return 'চুক্তি গ্রহণ করেছেন: $crop';
+  }
+
+  @override
+  String nContractRejected(String crop) {
+    return 'চুক্তি প্রত্যাখ্যাত: $crop';
+  }
+
+  @override
+  String nContractCancelled(String crop) {
+    return 'চুক্তি বাতিল: $crop';
+  }
+
+  @override
+  String nContractOrder(String no) {
+    return 'চুক্তির ডেলিভারি অর্ডার: $no';
+  }
 }

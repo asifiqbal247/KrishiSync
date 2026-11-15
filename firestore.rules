@@ -398,6 +398,35 @@ service cloud.firestore {
       }
     }
 
+    // ---------- contracts/{id} (38/39 farmer, 121–123 buyer) ----------
+    match /contracts/{id} {
+      function party() {
+        return signedIn() && (resource.data.buyerId == uid() || resource.data.farmerId == uid());
+      }
+      function toStatus(list) { return request.resource.data.status in list; }
+      allow read: if party() || isMod();
+      allow create: if isActive() && myRole() == 'buyer'
+        && request.resource.data.buyerId == uid()
+        && request.resource.data.farmerId is string
+        && request.resource.data.farmerId != uid()
+        && request.resource.data.status == 'pending'
+        && request.resource.data.quantityKg is number && request.resource.data.quantityKg > 0
+        && request.resource.data.pricePerKg is number && request.resource.data.pricePerKg > 0
+        && request.resource.data.schedule is list && request.resource.data.schedule.size() > 0;
+      allow update: if isActive() && (
+        // Farmer accepts or rejects a new contract (39 / D2).
+        (resource.data.farmerId == uid() && resource.data.status == 'pending'
+          && toStatus(['active', 'rejected']) && onlyChanges(['status', 'updatedAt']))
+        // Either side cancels (D3).
+        || (party() && resource.data.status in ['pending', 'active']
+          && toStatus(['cancelled']) && onlyChanges(['status', 'updatedAt']))
+        // Buyer turns a planned delivery into an order (123).
+        || (resource.data.buyerId == uid() && resource.data.status == 'active'
+          && toStatus(['active', 'completed'])
+          && onlyChanges(['schedule', 'status', 'updatedAt'])
+          && request.resource.data.schedule.size() == resource.data.schedule.size()));
+    }
+
     // ---------- chats/{a_b} (65/66 messages) ----------
     match /chats/{id} {
       function member() { return signedIn() && uid() in resource.data.members; }

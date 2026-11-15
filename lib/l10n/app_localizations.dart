@@ -7003,6 +7003,366 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'আজকের দাম {price}/কেজি'**
   String nPriceAlertBody(String price);
+
+  /// No description provided for @contractsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি'**
+  String get contractsTitle;
+
+  /// No description provided for @contractNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন'**
+  String get contractNew;
+
+  /// No description provided for @contractActive.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান'**
+  String get contractActive;
+
+  /// No description provided for @contractPending.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপেক্ষমাণ'**
+  String get contractPending;
+
+  /// No description provided for @contractDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন'**
+  String get contractDone;
+
+  /// No description provided for @contractRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাখ্যাত'**
+  String get contractRejected;
+
+  /// No description provided for @contractCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get contractCancelled;
+
+  /// No description provided for @contractsEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখানে কোনো চুক্তি নেই'**
+  String get contractsEmpty;
+
+  /// No description provided for @freqMonthly.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাসিক'**
+  String get freqMonthly;
+
+  /// No description provided for @freqWeekly.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাপ্তাহিক'**
+  String get freqWeekly;
+
+  /// No description provided for @contractFarmerSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{freq} {crop} সরবরাহ · {months} মাস'**
+  String contractFarmerSub(String freq, String crop, String months);
+
+  /// No description provided for @contractLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {freq} {qty}'**
+  String contractLine(String crop, String freq, String qty);
+
+  /// No description provided for @contractBuyerSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} · {range}'**
+  String contractBuyerSub(String name, String range);
+
+  /// No description provided for @newContractBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'+ নতুন চুক্তি'**
+  String get newContractBtn;
+
+  /// No description provided for @contractDetailsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তির বিবরণ'**
+  String get contractDetailsTitle;
+
+  /// No description provided for @buyerVerifiedLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} (যাচাইকৃত)'**
+  String buyerVerifiedLine(String name);
+
+  /// No description provided for @contractPriceFixed.
+  ///
+  /// In bn, this message translates to:
+  /// **'{price} / কেজি (নির্ধারিত)'**
+  String contractPriceFixed(String price);
+
+  /// No description provided for @contractTerms.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তির শর্ত'**
+  String get contractTerms;
+
+  /// No description provided for @rowTerm.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেয়াদ'**
+  String get rowTerm;
+
+  /// No description provided for @perMonthQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতি মাসে {qty}'**
+  String perMonthQty(String qty);
+
+  /// No description provided for @perWeekQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতি সপ্তাহে {qty}'**
+  String perWeekQty(String qty);
+
+  /// No description provided for @contractPayValue.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতি লোডের সময় (নিরাপদ লেনদেন থেকে)'**
+  String get contractPayValue;
+
+  /// No description provided for @acceptContract.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি গ্রহণ'**
+  String get acceptContract;
+
+  /// No description provided for @rejectContractQ.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি প্রত্যাখ্যান করবেন?'**
+  String get rejectContractQ;
+
+  /// No description provided for @rejectContractBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপর পক্ষকে জানানো হবে। এটি আর গ্রহণ করা যাবে না, তবে তারা নতুন প্রস্তাব দিতে পারবেন।'**
+  String get rejectContractBody;
+
+  /// No description provided for @cancelContractQ.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি বাতিল করবেন?'**
+  String get cancelContractQ;
+
+  /// No description provided for @cancelContractBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাকি সরবরাহ বন্ধ হবে। আগে লোড হওয়া মালের পেমেন্ট ফেরত হবে না — যা হয়েছে তা চূড়ান্ত।'**
+  String get cancelContractBody;
+
+  /// No description provided for @yesCancelIt.
+  ///
+  /// In bn, this message translates to:
+  /// **'হ্যাঁ, বাতিল করুন'**
+  String get yesCancelIt;
+
+  /// No description provided for @contractAccepted.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি গ্রহণ করা হয়েছে'**
+  String get contractAccepted;
+
+  /// No description provided for @newContractTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন চুক্তি'**
+  String get newContractTitle;
+
+  /// No description provided for @fieldSupplier.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরবরাহকারী'**
+  String get fieldSupplier;
+
+  /// No description provided for @fieldCropGrade.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল ও মান'**
+  String get fieldCropGrade;
+
+  /// No description provided for @cropGradeValue.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop}, গ্রেড {grade}'**
+  String cropGradeValue(String crop, String grade);
+
+  /// No description provided for @fieldQtyPerDelivery.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিমাণ (প্রতি ডেলিভারি)'**
+  String get fieldQtyPerDelivery;
+
+  /// No description provided for @fieldFixedPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'নির্ধারিত দাম'**
+  String get fieldFixedPrice;
+
+  /// No description provided for @sendContract.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি পাঠান'**
+  String get sendContract;
+
+  /// No description provided for @contractSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি পাঠানো হয়েছে'**
+  String get contractSent;
+
+  /// No description provided for @errSelectSupplier.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরবরাহকারী বাছুন'**
+  String get errSelectSupplier;
+
+  /// No description provided for @errSelectCrop.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল বাছুন'**
+  String get errSelectCrop;
+
+  /// No description provided for @searchFarmerHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষকের নাম খুঁজুন'**
+  String get searchFarmerHint;
+
+  /// No description provided for @contractStatusTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তির অবস্থা'**
+  String get contractStatusTitle;
+
+  /// No description provided for @rowContract.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি'**
+  String get rowContract;
+
+  /// No description provided for @rowSupplier.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরবরাহকারী'**
+  String get rowSupplier;
+
+  /// No description provided for @rowBuyerLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা'**
+  String get rowBuyerLabel;
+
+  /// No description provided for @deliverySchedule.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি সূচি'**
+  String get deliverySchedule;
+
+  /// No description provided for @monthDelivery.
+  ///
+  /// In bn, this message translates to:
+  /// **'{month} ডেলিভারি'**
+  String monthDelivery(String month);
+
+  /// No description provided for @weekDelivery.
+  ///
+  /// In bn, this message translates to:
+  /// **'সপ্তাহ {n} ডেলিভারি'**
+  String weekDelivery(String n);
+
+  /// No description provided for @deliveryOrdered.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} · অর্ডার হয়েছে'**
+  String deliveryOrdered(String qty);
+
+  /// No description provided for @deliveryDue.
+  ///
+  /// In bn, this message translates to:
+  /// **'নির্ধারিত: {date}'**
+  String deliveryDue(String date);
+
+  /// No description provided for @cancelContract.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি বাতিল'**
+  String get cancelContract;
+
+  /// No description provided for @renewContract.
+  ///
+  /// In bn, this message translates to:
+  /// **'নবায়ন করুন'**
+  String get renewContract;
+
+  /// No description provided for @orderDeliveryQ.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ডেলিভারির অর্ডার দেবেন?'**
+  String get orderDeliveryQ;
+
+  /// No description provided for @orderDeliveryBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} · {amount} নিরাপদ লেনদেনে জমা থাকবে, মাল পৌঁছালে কৃষক পাবেন।'**
+  String orderDeliveryBody(String qty, String amount);
+
+  /// No description provided for @orderNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার দিন'**
+  String get orderNow;
+
+  /// No description provided for @contractRenewed.
+  ///
+  /// In bn, this message translates to:
+  /// **'নবায়নের প্রস্তাব পাঠানো হয়েছে'**
+  String get contractRenewed;
+
+  /// No description provided for @nContractNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন চুক্তির প্রস্তাব: {crop}'**
+  String nContractNew(String crop);
+
+  /// No description provided for @nContractActive.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি গ্রহণ করেছেন: {crop}'**
+  String nContractActive(String crop);
+
+  /// No description provided for @nContractRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি প্রত্যাখ্যাত: {crop}'**
+  String nContractRejected(String crop);
+
+  /// No description provided for @nContractCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি বাতিল: {crop}'**
+  String nContractCancelled(String crop);
+
+  /// No description provided for @nContractOrder.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তির ডেলিভারি অর্ডার: {no}'**
+  String nContractOrder(String no);
 }
 
 class _AppLocalizationsDelegate

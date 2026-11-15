@@ -308,6 +308,7 @@ class TradeRepository {
       'orderNo': no,
       'listingId': src.listingId,
       'demandId': src.demandId,
+      if (src.contractId != null) 'contractId': src.contractId,
       'offerId': offerId,
       'farmerId': src.farmerId,
       'farmerName': src.farmerName,
@@ -372,6 +373,7 @@ class TradeRepository {
     required num pricePerKg,
     required UserLocation dropoff,
     required String paymentRef,
+    String notifyType = 'commit_accepted',
   }) async {
     final counterRef = _db.collection('counters').doc('orders');
     final orderRef = _orders.doc();
@@ -398,8 +400,14 @@ class TradeRepository {
     await notify(
       toUid: src.farmerId,
       fromUid: buyer.uid,
-      type: 'commit_accepted',
-      params: {'no': no, 'cropBn': src.cropNameBn, 'cropEn': src.cropNameEn},
+      type: notifyType,
+      params: {
+        'no': no,
+        'cropBn': src.cropNameBn,
+        'cropEn': src.cropNameEn,
+        'buyer': buyer.name,
+        'qty': '$quantityKg',
+      },
       link: 'order:${orderRef.id}',
     );
     return TradeOrder.fromDoc(await orderRef.get());
@@ -547,6 +555,7 @@ class OrderSource {
   const OrderSource({
     this.listingId = '',
     this.demandId,
+    this.contractId,
     required this.farmerId,
     required this.farmerName,
     required this.cropKey,
@@ -573,6 +582,7 @@ class OrderSource {
 
   final String listingId;
   final String? demandId;
+  final String? contractId;
   final String farmerId;
   final String farmerName;
   final String cropKey;

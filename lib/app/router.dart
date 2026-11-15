@@ -50,6 +50,7 @@ import '../features/transport/presentation/vehicle_screen.dart';
 import '../features/chat/presentation/chat_screens.dart';
 import '../features/profile/presentation/payment_method_screens.dart';
 import '../features/trade/presentation/history_screens.dart';
+import '../features/contract/presentation/contract_screens.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -73,6 +74,10 @@ abstract final class Routes {
   static const help = '/help';
   static const shareRecord = '/share-record';
   static const history = '/history';
+  static const contracts = '/contracts';
+  static const newContract = '/contracts/new';
+  static String contractDetails(String id) => '/contracts/$id/details';
+  static String contractStatus(String id) => '/contracts/$id';
   static const statement = '/history/statement';
   static String tip(int i) => '/tips/$i';
   static const globalBuyers = '/export';
@@ -338,6 +343,26 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const GlobalBuyersScreen(),
         routes: [
           GoRoute(path: 'guide', builder: (_, _) => const ExportGuideScreen()),
+        ],
+      ),
+      GoRoute(
+        path: Routes.contracts,
+        builder: (_, _) => const ContractsScreen(),
+        routes: [
+          GoRoute(
+              path: 'new', builder: (_, _) => const NewContractScreen()),
+          GoRoute(
+            path: ':id',
+            builder: (_, s) =>
+                ContractStatusScreen(id: s.pathParameters['id']!),
+            routes: [
+              GoRoute(
+                path: 'details',
+                builder: (_, s) =>
+                    ContractDetailsScreen(id: s.pathParameters['id']!),
+              ),
+            ],
+          ),
         ],
       ),
       GoRoute(

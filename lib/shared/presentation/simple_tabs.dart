@@ -27,7 +27,6 @@ import '../widgets/ks_dialogs.dart';
 import '../widgets/ks_list_item.dart';
 import '../widgets/ks_net_image.dart';
 import '../widgets/ks_option_card.dart';
-import '../widgets/ks_toast.dart';
 import '../../features/profile/presentation/payment_method_screens.dart';
 
 /// Tab whose real screen is built in a later Part.
@@ -79,7 +78,6 @@ class SimpleProfileTab extends ConsumerWidget {
       null => '',
     };
     final district = BdPlace.display(me.location.district, lang);
-    void soon() => KsToast.comingSoon(context);
     String n(int v) => Fmt.digits(context, '$v');
 
     final orders = ref.watch(myOrdersProvider).value ?? const <TradeOrder>[];
@@ -225,8 +223,8 @@ class SimpleProfileTab extends ConsumerWidget {
             ),
             row(
               role == UserRole.farmer ? l.rowMyContracts : l.rowContracts,
-              l.comingSoon,
-              soon,
+              null,
+              () => context.push(Routes.contracts),
             ),
             row(
               l.rowPayMethod,
