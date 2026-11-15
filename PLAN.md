@@ -5,7 +5,8 @@
 - **Part 7 (tested):** Report Issue 203/204 → Moderator Reports M4/M5 (resolve with note → reporter notified); Safe Payment 82 (placeholder) between 78 and order; NID verification M6 (user with NID → moderator verifies → notified, verified badge); Admin A1 dashboard (count queries), A2 users search/filter, A3 suspend/activate + change role, A4 moderation hub, A5 market prices (feeds home price cards + listing ranges), A6 crop catalog (new crops appear in Sell Crop; on/off). Self-transport flow tested (farmer handed over → buyer received → rate → completed).
 - **Part 8 (done):** profiles 68/138/193 with real data, 196 language sheet, D4 logout confirm, 215 skeletons, English plural-safe strings, Golaghor launcher icon (Android 12 launch screen uses it), release APK builds and runs (signed with debug key — fine for demo install).
 - **Test accounts:** 01700000001 farmer (Abdul Rahman), …02 buyer (Farhan Ahmed), …03 transporter (Kamal Hossain), …04 moderator (Rafiq), …05 admin (Tonmoy Admin). OTP 123456.
-- **Next step:** demo data (more listings/prices), Tier B extras if time allows (price trends, earnings list, payment history), final Figma pass.
+- **Demo data (2026-11-15):** farmers Karim Mia (…06, Mymensingh: potato 2 t, onion 1.5 t), Salma Begum (…07, Dinajpur: rice 5 t), Rahim Uddin (…08, Bagerhat: eggplant 800 kg) + Abdul Rahman tomato — all approved. Market prices set for all 7 crops.
+- **Next step:** Tier B extras if time allows (price trends, earnings list, payment history), final Figma pass.
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.

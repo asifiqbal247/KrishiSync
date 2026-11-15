@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/formatters.dart';
@@ -49,18 +51,19 @@ class PhoneAuthState {
     bool? verifying,
     AuthErrorCode? error,
     bool clearError = false,
-  }) =>
-      PhoneAuthState(
-        localPhone: localPhone ?? this.localPhone,
-        verificationId: verificationId ?? this.verificationId,
-        resendToken: resendToken ?? this.resendToken,
-        sending: sending ?? this.sending,
-        verifying: verifying ?? this.verifying,
-        error: clearError ? null : (error ?? this.error),
-      );
+  }) => PhoneAuthState(
+    localPhone: localPhone ?? this.localPhone,
+    verificationId: verificationId ?? this.verificationId,
+    resendToken: resendToken ?? this.resendToken,
+    sending: sending ?? this.sending,
+    verifying: verifying ?? this.verifying,
+    error: clearError ? null : (error ?? this.error),
+  );
 }
 
 class PhoneAuthController extends Notifier<PhoneAuthState> {
+  static const _verifyTimeout = Duration(seconds: 30);
+
   @override
   PhoneAuthState build() => const PhoneAuthState();
 
@@ -70,7 +73,10 @@ class PhoneAuthController extends Notifier<PhoneAuthState> {
   /// Auto-verification on Android signs in directly; router then moves on.
   Future<bool> sendCode(String localPhone, {bool resend = false}) async {
     state = state.copyWith(
-        localPhone: localPhone, sending: true, clearError: true);
+      localPhone: localPhone,
+      sending: true,
+      clearError: true,
+    );
     try {
       final r = await _auth.sendCode(
         BdPhone.toE164(localPhone),
@@ -79,9 +85,10 @@ class PhoneAuthController extends Notifier<PhoneAuthState> {
       switch (r) {
         case CodeSent(:final verificationId, :final resendToken):
           state = state.copyWith(
-              verificationId: verificationId,
-              resendToken: resendToken,
-              sending: false);
+            verificationId: verificationId,
+            resendToken: resendToken,
+            sending: false,
+          );
           return true;
         case AutoVerified(:final user):
           await _afterSignIn(user.uid, user.phoneNumber ?? '');
@@ -102,9 +109,17 @@ class PhoneAuthController extends Notifier<PhoneAuthState> {
     if (id == null) return;
     state = state.copyWith(verifying: true, clearError: true);
     try {
-      final user = await _auth.verifyCode(id, Fmt.latinDigits(code));
-      await _afterSignIn(user.uid, user.phoneNumber ?? '');
+      // Don't spin forever on a weak connection (shows "no internet").
+      final user = await _auth
+          .verifyCode(id, Fmt.latinDigits(code))
+          .timeout(_verifyTimeout);
+      await _afterSignIn(
+        user.uid,
+        user.phoneNumber ?? '',
+      ).timeout(_verifyTimeout);
       state = state.copyWith(verifying: false);
+    } on TimeoutException {
+      state = state.copyWith(verifying: false, error: AuthErrorCode.network);
     } on AuthFailure catch (e) {
       state = state.copyWith(verifying: false, error: e.code);
     } catch (_) {
@@ -112,14 +127,15 @@ class PhoneAuthController extends Notifier<PhoneAuthState> {
     }
   }
 
-  Future<void> _afterSignIn(String uid, String phone) =>
-      ref.read(userRepositoryProvider).ensureUserDoc(
-            uid: uid,
-            phone: phone,
-            language: ref.read(localeProvider)?.languageCode ?? 'bn',
-          );
+  Future<void> _afterSignIn(String uid, String phone) => ref
+      .read(userRepositoryProvider)
+      .ensureUserDoc(
+        uid: uid,
+        phone: phone,
+        language: ref.read(localeProvider)?.languageCode ?? 'bn',
+      );
 }
 
-final phoneAuthProvider =
-    NotifierProvider<PhoneAuthController, PhoneAuthState>(
-        PhoneAuthController.new);
+final phoneAuthProvider = NotifierProvider<PhoneAuthController, PhoneAuthState>(
+  PhoneAuthController.new,
+);
