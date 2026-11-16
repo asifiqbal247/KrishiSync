@@ -20,7 +20,9 @@ const maxVoiceSeconds = 60;
 
 /// "0:15" in the app's digits.
 String voiceLen(BuildContext context, int seconds) => Fmt.digits(
-    context, '${seconds ~/ 60}:${(seconds % 60).toString().padLeft(2, '0')}');
+  context,
+  '${seconds ~/ 60}:${(seconds % 60).toString().padLeft(2, '0')}',
+);
 
 /// V2 Voice Message (Figma 527:9301): records while the sheet is open.
 /// Returns the audio file and its length, or null when cancelled.
@@ -70,19 +72,26 @@ class _VoiceSheetState extends State<_VoiceSheet> {
 
   Future<void> _start() async {
     try {
-      _file = File('${Directory.systemTemp.path}/'
-          'ks_voice_${DateTime.now().millisecondsSinceEpoch}.aac');
+      _file = File(
+        '${Directory.systemTemp.path}/'
+        'ks_voice_${DateTime.now().millisecondsSinceEpoch}.aac',
+      );
       _sink = _file!.openWrite();
       // Small mono AAC: ~30 KB per 10 seconds.
-      final stream = await widget.rec.startStream(const RecordConfig(
-        encoder: AudioEncoder.aacLc,
-        bitRate: 24000,
-        sampleRate: 16000,
-        numChannels: 1,
-      ));
-      stream.listen(_sink!.add, onDone: () {
-        if (!_ended.isCompleted) _ended.complete();
-      });
+      final stream = await widget.rec.startStream(
+        const RecordConfig(
+          encoder: AudioEncoder.aacLc,
+          bitRate: 24000,
+          sampleRate: 16000,
+          numChannels: 1,
+        ),
+      );
+      stream.listen(
+        _sink!.add,
+        onDone: () {
+          if (!_ended.isCompleted) _ended.complete();
+        },
+      );
     } catch (_) {
       await _closeFile(delete: true);
       if (mounted) Navigator.pop(context);
@@ -135,9 +144,9 @@ class _VoiceSheetState extends State<_VoiceSheet> {
   }
 
   Widget _icon(String icon) => ColoredBox(
-        color: AppColors.bgSubtle,
-        child: Center(child: AppIcon(icon, color: AppColors.iconBrand)),
-      );
+    color: AppColors.bgSubtle,
+    child: Center(child: AppIcon(icon, color: AppColors.iconBrand)),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -149,8 +158,10 @@ class _VoiceSheetState extends State<_VoiceSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l.voiceRecording(voiceLen(context, _sec)),
-                style: AppTypography.headingBold20.normal),
+            Text(
+              l.voiceRecording(voiceLen(context, _sec)),
+              style: AppTypography.headingBold20.normal,
+            ),
             const SizedBox(height: AppSpacing.block),
             KsListItem(
               thumb: _icon(AppIcons.send),

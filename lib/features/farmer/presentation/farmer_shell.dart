@@ -43,7 +43,10 @@ class _FarmerShellState extends State<FarmerShell> {
           KsNavItem.images(l.navMarket, AppUi.navOnMarket, AppUi.navOffMarket),
           KsNavItem.images(l.navOrders, AppUi.navOnOrders, AppUi.navOffOrders),
           KsNavItem.images(
-              l.navProfile, AppUi.navOnProfile, AppUi.navOffProfile),
+            l.navProfile,
+            AppUi.navOnProfile,
+            AppUi.navOffProfile,
+          ),
         ],
       ),
     );

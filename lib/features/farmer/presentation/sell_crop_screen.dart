@@ -102,7 +102,8 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
       final n = _otherName.text.trim();
       return (n, n, CropCategory.other.name);
     }
-    final c = catalogCrop(ref.read(catalogProvider), _cropKey) ??
+    final c =
+        catalogCrop(ref.read(catalogProvider), _cropKey) ??
         CropCatalog.sellChips.first;
     return (c.bn, c.en, c.category.name);
   }
@@ -121,8 +122,8 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
     final l = AppLocalizations.of(context);
     final q = _num(_qty);
     setState(() {
-      _otherError = (_cropKey == CropCatalog.other &&
-              _otherName.text.trim().isEmpty)
+      _otherError =
+          (_cropKey == CropCatalog.other && _otherName.text.trim().isEmpty)
           ? l.commonRequired
           : null;
       _qtyError = (q == null || q <= 0) ? l.errQtyInvalid : null;
@@ -187,7 +188,9 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
           .read(imageStorageProvider)
           .upload(_photo!, kind: ImageKind.listing, ownerUid: me.uid);
       final (bn, en, category) = _cropNames;
-      await ref.read(listingRepositoryProvider).create(
+      await ref
+          .read(listingRepositoryProvider)
+          .create(
             farmer: me,
             photoUrls: [up.url],
             draft: ListingDraft(
@@ -235,8 +238,12 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
         body: SafeArea(
           top: false,
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-                AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.screen,
+              AppSpacing.contentTop,
+              AppSpacing.screen,
+              AppSpacing.lg,
+            ),
             children: [
               KsStepper(
                 labels: [l.sellStep1, l.sellStep2, l.sellStep3],
@@ -262,8 +269,10 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
       ? const SizedBox.shrink()
       : Padding(
           padding: const EdgeInsets.only(top: AppSpacing.xs),
-          child: Text(e,
-              style: AppTypography.caption.withColor(AppColors.textError)),
+          child: Text(
+            e,
+            style: AppTypography.caption.withColor(AppColors.textError),
+          ),
         );
 
   List<Widget> _step1(AppLocalizations l) {
@@ -339,7 +348,9 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
         },
       ),
       _err(_photoError),
-      const SizedBox(height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+      const SizedBox(
+        height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+      ),
       KsButton(label: l.sellNext, onPressed: _nextFrom1),
     ];
   }
@@ -362,10 +373,13 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
       if (market != null) ...[
         const SizedBox(height: AppSpacing.block),
         Text(
-          l.sellMarketRange(Fmt.number(context, market.min),
-              Fmt.number(context, market.max)),
-          style: AppTypography.bodySmallEmphasis.normal
-              .withColor(AppColors.textSecondary),
+          l.sellMarketRange(
+            Fmt.number(context, market.min),
+            Fmt.number(context, market.max),
+          ),
+          style: AppTypography.bodySmallEmphasis.normal.withColor(
+            AppColors.textSecondary,
+          ),
         ),
       ],
       const SizedBox(height: AppSpacing.block),
@@ -375,19 +389,22 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
         spacing: AppSpacing.sm,
         children: [
           KsPill(
-              label: l.sellToday,
-              selected: _when == _When.today,
-              onTap: () => setState(() => _when = _When.today)),
+            label: l.sellToday,
+            selected: _when == _When.today,
+            onTap: () => setState(() => _when = _When.today),
+          ),
           KsPill(
-              label: l.sellTomorrow,
-              selected: _when == _When.tomorrow,
-              onTap: () => setState(() => _when = _When.tomorrow)),
+            label: l.sellTomorrow,
+            selected: _when == _When.tomorrow,
+            onTap: () => setState(() => _when = _When.tomorrow),
+          ),
           KsPill(
-              label: _when == _When.date && _date != null
-                  ? Fmt.date(context, _date!)
-                  : l.sellPickDate,
-              selected: _when == _When.date,
-              onTap: _pickDate),
+            label: _when == _When.date && _date != null
+                ? Fmt.date(context, _date!)
+                : l.sellPickDate,
+            selected: _when == _When.date,
+            onTap: _pickDate,
+          ),
         ],
       ),
       const SizedBox(height: AppSpacing.block),
@@ -403,7 +420,9 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
         onTap: _pickPickup,
         errorText: _error,
       ),
-      const SizedBox(height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+      const SizedBox(
+        height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+      ),
       KsButton(label: l.sellNext, onPressed: _nextFrom2),
     ];
   }
@@ -414,32 +433,39 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
     return [
       ClipRRect(
         borderRadius: BorderRadius.circular(AppRadius.xl),
-        child: Image.file(_photo!,
-            height: _reviewImageHeight,
-            width: double.infinity,
-            fit: BoxFit.cover),
+        child: Image.file(
+          _photo!,
+          height: _reviewImageHeight,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
       ),
       const SizedBox(height: AppSpacing.block),
-      KsInfoCard(rows: [
-        (l.fieldCrop, l.cropWithGrade(crop, _grade)),
-        (l.fieldQuantity, l.qtyKg(Fmt.number(context, _num(_qty)!))),
-        (l.fieldPrice, l.priceLine(Fmt.number(context, _num(_price)!))),
-        (l.fieldAvailability, Fmt.date(context, _availableFrom)),
-        (l.fieldPickup, _placeLine(_pickup!)),
-      ]),
+      KsInfoCard(
+        rows: [
+          (l.fieldCrop, l.cropWithGrade(crop, _grade)),
+          (l.fieldQuantity, l.qtyKg(Fmt.number(context, _num(_qty)!))),
+          (l.fieldPrice, l.priceLine(Fmt.number(context, _num(_price)!))),
+          (l.fieldAvailability, Fmt.date(context, _availableFrom)),
+          (l.fieldPickup, _placeLine(_pickup!)),
+        ],
+      ),
       if (_error != null) ...[
         const SizedBox(height: AppSpacing.sm),
-        Text(_error!,
-            style: AppTypography.caption.withColor(AppColors.textError)),
+        Text(
+          _error!,
+          style: AppTypography.caption.withColor(AppColors.textError),
+        ),
       ],
-      const SizedBox(height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+      const SizedBox(
+        height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+      ),
       Row(
         children: [
           Expanded(
             child: KsButton.outline(
               label: l.sellEdit,
-              onPressed:
-                  _publishing ? null : () => setState(() => _step = 1),
+              onPressed: _publishing ? null : () => setState(() => _step = 1),
             ),
           ),
           const SizedBox(width: AppSpacing.md),

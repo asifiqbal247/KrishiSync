@@ -31,11 +31,11 @@ class _MyListingsScreenState extends ConsumerState<MyListingsScreen> {
   _Tab _tab = _Tab.ongoing;
 
   bool _inTab(Listing x) => switch (_tab) {
-        _Tab.ongoing => x.status == ListingStatus.pending ||
-            x.status == ListingStatus.active,
-        _Tab.sold => x.status == ListingStatus.sold,
-        _Tab.draft => x.status == ListingStatus.hidden,
-      };
+    _Tab.ongoing =>
+      x.status == ListingStatus.pending || x.status == ListingStatus.active,
+    _Tab.sold => x.status == ListingStatus.sold,
+    _Tab.draft => x.status == ListingStatus.hidden,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +53,12 @@ class _MyListingsScreenState extends ConsumerState<MyListingsScreen> {
       body: SafeArea(
         top: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-              AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.screen,
+            AppSpacing.contentTop,
+            AppSpacing.screen,
+            AppSpacing.lg,
+          ),
           child: Column(
             children: [
               Align(
@@ -74,20 +78,25 @@ class _MyListingsScreenState extends ConsumerState<MyListingsScreen> {
               const SizedBox(height: AppSpacing.block),
               Expanded(
                 child: async.when(
-                  loading: () =>
-                      const KsSkeletonList(padded: false),
+                  loading: () => const KsSkeletonList(padded: false),
                   error: (_, _) => Center(
-                      child: Text(l.errorGeneric,
-                          style: AppTypography.bodyMedium)),
+                    child: Text(
+                      l.errorGeneric,
+                      style: AppTypography.bodyMedium,
+                    ),
+                  ),
                   data: (all) {
                     final shown = all.where(_inTab).toList();
                     if (shown.isEmpty) {
                       return Align(
                         alignment: Alignment.topCenter,
-                        child: Text(l.emptyFilter,
-                            textAlign: TextAlign.center,
-                            style: AppTypography.bodyMedium.normal
-                                .withColor(AppColors.textSecondary)),
+                        child: Text(
+                          l.emptyFilter,
+                          textAlign: TextAlign.center,
+                          style: AppTypography.bodyMedium.normal.withColor(
+                            AppColors.textSecondary,
+                          ),
+                        ),
                       );
                     }
                     return ListView.separated(
@@ -96,8 +105,9 @@ class _MyListingsScreenState extends ConsumerState<MyListingsScreen> {
                           const SizedBox(height: AppSpacing.md),
                       itemBuilder: (_, i) => ListingTile(
                         listing: shown[i],
-                        onTap: () => context
-                            .push(Routes.farmerListingDetails(shown[i].id)),
+                        onTap: () => context.push(
+                          Routes.farmerListingDetails(shown[i].id),
+                        ),
                       ),
                     );
                   },

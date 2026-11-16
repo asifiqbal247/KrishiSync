@@ -33,9 +33,11 @@ class FarmerHomeScreen extends ConsumerWidget {
     final me = ref.watch(currentUserProvider).value;
     final listings = ref.watch(myListingsProvider).value ?? const <Listing>[];
     final running = listings
-        .where((x) =>
-            x.status == ListingStatus.active ||
-            x.status == ListingStatus.pending)
+        .where(
+          (x) =>
+              x.status == ListingStatus.active ||
+              x.status == ListingStatus.pending,
+        )
         .length;
     final prices = ref.watch(marketPricesProvider).value ?? const [];
     final newOffers = (ref.watch(myOffersProvider).value ?? const [])
@@ -53,8 +55,12 @@ class FarmerHomeScreen extends ConsumerWidget {
         onAvatar: () {},
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.s2xl),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.s2xl,
+        ),
         children: [
           KsSearchBar(
             hint: l.farmerSearchHint,
@@ -68,33 +74,41 @@ class FarmerHomeScreen extends ConsumerWidget {
               highlighted: true,
               thumb: Image.asset(AppUi.tileBell, fit: BoxFit.cover),
               title: l.homeNewOffers(
-                  Fmt.digits(context, '${newOffers.length}')),
+                Fmt.digits(context, '${newOffers.length}'),
+              ),
               subtitle: l.homeOffersSub(
-                  newOffers.first.cropName(Localizations.localeOf(context)
-                      .languageCode),
-                  Fmt.number(
-                      context,
-                      newOffers
-                          .map((o) => o.pricePerKg)
-                          .reduce((a, b) => a > b ? a : b))),
+                newOffers.first.cropName(
+                  Localizations.localeOf(context).languageCode,
+                ),
+                Fmt.number(
+                  context,
+                  newOffers
+                      .map((o) => o.pricePerKg)
+                      .reduce((a, b) => a > b ? a : b),
+                ),
+              ),
               trailingText: l.homeSee,
-              onTap: () => context
-                  .push(Routes.listingOffers(newOffers.first.listingId)),
+              onTap: () =>
+                  context.push(Routes.listingOffers(newOffers.first.listingId)),
             ),
           ],
           if (prices.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
             KsSectionHeader(
-                title: l.homeTodayPrices,
-                actionLabel: l.commonSeeAll,
-                onAction: () => context.push(Routes.marketPrices)),
+              title: l.homeTodayPrices,
+              actionLabel: l.commonSeeAll,
+              onAction: () => context.push(Routes.marketPrices),
+            ),
             const SizedBox(height: AppSpacing.block),
-            KsCarousel(children: [
-              for (final p in prices)
-                KsPriceCard(
+            KsCarousel(
+              children: [
+                for (final p in prices)
+                  KsPriceCard(
                     price: p,
-                    onTap: () => context.push(Routes.priceTrend(p.cropKey))),
-            ]),
+                    onTap: () => context.push(Routes.priceTrend(p.cropKey)),
+                  ),
+              ],
+            ),
           ],
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.homeWhatToDo),
@@ -116,8 +130,7 @@ class FarmerHomeScreen extends ConsumerWidget {
                 child: KsActionTile(
                   icon: AppUi.glyphList,
                   title: l.homeMyListings,
-                  hint: l.homeMyListingsSub(
-                      Fmt.digits(context, '$running')),
+                  hint: l.homeMyListingsSub(Fmt.digits(context, '$running')),
                   onTap: () => context.push(Routes.farmerListings),
                 ),
               ),
@@ -140,36 +153,55 @@ class FarmerHomeScreen extends ConsumerWidget {
                 child: KsActionTile(
                   icon: AppUi.glyphWallet,
                   title: l.homePayments,
-                  hint: l.homePaymentsSub(Fmt.taka(
-                      context,
-                      () {
-                        final now = DateTime.now();
-                        return (ref.watch(myOrdersProvider).value ??
-                                const <TradeOrder>[])
-                            .where((o) =>
+                  hint: l.homePaymentsSub(
+                    Fmt.taka(context, () {
+                      final now = DateTime.now();
+                      return (ref.watch(myOrdersProvider).value ??
+                              const <TradeOrder>[])
+                          .where(
+                            (o) =>
                                 o.status != OrderStatus.cancelled &&
                                 o.createdAt != null &&
                                 o.createdAt!.year == now.year &&
-                                o.createdAt!.month == now.month)
-                            .fold<num>(0, (a, o) => a + o.cropTotal);
-                      }())),
+                                o.createdAt!.month == now.month,
+                          )
+                          .fold<num>(0, (a, o) => a + o.cropTotal);
+                    }()),
+                  ),
                   onTap: () => context.push(Routes.payments),
                 ),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.block),
-          _BannerSlider(slides: [
-            (l.homeBannerExportTitle, l.homeBannerExportSub, AppImages.port,
-                Routes.globalBuyers),
-            (l.bannerOppTitle, l.bannerOppSub, AppImages.chili,
-                Routes.opportunities),
-            (l.bannerPlanTitle, l.bannerPlanSub, AppImages.farmerField,
-                Routes.planning),
-          ]),
+          _BannerSlider(
+            slides: [
+              (
+                l.homeBannerExportTitle,
+                l.homeBannerExportSub,
+                AppImages.port,
+                Routes.globalBuyers,
+              ),
+              (
+                l.bannerOppTitle,
+                l.bannerOppSub,
+                AppImages.chili,
+                Routes.opportunities,
+              ),
+              (
+                l.bannerPlanTitle,
+                l.bannerPlanSub,
+                AppImages.farmerField,
+                Routes.planning,
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(
-              title: l.homeTips, actionLabel: l.commonSeeAll, onAction: soon),
+            title: l.homeTips,
+            actionLabel: l.commonSeeAll,
+            onAction: soon,
+          ),
           const SizedBox(height: AppSpacing.block),
           SizedBox(
             height: _TipCard.height,
@@ -177,23 +209,26 @@ class FarmerHomeScreen extends ConsumerWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 _TipCard(
-                    image: AppUi.glyphTrendUp,
-                    title: l.tipBetterPrice,
-                    time: '1:05',
-                    done: true,
-                    onTap: () => context.push(Routes.tip(0))),
+                  image: AppUi.glyphTrendUp,
+                  title: l.tipBetterPrice,
+                  time: '1:05',
+                  done: true,
+                  onTap: () => context.push(Routes.tip(0)),
+                ),
                 const SizedBox(width: AppSpacing.md),
                 _TipCard(
-                    image: AppUi.tipClipboard,
-                    title: l.tipPackaging,
-                    time: '0:50',
-                    onTap: () => context.push(Routes.tip(1))),
+                  image: AppUi.tipClipboard,
+                  title: l.tipPackaging,
+                  time: '0:50',
+                  onTap: () => context.push(Routes.tip(1)),
+                ),
                 const SizedBox(width: AppSpacing.md),
                 _TipCard(
-                    image: AppUi.tipStar,
-                    title: l.tipGrading,
-                    time: '1:20',
-                    onTap: () => context.push(Routes.tip(2))),
+                  image: AppUi.tipStar,
+                  title: l.tipGrading,
+                  time: '1:20',
+                  onTap: () => context.push(Routes.tip(2)),
+                ),
               ],
             ),
           ),
@@ -258,30 +293,39 @@ class _BannerSliderState extends State<_BannerSlider> {
                             children: [
                               SizedBox(
                                 width: _imgLeft - AppSpacing.lg * 2,
-                                child: Text(title,
-                                    style: AppTypography.bold17.normal),
+                                child: Text(
+                                  title,
+                                  style: AppTypography.bold17.normal,
+                                ),
                               ),
                               const SizedBox(height: AppSpacing.xs),
                               SizedBox(
                                 width: _imgLeft - AppSpacing.lg * 2,
-                                child: Text(sub,
-                                    style: AppTypography.bodySmall.normal
-                                        .withColor(AppColors.textSecondary)),
+                                child: Text(
+                                  sub,
+                                  style: AppTypography.bodySmall.normal
+                                      .withColor(AppColors.textSecondary),
+                                ),
                               ),
                               const Spacer(),
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: _ctaPx, vertical: _ctaPy),
+                                  horizontal: _ctaPx,
+                                  vertical: _ctaPy,
+                                ),
                                 decoration: BoxDecoration(
                                   color: AppColors.bgBrand,
-                                  borderRadius:
-                                      BorderRadius.circular(AppRadius.xl),
+                                  borderRadius: BorderRadius.circular(
+                                    AppRadius.xl,
+                                  ),
                                 ),
-                                child: Text(l.homeSee,
-                                    style: AppTypography.caption.normal
-                                        .copyWith(
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColors.textOnBrand)),
+                                child: Text(
+                                  l.homeSee,
+                                  style: AppTypography.caption.normal.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.textOnBrand,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -291,8 +335,12 @@ class _BannerSliderState extends State<_BannerSlider> {
                           top: _imgTop,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(_imgRadius),
-                            child: Image.asset(image,
-                                width: _img, height: _img, fit: BoxFit.cover),
+                            child: Image.asset(
+                              image,
+                              width: _img,
+                              height: _img,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ],
@@ -377,14 +425,19 @@ class _TipCard extends StatelessWidget {
                   child: Image.asset(image, fit: BoxFit.contain),
                 ),
                 const SizedBox(height: AppSpacing.label),
-                Text(title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.bodyMediumStrong.normal),
+                Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.bodyMediumStrong.normal,
+                ),
                 const SizedBox(height: AppSpacing.label),
-                Text(l.tipListen(Fmt.digits(context, time)),
-                    style: AppTypography.caption.normal
-                        .withColor(AppColors.textSecondary)),
+                Text(
+                  l.tipListen(Fmt.digits(context, time)),
+                  style: AppTypography.caption.normal.withColor(
+                    AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
             if (done)
@@ -393,8 +446,12 @@ class _TipCard extends StatelessWidget {
                 top: _checkInset - AppSpacing.md,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(_check / 2),
-                  child: Image.asset(AppImages.dotActive,
-                      width: _check, height: _check, fit: BoxFit.cover),
+                  child: Image.asset(
+                    AppImages.dotActive,
+                    width: _check,
+                    height: _check,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
           ],

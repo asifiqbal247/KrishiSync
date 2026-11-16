@@ -12,25 +12,25 @@ import '../domain/listing.dart';
 (String, Color, Color) listingBadge(AppLocalizations l, ListingStatus s) =>
     switch (s) {
       ListingStatus.pending => (
-          l.statusPending,
-          AppColors.bgWarningSubtle,
-          AppColors.textWarning
-        ),
+        l.statusPending,
+        AppColors.bgWarningSubtle,
+        AppColors.textWarning,
+      ),
       ListingStatus.active => (
-          l.statusActive,
-          AppColors.bgSuccessSubtle,
-          AppColors.textSuccess
-        ),
+        l.statusActive,
+        AppColors.bgSuccessSubtle,
+        AppColors.textSuccess,
+      ),
       ListingStatus.sold => (
-          l.statusSold,
-          AppColors.bgMuted,
-          AppColors.textSecondary
-        ),
+        l.statusSold,
+        AppColors.bgMuted,
+        AppColors.textSecondary,
+      ),
       ListingStatus.hidden => (
-          l.statusHidden,
-          AppColors.bgErrorSubtle,
-          AppColors.textError
-        ),
+        l.statusHidden,
+        AppColors.bgErrorSubtle,
+        AppColors.textError,
+      ),
     };
 
 /// One listing row (HF/List Item / Status): photo, "Crop (Grade X)",
@@ -59,9 +59,12 @@ class ListingTile extends StatelessWidget {
         fallbackAsset: CropCatalog.imageFor(listing.cropKey),
       ),
       title: l.cropWithGrade(listing.cropName(lang), listing.grade),
-      subtitle: subtitle ??
-          l.listingSubtitle(Fmt.number(context, listing.availableKg),
-              Fmt.number(context, listing.pricePerKg)),
+      subtitle:
+          subtitle ??
+          l.listingSubtitle(
+            Fmt.number(context, listing.availableKg),
+            Fmt.number(context, listing.pricePerKg),
+          ),
       badge: badge,
       badgeColor: bg,
       badgeTextColor: fg,

@@ -67,8 +67,9 @@ class FirestoreListingRepository implements ListingRepository {
     return ref.id;
   }
 
-  List<Listing> _list(QuerySnapshot<Map<String, dynamic>> q) =>
-      [for (final d in q.docs) Listing.fromDoc(d)];
+  List<Listing> _list(QuerySnapshot<Map<String, dynamic>> q) => [
+    for (final d in q.docs) Listing.fromDoc(d),
+  ];
 
   @override
   Stream<List<Listing>> watchMine(String farmerId) => _col
@@ -78,10 +79,8 @@ class FirestoreListingRepository implements ListingRepository {
       .map(_list);
 
   @override
-  Stream<Listing?> watch(String id) => _col
-      .doc(id)
-      .snapshots()
-      .map((d) => d.exists ? Listing.fromDoc(d) : null);
+  Stream<Listing?> watch(String id) =>
+      _col.doc(id).snapshots().map((d) => d.exists ? Listing.fromDoc(d) : null);
 
   @override
   Stream<List<Listing>> watchByStatus(ListingStatus status, {int limit = 50}) =>
@@ -126,19 +125,18 @@ class FirestoreListingRepository implements ListingRepository {
 
   @override
   Future<void> markSold(String id) => _col.doc(id).update({
-        'status': ListingStatus.sold.name,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
+    'status': ListingStatus.sold.name,
+    'updatedAt': FieldValue.serverTimestamp(),
+  });
 
   @override
-  Future<void> approve(String id, String moderatorUid) =>
-      _col.doc(id).update({
-        'status': ListingStatus.active.name,
-        'moderationNote': null,
-        'moderatedBy': moderatorUid,
-        'moderatedAt': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
+  Future<void> approve(String id, String moderatorUid) => _col.doc(id).update({
+    'status': ListingStatus.active.name,
+    'moderationNote': null,
+    'moderatedBy': moderatorUid,
+    'moderatedAt': FieldValue.serverTimestamp(),
+    'updatedAt': FieldValue.serverTimestamp(),
+  });
 
   @override
   Future<void> reject(String id, String moderatorUid, String note) =>
@@ -152,7 +150,8 @@ class FirestoreListingRepository implements ListingRepository {
 }
 
 final listingRepositoryProvider = Provider<ListingRepository>(
-    (ref) => FirestoreListingRepository(ref.watch(firestoreProvider)));
+  (ref) => FirestoreListingRepository(ref.watch(firestoreProvider)),
+);
 
 final myListingsProvider = StreamProvider<List<Listing>>((ref) {
   final uid = ref.watch(currentUserProvider).value?.uid;
@@ -161,22 +160,29 @@ final myListingsProvider = StreamProvider<List<Listing>>((ref) {
 });
 
 final listingProvider = StreamProvider.family<Listing?, String>(
-    (ref, id) => ref.watch(listingRepositoryProvider).watch(id));
+  (ref, id) => ref.watch(listingRepositoryProvider).watch(id),
+);
 
 final listingsByStatusProvider =
     StreamProvider.family<List<Listing>, ListingStatus>(
-        (ref, s) => ref.watch(listingRepositoryProvider).watchByStatus(s));
+      (ref, s) => ref.watch(listingRepositoryProvider).watchByStatus(s),
+    );
 
 final listingCountProvider = StreamProvider.family<int, ListingStatus>(
-    (ref, s) => ref.watch(listingRepositoryProvider).countByStatus(s));
+  (ref, s) => ref.watch(listingRepositoryProvider).countByStatus(s),
+);
 
 final activeListingsProvider = StreamProvider<List<Listing>>(
-    (ref) => ref.watch(listingRepositoryProvider).watchActive());
+  (ref) => ref.watch(listingRepositoryProvider).watchActive(),
+);
 
 final farmerActiveListingsProvider =
-    StreamProvider.family<List<Listing>, String>((ref, farmerId) =>
-        ref.watch(listingRepositoryProvider).watchActiveByFarmer(farmerId));
+    StreamProvider.family<List<Listing>, String>(
+      (ref, farmerId) =>
+          ref.watch(listingRepositoryProvider).watchActiveByFarmer(farmerId),
+    );
 
 final similarListingsProvider = StreamProvider.family<List<Listing>, String>(
-    (ref, cropKey) =>
-        ref.watch(listingRepositoryProvider).watchActiveByCrop(cropKey));
+  (ref, cropKey) =>
+      ref.watch(listingRepositoryProvider).watchActiveByCrop(cropKey),
+);

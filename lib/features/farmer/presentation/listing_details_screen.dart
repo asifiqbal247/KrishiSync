@@ -46,8 +46,12 @@ class ListingDetailsScreen extends ConsumerWidget {
           return SafeArea(
             top: false,
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-                  AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.screen,
+                AppSpacing.contentTop,
+                AppSpacing.screen,
+                AppSpacing.lg,
+              ),
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(AppRadius.xl),
@@ -63,59 +67,80 @@ class ListingDetailsScreen extends ConsumerWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(l.cropWithGrade(x.cropName(lang), x.grade),
-                          style: AppTypography.headingBold20.normal),
+                      child: Text(
+                        l.cropWithGrade(x.cropName(lang), x.grade),
+                        style: AppTypography.headingBold20.normal,
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.x10,
-                          vertical: AppSpacing.badgeV),
+                        horizontal: AppSpacing.x10,
+                        vertical: AppSpacing.badgeV,
+                      ),
                       decoration: BoxDecoration(
                         color: badgeBg,
                         borderRadius: BorderRadius.circular(AppRadius.badge),
                       ),
-                      child: Text(badge,
-                          style: AppTypography.bodySmallEmphasis.normal
-                              .withColor(badgeFg)),
+                      child: Text(
+                        badge,
+                        style: AppTypography.bodySmallEmphasis.normal.withColor(
+                          badgeFg,
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.block),
-                KsInfoCard(rows: [
-                  (l.fieldQuantity,
-                      l.qtyKg(Fmt.number(context, x.availableKg))),
-                  (l.fieldMyPrice,
-                      l.priceLine(Fmt.number(context, x.pricePerKg))),
-                  if (market != null)
+                KsInfoCard(
+                  rows: [
                     (
-                      l.fieldMarketPrice,
-                      l.rangeLine(Fmt.number(context, market.min),
-                          Fmt.number(context, market.max))
+                      l.fieldQuantity,
+                      l.qtyKg(Fmt.number(context, x.availableKg)),
                     ),
-                  (
-                    l.fieldAvailability,
-                    l.availableFromDate(Fmt.date(context, x.availableFrom))
-                  ),
-                  (
-                    l.fieldPickup,
-                    BdPlace.display(x.pickup.upazila, lang).isNotEmpty
-                        ? BdPlace.display(x.pickup.upazila, lang)
-                        : BdPlace.display(x.pickup.district, lang)
-                  ),
-                ]),
+                    (
+                      l.fieldMyPrice,
+                      l.priceLine(Fmt.number(context, x.pricePerKg)),
+                    ),
+                    if (market != null)
+                      (
+                        l.fieldMarketPrice,
+                        l.rangeLine(
+                          Fmt.number(context, market.min),
+                          Fmt.number(context, market.max),
+                        ),
+                      ),
+                    (
+                      l.fieldAvailability,
+                      l.availableFromDate(Fmt.date(context, x.availableFrom)),
+                    ),
+                    (
+                      l.fieldPickup,
+                      BdPlace.display(x.pickup.upazila, lang).isNotEmpty
+                          ? BdPlace.display(x.pickup.upazila, lang)
+                          : BdPlace.display(x.pickup.district, lang),
+                    ),
+                  ],
+                ),
                 if (x.status == ListingStatus.hidden &&
                     (x.moderationNote ?? '').isNotEmpty) ...[
                   const SizedBox(height: AppSpacing.block),
-                  Text(l.moderationNote(x.moderationNote!),
-                      style: AppTypography.bodySmall
-                          .withColor(AppColors.textError)),
+                  Text(
+                    l.moderationNote(x.moderationNote!),
+                    style: AppTypography.bodySmall.withColor(
+                      AppColors.textError,
+                    ),
+                  ),
                 ],
                 const SizedBox(
-                    height:
-                        AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+                  height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+                ),
                 KsButton(
-                  label: l.seeBuyerOffers(Fmt.digits(context,
-                      '${(ref.watch(listingOffersProvider(x.id)).value ?? const []).length}')),
+                  label: l.seeBuyerOffers(
+                    Fmt.digits(
+                      context,
+                      '${(ref.watch(listingOffersProvider(x.id)).value ?? const []).length}',
+                    ),
+                  ),
                   onPressed: x.status == ListingStatus.active
                       ? () => context.push(Routes.listingOffers(x.id))
                       : null,
