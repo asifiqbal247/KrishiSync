@@ -99,8 +99,9 @@ class CloudinaryImageStorageService implements ImageStorageService {
     );
   }
 
-  /// Voice messages are small AAC files (~16 KB per 10 s), so no
-  /// compression step. Cloudinary keeps audio under the "video" type.
+  /// Voice messages are small AAC files (~30 KB per 10 s), so no
+  /// compression step. Cloudinary keeps audio under the "video" type
+  /// (/video/upload) with the audio preset (krishisync/voice folder).
   @override
   Future<String> uploadAudio(File file, {required String ownerUid}) async {
     if (await file.length() > _maxBytes) {
@@ -110,7 +111,8 @@ class CloudinaryImageStorageService implements ImageStorageService {
         'POST',
         Uri.parse('https://api.cloudinary.com/v1_1/'
             '${AppSecrets.cloudinaryCloudName}/video/upload'))
-      ..fields['upload_preset'] = AppSecrets.cloudinaryUploadPreset
+      // Separate audio-only preset; the image preset stays images-only.
+      ..fields['upload_preset'] = AppSecrets.cloudinaryAudioPreset
       ..fields['tags'] = 'krishisync,voice,$ownerUid'
       ..files.add(await http.MultipartFile.fromPath('file', file.path));
     final http.StreamedResponse streamed;

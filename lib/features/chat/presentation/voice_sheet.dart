@@ -14,8 +14,9 @@ import '../../../shared/widgets/app_icon.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_toast.dart';
 
-/// Longest voice message (rules allow 120 s).
-const maxVoiceSeconds = 120;
+/// Longest voice message; recording stops and sends at this point.
+/// Firestore rules allow the same maximum.
+const maxVoiceSeconds = 60;
 
 /// "0:15" in the app's digits.
 String voiceLen(BuildContext context, int seconds) => Fmt.digits(
