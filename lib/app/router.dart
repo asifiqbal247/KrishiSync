@@ -52,6 +52,8 @@ import '../features/profile/presentation/payment_method_screens.dart';
 import '../features/trade/presentation/history_screens.dart';
 import '../features/contract/presentation/contract_screens.dart';
 import '../features/transport/presentation/load_screens.dart';
+import '../features/market/presentation/opportunity_screens.dart';
+import '../features/trade/presentation/trace_screen.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -82,6 +84,10 @@ abstract final class Routes {
   static String extraWeight(String id) => '/extra/$id';
   static String refund(String id) => '/refund/$id';
   static String track(String id) => '/track/$id';
+  static const opportunities = '/opportunities';
+  static const planning = '/planning';
+  static String rescue(String id) => '/rescue/$id';
+  static String trace(String id) => '/trace/$id';
   static const newContract = '/contracts/new';
   static String contractDetails(String id) => '/contracts/$id/details';
   static String contractStatus(String id) => '/contracts/$id';
@@ -353,6 +359,18 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: 'guide', builder: (_, _) => const ExportGuideScreen()),
         ],
       ),
+      GoRoute(
+          path: Routes.opportunities,
+          builder: (_, _) => const OpportunityFeedScreen()),
+      GoRoute(
+          path: Routes.planning, builder: (_, _) => const PlanningScreen()),
+      GoRoute(
+          path: '/rescue/:id',
+          builder: (_, s) =>
+              SurplusRescueScreen(orderId: s.pathParameters['id']!)),
+      GoRoute(
+          path: '/trace/:id',
+          builder: (_, s) => TraceScreen(orderId: s.pathParameters['id']!)),
       GoRoute(
           path: '/load/:id',
           builder: (_, s) => FarmerLoadScreen(orderId: s.pathParameters['id']!)),

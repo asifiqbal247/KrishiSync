@@ -23,6 +23,7 @@ import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
+import '../../market/presentation/opportunity_screens.dart';
 import '../../transport/data/transport_repository.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
@@ -329,7 +330,11 @@ class OrderDetailsScreen extends ConsumerWidget {
               ),
               KsInfoRow(
                 l.rowPayment,
-                o.paymentStatus == 'unpaid' ? l.paymentPending : l.paymentHeld,
+                o.status == OrderStatus.cancelled
+                    ? l.orderStatusCancelled
+                    : o.paymentStatus == 'unpaid'
+                        ? l.paymentPending
+                        : l.paymentHeld,
               ),
               if (o.pickupDate != null)
                 iAmFarmer && o.transportMode == TransportMode.platform
@@ -348,6 +353,22 @@ class OrderDetailsScreen extends ConsumerWidget {
                   label: l.rowWeightDiff,
                   value: Fmt.taka(context, o.weightRefund),
                   onTap: () => context.push(Routes.weightDiff(o.id)),
+                ),
+              // 109: farm-to-door record once the crop is loaded.
+              if (!iAmFarmer &&
+                  o.status != OrderStatus.cancelled &&
+                  o.timeline.containsKey('pickedUp'))
+                KsLinkRow(
+                  label: l.rowTrace,
+                  value: l.seeLinkShort,
+                  onTap: () => context.push(Routes.trace(o.id)),
+                ),
+              // 55: buyer cancelled before loading → other buyers.
+              if (iAmFarmer && canRescue(o))
+                KsLinkRow(
+                  label: l.rowRescue,
+                  value: l.seeLinkShort,
+                  onTap: () => context.push(Routes.rescue(o.id)),
                 ),
               // 132: refund after a cancel.
               if (!iAmFarmer &&

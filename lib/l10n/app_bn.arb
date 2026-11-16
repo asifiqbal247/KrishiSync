@@ -3246,5 +3246,316 @@
         "type": "String"
       }
     }
-  }
+  },
+  "traceTitle": "উৎস রেকর্ড",
+  "traceOrderTitle": "{no} · {crop} {qty}",
+  "@traceOrderTitle": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "traceFarmers": "{n} জন কৃষক",
+  "@traceFarmers": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "traceDelivered": "ডেলিভারি {date}",
+  "@traceDelivered": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "qrLabel": "QR",
+  "traceFarmer": "কৃষক: {name} · {district}",
+  "@traceFarmer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "district": {
+        "type": "String"
+      }
+    }
+  },
+  "traceReady": "ফসল প্রস্তুত {date} · গ্রেড {grade}",
+  "@traceReady": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "traceLoadWeigh": "লোড ও ডিজিটাল ওজন",
+  "traceTransport": "পরিবহন: {name}",
+  "@traceTransport": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "traceSelfTransport": "পরিবহন: ক্রেতার নিজের গাড়ি",
+  "traceDelivery": "ডেলিভারি: {place}",
+  "@traceDelivery": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "traceOtpVerified": "{time} · OTP যাচাই",
+  "@traceOtpVerified": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "traceReceived": "{time} · ক্রেতা গ্রহণ করেছেন",
+  "@traceReceived": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "traceHeader": "গোলাঘর উৎস রেকর্ড",
+  "traceOrderLine": "{no} · {crop} {qty}",
+  "@traceOrderLine": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "traceFarmerLine": "কৃষক: {name}, {district} · {qty} · {grade}",
+  "@traceFarmerLine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "district": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "pdfShort": "PDF",
+  "qrShare": "QR শেয়ার",
+  "oppTitle": "বাজারের সুযোগ",
+  "oppFilterDemand": "বেশি চাহিদা",
+  "oppFilterPrice": "দাম বাড়ছে",
+  "oppFilterBuyer": "ক্রেতা খুঁজছে",
+  "oppHighDemand": "বেশি চাহিদা · {crop}",
+  "@oppHighDemand": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "oppHighDemandSub": "{district} · {n} জন ক্রেতা খুঁজছেন",
+  "@oppHighDemandSub": {
+    "placeholders": {
+      "district": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "oppPriceUp": "দাম বাড়ছে · {crop}",
+  "@oppPriceUp": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "oppPriceUpSub": "আগের দামের চেয়ে {pct} · {price}/কেজি",
+  "@oppPriceUpSub": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "oppSell": "বিক্রি",
+  "oppBuyerSeeking": "ক্রেতা খুঁজছেন · {crop} {qty}",
+  "@oppBuyerSeeking": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "oppSupply": "সরবরাহ",
+  "oppUpcoming": "আগামী চাহিদা · {crop} {qty}",
+  "@oppUpcoming": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "oppUpcomingSub": "{buyer} · {month}-এ দরকার",
+  "@oppUpcomingSub": {
+    "placeholders": {
+      "buyer": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "oppPlan": "পরিকল্পনা",
+  "oppEmpty": "এখন কোনো সুযোগ নেই — পরে আবার দেখুন",
+  "planTitle": "চাষের পরিকল্পনা",
+  "planIntro": "বীজ বোনার আগে দেখুন কোন ফসলের নিশ্চিত চাহিদা আছে",
+  "seasonRabi": "রবি (নভে–ফেব্রু)",
+  "seasonKharif1": "খরিফ-১",
+  "seasonKharif2": "খরিফ-২",
+  "planCropLine": "{crop} – {qty}",
+  "@planCropLine": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "planBuyersMore": "{name} +{n}",
+  "@planBuyersMore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "planHighDemand": "চাহিদা বেশি",
+  "priceRangeTk": "৳ {min}–{max}",
+  "@priceRangeTk": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "planEmpty": "এই মৌসুমে এখনো কোনো চাহিদা নেই",
+  "planWhenPaid": "টাকা কখন পাবেন",
+  "planWhenPaidBody": "হারভেস্টের পর মাল গাড়িতে উঠলেই। কোনো অগ্রিম টাকা নেই।",
+  "planCta": "চুক্তি দেখুন ও অংশ নিন",
+  "rescueTitle": "বিকল্প ক্রেতা",
+  "rescueCancelled": "অর্ডার বাতিল (লোডের আগে)",
+  "rescueCancelledBody": "{buyer} {qty} {crop}-এর অর্ডার ({no}) বাতিল করেছে। আপনার কোনো টাকা কাটা হবে না।",
+  "@rescueCancelledBody": {
+    "placeholders": {
+      "buyer": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "rescueFinding": "{crop}-এর জন্য কাছের ক্রেতা খুঁজে দিচ্ছি",
+  "@rescueFinding": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "rescueNone": "এখন এই ফসলের কোনো খোলা চাহিদা নেই",
+  "kmShort": "{n} কিমি",
+  "@kmShort": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "rescueOldPrice": "আগের দাম ৳{price}/কেজি",
+  "@rescueOldPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "rescueOldAndMarket": "আগের দাম ৳{price}/কেজি · বাজার দর ৳{min}–{max}",
+  "@rescueOldAndMarket": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "rescueTakeBest": "সেরা অফার গ্রহণ করুন",
+  "rescueRelist": "নিজের দামে আবার প্রকাশ করুন",
+  "rowTrace": "উৎস রেকর্ড",
+  "rowRescue": "বিকল্প ক্রেতা",
+  "seeLinkShort": "দেখুন",
+  "bannerOppTitle": "বাজারের সুযোগ",
+  "bannerOppSub": "বেশি চাহিদা ও দাম বাড়ছে এমন ফসল",
+  "bannerPlanTitle": "চাষের পরিকল্পনা",
+  "bannerPlanSub": "বোনার আগে নিশ্চিত চাহিদা দেখুন"
 }

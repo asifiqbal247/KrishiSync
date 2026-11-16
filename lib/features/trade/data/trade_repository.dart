@@ -466,7 +466,7 @@ class TradeRepository {
       fromUid: byUid,
       type: 'order_cancelled',
       params: params,
-      link: 'order:${o.id}',
+      link: 'rescue:${o.id}',
     );
     if (o.transporterId != null) {
       await notify(

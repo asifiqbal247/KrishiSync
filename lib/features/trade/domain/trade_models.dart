@@ -159,6 +159,8 @@ class TradeOrder {
     this.transporterId,
     this.transporterName,
     this.paymentRef = '',
+    this.demandId,
+    this.contractId,
     this.orderedKg,
     this.weightRefund = 0,
     this.refund,
@@ -201,6 +203,10 @@ class TradeOrder {
 
   /// "bank:…" / "bkash:…" from Safe Payment (82); placeholder reference.
   final String paymentRef;
+
+  /// Set when the order came from a buyer demand (99) or a contract (123).
+  final String? demandId;
+  final String? contractId;
 
   /// Digital weighing at loading (162). [quantityKg] / totals become the
   /// loaded amount; [orderedKg] keeps what the buyer ordered.
@@ -269,6 +275,8 @@ class TradeOrder {
       transporterId: m['transporterId'] as String?,
       transporterName: m['transporterName'] as String?,
       paymentRef: m['paymentRef'] as String? ?? '',
+      demandId: m['demandId'] as String?,
+      contractId: m['contractId'] as String?,
       orderedKg: m['orderedKg'] as num?,
       weightRefund: m['weightRefund'] as num? ?? 0,
       refund: m['refund'] as num?,

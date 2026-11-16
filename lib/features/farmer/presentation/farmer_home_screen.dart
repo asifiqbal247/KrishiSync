@@ -158,7 +158,14 @@ class FarmerHomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.block),
-          _ExportBanner(onTap: () => context.push(Routes.globalBuyers)),
+          _BannerSlider(slides: [
+            (l.homeBannerExportTitle, l.homeBannerExportSub, AppImages.port,
+                Routes.globalBuyers),
+            (l.bannerOppTitle, l.bannerOppSub, AppImages.chili,
+                Routes.opportunities),
+            (l.bannerPlanTitle, l.bannerPlanSub, AppImages.farmerField,
+                Routes.planning),
+          ]),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(
               title: l.homeTips, actionLabel: l.commonSeeAll, onAction: soon),
@@ -195,12 +202,22 @@ class FarmerHomeScreen extends ConsumerWidget {
   }
 }
 
-/// Banner Slider (292:108, slide 1): muted fill, radius 12, h 140, p 16,
-/// Bold 17 title, Regular 13 sub, brand CTA pill, 96px image radius 14,
-/// then 3 dots (active 18×6 brand, others 6×6 subtle).
-class _ExportBanner extends StatelessWidget {
-  const _ExportBanner({required this.onTap});
-  final VoidCallback onTap;
+/// Banner Slider (292:108): muted fill, radius 12, h 140, p 16, Bold 17
+/// title, Regular 13 sub, brand CTA pill, 96px image radius 14, then 3 dots
+/// (active 18×6 brand, others 6×6 subtle). Slides: export (36), market
+/// opportunities (34), production planning (35).
+class _BannerSlider extends StatefulWidget {
+  const _BannerSlider({required this.slides});
+
+  /// (title, subtitle, image, route)
+  final List<(String, String, String, String)> slides;
+
+  @override
+  State<_BannerSlider> createState() => _BannerSliderState();
+}
+
+class _BannerSliderState extends State<_BannerSlider> {
+  int _page = 0;
 
   static const _h = 140.0;
   static const _img = 96.0;
@@ -215,77 +232,93 @@ class _ExportBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Container(
-            height: _h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.bgMuted,
-              borderRadius: BorderRadius.circular(AppRadius.lg),
-            ),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(l.homeBannerExportTitle,
-                          style: AppTypography.bold17.normal),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(l.homeBannerExportSub,
-                          style: AppTypography.bodySmall.normal
-                              .withColor(AppColors.textSecondary)),
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: _ctaPx, vertical: _ctaPy),
-                        decoration: BoxDecoration(
-                          color: AppColors.bgBrand,
-                          borderRadius: BorderRadius.circular(AppRadius.xl),
-                        ),
-                        child: Text(l.homeSee,
-                            style: AppTypography.caption.normal.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textOnBrand)),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: _imgLeft,
-                  top: _imgTop,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(_imgRadius),
-                    child: Image.asset(AppImages.port,
-                        width: _img, height: _img, fit: BoxFit.cover),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      children: [
+        SizedBox(
+          height: _h,
+          child: PageView(
+            onPageChanged: (i) => setState(() => _page = i),
             children: [
-              for (var i = 0; i < 3; i++) ...[
-                if (i > 0) const SizedBox(width: AppSpacing.label),
-                Container(
-                  width: i == 0 ? _dotW : _dotH,
-                  height: _dotH,
-                  decoration: BoxDecoration(
-                    color: i == 0 ? AppColors.bgBrand : AppColors.bgSubtle,
-                    borderRadius: BorderRadius.circular(_dotH / 2),
+              for (final (title, sub, image, route) in widget.slides)
+                GestureDetector(
+                  onTap: () => context.push(route),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.bgMuted,
+                      borderRadius: BorderRadius.circular(AppRadius.lg),
+                    ),
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(AppSpacing.lg),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: _imgLeft - AppSpacing.lg * 2,
+                                child: Text(title,
+                                    style: AppTypography.bold17.normal),
+                              ),
+                              const SizedBox(height: AppSpacing.xs),
+                              SizedBox(
+                                width: _imgLeft - AppSpacing.lg * 2,
+                                child: Text(sub,
+                                    style: AppTypography.bodySmall.normal
+                                        .withColor(AppColors.textSecondary)),
+                              ),
+                              const Spacer(),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: _ctaPx, vertical: _ctaPy),
+                                decoration: BoxDecoration(
+                                  color: AppColors.bgBrand,
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadius.xl),
+                                ),
+                                child: Text(l.homeSee,
+                                    style: AppTypography.caption.normal
+                                        .copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.textOnBrand)),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          left: _imgLeft,
+                          top: _imgTop,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(_imgRadius),
+                            child: Image.asset(image,
+                                width: _img, height: _img, fit: BoxFit.cover),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
             ],
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (var i = 0; i < widget.slides.length; i++) ...[
+              if (i > 0) const SizedBox(width: AppSpacing.label),
+              Container(
+                width: i == _page ? _dotW : _dotH,
+                height: _dotH,
+                decoration: BoxDecoration(
+                  color: i == _page ? AppColors.bgBrand : AppColors.bgSubtle,
+                  borderRadius: BorderRadius.circular(_dotH / 2),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ],
     );
   }
 }

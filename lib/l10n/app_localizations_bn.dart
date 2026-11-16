@@ -4490,4 +4490,251 @@ class AppLocalizationsBn extends AppLocalizations {
   String nLoadedPaid(String no) {
     return 'মাল লোড হয়েছে, টাকা পাঠানো হয়েছে: $no';
   }
+
+  @override
+  String get traceTitle => 'উৎস রেকর্ড';
+
+  @override
+  String traceOrderTitle(String no, String crop, String qty) {
+    return '$no · $crop $qty';
+  }
+
+  @override
+  String traceFarmers(String n) {
+    return '$n জন কৃষক';
+  }
+
+  @override
+  String traceDelivered(String date) {
+    return 'ডেলিভারি $date';
+  }
+
+  @override
+  String get qrLabel => 'QR';
+
+  @override
+  String traceFarmer(String name, String district) {
+    return 'কৃষক: $name · $district';
+  }
+
+  @override
+  String traceReady(String date, String grade) {
+    return 'ফসল প্রস্তুত $date · গ্রেড $grade';
+  }
+
+  @override
+  String get traceLoadWeigh => 'লোড ও ডিজিটাল ওজন';
+
+  @override
+  String traceTransport(String name) {
+    return 'পরিবহন: $name';
+  }
+
+  @override
+  String get traceSelfTransport => 'পরিবহন: ক্রেতার নিজের গাড়ি';
+
+  @override
+  String traceDelivery(String place) {
+    return 'ডেলিভারি: $place';
+  }
+
+  @override
+  String traceOtpVerified(String time) {
+    return '$time · OTP যাচাই';
+  }
+
+  @override
+  String traceReceived(String time) {
+    return '$time · ক্রেতা গ্রহণ করেছেন';
+  }
+
+  @override
+  String get traceHeader => 'গোলাঘর উৎস রেকর্ড';
+
+  @override
+  String traceOrderLine(String no, String crop, String qty) {
+    return '$no · $crop $qty';
+  }
+
+  @override
+  String traceFarmerLine(
+    String name,
+    String district,
+    String qty,
+    String grade,
+  ) {
+    return 'কৃষক: $name, $district · $qty · $grade';
+  }
+
+  @override
+  String get pdfShort => 'PDF';
+
+  @override
+  String get qrShare => 'QR শেয়ার';
+
+  @override
+  String get oppTitle => 'বাজারের সুযোগ';
+
+  @override
+  String get oppFilterDemand => 'বেশি চাহিদা';
+
+  @override
+  String get oppFilterPrice => 'দাম বাড়ছে';
+
+  @override
+  String get oppFilterBuyer => 'ক্রেতা খুঁজছে';
+
+  @override
+  String oppHighDemand(String crop) {
+    return 'বেশি চাহিদা · $crop';
+  }
+
+  @override
+  String oppHighDemandSub(String district, String n) {
+    return '$district · $n জন ক্রেতা খুঁজছেন';
+  }
+
+  @override
+  String oppPriceUp(String crop) {
+    return 'দাম বাড়ছে · $crop';
+  }
+
+  @override
+  String oppPriceUpSub(String pct, String price) {
+    return 'আগের দামের চেয়ে $pct · $price/কেজি';
+  }
+
+  @override
+  String get oppSell => 'বিক্রি';
+
+  @override
+  String oppBuyerSeeking(String crop, String qty) {
+    return 'ক্রেতা খুঁজছেন · $crop $qty';
+  }
+
+  @override
+  String get oppSupply => 'সরবরাহ';
+
+  @override
+  String oppUpcoming(String crop, String qty) {
+    return 'আগামী চাহিদা · $crop $qty';
+  }
+
+  @override
+  String oppUpcomingSub(String buyer, String month) {
+    return '$buyer · $month-এ দরকার';
+  }
+
+  @override
+  String get oppPlan => 'পরিকল্পনা';
+
+  @override
+  String get oppEmpty => 'এখন কোনো সুযোগ নেই — পরে আবার দেখুন';
+
+  @override
+  String get planTitle => 'চাষের পরিকল্পনা';
+
+  @override
+  String get planIntro => 'বীজ বোনার আগে দেখুন কোন ফসলের নিশ্চিত চাহিদা আছে';
+
+  @override
+  String get seasonRabi => 'রবি (নভে–ফেব্রু)';
+
+  @override
+  String get seasonKharif1 => 'খরিফ-১';
+
+  @override
+  String get seasonKharif2 => 'খরিফ-২';
+
+  @override
+  String planCropLine(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String planBuyersMore(String name, String n) {
+    return '$name +$n';
+  }
+
+  @override
+  String get planHighDemand => 'চাহিদা বেশি';
+
+  @override
+  String priceRangeTk(String min, String max) {
+    return '৳ $min–$max';
+  }
+
+  @override
+  String get planEmpty => 'এই মৌসুমে এখনো কোনো চাহিদা নেই';
+
+  @override
+  String get planWhenPaid => 'টাকা কখন পাবেন';
+
+  @override
+  String get planWhenPaidBody =>
+      'হারভেস্টের পর মাল গাড়িতে উঠলেই। কোনো অগ্রিম টাকা নেই।';
+
+  @override
+  String get planCta => 'চুক্তি দেখুন ও অংশ নিন';
+
+  @override
+  String get rescueTitle => 'বিকল্প ক্রেতা';
+
+  @override
+  String get rescueCancelled => 'অর্ডার বাতিল (লোডের আগে)';
+
+  @override
+  String rescueCancelledBody(String buyer, String qty, String crop, String no) {
+    return '$buyer $qty $crop-এর অর্ডার ($no) বাতিল করেছে। আপনার কোনো টাকা কাটা হবে না।';
+  }
+
+  @override
+  String rescueFinding(String crop) {
+    return '$crop-এর জন্য কাছের ক্রেতা খুঁজে দিচ্ছি';
+  }
+
+  @override
+  String get rescueNone => 'এখন এই ফসলের কোনো খোলা চাহিদা নেই';
+
+  @override
+  String kmShort(String n) {
+    return '$n কিমি';
+  }
+
+  @override
+  String rescueOldPrice(String price) {
+    return 'আগের দাম ৳$price/কেজি';
+  }
+
+  @override
+  String rescueOldAndMarket(String price, String min, String max) {
+    return 'আগের দাম ৳$price/কেজি · বাজার দর ৳$min–$max';
+  }
+
+  @override
+  String get rescueTakeBest => 'সেরা অফার গ্রহণ করুন';
+
+  @override
+  String get rescueRelist => 'নিজের দামে আবার প্রকাশ করুন';
+
+  @override
+  String get rowTrace => 'উৎস রেকর্ড';
+
+  @override
+  String get rowRescue => 'বিকল্প ক্রেতা';
+
+  @override
+  String get seeLinkShort => 'দেখুন';
+
+  @override
+  String get bannerOppTitle => 'বাজারের সুযোগ';
+
+  @override
+  String get bannerOppSub => 'বেশি চাহিদা ও দাম বাড়ছে এমন ফসল';
+
+  @override
+  String get bannerPlanTitle => 'চাষের পরিকল্পনা';
+
+  @override
+  String get bannerPlanSub => 'বোনার আগে নিশ্চিত চাহিদা দেখুন';
 }

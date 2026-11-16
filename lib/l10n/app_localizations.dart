@@ -7993,6 +7993,389 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'মাল লোড হয়েছে, টাকা পাঠানো হয়েছে: {no}'**
   String nLoadedPaid(String no);
+
+  /// No description provided for @traceTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'উৎস রেকর্ড'**
+  String get traceTitle;
+
+  /// No description provided for @traceOrderTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} · {crop} {qty}'**
+  String traceOrderTitle(String no, String crop, String qty);
+
+  /// No description provided for @traceFarmers.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} জন কৃষক'**
+  String traceFarmers(String n);
+
+  /// No description provided for @traceDelivered.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি {date}'**
+  String traceDelivered(String date);
+
+  /// No description provided for @qrLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'QR'**
+  String get qrLabel;
+
+  /// No description provided for @traceFarmer.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক: {name} · {district}'**
+  String traceFarmer(String name, String district);
+
+  /// No description provided for @traceReady.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল প্রস্তুত {date} · গ্রেড {grade}'**
+  String traceReady(String date, String grade);
+
+  /// No description provided for @traceLoadWeigh.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড ও ডিজিটাল ওজন'**
+  String get traceLoadWeigh;
+
+  /// No description provided for @traceTransport.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবহন: {name}'**
+  String traceTransport(String name);
+
+  /// No description provided for @traceSelfTransport.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবহন: ক্রেতার নিজের গাড়ি'**
+  String get traceSelfTransport;
+
+  /// No description provided for @traceDelivery.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি: {place}'**
+  String traceDelivery(String place);
+
+  /// No description provided for @traceOtpVerified.
+  ///
+  /// In bn, this message translates to:
+  /// **'{time} · OTP যাচাই'**
+  String traceOtpVerified(String time);
+
+  /// No description provided for @traceReceived.
+  ///
+  /// In bn, this message translates to:
+  /// **'{time} · ক্রেতা গ্রহণ করেছেন'**
+  String traceReceived(String time);
+
+  /// No description provided for @traceHeader.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর উৎস রেকর্ড'**
+  String get traceHeader;
+
+  /// No description provided for @traceOrderLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} · {crop} {qty}'**
+  String traceOrderLine(String no, String crop, String qty);
+
+  /// No description provided for @traceFarmerLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক: {name}, {district} · {qty} · {grade}'**
+  String traceFarmerLine(
+    String name,
+    String district,
+    String qty,
+    String grade,
+  );
+
+  /// No description provided for @pdfShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'PDF'**
+  String get pdfShort;
+
+  /// No description provided for @qrShare.
+  ///
+  /// In bn, this message translates to:
+  /// **'QR শেয়ার'**
+  String get qrShare;
+
+  /// No description provided for @oppTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজারের সুযোগ'**
+  String get oppTitle;
+
+  /// No description provided for @oppFilterDemand.
+  ///
+  /// In bn, this message translates to:
+  /// **'বেশি চাহিদা'**
+  String get oppFilterDemand;
+
+  /// No description provided for @oppFilterPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম বাড়ছে'**
+  String get oppFilterPrice;
+
+  /// No description provided for @oppFilterBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা খুঁজছে'**
+  String get oppFilterBuyer;
+
+  /// No description provided for @oppHighDemand.
+  ///
+  /// In bn, this message translates to:
+  /// **'বেশি চাহিদা · {crop}'**
+  String oppHighDemand(String crop);
+
+  /// No description provided for @oppHighDemandSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{district} · {n} জন ক্রেতা খুঁজছেন'**
+  String oppHighDemandSub(String district, String n);
+
+  /// No description provided for @oppPriceUp.
+  ///
+  /// In bn, this message translates to:
+  /// **'দাম বাড়ছে · {crop}'**
+  String oppPriceUp(String crop);
+
+  /// No description provided for @oppPriceUpSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের দামের চেয়ে {pct} · {price}/কেজি'**
+  String oppPriceUpSub(String pct, String price);
+
+  /// No description provided for @oppSell.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিক্রি'**
+  String get oppSell;
+
+  /// No description provided for @oppBuyerSeeking.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতা খুঁজছেন · {crop} {qty}'**
+  String oppBuyerSeeking(String crop, String qty);
+
+  /// No description provided for @oppSupply.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরবরাহ'**
+  String get oppSupply;
+
+  /// No description provided for @oppUpcoming.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগামী চাহিদা · {crop} {qty}'**
+  String oppUpcoming(String crop, String qty);
+
+  /// No description provided for @oppUpcomingSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{buyer} · {month}-এ দরকার'**
+  String oppUpcomingSub(String buyer, String month);
+
+  /// No description provided for @oppPlan.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিকল্পনা'**
+  String get oppPlan;
+
+  /// No description provided for @oppEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন কোনো সুযোগ নেই — পরে আবার দেখুন'**
+  String get oppEmpty;
+
+  /// No description provided for @planTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'চাষের পরিকল্পনা'**
+  String get planTitle;
+
+  /// No description provided for @planIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'বীজ বোনার আগে দেখুন কোন ফসলের নিশ্চিত চাহিদা আছে'**
+  String get planIntro;
+
+  /// No description provided for @seasonRabi.
+  ///
+  /// In bn, this message translates to:
+  /// **'রবি (নভে–ফেব্রু)'**
+  String get seasonRabi;
+
+  /// No description provided for @seasonKharif1.
+  ///
+  /// In bn, this message translates to:
+  /// **'খরিফ-১'**
+  String get seasonKharif1;
+
+  /// No description provided for @seasonKharif2.
+  ///
+  /// In bn, this message translates to:
+  /// **'খরিফ-২'**
+  String get seasonKharif2;
+
+  /// No description provided for @planCropLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {qty}'**
+  String planCropLine(String crop, String qty);
+
+  /// No description provided for @planBuyersMore.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} +{n}'**
+  String planBuyersMore(String name, String n);
+
+  /// No description provided for @planHighDemand.
+  ///
+  /// In bn, this message translates to:
+  /// **'চাহিদা বেশি'**
+  String get planHighDemand;
+
+  /// No description provided for @priceRangeTk.
+  ///
+  /// In bn, this message translates to:
+  /// **'৳ {min}–{max}'**
+  String priceRangeTk(String min, String max);
+
+  /// No description provided for @planEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই মৌসুমে এখনো কোনো চাহিদা নেই'**
+  String get planEmpty;
+
+  /// No description provided for @planWhenPaid.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকা কখন পাবেন'**
+  String get planWhenPaid;
+
+  /// No description provided for @planWhenPaidBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'হারভেস্টের পর মাল গাড়িতে উঠলেই। কোনো অগ্রিম টাকা নেই।'**
+  String get planWhenPaidBody;
+
+  /// No description provided for @planCta.
+  ///
+  /// In bn, this message translates to:
+  /// **'চুক্তি দেখুন ও অংশ নিন'**
+  String get planCta;
+
+  /// No description provided for @rescueTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকল্প ক্রেতা'**
+  String get rescueTitle;
+
+  /// No description provided for @rescueCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডার বাতিল (লোডের আগে)'**
+  String get rescueCancelled;
+
+  /// No description provided for @rescueCancelledBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{buyer} {qty} {crop}-এর অর্ডার ({no}) বাতিল করেছে। আপনার কোনো টাকা কাটা হবে না।'**
+  String rescueCancelledBody(String buyer, String qty, String crop, String no);
+
+  /// No description provided for @rescueFinding.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop}-এর জন্য কাছের ক্রেতা খুঁজে দিচ্ছি'**
+  String rescueFinding(String crop);
+
+  /// No description provided for @rescueNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন এই ফসলের কোনো খোলা চাহিদা নেই'**
+  String get rescueNone;
+
+  /// No description provided for @kmShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} কিমি'**
+  String kmShort(String n);
+
+  /// No description provided for @rescueOldPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের দাম ৳{price}/কেজি'**
+  String rescueOldPrice(String price);
+
+  /// No description provided for @rescueOldAndMarket.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের দাম ৳{price}/কেজি · বাজার দর ৳{min}–{max}'**
+  String rescueOldAndMarket(String price, String min, String max);
+
+  /// No description provided for @rescueTakeBest.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেরা অফার গ্রহণ করুন'**
+  String get rescueTakeBest;
+
+  /// No description provided for @rescueRelist.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিজের দামে আবার প্রকাশ করুন'**
+  String get rescueRelist;
+
+  /// No description provided for @rowTrace.
+  ///
+  /// In bn, this message translates to:
+  /// **'উৎস রেকর্ড'**
+  String get rowTrace;
+
+  /// No description provided for @rowRescue.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকল্প ক্রেতা'**
+  String get rowRescue;
+
+  /// No description provided for @seeLinkShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'দেখুন'**
+  String get seeLinkShort;
+
+  /// No description provided for @bannerOppTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজারের সুযোগ'**
+  String get bannerOppTitle;
+
+  /// No description provided for @bannerOppSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'বেশি চাহিদা ও দাম বাড়ছে এমন ফসল'**
+  String get bannerOppSub;
+
+  /// No description provided for @bannerPlanTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'চাষের পরিকল্পনা'**
+  String get bannerPlanTitle;
+
+  /// No description provided for @bannerPlanSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'বোনার আগে নিশ্চিত চাহিদা দেখুন'**
+  String get bannerPlanSub;
 }
 
 class _AppLocalizationsDelegate

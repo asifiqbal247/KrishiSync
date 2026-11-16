@@ -117,6 +117,8 @@ class NotificationsScreen extends ConsumerWidget {
       'truck' || 'loaded' => Routes.farmerLoad(id),
       'extra' => Routes.extraWeight(id),
       'weight' => Routes.weightDiff(id),
+      'rescue' => Routes.rescue(id),
+      'trace' => Routes.trace(id),
       _ => null,
     };
   }
