@@ -69,6 +69,10 @@ class PhoneAuthController extends Notifier<PhoneAuthState> {
 
   AuthRepository get _auth => ref.read(authRepositoryProvider);
 
+  void clearError() {
+    if (state.error != null) state = state.copyWith(clearError: true);
+  }
+
   /// Returns true when the code was sent (go to OTP screen).
   /// Auto-verification on Android signs in directly; router then moves on.
   Future<bool> sendCode(String localPhone, {bool resend = false}) async {

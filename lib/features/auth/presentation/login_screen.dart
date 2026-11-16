@@ -34,6 +34,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   static const _imageHeight = 260.0;
 
   @override
+  void initState() {
+    super.initState();
+    // An error from an earlier sign-in (e.g. a slow one before logout)
+    // must not show on a fresh login screen.
+    Future.microtask(() => ref.read(phoneAuthProvider.notifier).clearError());
+  }
+
+  @override
   void dispose() {
     _phone.dispose();
     _termsTap.dispose();

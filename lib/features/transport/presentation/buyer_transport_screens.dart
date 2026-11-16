@@ -546,7 +546,7 @@ class TrackingScreen extends ConsumerWidget {
     final left =
         d.status == DeliveryStatus.pickedUp ? tripLeft(d, live) : null;
     final start = d.timeline['pickedUp'] ?? d.pickupDate;
-    final eta =
+    var eta =
         d.timeline['delivered'] ??
         (left != null && d.hours != null
             ? DateTime.now().add(
@@ -554,6 +554,14 @@ class TrackingScreen extends ConsumerWidget {
             : start == null || d.hours == null
                 ? null
                 : start.add(Duration(hours: d.hours!)));
+    // A planned time that has already passed (truck late or not loaded
+    // yet): count the whole road time from now instead.
+    if (eta != null &&
+        d.timeline['delivered'] == null &&
+        d.hours != null &&
+        eta.isBefore(DateTime.now())) {
+      eta = DateTime.now().add(Duration(hours: d.hours!));
+    }
     final seen = live?.at == null
         ? null
         : DateTime.now().difference(live!.at!).inMinutes;
