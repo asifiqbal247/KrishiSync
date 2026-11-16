@@ -4440,5 +4440,91 @@
         "type": "String"
       }
     }
+  },
+  "matchTitle": "কৃষক মিলান",
+  "matchHeader": "{crop} – {qty} · {place}",
+  "@matchHeader": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "matchOk": "মিলেছে",
+  "matchWait": "অপেক্ষা",
+  "matchSub": "{district} · {qty}",
+  "@matchSub": {
+    "placeholders": {
+      "district": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "matchNone": "এখনো কোনো কৃষক সরবরাহের প্রস্তাব দেননি",
+  "addToPool": "পুলে যোগ করুন",
+  "poolTitle": "ডিজিটাল পুলিং",
+  "poolTarget": "{crop} – মোট লক্ষ্য",
+  "@poolTarget": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "poolFarmers": "পুলে কৃষক ({n})",
+  "@poolFarmers": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "poolFarmerSub": "{qty} · পিকআপ {date}",
+  "@poolFarmerSub": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rowLeft": "বাকি",
+  "rowAvgPrice": "গড় দাম",
+  "poCreate": "ক্রয়াদেশ তৈরি করুন",
+  "poTitle": "ক্রয়াদেশ (PO)",
+  "rowPoNo": "PO নং",
+  "rowTotalQty": "মোট পরিমাণ",
+  "rowFarmersN": "{n} জন কৃষক",
+  "@rowFarmersN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "rowTotalValue": "মোট মূল্য",
+  "poSplit": "কৃষক অনুযায়ী ভাগ",
+  "poConfirm": "PO নিশ্চিত করুন",
+  "poDone": "{no} নিশ্চিত — {n}টি অর্ডার তৈরি হয়েছে",
+  "@poDone": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
   }
 }

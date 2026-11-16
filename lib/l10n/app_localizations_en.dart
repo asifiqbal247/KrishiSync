@@ -5715,4 +5715,84 @@ class AppLocalizationsEn extends AppLocalizations {
   String nReturnLoad(String from, String to) {
     return 'Return load found: $from → $to';
   }
+
+  @override
+  String get matchTitle => 'Farmer matching';
+
+  @override
+  String matchHeader(String crop, String qty, String place) {
+    return '$crop – $qty · $place';
+  }
+
+  @override
+  String get matchOk => 'Matched';
+
+  @override
+  String get matchWait => 'Waiting';
+
+  @override
+  String matchSub(String district, String qty) {
+    return '$district · $qty';
+  }
+
+  @override
+  String get matchNone => 'No farmer has offered supply yet';
+
+  @override
+  String get addToPool => 'Add to pool';
+
+  @override
+  String get poolTitle => 'Digital pooling';
+
+  @override
+  String poolTarget(String crop) {
+    return '$crop – total target';
+  }
+
+  @override
+  String poolFarmers(String n) {
+    return 'Farmers in pool ($n)';
+  }
+
+  @override
+  String poolFarmerSub(String qty, String date) {
+    return '$qty · pickup $date';
+  }
+
+  @override
+  String get rowLeft => 'Left';
+
+  @override
+  String get rowAvgPrice => 'Average price';
+
+  @override
+  String get poCreate => 'Create purchase order';
+
+  @override
+  String get poTitle => 'Purchase order (PO)';
+
+  @override
+  String get rowPoNo => 'PO no.';
+
+  @override
+  String get rowTotalQty => 'Total quantity';
+
+  @override
+  String rowFarmersN(String n) {
+    return '$n farmer(s)';
+  }
+
+  @override
+  String get rowTotalValue => 'Total value';
+
+  @override
+  String get poSplit => 'Split by farmer';
+
+  @override
+  String get poConfirm => 'Confirm PO';
+
+  @override
+  String poDone(String no, String n) {
+    return '$no confirmed — $n order(s) created';
+  }
 }

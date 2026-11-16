@@ -265,6 +265,40 @@ class DemandRepository {
     }
   }
 
+  static const firstPoNo = 1;
+
+  String _poText(int n) =>
+      'PO-${DateTime.now().year}-${n.toString().padLeft(4, '0')}';
+
+  /// 104 preview: the number the next purchase order will get.
+  Future<String> peekPoNo() async {
+    final c = await _db.collection('counters').doc('po').get();
+    return _poText((c.data()?['next'] as num?)?.toInt() ?? firstPoNo);
+  }
+
+  /// 104 "confirm PO": takes the next PO number, then pays and places one
+  /// order per pooled farmer (same as 99 accept) and records the PO.
+  Future<String> confirmPo(
+    Demand d,
+    List<Commit> pooled,
+    AppUser buyer,
+    num alreadyAcceptedKg,
+  ) async {
+    final counter = _db.collection('counters').doc('po');
+    final no = await _db.runTransaction<String>((tx) async {
+      final c = await tx.get(counter);
+      final next = (c.data()?['next'] as num?)?.toInt() ?? firstPoNo;
+      tx.set(counter, {'next': next + 1});
+      return _poText(next);
+    });
+    await accept(d, pooled, buyer, alreadyAcceptedKg);
+    await _col.doc(d.id).update({
+      'poNos': FieldValue.arrayUnion([no]),
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+    return no;
+  }
+
   Future<void> close(String id) => _col.doc(id).update({
     'status': DemandStatus.closed.name,
     'updatedAt': FieldValue.serverTimestamp(),

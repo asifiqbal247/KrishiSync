@@ -24,6 +24,7 @@ import '../features/buyer/presentation/buyer_shell.dart';
 import '../features/buyer/presentation/farmer_profile_screen.dart';
 import '../features/buyer/presentation/search_screen.dart';
 import '../features/demand/presentation/demand_screens.dart';
+import '../features/demand/presentation/pooling_screens.dart';
 import '../features/farmer/presentation/farmer_shell.dart';
 import '../features/farmer/presentation/guide_screens.dart';
 import '../features/farmer/presentation/listing_details_screen.dart';
@@ -116,6 +117,9 @@ abstract final class Routes {
   static const postDemand = '/demand/new';
   static const myDemands = '/demand/mine';
   static String demandOffers(String id) => '/demand/$id/offers';
+  static String matching(String id) => '/demand/$id/match';
+  static String pool(String id) => '/demand/$id/pool';
+  static String purchaseOrder(String id) => '/demand/$id/po';
   static const buyerDemands = '/demands';
   static String demandDetails(String id) => '/demands/$id';
   static const ratings = '/ratings';
@@ -337,6 +341,24 @@ final routerProvider = Provider<GoRouter>((ref) {
           builder: (_, _) => const PostDemandScreen()),
       GoRoute(
           path: Routes.myDemands, builder: (_, _) => const MyDemandsScreen()),
+      GoRoute(
+        path: '/demand/:id/match',
+        builder: (_, s) => MatchingScreen(demandId: s.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/demand/:id/pool',
+        builder: (_, s) => PoolScreen(
+          demandId: s.pathParameters['id']!,
+          farmerIds: (s.extra as List<String>?) ?? const [],
+        ),
+      ),
+      GoRoute(
+        path: '/demand/:id/po',
+        builder: (_, s) => PurchaseOrderScreen(
+          demandId: s.pathParameters['id']!,
+          farmerIds: (s.extra as List<String>?) ?? const [],
+        ),
+      ),
       GoRoute(
         path: '/demand/:id/offers',
         builder: (_, s) =>

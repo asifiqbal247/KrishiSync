@@ -119,7 +119,7 @@ class ProcurementDashboardScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.block),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () => context.push(Routes.demandOffers(d.id)),
+              onTap: () => context.push(Routes.matching(d.id)),
               child: ProgressRow(
                 label: l.procLine(
                     d.cropName(lang), tonsText(context, d.quantityKg)),

@@ -5709,4 +5709,84 @@ class AppLocalizationsBn extends AppLocalizations {
   String nReturnLoad(String from, String to) {
     return 'ফিরতি লোড পাওয়া গেছে: $from → $to';
   }
+
+  @override
+  String get matchTitle => 'কৃষক মিলান';
+
+  @override
+  String matchHeader(String crop, String qty, String place) {
+    return '$crop – $qty · $place';
+  }
+
+  @override
+  String get matchOk => 'মিলেছে';
+
+  @override
+  String get matchWait => 'অপেক্ষা';
+
+  @override
+  String matchSub(String district, String qty) {
+    return '$district · $qty';
+  }
+
+  @override
+  String get matchNone => 'এখনো কোনো কৃষক সরবরাহের প্রস্তাব দেননি';
+
+  @override
+  String get addToPool => 'পুলে যোগ করুন';
+
+  @override
+  String get poolTitle => 'ডিজিটাল পুলিং';
+
+  @override
+  String poolTarget(String crop) {
+    return '$crop – মোট লক্ষ্য';
+  }
+
+  @override
+  String poolFarmers(String n) {
+    return 'পুলে কৃষক ($n)';
+  }
+
+  @override
+  String poolFarmerSub(String qty, String date) {
+    return '$qty · পিকআপ $date';
+  }
+
+  @override
+  String get rowLeft => 'বাকি';
+
+  @override
+  String get rowAvgPrice => 'গড় দাম';
+
+  @override
+  String get poCreate => 'ক্রয়াদেশ তৈরি করুন';
+
+  @override
+  String get poTitle => 'ক্রয়াদেশ (PO)';
+
+  @override
+  String get rowPoNo => 'PO নং';
+
+  @override
+  String get rowTotalQty => 'মোট পরিমাণ';
+
+  @override
+  String rowFarmersN(String n) {
+    return '$n জন কৃষক';
+  }
+
+  @override
+  String get rowTotalValue => 'মোট মূল্য';
+
+  @override
+  String get poSplit => 'কৃষক অনুযায়ী ভাগ';
+
+  @override
+  String get poConfirm => 'PO নিশ্চিত করুন';
+
+  @override
+  String poDone(String no, String n) {
+    return '$no নিশ্চিত — $nটি অর্ডার তৈরি হয়েছে';
+  }
 }

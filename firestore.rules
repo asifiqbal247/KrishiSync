@@ -199,9 +199,9 @@ service cloud.firestore {
     // Order numbers KS-1048, KS-1049 … (+1 per order, inside a transaction).
     match /counters/{name} {
       allow read: if signedIn();
-      allow create: if isActive() && name == 'orders'
+      allow create: if isActive() && name in ['orders', 'po']
         && request.resource.data.keys().hasOnly(['next']);
-      allow update: if isActive() && name == 'orders'
+      allow update: if isActive() && name in ['orders', 'po']
         && request.resource.data.keys().hasOnly(['next'])
         && request.resource.data.next == resource.data.next + 1;
     }
@@ -532,7 +532,7 @@ service cloud.firestore {
         && request.resource.data.quantityKg is number && request.resource.data.quantityKg > 0
         && request.resource.data.targetPrice is number && request.resource.data.targetPrice > 0;
       allow update: if isActive() && resource.data.buyerId == uid()
-        && onlyChanges(['status', 'updatedAt'])
+        && onlyChanges(['status', 'poNos', 'updatedAt'])
         && request.resource.data.status in ['open', 'filled', 'closed'];
 
       // One commitment per farmer.

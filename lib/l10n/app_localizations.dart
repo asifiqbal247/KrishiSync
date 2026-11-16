@@ -10002,6 +10002,138 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ফিরতি লোড পাওয়া গেছে: {from} → {to}'**
   String nReturnLoad(String from, String to);
+
+  /// No description provided for @matchTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক মিলান'**
+  String get matchTitle;
+
+  /// No description provided for @matchHeader.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {qty} · {place}'**
+  String matchHeader(String crop, String qty, String place);
+
+  /// No description provided for @matchOk.
+  ///
+  /// In bn, this message translates to:
+  /// **'মিলেছে'**
+  String get matchOk;
+
+  /// No description provided for @matchWait.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপেক্ষা'**
+  String get matchWait;
+
+  /// No description provided for @matchSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{district} · {qty}'**
+  String matchSub(String district, String qty);
+
+  /// No description provided for @matchNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো কৃষক সরবরাহের প্রস্তাব দেননি'**
+  String get matchNone;
+
+  /// No description provided for @addToPool.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুলে যোগ করুন'**
+  String get addToPool;
+
+  /// No description provided for @poolTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিজিটাল পুলিং'**
+  String get poolTitle;
+
+  /// No description provided for @poolTarget.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – মোট লক্ষ্য'**
+  String poolTarget(String crop);
+
+  /// No description provided for @poolFarmers.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুলে কৃষক ({n})'**
+  String poolFarmers(String n);
+
+  /// No description provided for @poolFarmerSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} · পিকআপ {date}'**
+  String poolFarmerSub(String qty, String date);
+
+  /// No description provided for @rowLeft.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাকি'**
+  String get rowLeft;
+
+  /// No description provided for @rowAvgPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'গড় দাম'**
+  String get rowAvgPrice;
+
+  /// No description provided for @poCreate.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রয়াদেশ তৈরি করুন'**
+  String get poCreate;
+
+  /// No description provided for @poTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রয়াদেশ (PO)'**
+  String get poTitle;
+
+  /// No description provided for @rowPoNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'PO নং'**
+  String get rowPoNo;
+
+  /// No description provided for @rowTotalQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট পরিমাণ'**
+  String get rowTotalQty;
+
+  /// No description provided for @rowFarmersN.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} জন কৃষক'**
+  String rowFarmersN(String n);
+
+  /// No description provided for @rowTotalValue.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট মূল্য'**
+  String get rowTotalValue;
+
+  /// No description provided for @poSplit.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক অনুযায়ী ভাগ'**
+  String get poSplit;
+
+  /// No description provided for @poConfirm.
+  ///
+  /// In bn, this message translates to:
+  /// **'PO নিশ্চিত করুন'**
+  String get poConfirm;
+
+  /// No description provided for @poDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} নিশ্চিত — {n}টি অর্ডার তৈরি হয়েছে'**
+  String poDone(String no, String n);
 }
 
 class _AppLocalizationsDelegate
