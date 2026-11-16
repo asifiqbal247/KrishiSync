@@ -109,10 +109,10 @@ class QualityStandardScreen extends StatelessWidget {
             AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
         children: [
           Text(l.stdHeading(cropName, grade),
-              style: AppTypography.bodyMediumStrong.normal),
+              style: AppTypography.labelButton.normal),
           const SizedBox(height: AppSpacing.block),
           KsInfoBox(children: [
-            for (final (k, v) in rows) KsInfoRow(k, v, strong: true),
+            for (final (k, v) in rows) KsInfoRow(k, v, boldValue: true),
           ]),
           const SizedBox(height: AppSpacing.block),
           ClipRRect(

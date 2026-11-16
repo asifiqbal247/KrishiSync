@@ -179,12 +179,16 @@ class KsInfoBox extends StatelessWidget {
 
 /// Plain info row: Regular 13 secondary label | Medium 14 value.
 class KsInfoRow extends StatelessWidget {
-  const KsInfoRow(this.label, this.value, {super.key, this.strong = false});
+  const KsInfoRow(this.label, this.value,
+      {super.key, this.strong = false, this.boldValue = false});
   final String label;
   final String value;
 
   /// Total rows (e.g. "মোট ফেরত"): label and value in bold.
   final bool strong;
+
+  /// Grey label, SemiBold value (97 Quality Standard).
+  final bool boldValue;
 
   @override
   Widget build(BuildContext context) => Row(
@@ -199,7 +203,7 @@ class KsInfoRow extends StatelessWidget {
           Expanded(
             child: Text(value,
                 textAlign: TextAlign.right,
-                style: strong
+                style: strong || boldValue
                     ? AppTypography.bodyMediumStrong.normal
                     : AppTypography.bodyMediumEmphasis.normal),
           ),
