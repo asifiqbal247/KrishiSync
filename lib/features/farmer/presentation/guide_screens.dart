@@ -13,12 +13,16 @@ import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_list_item.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
+import '../data/trade_doc_repository.dart';
 
 const _pad = EdgeInsets.fromLTRB(
-    AppSpacing.screen, AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg);
+  AppSpacing.screen,
+  AppSpacing.contentTop,
+  AppSpacing.screen,
+  AppSpacing.lg,
+);
 
 /// Farming tip pages behind the home Tip Cards (345:6251): better price,
 /// packaging, grading. Audio is Tier C; the tip is shown as text.
@@ -51,7 +55,10 @@ class TipScreen extends StatelessWidget {
                 color: AppColors.bgSubtle,
                 borderRadius: BorderRadius.circular(AppRadius.lg),
               ),
-              child: Text(p, style: AppTypography.bodyMedium.copyWith(height: 1.5)),
+              child: Text(
+                p,
+                style: AppTypography.bodyMedium.copyWith(height: 1.5),
+              ),
             ),
           ],
         ],
@@ -78,20 +85,29 @@ class GlobalBuyersScreen extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.xl),
-            child: Image.asset(AppImages.port,
-                height: _imgH, width: double.infinity, fit: BoxFit.cover),
+            child: Image.asset(
+              AppImages.port,
+              height: _imgH,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.globalBuyersIntro,
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+          Text(
+            l.globalBuyersIntro,
+            style: AppTypography.bodySmall.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(height: AppSpacing.block),
           KsNoteBoxLite(text: l.noExportDemand),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton.outline(
-              label: l.seeExportGuide,
-              onPressed: () => context.push(Routes.exportGuide)),
+            label: l.seeExportGuide,
+            onPressed: () => context.push(Routes.exportGuide),
+          ),
         ],
       ),
     );
@@ -105,16 +121,17 @@ class KsNoteBoxLite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppRadius.lg),
-          border: Border.all(color: AppColors.borderDefault),
-        ),
-        child: Text(text,
-            style: AppTypography.bodyMedium.normal
-                .withColor(AppColors.textSecondary)),
-      );
+    width: double.infinity,
+    padding: const EdgeInsets.all(AppSpacing.lg),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(AppRadius.lg),
+      border: Border.all(color: AppColors.borderDefault),
+    ),
+    child: Text(
+      text,
+      style: AppTypography.bodyMedium.normal.withColor(AppColors.textSecondary),
+    ),
+  );
 }
 
 /// 37 Export Guide & Documents (Figma 292:991). Step 1 is ticked from the
@@ -127,8 +144,18 @@ class ExportGuideScreen extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final me = ref.watch(currentUserProvider).value;
     final verified = me?.verification == VerificationStatus.verified;
-    // Document viewer (207) is Tier C.
-    void soon() => KsToast.comingSoon(context);
+    // Step 2 is ticked once the phytosanitary paper is verified (207).
+    final phyto = me == null
+        ? null
+        : ref.watch(tradeDocProvider((me.uid, TradeDocType.phyto))).value;
+    final phytoOk =
+        phyto != null &&
+        phyto.status == TradeDocStatus.verified &&
+        !phyto.expired;
+    void open(TradeDocType t) {
+      if (me != null) context.push(Routes.tradeDoc(me.uid, t.name));
+    }
+
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.exportGuideTitle),
@@ -143,8 +170,14 @@ class ExportGuideScreen extends ConsumerWidget {
             done: verified,
             onTap: verified ? null : () => context.push(Routes.verification),
           ),
+          const SizedBox(height: AppSpacing.block),
+          KsTimelineItem(
+            title: l.exStep2,
+            subtitle: l.exStep2Sub,
+            done: phytoOk,
+            onTap: phytoOk ? null : () => open(TradeDocType.phyto),
+          ),
           for (final (t, s) in [
-            (l.exStep2, l.exStep2Sub),
             (l.exStep3, l.exStep3Sub),
             (l.exStep4, l.exStep4Sub),
           ]) ...[
@@ -154,9 +187,17 @@ class ExportGuideScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.exDocs),
           const SizedBox(height: AppSpacing.block),
-          KsListItem(title: l.exDoc1, subtitle: l.exDoc1Sub, onTap: soon),
+          KsListItem(
+            title: l.exDoc1,
+            subtitle: l.exDoc1Sub,
+            onTap: () => open(TradeDocType.phyto),
+          ),
           const SizedBox(height: AppSpacing.block),
-          KsListItem(title: l.exDoc2, subtitle: l.exDoc2Sub, onTap: soon),
+          KsListItem(
+            title: l.exDoc2,
+            subtitle: l.exDoc2Sub,
+            onTap: () => open(TradeDocType.license),
+          ),
         ],
       ),
     );

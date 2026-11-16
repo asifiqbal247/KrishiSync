@@ -4526,5 +4526,54 @@
         "type": "String"
       }
     }
-  }
+  },
+  "attachTitle": "ফাইল পাঠান",
+  "attachPhoto": "ছবি",
+  "attachPhotoSub": "গ্যালারি বা ক্যামেরা থেকে",
+  "attachVideo": "ভিডিও",
+  "attachVideoSub": "ফসল বা পণ্যের ভিডিও",
+  "attachDoc": "ডকুমেন্ট",
+  "attachDocSub": "রসিদ, চুক্তি বা PDF",
+  "fileSending": "পাঠানো হচ্ছে…",
+  "fileTooLarge": "ফাইলটি অনেক বড় (সর্বোচ্চ {mb} MB)",
+  "@fileTooLarge": {
+    "placeholders": {
+      "mb": {
+        "type": "String"
+      }
+    }
+  },
+  "videoTapToWatch": "চাপ দিয়ে ভিডিও দেখুন",
+  "fileOpenFailed": "ফাইলটি খোলা যায়নি",
+  "rowUploaded": "আপলোড",
+  "rowExpiry": "মেয়াদ শেষ",
+  "docVerified": "✓ যাচাইকৃত",
+  "docPending": "যাচাই চলছে",
+  "docRejected": "বাতিল — নতুন করে আপলোড করুন",
+  "docExpired": "মেয়াদ শেষ হয়ে গেছে",
+  "docPdf": "PDF ডাউনলোড",
+  "docReupload": "নতুন করে আপলোড",
+  "docUpload": "আপলোড করুন",
+  "docNoneTitle": "এখনো আপলোড করা হয়নি",
+  "docNoneBody": "কাগজের পরিষ্কার ছবি তুলে আপলোড করুন। মডারেটর যাচাই করবেন।",
+  "docExpiryPick": "কাগজের মেয়াদ শেষের তারিখ বাছুন",
+  "docSent": "আপলোড হয়েছে — মডারেটর যাচাই করবেন",
+  "nDocOk": "{doc} যাচাই হয়েছে",
+  "@nDocOk": {
+    "placeholders": {
+      "doc": {
+        "type": "String"
+      }
+    }
+  },
+  "nDocOkBody": "রপ্তানির জন্য আপনার কাগজ এখন প্রস্তুত",
+  "nDocRejected": "{doc} বাতিল হয়েছে",
+  "@nDocRejected": {
+    "placeholders": {
+      "doc": {
+        "type": "String"
+      }
+    }
+  },
+  "nDocRejectedBody": "পরিষ্কার ছবি দিয়ে নতুন করে আপলোড করুন"
 }

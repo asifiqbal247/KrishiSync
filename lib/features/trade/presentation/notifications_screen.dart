@@ -15,6 +15,7 @@ import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_states.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
+import '../../farmer/data/trade_doc_repository.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
 
@@ -31,6 +32,8 @@ class NotificationsScreen extends ConsumerWidget {
     final crop = (bn ? p['cropBn'] : p['cropEn']) ?? '';
     String num(String? v) =>
         Fmt.number(context, double.tryParse(v ?? '') ?? 0);
+    String docName(String? t) =>
+        t == TradeDocType.license.name ? l.exDoc2 : l.exDoc1;
     return switch (n.type) {
       'offer_new' => (
           l.nOfferNew(crop),
@@ -66,6 +69,11 @@ class NotificationsScreen extends ConsumerWidget {
       'commit_accepted' => (l.nCommitAccepted(p['no'] ?? ''), crop),
       'verify_ok' => (l.nVerifyOk, l.nVerifyOkBody),
       'verify_rejected' => (l.nVerifyRejected, l.nVerifyRejectedBody),
+      'doc_ok' => (l.nDocOk(docName(p['doc'])), l.nDocOkBody),
+      'doc_rejected' => (
+          l.nDocRejected(docName(p['doc'])),
+          l.nDocRejectedBody
+        ),
       'report_resolved' => (l.nReportResolved, p['note'] ?? ''),
       'report_dismissed' => (l.nReportDismissed, p['note'] ?? ''),
       'trip_picked' => (l.nTripPicked(p['no'] ?? ''), crop),
@@ -128,6 +136,10 @@ class NotificationsScreen extends ConsumerWidget {
       'book' => Routes.buyerBook(id),
       'job' => Routes.trJob(id),
       'return' => Routes.trReturnDone(id),
+      // tradeDocs id = {uid}_{type}
+      'doc' when id.contains('_') => Routes.tradeDoc(
+          id.substring(0, id.lastIndexOf('_')),
+          id.substring(id.lastIndexOf('_') + 1)),
       'load' => Routes.trLoad(id),
       'demand' => Routes.demandOffers(id),
       'price' => Routes.priceTrend(id),

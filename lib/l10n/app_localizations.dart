@@ -10134,6 +10134,174 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'{no} নিশ্চিত — {n}টি অর্ডার তৈরি হয়েছে'**
   String poDone(String no, String n);
+
+  /// No description provided for @attachTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাইল পাঠান'**
+  String get attachTitle;
+
+  /// No description provided for @attachPhoto.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি'**
+  String get attachPhoto;
+
+  /// No description provided for @attachPhotoSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্যালারি বা ক্যামেরা থেকে'**
+  String get attachPhotoSub;
+
+  /// No description provided for @attachVideo.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভিডিও'**
+  String get attachVideo;
+
+  /// No description provided for @attachVideoSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসল বা পণ্যের ভিডিও'**
+  String get attachVideoSub;
+
+  /// No description provided for @attachDoc.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডকুমেন্ট'**
+  String get attachDoc;
+
+  /// No description provided for @attachDocSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ, চুক্তি বা PDF'**
+  String get attachDocSub;
+
+  /// No description provided for @fileSending.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠানো হচ্ছে…'**
+  String get fileSending;
+
+  /// No description provided for @fileTooLarge.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাইলটি অনেক বড় (সর্বোচ্চ {mb} MB)'**
+  String fileTooLarge(String mb);
+
+  /// No description provided for @videoTapToWatch.
+  ///
+  /// In bn, this message translates to:
+  /// **'চাপ দিয়ে ভিডিও দেখুন'**
+  String get videoTapToWatch;
+
+  /// No description provided for @fileOpenFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাইলটি খোলা যায়নি'**
+  String get fileOpenFailed;
+
+  /// No description provided for @rowUploaded.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপলোড'**
+  String get rowUploaded;
+
+  /// No description provided for @rowExpiry.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেয়াদ শেষ'**
+  String get rowExpiry;
+
+  /// No description provided for @docVerified.
+  ///
+  /// In bn, this message translates to:
+  /// **'✓ যাচাইকৃত'**
+  String get docVerified;
+
+  /// No description provided for @docPending.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাই চলছে'**
+  String get docPending;
+
+  /// No description provided for @docRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল — নতুন করে আপলোড করুন'**
+  String get docRejected;
+
+  /// No description provided for @docExpired.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেয়াদ শেষ হয়ে গেছে'**
+  String get docExpired;
+
+  /// No description provided for @docPdf.
+  ///
+  /// In bn, this message translates to:
+  /// **'PDF ডাউনলোড'**
+  String get docPdf;
+
+  /// No description provided for @docReupload.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন করে আপলোড'**
+  String get docReupload;
+
+  /// No description provided for @docUpload.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপলোড করুন'**
+  String get docUpload;
+
+  /// No description provided for @docNoneTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো আপলোড করা হয়নি'**
+  String get docNoneTitle;
+
+  /// No description provided for @docNoneBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাগজের পরিষ্কার ছবি তুলে আপলোড করুন। মডারেটর যাচাই করবেন।'**
+  String get docNoneBody;
+
+  /// No description provided for @docExpiryPick.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাগজের মেয়াদ শেষের তারিখ বাছুন'**
+  String get docExpiryPick;
+
+  /// No description provided for @docSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপলোড হয়েছে — মডারেটর যাচাই করবেন'**
+  String get docSent;
+
+  /// No description provided for @nDocOk.
+  ///
+  /// In bn, this message translates to:
+  /// **'{doc} যাচাই হয়েছে'**
+  String nDocOk(String doc);
+
+  /// No description provided for @nDocOkBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'রপ্তানির জন্য আপনার কাগজ এখন প্রস্তুত'**
+  String get nDocOkBody;
+
+  /// No description provided for @nDocRejected.
+  ///
+  /// In bn, this message translates to:
+  /// **'{doc} বাতিল হয়েছে'**
+  String nDocRejected(String doc);
+
+  /// No description provided for @nDocRejectedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিষ্কার ছবি দিয়ে নতুন করে আপলোড করুন'**
+  String get nDocRejectedBody;
 }
 
 class _AppLocalizationsDelegate

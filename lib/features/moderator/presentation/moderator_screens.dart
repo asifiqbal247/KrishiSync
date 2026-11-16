@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../farmer/data/trade_doc_repository.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_assets.dart';
@@ -23,7 +24,6 @@ import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
-import '../../admin/data/admin_repository.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
 import '../../farmer/domain/listing.dart';
@@ -167,7 +167,7 @@ class ModeratorHome extends ConsumerWidget {
                   label: l.modStatVerify,
                   value: Fmt.digits(
                     context,
-                    '${ref.watch(pendingVerificationProvider).value?.length ?? 0}',
+                    '${ref.watch(pendingVerifyCountProvider) ?? 0}',
                   ),
                   onTap: () => onOpenTab?.call(3),
                 ),

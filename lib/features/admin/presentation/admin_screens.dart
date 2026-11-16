@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../farmer/data/trade_doc_repository.dart';
 import '../../../shared/utils/sheet_utils.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
@@ -335,10 +336,10 @@ class _UsersScreenState extends ConsumerState<UsersScreen> {
                         badgeColor: AppColors.bgErrorSubtle,
                         badgeTextColor: AppColors.textError,
                         onTap: () {
-                            // Don't reopen the keyboard when coming back.
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            context.push(Routes.adminUser(u.uid));
-                          },
+                          // Don't reopen the keyboard when coming back.
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          context.push(Routes.adminUser(u.uid));
+                        },
                       ),
                       const SizedBox(height: AppSpacing.block),
                     ],
@@ -516,7 +517,7 @@ class ModerationHub extends ConsumerWidget {
         .watch(listingCountProvider(ListingStatus.pending))
         .value;
     final reports = ref.watch(openReportsCountProvider).value;
-    final verify = ref.watch(pendingVerificationProvider).value?.length;
+    final verify = ref.watch(pendingVerifyCountProvider);
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.moderationTitle, showBack: false),
@@ -587,7 +588,10 @@ class PricesScreen extends ConsumerWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Text(crop.name(lang), style: AppTypography.h3.normal),
+                    child: Text(
+                      crop.name(lang),
+                      style: AppTypography.h3.normal,
+                    ),
                   ),
                   KsPill(
                     label: Fmt.date(ctx, day),

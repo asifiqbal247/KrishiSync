@@ -5789,4 +5789,95 @@ class AppLocalizationsBn extends AppLocalizations {
   String poDone(String no, String n) {
     return '$no নিশ্চিত — $nটি অর্ডার তৈরি হয়েছে';
   }
+
+  @override
+  String get attachTitle => 'ফাইল পাঠান';
+
+  @override
+  String get attachPhoto => 'ছবি';
+
+  @override
+  String get attachPhotoSub => 'গ্যালারি বা ক্যামেরা থেকে';
+
+  @override
+  String get attachVideo => 'ভিডিও';
+
+  @override
+  String get attachVideoSub => 'ফসল বা পণ্যের ভিডিও';
+
+  @override
+  String get attachDoc => 'ডকুমেন্ট';
+
+  @override
+  String get attachDocSub => 'রসিদ, চুক্তি বা PDF';
+
+  @override
+  String get fileSending => 'পাঠানো হচ্ছে…';
+
+  @override
+  String fileTooLarge(String mb) {
+    return 'ফাইলটি অনেক বড় (সর্বোচ্চ $mb MB)';
+  }
+
+  @override
+  String get videoTapToWatch => 'চাপ দিয়ে ভিডিও দেখুন';
+
+  @override
+  String get fileOpenFailed => 'ফাইলটি খোলা যায়নি';
+
+  @override
+  String get rowUploaded => 'আপলোড';
+
+  @override
+  String get rowExpiry => 'মেয়াদ শেষ';
+
+  @override
+  String get docVerified => '✓ যাচাইকৃত';
+
+  @override
+  String get docPending => 'যাচাই চলছে';
+
+  @override
+  String get docRejected => 'বাতিল — নতুন করে আপলোড করুন';
+
+  @override
+  String get docExpired => 'মেয়াদ শেষ হয়ে গেছে';
+
+  @override
+  String get docPdf => 'PDF ডাউনলোড';
+
+  @override
+  String get docReupload => 'নতুন করে আপলোড';
+
+  @override
+  String get docUpload => 'আপলোড করুন';
+
+  @override
+  String get docNoneTitle => 'এখনো আপলোড করা হয়নি';
+
+  @override
+  String get docNoneBody =>
+      'কাগজের পরিষ্কার ছবি তুলে আপলোড করুন। মডারেটর যাচাই করবেন।';
+
+  @override
+  String get docExpiryPick => 'কাগজের মেয়াদ শেষের তারিখ বাছুন';
+
+  @override
+  String get docSent => 'আপলোড হয়েছে — মডারেটর যাচাই করবেন';
+
+  @override
+  String nDocOk(String doc) {
+    return '$doc যাচাই হয়েছে';
+  }
+
+  @override
+  String get nDocOkBody => 'রপ্তানির জন্য আপনার কাগজ এখন প্রস্তুত';
+
+  @override
+  String nDocRejected(String doc) {
+    return '$doc বাতিল হয়েছে';
+  }
+
+  @override
+  String get nDocRejectedBody => 'পরিষ্কার ছবি দিয়ে নতুন করে আপলোড করুন';
 }

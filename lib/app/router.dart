@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/l10n/locale_controller.dart';
+import '../features/farmer/data/trade_doc_repository.dart';
+import '../features/farmer/presentation/trade_doc_screen.dart';
 import '../features/admin/presentation/admin_screens.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/user_repository.dart';
@@ -147,6 +149,8 @@ abstract final class Routes {
   static const procurement = '/procurement';
   static const procurementAnalytics = '/procurement/analytics';
   static String supplier(String uid) => '/suppliers/$uid';
+  // 207 Document viewer: a farmer's export paper (phyto | license).
+  static String tradeDoc(String uid, String type) => '/documents/$uid/$type';
   static String transporterProfile(String uid, {bool pick = false}) =>
       '/people/transporter/$uid${pick ? '?pick=1' : ''}';
   static String buyerProfile(String uid) => '/people/buyer/$uid';
@@ -583,6 +587,16 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, _) => const ProcurementAnalyticsScreen(),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/documents/:uid/:type',
+        builder: (_, s) => TradeDocScreen(
+          uid: s.pathParameters['uid']!,
+          type: TradeDocType.values.firstWhere(
+            (t) => t.name == s.pathParameters['type'],
+            orElse: () => TradeDocType.phyto,
+          ),
+        ),
       ),
       GoRoute(
         path: '/suppliers',

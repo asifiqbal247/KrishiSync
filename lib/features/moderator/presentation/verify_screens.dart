@@ -19,6 +19,8 @@ import '../../../shared/widgets/ks_skeleton.dart';
 import '../../admin/data/admin_repository.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
+import '../../farmer/data/trade_doc_repository.dart';
+import '../../farmer/presentation/trade_doc_screen.dart';
 import '../../transport/presentation/transport_common.dart';
 import 'report_screens.dart';
 
@@ -29,7 +31,8 @@ const _pad = EdgeInsets.fromLTRB(
   AppSpacing.lg,
 );
 
-/// M6 Verification queue: users who gave an NID number.
+/// M6 Verification queue: users who gave an NID number, then export
+/// papers waiting for a check (207).
 class VerificationQueue extends ConsumerWidget {
   const VerificationQueue({super.key, this.showBack = false});
   final bool showBack;
@@ -38,6 +41,7 @@ class VerificationQueue extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final async = ref.watch(pendingVerificationProvider);
+    final papers = ref.watch(pendingTradeDocsProvider).value ?? const [];
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.verifyTitle, showBack: showBack),
@@ -49,7 +53,7 @@ class VerificationQueue extends ConsumerWidget {
         AsyncData(value: final list) => ListView(
           padding: _pad,
           children: [
-            if (list.isEmpty)
+            if (list.isEmpty && papers.isEmpty)
               Text(
                 l.verifyEmpty,
                 textAlign: TextAlign.center,
@@ -67,6 +71,18 @@ class VerificationQueue extends ConsumerWidget {
                 title: u.name,
                 subtitle: l.nameRolePhone(roleLabel(l, u.role?.name), u.phone),
                 onTap: () => context.push(Routes.moderatorVerifyUser(u.uid)),
+              ),
+              const SizedBox(height: AppSpacing.block),
+            ],
+            for (final d in papers) ...[
+              KsListItem(
+                thumb: KsNetImage(
+                  url: d.url,
+                  thumbSize: KsListItem.thumbSize.round(),
+                ),
+                title: ref.watch(userByIdProvider(d.uid)).value?.name ?? '',
+                subtitle: tradeDocName(l, d.type),
+                onTap: () => context.push(Routes.tradeDoc(d.uid, d.type.name)),
               ),
               const SizedBox(height: AppSpacing.block),
             ],
@@ -164,7 +180,10 @@ class _VerifyReviewState extends ConsumerState<VerifyReviewScreen> {
             const SizedBox(height: AppSpacing.block),
             ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.xl),
-              child: SizedBox(height: _docH, child: KsNetImage(url: url)),
+              child: SizedBox(
+                height: _docH,
+                child: KsNetImage(url: url),
+              ),
             ),
           ],
           const SizedBox(

@@ -107,6 +107,9 @@ abstract final class AppColors {
   static const shadowModal = Color(0x2E000000);
   /// Modal overlay: rgba(31,31,31,0.45).
   static const overlayScrim = Color(0x731F1F1F);
+
+  /// Full-screen photo viewer backdrop (chat photos, papers).
+  static const photoBackdrop = black;
   /// Price / tip card border (#E0E0E0 in Figma cards).
   static const cardBorder = Color(0xFFE0E0E0);
   /// Tip card thumb background (#F3F3F3).

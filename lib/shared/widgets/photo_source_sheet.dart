@@ -12,8 +12,16 @@ import 'app_icon.dart';
 
 /// Ask camera or gallery, then return the picked file (or null).
 Future<File?> pickPhoto(BuildContext context) async {
+  final source = await askPhotoSource(context);
+  if (source == null) return null;
+  final x = await ImagePicker().pickImage(source: source, imageQuality: 90);
+  return x == null ? null : File(x.path);
+}
+
+/// Camera or gallery sheet (photos and chat videos).
+Future<ImageSource?> askPhotoSource(BuildContext context) {
   final l = AppLocalizations.of(context);
-  final source = await showModalBottomSheet<ImageSource>(
+  return showModalBottomSheet<ImageSource>(
     context: context,
     builder: (ctx) => SafeArea(
       child: Padding(
@@ -45,7 +53,4 @@ Future<File?> pickPhoto(BuildContext context) async {
       ),
     ),
   );
-  if (source == null) return null;
-  final x = await ImagePicker().pickImage(source: source, imageQuality: 90);
-  return x == null ? null : File(x.path);
 }

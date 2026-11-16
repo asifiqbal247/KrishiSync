@@ -94,4 +94,10 @@ abstract final class Fmt {
     final pattern = d.year == DateTime.now().year ? 'd MMMM' : 'd MMMM y';
     return digits(context, DateFormat(pattern, loc).format(d));
   }
+
+  /// Short month, always with year: "১২ অক্টো. ২০২৬" (207 papers).
+  static String dateFull(BuildContext context, DateTime d) {
+    final loc = Localizations.localeOf(context).languageCode;
+    return digits(context, DateFormat('d MMM y', loc).format(d));
+  }
 }

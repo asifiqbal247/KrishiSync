@@ -5795,4 +5795,95 @@ class AppLocalizationsEn extends AppLocalizations {
   String poDone(String no, String n) {
     return '$no confirmed — $n order(s) created';
   }
+
+  @override
+  String get attachTitle => 'Send a file';
+
+  @override
+  String get attachPhoto => 'Photo';
+
+  @override
+  String get attachPhotoSub => 'From gallery or camera';
+
+  @override
+  String get attachVideo => 'Video';
+
+  @override
+  String get attachVideoSub => 'Video of the crop or goods';
+
+  @override
+  String get attachDoc => 'Document';
+
+  @override
+  String get attachDocSub => 'Receipt, contract or PDF';
+
+  @override
+  String get fileSending => 'Sending…';
+
+  @override
+  String fileTooLarge(String mb) {
+    return 'The file is too large (max $mb MB)';
+  }
+
+  @override
+  String get videoTapToWatch => 'Tap to watch';
+
+  @override
+  String get fileOpenFailed => 'Could not open the file';
+
+  @override
+  String get rowUploaded => 'Uploaded';
+
+  @override
+  String get rowExpiry => 'Expires';
+
+  @override
+  String get docVerified => '✓ Verified';
+
+  @override
+  String get docPending => 'Being checked';
+
+  @override
+  String get docRejected => 'Rejected — please upload again';
+
+  @override
+  String get docExpired => 'Expired';
+
+  @override
+  String get docPdf => 'Download PDF';
+
+  @override
+  String get docReupload => 'Upload again';
+
+  @override
+  String get docUpload => 'Upload';
+
+  @override
+  String get docNoneTitle => 'Not uploaded yet';
+
+  @override
+  String get docNoneBody =>
+      'Take a clear photo of the paper and upload it. A moderator will check it.';
+
+  @override
+  String get docExpiryPick => 'Pick the paper\'s expiry date';
+
+  @override
+  String get docSent => 'Uploaded — a moderator will check it';
+
+  @override
+  String nDocOk(String doc) {
+    return '$doc verified';
+  }
+
+  @override
+  String get nDocOkBody => 'Your paper is now ready for export';
+
+  @override
+  String nDocRejected(String doc) {
+    return '$doc rejected';
+  }
+
+  @override
+  String get nDocRejectedBody => 'Please upload a clear photo again';
 }

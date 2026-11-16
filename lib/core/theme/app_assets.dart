@@ -137,6 +137,11 @@ abstract final class AppUi {
   // Chat composer (66): 44px voice + send buttons.
   static const chatVoice = '$_p/chat_voice.webp';
   static const chatSend = '$_p/chat_send.webp';
+
+  // 216 Chat – attach file sheet: 44px option tiles.
+  static const attachImage = '$_p/attach_img.webp';
+  static const attachVideo = '$_p/attach_vid.webp';
+  static const attachDoc = '$_p/attach_doc.webp';
 }
 
 abstract final class AppData {

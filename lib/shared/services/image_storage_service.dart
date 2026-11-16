@@ -21,12 +21,24 @@ class UploadedImage {
   final int width;
   final int height;
 
-  Map<String, dynamic> toMap() =>
-      {'url': url, 'publicId': publicId, 'w': width, 'h': height};
+  Map<String, dynamic> toMap() => {
+    'url': url,
+    'publicId': publicId,
+    'w': width,
+    'h': height,
+  };
 }
 
 /// What kind of image is being uploaded. Used for tags and size limits.
-enum ImageKind { profile, listing, delivery, verification, report }
+enum ImageKind {
+  profile,
+  listing,
+  delivery,
+  verification,
+  report,
+  chat,
+  tradeDoc,
+}
 
 class ImageUploadException implements Exception {
   ImageUploadException(this.message);
@@ -49,20 +61,29 @@ abstract interface class ImageStorageService {
 
   /// Short voice message (chat). Returns the file's URL.
   Future<String> uploadAudio(File file, {required String ownerUid});
+
+  /// Chat video or PDF document (216). Returns the file's URL.
+  Future<String> uploadFile(
+    File file, {
+    required bool video,
+    required String ownerUid,
+  });
 }
 
 class CloudinaryImageStorageService implements ImageStorageService {
   CloudinaryImageStorageService({http.Client? client})
-      : _client = client ?? http.Client();
+    : _client = client ?? http.Client();
 
   final http.Client _client;
 
   static const _maxSide = 1280;
   static const _quality = 75;
   static const _maxBytes = 5 * 1024 * 1024;
+  static const _maxVideoBytes = 30 * 1024 * 1024;
 
   Uri get _endpoint => Uri.parse(
-      'https://api.cloudinary.com/v1_1/${AppSecrets.cloudinaryCloudName}/image/upload');
+    'https://api.cloudinary.com/v1_1/${AppSecrets.cloudinaryCloudName}/image/upload',
+  );
 
   @override
   Future<UploadedImage> upload(
@@ -107,17 +128,58 @@ class CloudinaryImageStorageService implements ImageStorageService {
     if (await file.length() > _maxBytes) {
       throw ImageUploadException('too_large');
     }
-    final req = http.MultipartRequest(
-        'POST',
-        Uri.parse('https://api.cloudinary.com/v1_1/'
-            '${AppSecrets.cloudinaryCloudName}/video/upload'))
-      // Separate audio-only preset; the image preset stays images-only.
-      ..fields['upload_preset'] = AppSecrets.cloudinaryAudioPreset
-      ..fields['tags'] = 'krishisync,voice,$ownerUid'
-      ..files.add(await http.MultipartFile.fromPath('file', file.path));
+    final req =
+        http.MultipartRequest(
+            'POST',
+            Uri.parse(
+              'https://api.cloudinary.com/v1_1/'
+              '${AppSecrets.cloudinaryCloudName}/video/upload',
+            ),
+          )
+          // Separate audio-only preset; the image preset stays images-only.
+          ..fields['upload_preset'] = AppSecrets.cloudinaryAudioPreset
+          ..fields['tags'] = 'krishisync,voice,$ownerUid'
+          ..files.add(await http.MultipartFile.fromPath('file', file.path));
     final http.StreamedResponse streamed;
     try {
       streamed = await _client.send(req).timeout(const Duration(seconds: 60));
+    } on SocketException {
+      throw ImageUploadException('network');
+    }
+    final body = await streamed.stream.bytesToString();
+    if (streamed.statusCode != 200) {
+      throw ImageUploadException('http_${streamed.statusCode}');
+    }
+    return (jsonDecode(body) as Map<String, dynamic>)['secure_url'] as String;
+  }
+
+  /// Videos (max [_maxVideoBytes]) go to /video/upload, PDFs to
+  /// /raw/upload so they open as plain files. Own preset; the image preset
+  /// stays images-only.
+  @override
+  Future<String> uploadFile(
+    File file, {
+    required bool video,
+    required String ownerUid,
+  }) async {
+    if (await file.length() > (video ? _maxVideoBytes : _maxBytes)) {
+      throw ImageUploadException('too_large');
+    }
+    final type = video ? 'video' : 'raw';
+    final req =
+        http.MultipartRequest(
+            'POST',
+            Uri.parse(
+              'https://api.cloudinary.com/v1_1/'
+              '${AppSecrets.cloudinaryCloudName}/$type/upload',
+            ),
+          )
+          ..fields['upload_preset'] = AppSecrets.cloudinaryFilesPreset
+          ..fields['tags'] = 'krishisync,${video ? 'video' : 'doc'},$ownerUid'
+          ..files.add(await http.MultipartFile.fromPath('file', file.path));
+    final http.StreamedResponse streamed;
+    try {
+      streamed = await _client.send(req).timeout(const Duration(minutes: 3));
     } on SocketException {
       throw ImageUploadException('network');
     }

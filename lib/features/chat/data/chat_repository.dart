@@ -14,6 +14,7 @@ class ChatThread {
     required this.roles,
     required this.lastText,
     this.lastVoice = false,
+    this.lastFile = '',
     this.lastAt,
   });
 
@@ -26,9 +27,13 @@ class ChatThread {
 
   /// The last message was a voice message (lastText is then empty).
   final bool lastVoice;
+
+  /// Kind of the last attachment (216): image | video | doc, or ''.
+  final String lastFile;
   final DateTime? lastAt;
 
-  bool get hasMessages => lastText.isNotEmpty || lastVoice;
+  bool get hasMessages =>
+      lastText.isNotEmpty || lastVoice || lastFile.isNotEmpty;
 
   String other(String me) =>
       members.firstWhere((m) => m != me, orElse: () => me);
@@ -49,14 +54,23 @@ class ChatThread {
       roles: map('roles'),
       lastText: m['lastText'] as String? ?? '',
       lastVoice: m['lastVoice'] == true,
+      lastFile: m['lastFile'] as String? ?? '',
       lastAt: (m['lastAt'] as Timestamp?)?.toDate(),
     );
   }
 }
 
 class ChatMessage {
-  const ChatMessage(this.from, this.text, this.at,
-      {this.voiceUrl, this.voiceSec});
+  const ChatMessage(
+    this.from,
+    this.text,
+    this.at, {
+    this.voiceUrl,
+    this.voiceSec,
+    this.fileUrl,
+    this.fileKind,
+    this.fileName,
+  });
   final String from;
   final String text;
   final DateTime? at;
@@ -66,6 +80,12 @@ class ChatMessage {
   final int? voiceSec;
   bool get isVoice => voiceUrl != null;
 
+  /// Attachment (216): image | video | doc, its URL and (doc) file name.
+  final String? fileUrl;
+  final String? fileKind;
+  final String? fileName;
+  bool get isFile => fileUrl != null;
+
   factory ChatMessage.fromDoc(DocumentSnapshot<Map<String, dynamic>> d) {
     final m = d.data() ?? const {};
     return ChatMessage(
@@ -74,6 +94,9 @@ class ChatMessage {
       (m['at'] as Timestamp?)?.toDate(),
       voiceUrl: m['voiceUrl'] as String?,
       voiceSec: (m['voiceSec'] as num?)?.toInt(),
+      fileUrl: m['fileUrl'] as String?,
+      fileKind: m['fileKind'] as String?,
+      fileName: m['fileName'] as String?,
     );
   }
 }
@@ -136,13 +159,21 @@ class ChatRepository {
       'text': text,
       'at': now,
     });
-    b.update(_chats.doc(chatId),
-        {'lastText': text, 'lastVoice': false, 'lastAt': now});
+    b.update(_chats.doc(chatId), {
+      'lastText': text,
+      'lastVoice': false,
+      'lastFile': '',
+      'lastAt': now,
+    });
     return b.commit();
   }
 
-  Future<void> sendVoice(String chatId, String from,
-      {required String url, required int seconds}) {
+  Future<void> sendVoice(
+    String chatId,
+    String from, {
+    required String url,
+    required int seconds,
+  }) {
     final b = _db.batch();
     final now = FieldValue.serverTimestamp();
     b.set(_chats.doc(chatId).collection('messages').doc(), {
@@ -152,8 +183,39 @@ class ChatRepository {
       'voiceSec': seconds,
       'at': now,
     });
-    b.update(_chats.doc(chatId),
-        {'lastText': '', 'lastVoice': true, 'lastAt': now});
+    b.update(_chats.doc(chatId), {
+      'lastText': '',
+      'lastVoice': true,
+      'lastFile': '',
+      'lastAt': now,
+    });
+    return b.commit();
+  }
+
+  /// Photo, video or document message (216).
+  Future<void> sendFile(
+    String chatId,
+    String from, {
+    required String url,
+    required String kind,
+    String? name,
+  }) {
+    final b = _db.batch();
+    final now = FieldValue.serverTimestamp();
+    b.set(_chats.doc(chatId).collection('messages').doc(), {
+      'from': from,
+      'text': '',
+      'fileUrl': url,
+      'fileKind': kind,
+      'fileName': ?name,
+      'at': now,
+    });
+    b.update(_chats.doc(chatId), {
+      'lastText': '',
+      'lastVoice': false,
+      'lastFile': kind,
+      'lastAt': now,
+    });
     return b.commit();
   }
 

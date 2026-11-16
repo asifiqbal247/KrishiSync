@@ -29,6 +29,7 @@ import '../../auth/domain/app_user.dart';
 import '../../moderator/presentation/report_screens.dart';
 import '../../../shared/services/image_storage_service.dart';
 import '../data/chat_repository.dart';
+import 'attach_sheet.dart';
 import 'voice_sheet.dart';
 
 const _pad = EdgeInsets.fromLTRB(
@@ -141,7 +142,12 @@ class _MessagesState extends ConsumerState<MessagesScreen> {
                     fallbackAsset: avatarFor(c.roles[c.other(me.uid)]),
                   ),
                   title: chatName(l, c, c.other(me.uid)),
-                  subtitle: c.lastVoice ? l.voiceMessage : c.lastText,
+                  subtitle: switch (c.lastFile) {
+                    'image' => l.attachPhoto,
+                    'video' => l.attachVideo,
+                    'doc' => l.attachDoc,
+                    _ => c.lastVoice ? l.voiceMessage : c.lastText,
+                  },
                   trailingText: chatTime(context, c.lastAt),
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -159,8 +165,8 @@ class _MessagesState extends ConsumerState<MessagesScreen> {
   }
 }
 
-/// 66 / 136 / 190 Chat (Figma 292:845). Text and voice messages (V2) are
-/// real; attachments and video calls are Tier C.
+/// 66 / 136 / 190 Chat (Figma 292:845). Text, voice (V2) and attachments
+/// (216: photo, video, document) are real; video calls are Tier C.
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key, required this.chatId});
   final String chatId;
@@ -181,6 +187,7 @@ class _ChatState extends ConsumerState<ChatScreen> {
   String? _playing; // voice URL now playing
   int _playedSec = 0;
   bool _sendingVoice = false;
+  bool _sendingFile = false;
 
   @override
   void initState() {
@@ -247,6 +254,65 @@ class _ChatState extends ConsumerState<ChatScreen> {
       }
     } finally {
       if (mounted) setState(() => _sendingVoice = false);
+    }
+  }
+
+  /// "+": pick a photo, video or document (216), upload, send.
+  Future<void> _attach(String uid) async {
+    if (_sendingFile) return;
+    FocusManager.instance.primaryFocus?.unfocus();
+    final picked = await pickAttachment(context);
+    if (picked == null || !mounted) return;
+    final l = AppLocalizations.of(context);
+    setState(() => _sendingFile = true);
+    try {
+      final store = ref.read(imageStorageProvider);
+      final url = picked.kind == 'image'
+          ? (await store.upload(
+              picked.file,
+              kind: ImageKind.chat,
+              ownerUid: uid,
+            )).url
+          : await store.uploadFile(
+              picked.file,
+              video: picked.kind == 'video',
+              ownerUid: uid,
+            );
+      await ref
+          .read(chatRepositoryProvider)
+          .sendFile(
+            widget.chatId,
+            uid,
+            url: url,
+            kind: picked.kind,
+            name: picked.name,
+          );
+    } on ImageUploadException catch (e) {
+      if (mounted) {
+        KsToast.show(
+          context,
+          e.message == 'too_large'
+              ? l.fileTooLarge(
+                  Fmt.digits(context, picked.kind == 'video' ? '30' : '5'),
+                )
+              : l.errorGeneric,
+        );
+      }
+    } catch (_) {
+      if (mounted) KsToast.show(context, l.errorGeneric);
+    } finally {
+      if (mounted) setState(() => _sendingFile = false);
+    }
+  }
+
+  /// Video or PDF: open in the phone's own player / viewer.
+  Future<void> _openFile(String url) async {
+    final ok = await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!ok && mounted) {
+      KsToast.show(context, AppLocalizations.of(context).fileOpenFailed);
     }
   }
 
@@ -319,50 +385,66 @@ class _ChatState extends ConsumerState<ChatScreen> {
                           alignment: mine
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: m.isVoice
-                                ? () => _toggle(m.voiceUrl!)
-                                : null,
-                            child: Container(
-                              constraints: BoxConstraints(
-                                maxWidth: width * _bubbleMax,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.md,
-                                vertical: AppSpacing.x10,
-                              ),
-                              decoration: BoxDecoration(
-                                color: mine
-                                    ? AppColors.bgBrand
-                                    : AppColors.bgSurface,
-                                borderRadius: BorderRadius.circular(
-                                  AppRadius.lg,
-                                ),
-                              ),
-                              child: Text(
-                                m.isVoice
-                                    ? l.voiceMessageLen(
-                                        voiceLen(
-                                          context,
-                                          _playing == m.voiceUrl
-                                              ? _playedSec
-                                              : (m.voiceSec ?? 0),
-                                        ),
-                                      )
-                                    : m.text,
-                                style: AppTypography.bodyMedium.normal
-                                    .withColor(
-                                      mine
-                                          ? AppColors.textOnBrand
-                                          : AppColors.textPrimary,
+                          child: m.isFile
+                              ? _FileBubble(
+                                  m: m,
+                                  mine: mine,
+                                  maxWidth: width * _bubbleMax,
+                                  onOpen: () => m.fileKind == 'image'
+                                      ? showPhoto(context, m.fileUrl!)
+                                      : _openFile(m.fileUrl!),
+                                )
+                              : GestureDetector(
+                                  onTap: m.isVoice
+                                      ? () => _toggle(m.voiceUrl!)
+                                      : null,
+                                  child: Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth: width * _bubbleMax,
                                     ),
-                              ),
-                            ),
-                          ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: AppSpacing.md,
+                                      vertical: AppSpacing.x10,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: mine
+                                          ? AppColors.bgBrand
+                                          : AppColors.bgSurface,
+                                      borderRadius: BorderRadius.circular(
+                                        AppRadius.lg,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      m.isVoice
+                                          ? l.voiceMessageLen(
+                                              voiceLen(
+                                                context,
+                                                _playing == m.voiceUrl
+                                                    ? _playedSec
+                                                    : (m.voiceSec ?? 0),
+                                              ),
+                                            )
+                                          : m.text,
+                                      style: AppTypography.bodyMedium.normal
+                                          .withColor(
+                                            mine
+                                                ? AppColors.textOnBrand
+                                                : AppColors.textPrimary,
+                                          ),
+                                    ),
+                                  ),
+                                ),
                         );
                       },
                     ),
             ),
+            if (_sendingFile) ...[
+              const LinearProgressIndicator(
+                color: AppColors.bgBrand,
+                backgroundColor: AppColors.bgSubtle,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
             // Composer (292:862): attach · field · voice · send, gap 8.
             Padding(
               padding: const EdgeInsets.fromLTRB(
@@ -373,7 +455,10 @@ class _ChatState extends ConsumerState<ChatScreen> {
               ),
               child: Row(
                 children: [
-                  _RoundButton(icon: AppIcons.plus, onTap: soon),
+                  _RoundButton(
+                    icon: AppIcons.plus,
+                    onTap: me == null ? null : () => _attach(me.uid),
+                  ),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Container(
@@ -437,7 +522,7 @@ class _ChatState extends ConsumerState<ChatScreen> {
 class _RoundButton extends StatelessWidget {
   const _RoundButton({required this.icon, required this.onTap});
   final String icon;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   static const _size = 44.0;
 
   @override
@@ -456,6 +541,103 @@ class _RoundButton extends StatelessWidget {
     ),
   );
 }
+
+/// Chat attachment (216). Photo: rounded picture, tap for full screen.
+/// Video / document: bubble with the sheet's icon tile and a label.
+class _FileBubble extends StatelessWidget {
+  const _FileBubble({
+    required this.m,
+    required this.mine,
+    required this.maxWidth,
+    required this.onOpen,
+  });
+
+  final ChatMessage m;
+  final bool mine;
+  final double maxWidth;
+  final VoidCallback onOpen;
+
+  static const _photoAspect = 4 / 3;
+  static const _tile = 36.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final radius = BorderRadius.circular(AppRadius.lg);
+    if (m.fileKind == 'image') {
+      return GestureDetector(
+        onTap: onOpen,
+        child: ClipRRect(
+          borderRadius: radius,
+          child: SizedBox(
+            width: maxWidth,
+            height: maxWidth / _photoAspect,
+            child: KsNetImage(url: m.fileUrl),
+          ),
+        ),
+      );
+    }
+    final video = m.fileKind == 'video';
+    final fg = mine ? AppColors.textOnBrand : AppColors.textPrimary;
+    return GestureDetector(
+      onTap: onOpen,
+      child: Container(
+        constraints: BoxConstraints(maxWidth: maxWidth),
+        padding: const EdgeInsets.all(AppSpacing.x10),
+        decoration: BoxDecoration(
+          color: mine ? AppColors.bgBrand : AppColors.bgSurface,
+          borderRadius: radius,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              child: Image.asset(
+                video ? AppUi.attachVideo : AppUi.attachDoc,
+                width: _tile,
+                height: _tile,
+              ),
+            ),
+            const SizedBox(width: AppSpacing.x10),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    video ? l.attachVideo : (m.fileName ?? l.attachDoc),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTypography.bodyMediumStrong.normal.withColor(fg),
+                  ),
+                  Text(
+                    video ? l.videoTapToWatch : l.attachDoc,
+                    style: AppTypography.caption.normal.withColor(fg),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Full-screen photo with pinch zoom (chat photos, papers).
+Future<void> showPhoto(BuildContext context, String url) => showDialog<void>(
+  context: context,
+  barrierColor: AppColors.photoBackdrop,
+  builder: (ctx) => GestureDetector(
+    onTap: () => Navigator.pop(ctx),
+    child: InteractiveViewer(
+      child: Center(
+        child: KsNetImage(url: url, fit: BoxFit.contain),
+      ),
+    ),
+  ),
+);
 
 // ───────────────────────── Help ─────────────────────────
 
