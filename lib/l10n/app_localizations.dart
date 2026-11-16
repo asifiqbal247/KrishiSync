@@ -9216,6 +9216,234 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'অনুমতি দিন'**
   String get locAskAllow;
+
+  /// No description provided for @stdTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান নির্ধারণ'**
+  String get stdTitle;
+
+  /// No description provided for @stdHeading.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} · গ্রেড {grade}'**
+  String stdHeading(String crop, String grade);
+
+  /// No description provided for @stdRowSize.
+  ///
+  /// In bn, this message translates to:
+  /// **'ন্যূনতম আকার'**
+  String get stdRowSize;
+
+  /// No description provided for @stdRowColor.
+  ///
+  /// In bn, this message translates to:
+  /// **'রং'**
+  String get stdRowColor;
+
+  /// No description provided for @stdRowRipe.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাকা'**
+  String get stdRowRipe;
+
+  /// No description provided for @stdRowDamage.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বোচ্চ ক্ষতিগ্রস্ত'**
+  String get stdRowDamage;
+
+  /// No description provided for @stdRowPack.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্যাকেজিং'**
+  String get stdRowPack;
+
+  /// No description provided for @stdWhenTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'কখন যাচাই হবে'**
+  String get stdWhenTitle;
+
+  /// No description provided for @stdWhenBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু লোডের সময় (আপনার পরিদর্শকের চেকলিস্ট)। ডেলিভারির পর এই মান দিয়ে টাকা ফেরত চাওয়া যাবে না।'**
+  String get stdWhenBody;
+
+  /// No description provided for @stdUse.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই মান ব্যবহার করুন'**
+  String get stdUse;
+
+  /// No description provided for @stdCheckLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{label}: {value}'**
+  String stdCheckLine(String label, String value);
+
+  /// No description provided for @stdSizeAcross.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} সেমি ব্যাস'**
+  String stdSizeAcross(String n);
+
+  /// No description provided for @stdSizeLength.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} সেমি লম্বা'**
+  String stdSizeLength(String n);
+
+  /// No description provided for @stdSizeGrams.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিটি {n} গ্রাম'**
+  String stdSizeGrams(String n);
+
+  /// No description provided for @stdSizeGrain.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুষ্ট দানা, চিটা ≤{n}%'**
+  String stdSizeGrain(String n);
+
+  /// No description provided for @stdSizeEven.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমান আকার'**
+  String get stdSizeEven;
+
+  /// No description provided for @stdDamagePct.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}%'**
+  String stdDamagePct(String n);
+
+  /// No description provided for @stdColorRed.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}% লাল'**
+  String stdColorRed(String n);
+
+  /// No description provided for @stdColorPotato.
+  ///
+  /// In bn, this message translates to:
+  /// **'হালকা বাদামি, সবুজ দাগ নেই'**
+  String get stdColorPotato;
+
+  /// No description provided for @stdColorPaddy.
+  ///
+  /// In bn, this message translates to:
+  /// **'সোনালি'**
+  String get stdColorPaddy;
+
+  /// No description provided for @stdColorEggplant.
+  ///
+  /// In bn, this message translates to:
+  /// **'উজ্জ্বল বেগুনি, চকচকে'**
+  String get stdColorEggplant;
+
+  /// No description provided for @stdColorOnion.
+  ///
+  /// In bn, this message translates to:
+  /// **'লালচে, শুকনো খোসা'**
+  String get stdColorOnion;
+
+  /// No description provided for @stdColorChili.
+  ///
+  /// In bn, this message translates to:
+  /// **'উজ্জ্বল সবুজ'**
+  String get stdColorChili;
+
+  /// No description provided for @stdColorMango.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিপক্ব সবুজ থেকে হলুদ'**
+  String get stdColorMango;
+
+  /// No description provided for @stdColorNatural.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্বাভাবিক রং'**
+  String get stdColorNatural;
+
+  /// No description provided for @stdRipeTomato.
+  ///
+  /// In bn, this message translates to:
+  /// **'আধা-পাকা থেকে পাকা'**
+  String get stdRipeTomato;
+
+  /// No description provided for @stdRipePotato.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিপক্ব, খোসা শক্ত'**
+  String get stdRipePotato;
+
+  /// No description provided for @stdRipePaddy.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো পাকা, আর্দ্রতা ≤{n}%'**
+  String stdRipePaddy(String n);
+
+  /// No description provided for @stdRipeEggplant.
+  ///
+  /// In bn, this message translates to:
+  /// **'কচি, বীজ নরম'**
+  String get stdRipeEggplant;
+
+  /// No description provided for @stdRipeOnion.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো শুকানো, অঙ্কুর নেই'**
+  String get stdRipeOnion;
+
+  /// No description provided for @stdRipeChili.
+  ///
+  /// In bn, this message translates to:
+  /// **'তাজা ও শক্ত'**
+  String get stdRipeChili;
+
+  /// No description provided for @stdRipeMango.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিপক্ব, শক্ত'**
+  String get stdRipeMango;
+
+  /// No description provided for @stdRipeMarket.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাজারজাত উপযোগী'**
+  String get stdRipeMarket;
+
+  /// No description provided for @stdPackCrate.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} কেজির ক্রেট'**
+  String stdPackCrate(String n);
+
+  /// No description provided for @stdPackSack.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} কেজির বস্তা'**
+  String stdPackSack(String n);
+
+  /// No description provided for @stdPackNet.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} কেজির জালি বস্তা'**
+  String stdPackNet(String n);
+
+  /// No description provided for @stdPackBag.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} কেজির ব্যাগ'**
+  String stdPackBag(String n);
+
+  /// No description provided for @stdPackClean.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিষ্কার বস্তা বা ক্রেট'**
+  String get stdPackClean;
 }
 
 class _AppLocalizationsDelegate

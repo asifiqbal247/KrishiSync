@@ -4008,5 +4008,140 @@
   "locAskTitle": "ট্রাকের অবস্থান জানাতে অনুমতি দিন",
   "locAskBody": "ট্রিপ চলার সময় ক্রেতা ও কৃষক ম্যাপে আপনার ট্রাক দেখতে পাবেন। পরের বক্সে “While using the app” চাপুন।",
   "locAskLater": "পরে",
-  "locAskAllow": "অনুমতি দিন"
+  "locAskAllow": "অনুমতি দিন",
+  "stdTitle": "মান নির্ধারণ",
+  "stdHeading": "{crop} · গ্রেড {grade}",
+  "@stdHeading": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "stdRowSize": "ন্যূনতম আকার",
+  "stdRowColor": "রং",
+  "stdRowRipe": "পাকা",
+  "stdRowDamage": "সর্বোচ্চ ক্ষতিগ্রস্ত",
+  "stdRowPack": "প্যাকেজিং",
+  "stdWhenTitle": "কখন যাচাই হবে",
+  "stdWhenBody": "শুধু লোডের সময় (আপনার পরিদর্শকের চেকলিস্ট)। ডেলিভারির পর এই মান দিয়ে টাকা ফেরত চাওয়া যাবে না।",
+  "stdUse": "এই মান ব্যবহার করুন",
+  "stdCheckLine": "{label}: {value}",
+  "@stdCheckLine": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "stdSizeAcross": "{n} সেমি ব্যাস",
+  "@stdSizeAcross": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdSizeLength": "{n} সেমি লম্বা",
+  "@stdSizeLength": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdSizeGrams": "প্রতিটি {n} গ্রাম",
+  "@stdSizeGrams": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdSizeGrain": "পুষ্ট দানা, চিটা ≤{n}%",
+  "@stdSizeGrain": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdSizeEven": "সমান আকার",
+  "stdDamagePct": "{n}%",
+  "@stdDamagePct": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdColorRed": "{n}% লাল",
+  "@stdColorRed": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdColorPotato": "হালকা বাদামি, সবুজ দাগ নেই",
+  "stdColorPaddy": "সোনালি",
+  "stdColorEggplant": "উজ্জ্বল বেগুনি, চকচকে",
+  "stdColorOnion": "লালচে, শুকনো খোসা",
+  "stdColorChili": "উজ্জ্বল সবুজ",
+  "stdColorMango": "পরিপক্ব সবুজ থেকে হলুদ",
+  "stdColorNatural": "স্বাভাবিক রং",
+  "stdRipeTomato": "আধা-পাকা থেকে পাকা",
+  "stdRipePotato": "পরিপক্ব, খোসা শক্ত",
+  "stdRipePaddy": "পুরো পাকা, আর্দ্রতা ≤{n}%",
+  "@stdRipePaddy": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdRipeEggplant": "কচি, বীজ নরম",
+  "stdRipeOnion": "পুরো শুকানো, অঙ্কুর নেই",
+  "stdRipeChili": "তাজা ও শক্ত",
+  "stdRipeMango": "পরিপক্ব, শক্ত",
+  "stdRipeMarket": "বাজারজাত উপযোগী",
+  "stdPackCrate": "{n} কেজির ক্রেট",
+  "@stdPackCrate": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdPackSack": "{n} কেজির বস্তা",
+  "@stdPackSack": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdPackNet": "{n} কেজির জালি বস্তা",
+  "@stdPackNet": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdPackBag": "{n} কেজির ব্যাগ",
+  "@stdPackBag": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stdPackClean": "পরিষ্কার বস্তা বা ক্রেট"
 }

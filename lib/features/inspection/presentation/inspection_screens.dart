@@ -37,6 +37,7 @@ import '../../trade/data/trade_repository.dart';
 import '../../trade/domain/trade_models.dart';
 import '../../trade/presentation/trace_screen.dart';
 import '../../transport/presentation/transport_common.dart';
+import '../../demand/presentation/quality_standard_screen.dart';
 import '../data/inspection_repository.dart';
 
 const _pad = EdgeInsets.fromLTRB(
@@ -56,12 +57,12 @@ Widget _loading(String title) => Scaffold(
     );
 
 /// Five checklist lines (Figma 89). Allowed damage depends on the grade.
-List<String> checklistLabels(AppLocalizations l, String grade) => [
-      l.chkSize,
-      l.chkNoSprout,
-      l.chkFirm,
-      l.chkDamage(switch (grade) { 'B' => '১০', 'C' => '২০', _ => '৫' }),
-      l.chkPacking,
+/// 89 checklist = the crop's grade standard (97), one line per item.
+List<String> checklistLabels(
+        BuildContext context, String cropKey, String grade) =>
+    [
+      for (final (k, v) in qualityStandardRows(context, cropKey, grade))
+        AppLocalizations.of(context).stdCheckLine(k, v),
     ];
 
 String decisionLabel(AppLocalizations l, InspectionDecision d) => switch (d) {
@@ -433,7 +434,7 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
       _Mode.partial => l.partialTitle(o.farmerName),
       _Mode.cancel => l.cancelLoadTitle(o.farmerName),
     };
-    final labels = checklistLabels(l, o.grade);
+    final labels = checklistLabels(context, o.cropKey, o.grade);
 
     Widget photoBox(List<File> list, String label) => KsUploadBox(
           label: label,

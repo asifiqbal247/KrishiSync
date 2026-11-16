@@ -5244,4 +5244,145 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get locAskAllow => 'অনুমতি দিন';
+
+  @override
+  String get stdTitle => 'মান নির্ধারণ';
+
+  @override
+  String stdHeading(String crop, String grade) {
+    return '$crop · গ্রেড $grade';
+  }
+
+  @override
+  String get stdRowSize => 'ন্যূনতম আকার';
+
+  @override
+  String get stdRowColor => 'রং';
+
+  @override
+  String get stdRowRipe => 'পাকা';
+
+  @override
+  String get stdRowDamage => 'সর্বোচ্চ ক্ষতিগ্রস্ত';
+
+  @override
+  String get stdRowPack => 'প্যাকেজিং';
+
+  @override
+  String get stdWhenTitle => 'কখন যাচাই হবে';
+
+  @override
+  String get stdWhenBody =>
+      'শুধু লোডের সময় (আপনার পরিদর্শকের চেকলিস্ট)। ডেলিভারির পর এই মান দিয়ে টাকা ফেরত চাওয়া যাবে না।';
+
+  @override
+  String get stdUse => 'এই মান ব্যবহার করুন';
+
+  @override
+  String stdCheckLine(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String stdSizeAcross(String n) {
+    return '$n সেমি ব্যাস';
+  }
+
+  @override
+  String stdSizeLength(String n) {
+    return '$n সেমি লম্বা';
+  }
+
+  @override
+  String stdSizeGrams(String n) {
+    return 'প্রতিটি $n গ্রাম';
+  }
+
+  @override
+  String stdSizeGrain(String n) {
+    return 'পুষ্ট দানা, চিটা ≤$n%';
+  }
+
+  @override
+  String get stdSizeEven => 'সমান আকার';
+
+  @override
+  String stdDamagePct(String n) {
+    return '$n%';
+  }
+
+  @override
+  String stdColorRed(String n) {
+    return '$n% লাল';
+  }
+
+  @override
+  String get stdColorPotato => 'হালকা বাদামি, সবুজ দাগ নেই';
+
+  @override
+  String get stdColorPaddy => 'সোনালি';
+
+  @override
+  String get stdColorEggplant => 'উজ্জ্বল বেগুনি, চকচকে';
+
+  @override
+  String get stdColorOnion => 'লালচে, শুকনো খোসা';
+
+  @override
+  String get stdColorChili => 'উজ্জ্বল সবুজ';
+
+  @override
+  String get stdColorMango => 'পরিপক্ব সবুজ থেকে হলুদ';
+
+  @override
+  String get stdColorNatural => 'স্বাভাবিক রং';
+
+  @override
+  String get stdRipeTomato => 'আধা-পাকা থেকে পাকা';
+
+  @override
+  String get stdRipePotato => 'পরিপক্ব, খোসা শক্ত';
+
+  @override
+  String stdRipePaddy(String n) {
+    return 'পুরো পাকা, আর্দ্রতা ≤$n%';
+  }
+
+  @override
+  String get stdRipeEggplant => 'কচি, বীজ নরম';
+
+  @override
+  String get stdRipeOnion => 'পুরো শুকানো, অঙ্কুর নেই';
+
+  @override
+  String get stdRipeChili => 'তাজা ও শক্ত';
+
+  @override
+  String get stdRipeMango => 'পরিপক্ব, শক্ত';
+
+  @override
+  String get stdRipeMarket => 'বাজারজাত উপযোগী';
+
+  @override
+  String stdPackCrate(String n) {
+    return '$n কেজির ক্রেট';
+  }
+
+  @override
+  String stdPackSack(String n) {
+    return '$n কেজির বস্তা';
+  }
+
+  @override
+  String stdPackNet(String n) {
+    return '$n কেজির জালি বস্তা';
+  }
+
+  @override
+  String stdPackBag(String n) {
+    return '$n কেজির ব্যাগ';
+  }
+
+  @override
+  String get stdPackClean => 'পরিষ্কার বস্তা বা ক্রেট';
 }

@@ -35,6 +35,7 @@ import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
 import '../../transport/presentation/transport_common.dart';
 import '../data/demand_repository.dart';
+import 'quality_standard_screen.dart';
 
 const _pad = EdgeInsets.fromLTRB(
   AppSpacing.screen,
@@ -178,7 +179,23 @@ class _PostDemandState extends ConsumerState<PostDemandScreen> {
             title: l.fieldGradeSize,
             options: [for (final g in _grades) (g, l.gradeLabel(g))],
           );
-          if (g != null) setState(() => _grade = g);
+          if (g == null || !context.mounted) return;
+          // 97: show the standard for this crop + grade; "use" confirms it.
+          final crop = _crop;
+          if (crop == null) {
+            setState(() => _grade = g);
+            return;
+          }
+          final ok = await Navigator.of(context).push<bool>(
+            MaterialPageRoute(
+              builder: (_) => QualityStandardScreen(
+                cropKey: crop.key,
+                cropName: crop.name(lang),
+                grade: g,
+              ),
+            ),
+          );
+          if (ok == true) setState(() => _grade = g);
         },
       ),
       const SizedBox(height: AppSpacing.block),
@@ -919,6 +936,21 @@ class DemandDetailsScreen extends ConsumerWidget {
                   l.kmOnly(Fmt.number(context, (km * 1.3).round())),
                 ),
             ],
+          ),
+          const SizedBox(height: AppSpacing.block),
+          KsLinkRow(
+            label: l.stdTitle,
+            value: l.seeLinkShort,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => QualityStandardScreen(
+                  cropKey: d.cropKey,
+                  cropName: d.cropName(lang),
+                  grade: d.grade,
+                  pick: false,
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: AppSpacing.block),
           Row(

@@ -5250,4 +5250,145 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get locAskAllow => 'Allow';
+
+  @override
+  String get stdTitle => 'Quality standard';
+
+  @override
+  String stdHeading(String crop, String grade) {
+    return '$crop · grade $grade';
+  }
+
+  @override
+  String get stdRowSize => 'Minimum size';
+
+  @override
+  String get stdRowColor => 'Colour';
+
+  @override
+  String get stdRowRipe => 'Ripeness';
+
+  @override
+  String get stdRowDamage => 'Max damaged';
+
+  @override
+  String get stdRowPack => 'Packaging';
+
+  @override
+  String get stdWhenTitle => 'When it is checked';
+
+  @override
+  String get stdWhenBody =>
+      'Only at loading (your inspector\'s checklist). After delivery, no refund can be claimed with this standard.';
+
+  @override
+  String get stdUse => 'Use this standard';
+
+  @override
+  String stdCheckLine(String label, String value) {
+    return '$label: $value';
+  }
+
+  @override
+  String stdSizeAcross(String n) {
+    return '$n cm across';
+  }
+
+  @override
+  String stdSizeLength(String n) {
+    return '$n cm long';
+  }
+
+  @override
+  String stdSizeGrams(String n) {
+    return '$n g each';
+  }
+
+  @override
+  String stdSizeGrain(String n) {
+    return 'Full grains, empty ≤$n%';
+  }
+
+  @override
+  String get stdSizeEven => 'Even size';
+
+  @override
+  String stdDamagePct(String n) {
+    return '$n%';
+  }
+
+  @override
+  String stdColorRed(String n) {
+    return '$n% red';
+  }
+
+  @override
+  String get stdColorPotato => 'Light brown, no green patches';
+
+  @override
+  String get stdColorPaddy => 'Golden';
+
+  @override
+  String get stdColorEggplant => 'Bright purple, glossy';
+
+  @override
+  String get stdColorOnion => 'Reddish, dry skin';
+
+  @override
+  String get stdColorChili => 'Bright green';
+
+  @override
+  String get stdColorMango => 'Mature green to yellow';
+
+  @override
+  String get stdColorNatural => 'Natural colour';
+
+  @override
+  String get stdRipeTomato => 'Half-ripe to ripe';
+
+  @override
+  String get stdRipePotato => 'Mature, firm skin';
+
+  @override
+  String stdRipePaddy(String n) {
+    return 'Fully ripe, moisture ≤$n%';
+  }
+
+  @override
+  String get stdRipeEggplant => 'Young, soft seeds';
+
+  @override
+  String get stdRipeOnion => 'Fully cured, no sprouts';
+
+  @override
+  String get stdRipeChili => 'Fresh and firm';
+
+  @override
+  String get stdRipeMango => 'Mature, firm';
+
+  @override
+  String get stdRipeMarket => 'Ready for market';
+
+  @override
+  String stdPackCrate(String n) {
+    return '$n kg crate';
+  }
+
+  @override
+  String stdPackSack(String n) {
+    return '$n kg sack';
+  }
+
+  @override
+  String stdPackNet(String n) {
+    return '$n kg net bag';
+  }
+
+  @override
+  String stdPackBag(String n) {
+    return '$n kg bag';
+  }
+
+  @override
+  String get stdPackClean => 'Clean sack or crate';
 }
