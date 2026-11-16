@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../shared/utils/sheet_utils.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_assets.dart';
@@ -852,7 +853,7 @@ class DemandDetailsScreen extends ConsumerWidget {
         },
       ),
     );
-    qty.dispose();
+    disposeAfterSheet([qty]);
   }
 
   @override

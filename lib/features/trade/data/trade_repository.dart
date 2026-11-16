@@ -419,8 +419,11 @@ class TradeRepository {
 
   /// Buyer cancels before pickup (D5): order + load cancelled, stock back.
   /// Refund is recorded only (payment is a placeholder).
-  Future<void> cancelOrder(TradeOrder o, String byUid) async {
-    final fee = cancelFee(o);
+  /// [keepFare]: the buyer's inspector cancelled at the farm (91) — the
+  /// truck already came, so its whole fare is kept.
+  Future<void> cancelOrder(TradeOrder o, String byUid,
+      {bool keepFare = false}) async {
+    final fee = keepFare ? o.transportFare : cancelFee(o);
     final listingRef = o.listingId.isEmpty
         ? null
         : _db.collection('listings').doc(o.listingId);

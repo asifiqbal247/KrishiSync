@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../shared/utils/sheet_utils.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_colors.dart';
@@ -259,7 +260,7 @@ class _PriceTrendState extends ConsumerState<PriceTrendScreen> {
         ),
       ),
     );
-    c.dispose();
+    disposeAfterSheet([c]);
   }
 
   static String weekdayShort(AppLocalizations l, DateTime d) => switch (d.weekday) {

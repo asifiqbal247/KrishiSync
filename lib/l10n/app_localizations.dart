@@ -8376,6 +8376,702 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বোনার আগে নিশ্চিত চাহিদা দেখুন'**
   String get bannerPlanSub;
+
+  /// No description provided for @assignInspTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শক পাঠান'**
+  String get assignInspTitle;
+
+  /// No description provided for @assignInspBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার লোক লোডের সময় মান ও ওজন যাচাই করবেন। তিনি এই নম্বর দিয়ে গোলাঘর অ্যাপে লগইন করবেন।'**
+  String get assignInspBody;
+
+  /// No description provided for @fieldInspName.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শকের নাম'**
+  String get fieldInspName;
+
+  /// No description provided for @fieldInspPhone.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শকের মোবাইল নম্বর'**
+  String get fieldInspPhone;
+
+  /// No description provided for @sendInvite.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমন্ত্রণ পাঠান'**
+  String get sendInvite;
+
+  /// No description provided for @errNameRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম লিখুন'**
+  String get errNameRequired;
+
+  /// No description provided for @errInspNotSelf.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিজের নম্বর দেওয়া যাবে না'**
+  String get errInspNotSelf;
+
+  /// No description provided for @inspInviteText.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name}, গোলাঘর অ্যাপে আপনাকে পরিদর্শক করা হয়েছে ({no} · {crop})। অ্যাপ খুলে এই নম্বর দিয়ে লগইন করুন: {phone}'**
+  String inspInviteText(String name, String no, String crop, String phone);
+
+  /// No description provided for @inspHomeTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শকের কাজ'**
+  String get inspHomeTitle;
+
+  /// No description provided for @inspInvitedBy.
+  ///
+  /// In bn, this message translates to:
+  /// **'{buyer} আপনাকে পরিদর্শক করেছেন'**
+  String inspInvitedBy(String buyer);
+
+  /// No description provided for @inspOrderLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} · {crop} {qty} · {date}'**
+  String inspOrderLine(String no, String crop, String qty, String date);
+
+  /// No description provided for @inspTruckBooked.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক বুক হয়েছে · {name}'**
+  String inspTruckBooked(String name);
+
+  /// No description provided for @inspTruckBookedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{place} · ট্রাক পৌঁছালে মান যাচাই শুরু করুন'**
+  String inspTruckBookedBody(String place);
+
+  /// No description provided for @inspPickups.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিকআপ ({n})'**
+  String inspPickups(String n);
+
+  /// No description provided for @inspNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো পরিদর্শনের কাজ নেই'**
+  String get inspNone;
+
+  /// No description provided for @numberedName.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}. {name}'**
+  String numberedName(String n, String name);
+
+  /// No description provided for @inspStart.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুরু'**
+  String get inspStart;
+
+  /// No description provided for @inspClosed.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেষ'**
+  String get inspClosed;
+
+  /// No description provided for @inspChalan.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালানের তথ্য'**
+  String get inspChalan;
+
+  /// No description provided for @inspGrade.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান'**
+  String get inspGrade;
+
+  /// No description provided for @inspGradeValue.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড {grade} (চুক্তি অনুযায়ী)'**
+  String inspGradeValue(String grade);
+
+  /// No description provided for @inspTruck.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক'**
+  String get inspTruck;
+
+  /// No description provided for @callDriver.
+  ///
+  /// In bn, this message translates to:
+  /// **'ড্রাইভারকে কল'**
+  String get callDriver;
+
+  /// No description provided for @seeRouteMap.
+  ///
+  /// In bn, this message translates to:
+  /// **'ম্যাপে পথ দেখুন'**
+  String get seeRouteMap;
+
+  /// No description provided for @qcTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান যাচাই · {name}'**
+  String qcTitle(String name);
+
+  /// No description provided for @partialTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আংশিক লোড · {name}'**
+  String partialTitle(String name);
+
+  /// No description provided for @cancelLoadTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড বাতিল · {name}'**
+  String cancelLoadTitle(String name);
+
+  /// No description provided for @gradeChecklist.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড {grade} চেকলিস্ট'**
+  String gradeChecklist(String grade);
+
+  /// No description provided for @chkSize.
+  ///
+  /// In bn, this message translates to:
+  /// **'ন্যূনতম আকার ঠিক আছে'**
+  String get chkSize;
+
+  /// No description provided for @chkNoSprout.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবুজ বা অঙ্কুর নেই'**
+  String get chkNoSprout;
+
+  /// No description provided for @chkFirm.
+  ///
+  /// In bn, this message translates to:
+  /// **'শক্ত, নরম বা পচা নয়'**
+  String get chkFirm;
+
+  /// No description provided for @chkDamage.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বোচ্চ {pct}% ক্ষতিগ্রস্ত'**
+  String chkDamage(String pct);
+
+  /// No description provided for @chkPacking.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্যাকেজিং ঠিক আছে'**
+  String get chkPacking;
+
+  /// No description provided for @chkOk.
+  ///
+  /// In bn, this message translates to:
+  /// **'ঠিক'**
+  String get chkOk;
+
+  /// No description provided for @chkProblem.
+  ///
+  /// In bn, this message translates to:
+  /// **'সমস্যা'**
+  String get chkProblem;
+
+  /// No description provided for @rowDigitalWeight.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিজিটাল ওজন'**
+  String get rowDigitalWeight;
+
+  /// No description provided for @goodsPhotos.
+  ///
+  /// In bn, this message translates to:
+  /// **'মালের ছবি তুলুন ({n}/{max})'**
+  String goodsPhotos(String n, String max);
+
+  /// No description provided for @rejectPhotos.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাদ দেওয়া মালের ছবি তুলুন ({n}/{max})'**
+  String rejectPhotos(String n, String max);
+
+  /// No description provided for @decApprove.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদন'**
+  String get decApprove;
+
+  /// No description provided for @decApproved.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদিত'**
+  String get decApproved;
+
+  /// No description provided for @decPartial.
+  ///
+  /// In bn, this message translates to:
+  /// **'আংশিক'**
+  String get decPartial;
+
+  /// No description provided for @decPartialTake.
+  ///
+  /// In bn, this message translates to:
+  /// **'আংশিক (কম নিন)'**
+  String get decPartialTake;
+
+  /// No description provided for @decCancel.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get decCancel;
+
+  /// No description provided for @qcNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদনের পর কৃষক OTP দিলে টাকা ছাড় হবে। এই রিপোর্ট চূড়ান্ত।'**
+  String get qcNote;
+
+  /// No description provided for @submitReport.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিপোর্ট জমা দিন'**
+  String get submitReport;
+
+  /// No description provided for @howMuchTake.
+  ///
+  /// In bn, this message translates to:
+  /// **'কতটুকু মাল নেবেন?'**
+  String get howMuchTake;
+
+  /// No description provided for @rowLeftOut.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাদ যাবে'**
+  String get rowLeftOut;
+
+  /// No description provided for @howMuchGood.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভালো মাল কত কেজি নেবেন?'**
+  String get howMuchGood;
+
+  /// No description provided for @scaleWeight.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} (স্কেল থেকে)'**
+  String scaleWeight(String qty);
+
+  /// No description provided for @reasonSmall.
+  ///
+  /// In bn, this message translates to:
+  /// **'আকার ছোট'**
+  String get reasonSmall;
+
+  /// No description provided for @reasonDamaged.
+  ///
+  /// In bn, this message translates to:
+  /// **'নষ্ট মাল'**
+  String get reasonDamaged;
+
+  /// No description provided for @reasonLowGrade.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রেড কম'**
+  String get reasonLowGrade;
+
+  /// No description provided for @partialNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু {qty} লোড হবে। কৃষক OTP দিলে এর টাকা ছাড় হবে। বাকি ফসলের দাম ও ফি ক্রেতা ফেরত পাবেন। ট্রাক ভাড়া একই থাকবে।'**
+  String partialNote(String qty);
+
+  /// No description provided for @errAcceptKg.
+  ///
+  /// In bn, this message translates to:
+  /// **'০ থেকে {qty}-এর কম লিখুন'**
+  String errAcceptKg(String qty);
+
+  /// No description provided for @whyCancel.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেন বাতিল করছেন?'**
+  String get whyCancel;
+
+  /// No description provided for @rowWillLoad.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড হবে'**
+  String get rowWillLoad;
+
+  /// No description provided for @cancelLoadNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাল লোড হবে না, কৃষক টাকা পাবেন না। ক্রেতা ফসলের দাম ও ফি ফেরত পাবেন। ট্রাক ভাড়া ক্রেতা দেবেন।'**
+  String get cancelLoadNote;
+
+  /// No description provided for @cancelLoadBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড বাতিল করুন'**
+  String get cancelLoadBtn;
+
+  /// No description provided for @cancelLoadQ.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড বাতিল করবেন?'**
+  String get cancelLoadQ;
+
+  /// No description provided for @cancelLoadBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ডারটি বাতিল হবে। এই রিপোর্ট আর বদলানো যাবে না।'**
+  String get cancelLoadBody;
+
+  /// No description provided for @reportSentTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিপোর্ট জমা হয়েছে'**
+  String get reportSentTitle;
+
+  /// No description provided for @reportReachedBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিপোর্ট ক্রেতার কাছে পৌঁছেছে'**
+  String get reportReachedBuyer;
+
+  /// No description provided for @rowStop.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্টপ'**
+  String get rowStop;
+
+  /// No description provided for @stopLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{i}/{n} · {name}'**
+  String stopLine(String i, String n, String name);
+
+  /// No description provided for @rowDecision.
+  ///
+  /// In bn, this message translates to:
+  /// **'সিদ্ধান্ত'**
+  String get rowDecision;
+
+  /// No description provided for @decApproveLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমোদন · {ok}/{n} ঠিক'**
+  String decApproveLine(String ok, String n);
+
+  /// No description provided for @decPartialLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'আংশিক · {qty} নেওয়া'**
+  String decPartialLine(String qty);
+
+  /// No description provided for @decCancelLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল · {reason}'**
+  String decCancelLine(String reason);
+
+  /// No description provided for @rowWeight.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন'**
+  String get rowWeight;
+
+  /// No description provided for @weightLeftOut.
+  ///
+  /// In bn, this message translates to:
+  /// **'{w} ({left} বাদ)'**
+  String weightLeftOut(String w, String left);
+
+  /// No description provided for @weightNoneTaken.
+  ///
+  /// In bn, this message translates to:
+  /// **'{w} (কিছুই নেওয়া হয়নি)'**
+  String weightNoneTaken(String w);
+
+  /// No description provided for @rowTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়'**
+  String get rowTime;
+
+  /// No description provided for @whatNext.
+  ///
+  /// In bn, this message translates to:
+  /// **'এরপর কী হবে'**
+  String get whatNext;
+
+  /// No description provided for @nextApprove.
+  ///
+  /// In bn, this message translates to:
+  /// **'ড্রাইভার কৃষকের OTP নিলে মাল গাড়িতে উঠবে। এই রিপোর্ট আর বদলানো যাবে না।'**
+  String get nextApprove;
+
+  /// No description provided for @nextPartial.
+  ///
+  /// In bn, this message translates to:
+  /// **'ড্রাইভার শুধু {qty} তুলবেন। এই রিপোর্ট আর বদলানো যাবে না।'**
+  String nextPartial(String qty);
+
+  /// No description provided for @nextCancel.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই স্টপে কোনো মাল উঠবে না। এই রিপোর্ট আর বদলানো যাবে না।'**
+  String get nextCancel;
+
+  /// No description provided for @nextPickups.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরের পিকআপ দেখুন'**
+  String get nextPickups;
+
+  /// No description provided for @inspReportTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শন রিপোর্ট'**
+  String get inspReportTitle;
+
+  /// No description provided for @loadRecordTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোডের রেকর্ড'**
+  String get loadRecordTitle;
+
+  /// No description provided for @loadDoneBadge.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড হয়েছে'**
+  String get loadDoneBadge;
+
+  /// No description provided for @rowInspector.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শক'**
+  String get rowInspector;
+
+  /// No description provided for @inspYours.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} (আপনার)'**
+  String inspYours(String name);
+
+  /// No description provided for @inspNotSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠাননি'**
+  String get inspNotSent;
+
+  /// No description provided for @rowTimePlace.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময় ও স্থান'**
+  String get rowTimePlace;
+
+  /// No description provided for @rowWeighedBy.
+  ///
+  /// In bn, this message translates to:
+  /// **'ওজন নিয়েছেন'**
+  String get rowWeighedBy;
+
+  /// No description provided for @weighedByDriver.
+  ///
+  /// In bn, this message translates to:
+  /// **'ড্রাইভার {name}'**
+  String weighedByDriver(String name);
+
+  /// No description provided for @weighedBySelf.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি (নিজের গাড়ি)'**
+  String get weighedBySelf;
+
+  /// No description provided for @rowReceivedFarmer.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক পেয়েছেন'**
+  String get rowReceivedFarmer;
+
+  /// No description provided for @rowChecklist.
+  ///
+  /// In bn, this message translates to:
+  /// **'চেকলিস্ট'**
+  String get rowChecklist;
+
+  /// No description provided for @okOutOf.
+  ///
+  /// In bn, this message translates to:
+  /// **'{ok}/{n} ঠিক'**
+  String okOutOf(String ok, String n);
+
+  /// No description provided for @rowTaken.
+  ///
+  /// In bn, this message translates to:
+  /// **'নেওয়া হয়েছে'**
+  String get rowTaken;
+
+  /// No description provided for @leftOutWhy.
+  ///
+  /// In bn, this message translates to:
+  /// **'{qty} ({reason})'**
+  String leftOutWhy(String qty, String reason);
+
+  /// No description provided for @rowCropValueBack.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের দাম ফেরত'**
+  String get rowCropValueBack;
+
+  /// No description provided for @reasonNotMet.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান মেলেনি ({reason})'**
+  String reasonNotMet(String reason);
+
+  /// No description provided for @yourResponsibility.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান ও পরিমাণের দায় আপনার'**
+  String get yourResponsibility;
+
+  /// No description provided for @yourResponsibilityBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি পরিদর্শক পাঠাননি। ড্রাইভার শুধু ওজন ও ছবি নিয়েছেন। লোডের পর মান নিয়ে অভিযোগ করা যাবে না।'**
+  String get yourResponsibilityBody;
+
+  /// No description provided for @yourResponsibilitySelf.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি নিজে ওজন ও ছবি নিয়ে লোড নিশ্চিত করেছেন। লোডের পর মান বা ওজন নিয়ে অভিযোগ করা যাবে না।'**
+  String get yourResponsibilitySelf;
+
+  /// No description provided for @reportIsProof.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই রিপোর্টই প্রমাণ'**
+  String get reportIsProof;
+
+  /// No description provided for @reportIsProofBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোডের সময় আপনার পরিদর্শক মান অনুমোদন করেছেন। পরে আপত্তি হলে এই রিপোর্ট দেখা হবে; কৃষকের টাকা আটকানো যাবে না।'**
+  String get reportIsProofBody;
+
+  /// No description provided for @fareSame.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক ভাড়া একই থাকবে'**
+  String get fareSame;
+
+  /// No description provided for @fareSameBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক আপনি বুক করেছেন, তাই ভাড়া {fare} আপনি দেবেন। ফেরতের টাকা ৩ কর্মদিবসের মধ্যে একই মাধ্যমে যাবে।'**
+  String fareSameBody(String fare);
+
+  /// No description provided for @farePayYou.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক ভাড়া আপনি দেবেন'**
+  String get farePayYou;
+
+  /// No description provided for @farePayYouBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক আপনি বুক করেছেন, তাই ভাড়া {fare} ফেরত হবে না।'**
+  String farePayYouBody(String fare);
+
+  /// No description provided for @rowInspectorAssign.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শক'**
+  String get rowInspectorAssign;
+
+  /// No description provided for @inspSend.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠান'**
+  String get inspSend;
+
+  /// No description provided for @rowInspReport.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শন রিপোর্ট'**
+  String get rowInspReport;
+
+  /// No description provided for @rowLoadRecord.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোডের রেকর্ড'**
+  String get rowLoadRecord;
+
+  /// No description provided for @inspPresent.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} (ক্রেতার)'**
+  String inspPresent(String name);
+
+  /// No description provided for @rowInspDecision.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শকের সিদ্ধান্ত'**
+  String get rowInspDecision;
+
+  /// No description provided for @inspWaitNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শকের সিদ্ধান্তের অপেক্ষা — রিপোর্টের পর লোড করুন'**
+  String get inspWaitNote;
+
+  /// No description provided for @inspPartialNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শক শুধু {qty} নিতে বলেছেন'**
+  String inspPartialNote(String qty);
+
+  /// No description provided for @rowInspectorWork.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শকের কাজ'**
+  String get rowInspectorWork;
+
+  /// No description provided for @nInspectionDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শন রিপোর্ট: {no}'**
+  String nInspectionDone(String no);
+
+  /// No description provided for @rowInspReason.
+  ///
+  /// In bn, this message translates to:
+  /// **'কারণ'**
+  String get rowInspReason;
+
+  /// No description provided for @errInspPhoto.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্তত একটি ছবি তুলুন'**
+  String get errInspPhoto;
+
+  /// No description provided for @rowLeftOutPast.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাদ গেছে'**
+  String get rowLeftOutPast;
 }
 
 class _AppLocalizationsDelegate

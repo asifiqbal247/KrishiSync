@@ -53,6 +53,8 @@ import '../features/trade/presentation/history_screens.dart';
 import '../features/contract/presentation/contract_screens.dart';
 import '../features/transport/presentation/load_screens.dart';
 import '../features/market/presentation/opportunity_screens.dart';
+import '../features/inspection/data/inspection_repository.dart';
+import '../features/inspection/presentation/inspection_screens.dart';
 import '../features/trade/presentation/trace_screen.dart';
 
 abstract final class Routes {
@@ -85,6 +87,11 @@ abstract final class Routes {
   static String refund(String id) => '/refund/$id';
   static String track(String id) => '/track/$id';
   static const opportunities = '/opportunities';
+  // Buyer's inspector (88–95).
+  static const inspector = '/inspector';
+  static String inspCheck(String id) => '/inspector/check/$id';
+  static String inspSent(String id) => '/inspector/sent/$id';
+  static String loadReport(String id) => '/inspection/$id';
   static const planning = '/planning';
   static String rescue(String id) => '/rescue/$id';
   static String trace(String id) => '/trace/$id';
@@ -199,6 +206,7 @@ class _RouterRefresh extends ChangeNotifier {
     void ping(_, _) => notifyListeners();
     ref.listen(authStateProvider, ping);
     ref.listen(currentUserProvider, ping);
+    ref.listen(myInvitesProvider, ping);
     ref.listen(localeProvider, ping);
     ref.listen(onboardingDoneProvider, ping);
     ref.listen(splashMinElapsedProvider, ping);
@@ -239,8 +247,18 @@ final routerProvider = Provider<GoRouter>((ref) {
       return loc == Routes.splash ? null : Routes.splash;
     }
     final u = user.value!;
-    // 6. No role yet.
-    if (!u.hasRole) return loc == Routes.role ? null : Routes.role;
+    // 6. No role yet. A person invited as a buyer's inspector (88) only
+    //    sees the inspector screens.
+    if (!u.hasRole) {
+      final invites = ref.read(myInvitesProvider);
+      if (invites.isLoading && !invites.hasValue) {
+        return loc == Routes.splash ? null : Routes.splash;
+      }
+      if ((invites.value ?? const []).isNotEmpty) {
+        return loc.startsWith(Routes.inspector) ? null : Routes.inspector;
+      }
+      return loc == Routes.role ? null : Routes.role;
+    }
     // 7. Profile incomplete (location picker is part of that step).
     if (!u.profileComplete) {
       return (loc == Routes.profileSetup || loc == Routes.locationPicker)
@@ -359,6 +377,23 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: 'guide', builder: (_, _) => const ExportGuideScreen()),
         ],
       ),
+      GoRoute(
+        path: Routes.inspector,
+        builder: (_, _) => const InspectorHomeScreen(),
+        routes: [
+          GoRoute(
+              path: 'check/:id',
+              builder: (_, s) =>
+                  QualityCheckScreen(orderId: s.pathParameters['id']!)),
+          GoRoute(
+              path: 'sent/:id',
+              builder: (_, s) =>
+                  ReportSentScreen(orderId: s.pathParameters['id']!)),
+        ],
+      ),
+      GoRoute(
+          path: '/inspection/:id',
+          builder: (_, s) => LoadReportScreen(orderId: s.pathParameters['id']!)),
       GoRoute(
           path: Routes.opportunities,
           builder: (_, _) => const OpportunityFeedScreen()),

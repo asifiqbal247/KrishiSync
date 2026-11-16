@@ -96,8 +96,11 @@ class _KsTextFieldState extends State<KsTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        _Label(widget.label),
-        const SizedBox(height: AppSpacing.label),
+        // A section title above can replace the label (e.g. Figma 90).
+        if (widget.label.isNotEmpty) ...[
+          _Label(widget.label),
+          const SizedBox(height: AppSpacing.label),
+        ],
         Container(
           height: AppSizes.inputHeight,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),

@@ -4742,4 +4742,432 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bannerPlanSub => 'See sure demand before sowing';
+
+  @override
+  String get assignInspTitle => 'Send an inspector';
+
+  @override
+  String get assignInspBody =>
+      'Your person checks quality and weight at loading. They log in to Golaghor with this number.';
+
+  @override
+  String get fieldInspName => 'Inspector\'s name';
+
+  @override
+  String get fieldInspPhone => 'Inspector\'s mobile number';
+
+  @override
+  String get sendInvite => 'Send invite';
+
+  @override
+  String get errNameRequired => 'Enter a name';
+
+  @override
+  String get errInspNotSelf => 'You can\'t use your own number';
+
+  @override
+  String inspInviteText(String name, String no, String crop, String phone) {
+    return '$name, you are the inspector for $no · $crop on Golaghor. Open the app and log in with this number: $phone';
+  }
+
+  @override
+  String get inspHomeTitle => 'Inspector\'s work';
+
+  @override
+  String inspInvitedBy(String buyer) {
+    return '$buyer made you the inspector';
+  }
+
+  @override
+  String inspOrderLine(String no, String crop, String qty, String date) {
+    return '$no · $crop $qty · $date';
+  }
+
+  @override
+  String inspTruckBooked(String name) {
+    return 'Truck booked · $name';
+  }
+
+  @override
+  String inspTruckBookedBody(String place) {
+    return '$place · start the quality check when the truck arrives';
+  }
+
+  @override
+  String inspPickups(String n) {
+    return 'Pickups ($n)';
+  }
+
+  @override
+  String get inspNone => 'No inspection work yet';
+
+  @override
+  String numberedName(String n, String name) {
+    return '$n. $name';
+  }
+
+  @override
+  String get inspStart => 'Start';
+
+  @override
+  String get inspClosed => 'Closed';
+
+  @override
+  String get inspChalan => 'Shipment info';
+
+  @override
+  String get inspGrade => 'Grade';
+
+  @override
+  String inspGradeValue(String grade) {
+    return 'Grade $grade (as agreed)';
+  }
+
+  @override
+  String get inspTruck => 'Truck';
+
+  @override
+  String get callDriver => 'Call driver';
+
+  @override
+  String get seeRouteMap => 'Route on map';
+
+  @override
+  String qcTitle(String name) {
+    return 'Quality check · $name';
+  }
+
+  @override
+  String partialTitle(String name) {
+    return 'Partial load · $name';
+  }
+
+  @override
+  String cancelLoadTitle(String name) {
+    return 'Cancel load · $name';
+  }
+
+  @override
+  String gradeChecklist(String grade) {
+    return 'Grade $grade checklist';
+  }
+
+  @override
+  String get chkSize => 'Minimum size is right';
+
+  @override
+  String get chkNoSprout => 'No green parts or sprouts';
+
+  @override
+  String get chkFirm => 'Firm, not soft or rotten';
+
+  @override
+  String chkDamage(String pct) {
+    return 'At most $pct% damaged';
+  }
+
+  @override
+  String get chkPacking => 'Packing is right';
+
+  @override
+  String get chkOk => 'OK';
+
+  @override
+  String get chkProblem => 'Problem';
+
+  @override
+  String get rowDigitalWeight => 'Digital weight';
+
+  @override
+  String goodsPhotos(String n, String max) {
+    return 'Photos of the crop ($n/$max)';
+  }
+
+  @override
+  String rejectPhotos(String n, String max) {
+    return 'Photos of left-out crop ($n/$max)';
+  }
+
+  @override
+  String get decApprove => 'Approve';
+
+  @override
+  String get decApproved => 'Approved';
+
+  @override
+  String get decPartial => 'Partial';
+
+  @override
+  String get decPartialTake => 'Partial (take less)';
+
+  @override
+  String get decCancel => 'Cancel';
+
+  @override
+  String get qcNote =>
+      'After approval, money is released when the farmer gives the OTP. This report is final.';
+
+  @override
+  String get submitReport => 'Submit report';
+
+  @override
+  String get howMuchTake => 'How much will you take?';
+
+  @override
+  String get rowLeftOut => 'Left out';
+
+  @override
+  String get howMuchGood => 'How many kg of good crop?';
+
+  @override
+  String scaleWeight(String qty) {
+    return '$qty (from scale)';
+  }
+
+  @override
+  String get reasonSmall => 'Too small';
+
+  @override
+  String get reasonDamaged => 'Damaged';
+
+  @override
+  String get reasonLowGrade => 'Lower grade';
+
+  @override
+  String partialNote(String qty) {
+    return 'Only $qty is loaded. The farmer is paid for it with the OTP. The buyer gets the rest of the crop price and fee back. The fare stays the same.';
+  }
+
+  @override
+  String errAcceptKg(String qty) {
+    return 'Enter more than 0 and less than $qty';
+  }
+
+  @override
+  String get whyCancel => 'Why are you cancelling?';
+
+  @override
+  String get rowWillLoad => 'Will load';
+
+  @override
+  String get cancelLoadNote =>
+      'Nothing is loaded and the farmer gets no money. The buyer gets the crop price and fee back. The buyer pays the truck fare.';
+
+  @override
+  String get cancelLoadBtn => 'Cancel load';
+
+  @override
+  String get cancelLoadQ => 'Cancel this load?';
+
+  @override
+  String get cancelLoadBody =>
+      'The order will be cancelled. This report can\'t be changed.';
+
+  @override
+  String get reportSentTitle => 'Report sent';
+
+  @override
+  String get reportReachedBuyer => 'The report reached the buyer';
+
+  @override
+  String get rowStop => 'Stop';
+
+  @override
+  String stopLine(String i, String n, String name) {
+    return '$i/$n · $name';
+  }
+
+  @override
+  String get rowDecision => 'Decision';
+
+  @override
+  String decApproveLine(String ok, String n) {
+    return 'Approved · $ok/$n OK';
+  }
+
+  @override
+  String decPartialLine(String qty) {
+    return 'Partial · $qty taken';
+  }
+
+  @override
+  String decCancelLine(String reason) {
+    return 'Cancelled · $reason';
+  }
+
+  @override
+  String get rowWeight => 'Weight';
+
+  @override
+  String weightLeftOut(String w, String left) {
+    return '$w ($left left out)';
+  }
+
+  @override
+  String weightNoneTaken(String w) {
+    return '$w (nothing taken)';
+  }
+
+  @override
+  String get rowTime => 'Time';
+
+  @override
+  String get whatNext => 'What happens next';
+
+  @override
+  String get nextApprove =>
+      'The crop is loaded once the driver gets the farmer\'s OTP. This report can\'t be changed.';
+
+  @override
+  String nextPartial(String qty) {
+    return 'The driver loads only $qty. This report can\'t be changed.';
+  }
+
+  @override
+  String get nextCancel =>
+      'Nothing is loaded at this stop. This report can\'t be changed.';
+
+  @override
+  String get nextPickups => 'See next pickups';
+
+  @override
+  String get inspReportTitle => 'Inspection report';
+
+  @override
+  String get loadRecordTitle => 'Load record';
+
+  @override
+  String get loadDoneBadge => 'Loaded';
+
+  @override
+  String get rowInspector => 'Inspector';
+
+  @override
+  String inspYours(String name) {
+    return '$name (yours)';
+  }
+
+  @override
+  String get inspNotSent => 'Not sent';
+
+  @override
+  String get rowTimePlace => 'Time & place';
+
+  @override
+  String get rowWeighedBy => 'Weighed by';
+
+  @override
+  String weighedByDriver(String name) {
+    return 'Driver $name';
+  }
+
+  @override
+  String get weighedBySelf => 'You (own vehicle)';
+
+  @override
+  String get rowReceivedFarmer => 'Farmer received';
+
+  @override
+  String get rowChecklist => 'Checklist';
+
+  @override
+  String okOutOf(String ok, String n) {
+    return '$ok/$n OK';
+  }
+
+  @override
+  String get rowTaken => 'Taken';
+
+  @override
+  String leftOutWhy(String qty, String reason) {
+    return '$qty ($reason)';
+  }
+
+  @override
+  String get rowCropValueBack => 'Crop price back';
+
+  @override
+  String reasonNotMet(String reason) {
+    return 'Quality not met ($reason)';
+  }
+
+  @override
+  String get yourResponsibility => 'Quality and amount are your responsibility';
+
+  @override
+  String get yourResponsibilityBody =>
+      'You sent no inspector. The driver only took the weight and photos. You can\'t complain about quality after loading.';
+
+  @override
+  String get yourResponsibilitySelf =>
+      'You weighed and confirmed the load yourself. You can\'t complain about quality or weight after loading.';
+
+  @override
+  String get reportIsProof => 'This report is the proof';
+
+  @override
+  String get reportIsProofBody =>
+      'Your inspector approved the quality at loading. If there is a dispute later, this report is checked; the farmer\'s money can\'t be held.';
+
+  @override
+  String get fareSame => 'The truck fare stays the same';
+
+  @override
+  String fareSameBody(String fare) {
+    return 'You booked the truck, so you pay the $fare fare. The refund comes back the same way within 3 working days.';
+  }
+
+  @override
+  String get farePayYou => 'You pay the truck fare';
+
+  @override
+  String farePayYouBody(String fare) {
+    return 'You booked the truck, so the $fare fare is not refunded.';
+  }
+
+  @override
+  String get rowInspectorAssign => 'Inspector';
+
+  @override
+  String get inspSend => 'Send';
+
+  @override
+  String get rowInspReport => 'Inspection report';
+
+  @override
+  String get rowLoadRecord => 'Load record';
+
+  @override
+  String inspPresent(String name) {
+    return '$name (buyer\'s)';
+  }
+
+  @override
+  String get rowInspDecision => 'Inspector\'s decision';
+
+  @override
+  String get inspWaitNote =>
+      'Waiting for the inspector\'s decision — load after the report';
+
+  @override
+  String inspPartialNote(String qty) {
+    return 'The inspector approved only $qty';
+  }
+
+  @override
+  String get rowInspectorWork => 'Inspector\'s work';
+
+  @override
+  String nInspectionDone(String no) {
+    return 'Inspection report: $no';
+  }
+
+  @override
+  String get rowInspReason => 'Reason';
+
+  @override
+  String get errInspPhoto => 'Take at least one photo';
+
+  @override
+  String get rowLeftOutPast => 'Left out';
 }

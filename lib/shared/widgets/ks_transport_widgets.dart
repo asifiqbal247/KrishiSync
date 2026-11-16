@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../utils/sheet_utils.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
@@ -301,7 +302,7 @@ Future<T?> showKsOptionsSheet<T>(
       },
     ),
   );
-  q.dispose();
+  disposeAfterSheet([q]);
   FocusManager.instance.primaryFocus?.unfocus();
   return r;
 }

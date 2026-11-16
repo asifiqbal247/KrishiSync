@@ -4737,4 +4737,432 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get bannerPlanSub => 'বোনার আগে নিশ্চিত চাহিদা দেখুন';
+
+  @override
+  String get assignInspTitle => 'পরিদর্শক পাঠান';
+
+  @override
+  String get assignInspBody =>
+      'আপনার লোক লোডের সময় মান ও ওজন যাচাই করবেন। তিনি এই নম্বর দিয়ে গোলাঘর অ্যাপে লগইন করবেন।';
+
+  @override
+  String get fieldInspName => 'পরিদর্শকের নাম';
+
+  @override
+  String get fieldInspPhone => 'পরিদর্শকের মোবাইল নম্বর';
+
+  @override
+  String get sendInvite => 'আমন্ত্রণ পাঠান';
+
+  @override
+  String get errNameRequired => 'নাম লিখুন';
+
+  @override
+  String get errInspNotSelf => 'নিজের নম্বর দেওয়া যাবে না';
+
+  @override
+  String inspInviteText(String name, String no, String crop, String phone) {
+    return '$name, গোলাঘর অ্যাপে আপনাকে পরিদর্শক করা হয়েছে ($no · $crop)। অ্যাপ খুলে এই নম্বর দিয়ে লগইন করুন: $phone';
+  }
+
+  @override
+  String get inspHomeTitle => 'পরিদর্শকের কাজ';
+
+  @override
+  String inspInvitedBy(String buyer) {
+    return '$buyer আপনাকে পরিদর্শক করেছেন';
+  }
+
+  @override
+  String inspOrderLine(String no, String crop, String qty, String date) {
+    return '$no · $crop $qty · $date';
+  }
+
+  @override
+  String inspTruckBooked(String name) {
+    return 'ট্রাক বুক হয়েছে · $name';
+  }
+
+  @override
+  String inspTruckBookedBody(String place) {
+    return '$place · ট্রাক পৌঁছালে মান যাচাই শুরু করুন';
+  }
+
+  @override
+  String inspPickups(String n) {
+    return 'পিকআপ ($n)';
+  }
+
+  @override
+  String get inspNone => 'এখনো কোনো পরিদর্শনের কাজ নেই';
+
+  @override
+  String numberedName(String n, String name) {
+    return '$n. $name';
+  }
+
+  @override
+  String get inspStart => 'শুরু';
+
+  @override
+  String get inspClosed => 'শেষ';
+
+  @override
+  String get inspChalan => 'চালানের তথ্য';
+
+  @override
+  String get inspGrade => 'মান';
+
+  @override
+  String inspGradeValue(String grade) {
+    return 'গ্রেড $grade (চুক্তি অনুযায়ী)';
+  }
+
+  @override
+  String get inspTruck => 'ট্রাক';
+
+  @override
+  String get callDriver => 'ড্রাইভারকে কল';
+
+  @override
+  String get seeRouteMap => 'ম্যাপে পথ দেখুন';
+
+  @override
+  String qcTitle(String name) {
+    return 'মান যাচাই · $name';
+  }
+
+  @override
+  String partialTitle(String name) {
+    return 'আংশিক লোড · $name';
+  }
+
+  @override
+  String cancelLoadTitle(String name) {
+    return 'লোড বাতিল · $name';
+  }
+
+  @override
+  String gradeChecklist(String grade) {
+    return 'গ্রেড $grade চেকলিস্ট';
+  }
+
+  @override
+  String get chkSize => 'ন্যূনতম আকার ঠিক আছে';
+
+  @override
+  String get chkNoSprout => 'সবুজ বা অঙ্কুর নেই';
+
+  @override
+  String get chkFirm => 'শক্ত, নরম বা পচা নয়';
+
+  @override
+  String chkDamage(String pct) {
+    return 'সর্বোচ্চ $pct% ক্ষতিগ্রস্ত';
+  }
+
+  @override
+  String get chkPacking => 'প্যাকেজিং ঠিক আছে';
+
+  @override
+  String get chkOk => 'ঠিক';
+
+  @override
+  String get chkProblem => 'সমস্যা';
+
+  @override
+  String get rowDigitalWeight => 'ডিজিটাল ওজন';
+
+  @override
+  String goodsPhotos(String n, String max) {
+    return 'মালের ছবি তুলুন ($n/$max)';
+  }
+
+  @override
+  String rejectPhotos(String n, String max) {
+    return 'বাদ দেওয়া মালের ছবি তুলুন ($n/$max)';
+  }
+
+  @override
+  String get decApprove => 'অনুমোদন';
+
+  @override
+  String get decApproved => 'অনুমোদিত';
+
+  @override
+  String get decPartial => 'আংশিক';
+
+  @override
+  String get decPartialTake => 'আংশিক (কম নিন)';
+
+  @override
+  String get decCancel => 'বাতিল';
+
+  @override
+  String get qcNote =>
+      'অনুমোদনের পর কৃষক OTP দিলে টাকা ছাড় হবে। এই রিপোর্ট চূড়ান্ত।';
+
+  @override
+  String get submitReport => 'রিপোর্ট জমা দিন';
+
+  @override
+  String get howMuchTake => 'কতটুকু মাল নেবেন?';
+
+  @override
+  String get rowLeftOut => 'বাদ যাবে';
+
+  @override
+  String get howMuchGood => 'ভালো মাল কত কেজি নেবেন?';
+
+  @override
+  String scaleWeight(String qty) {
+    return '$qty (স্কেল থেকে)';
+  }
+
+  @override
+  String get reasonSmall => 'আকার ছোট';
+
+  @override
+  String get reasonDamaged => 'নষ্ট মাল';
+
+  @override
+  String get reasonLowGrade => 'গ্রেড কম';
+
+  @override
+  String partialNote(String qty) {
+    return 'শুধু $qty লোড হবে। কৃষক OTP দিলে এর টাকা ছাড় হবে। বাকি ফসলের দাম ও ফি ক্রেতা ফেরত পাবেন। ট্রাক ভাড়া একই থাকবে।';
+  }
+
+  @override
+  String errAcceptKg(String qty) {
+    return '০ থেকে $qty-এর কম লিখুন';
+  }
+
+  @override
+  String get whyCancel => 'কেন বাতিল করছেন?';
+
+  @override
+  String get rowWillLoad => 'লোড হবে';
+
+  @override
+  String get cancelLoadNote =>
+      'মাল লোড হবে না, কৃষক টাকা পাবেন না। ক্রেতা ফসলের দাম ও ফি ফেরত পাবেন। ট্রাক ভাড়া ক্রেতা দেবেন।';
+
+  @override
+  String get cancelLoadBtn => 'লোড বাতিল করুন';
+
+  @override
+  String get cancelLoadQ => 'লোড বাতিল করবেন?';
+
+  @override
+  String get cancelLoadBody =>
+      'অর্ডারটি বাতিল হবে। এই রিপোর্ট আর বদলানো যাবে না।';
+
+  @override
+  String get reportSentTitle => 'রিপোর্ট জমা হয়েছে';
+
+  @override
+  String get reportReachedBuyer => 'রিপোর্ট ক্রেতার কাছে পৌঁছেছে';
+
+  @override
+  String get rowStop => 'স্টপ';
+
+  @override
+  String stopLine(String i, String n, String name) {
+    return '$i/$n · $name';
+  }
+
+  @override
+  String get rowDecision => 'সিদ্ধান্ত';
+
+  @override
+  String decApproveLine(String ok, String n) {
+    return 'অনুমোদন · $ok/$n ঠিক';
+  }
+
+  @override
+  String decPartialLine(String qty) {
+    return 'আংশিক · $qty নেওয়া';
+  }
+
+  @override
+  String decCancelLine(String reason) {
+    return 'বাতিল · $reason';
+  }
+
+  @override
+  String get rowWeight => 'ওজন';
+
+  @override
+  String weightLeftOut(String w, String left) {
+    return '$w ($left বাদ)';
+  }
+
+  @override
+  String weightNoneTaken(String w) {
+    return '$w (কিছুই নেওয়া হয়নি)';
+  }
+
+  @override
+  String get rowTime => 'সময়';
+
+  @override
+  String get whatNext => 'এরপর কী হবে';
+
+  @override
+  String get nextApprove =>
+      'ড্রাইভার কৃষকের OTP নিলে মাল গাড়িতে উঠবে। এই রিপোর্ট আর বদলানো যাবে না।';
+
+  @override
+  String nextPartial(String qty) {
+    return 'ড্রাইভার শুধু $qty তুলবেন। এই রিপোর্ট আর বদলানো যাবে না।';
+  }
+
+  @override
+  String get nextCancel =>
+      'এই স্টপে কোনো মাল উঠবে না। এই রিপোর্ট আর বদলানো যাবে না।';
+
+  @override
+  String get nextPickups => 'পরের পিকআপ দেখুন';
+
+  @override
+  String get inspReportTitle => 'পরিদর্শন রিপোর্ট';
+
+  @override
+  String get loadRecordTitle => 'লোডের রেকর্ড';
+
+  @override
+  String get loadDoneBadge => 'লোড হয়েছে';
+
+  @override
+  String get rowInspector => 'পরিদর্শক';
+
+  @override
+  String inspYours(String name) {
+    return '$name (আপনার)';
+  }
+
+  @override
+  String get inspNotSent => 'পাঠাননি';
+
+  @override
+  String get rowTimePlace => 'সময় ও স্থান';
+
+  @override
+  String get rowWeighedBy => 'ওজন নিয়েছেন';
+
+  @override
+  String weighedByDriver(String name) {
+    return 'ড্রাইভার $name';
+  }
+
+  @override
+  String get weighedBySelf => 'আপনি (নিজের গাড়ি)';
+
+  @override
+  String get rowReceivedFarmer => 'কৃষক পেয়েছেন';
+
+  @override
+  String get rowChecklist => 'চেকলিস্ট';
+
+  @override
+  String okOutOf(String ok, String n) {
+    return '$ok/$n ঠিক';
+  }
+
+  @override
+  String get rowTaken => 'নেওয়া হয়েছে';
+
+  @override
+  String leftOutWhy(String qty, String reason) {
+    return '$qty ($reason)';
+  }
+
+  @override
+  String get rowCropValueBack => 'ফসলের দাম ফেরত';
+
+  @override
+  String reasonNotMet(String reason) {
+    return 'মান মেলেনি ($reason)';
+  }
+
+  @override
+  String get yourResponsibility => 'মান ও পরিমাণের দায় আপনার';
+
+  @override
+  String get yourResponsibilityBody =>
+      'আপনি পরিদর্শক পাঠাননি। ড্রাইভার শুধু ওজন ও ছবি নিয়েছেন। লোডের পর মান নিয়ে অভিযোগ করা যাবে না।';
+
+  @override
+  String get yourResponsibilitySelf =>
+      'আপনি নিজে ওজন ও ছবি নিয়ে লোড নিশ্চিত করেছেন। লোডের পর মান বা ওজন নিয়ে অভিযোগ করা যাবে না।';
+
+  @override
+  String get reportIsProof => 'এই রিপোর্টই প্রমাণ';
+
+  @override
+  String get reportIsProofBody =>
+      'লোডের সময় আপনার পরিদর্শক মান অনুমোদন করেছেন। পরে আপত্তি হলে এই রিপোর্ট দেখা হবে; কৃষকের টাকা আটকানো যাবে না।';
+
+  @override
+  String get fareSame => 'ট্রাক ভাড়া একই থাকবে';
+
+  @override
+  String fareSameBody(String fare) {
+    return 'ট্রাক আপনি বুক করেছেন, তাই ভাড়া $fare আপনি দেবেন। ফেরতের টাকা ৩ কর্মদিবসের মধ্যে একই মাধ্যমে যাবে।';
+  }
+
+  @override
+  String get farePayYou => 'ট্রাক ভাড়া আপনি দেবেন';
+
+  @override
+  String farePayYouBody(String fare) {
+    return 'ট্রাক আপনি বুক করেছেন, তাই ভাড়া $fare ফেরত হবে না।';
+  }
+
+  @override
+  String get rowInspectorAssign => 'পরিদর্শক';
+
+  @override
+  String get inspSend => 'পাঠান';
+
+  @override
+  String get rowInspReport => 'পরিদর্শন রিপোর্ট';
+
+  @override
+  String get rowLoadRecord => 'লোডের রেকর্ড';
+
+  @override
+  String inspPresent(String name) {
+    return '$name (ক্রেতার)';
+  }
+
+  @override
+  String get rowInspDecision => 'পরিদর্শকের সিদ্ধান্ত';
+
+  @override
+  String get inspWaitNote =>
+      'পরিদর্শকের সিদ্ধান্তের অপেক্ষা — রিপোর্টের পর লোড করুন';
+
+  @override
+  String inspPartialNote(String qty) {
+    return 'পরিদর্শক শুধু $qty নিতে বলেছেন';
+  }
+
+  @override
+  String get rowInspectorWork => 'পরিদর্শকের কাজ';
+
+  @override
+  String nInspectionDone(String no) {
+    return 'পরিদর্শন রিপোর্ট: $no';
+  }
+
+  @override
+  String get rowInspReason => 'কারণ';
+
+  @override
+  String get errInspPhoto => 'অন্তত একটি ছবি তুলুন';
+
+  @override
+  String get rowLeftOutPast => 'বাদ গেছে';
 }

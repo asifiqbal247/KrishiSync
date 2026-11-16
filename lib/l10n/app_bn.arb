@@ -3557,5 +3557,411 @@
   "bannerOppTitle": "বাজারের সুযোগ",
   "bannerOppSub": "বেশি চাহিদা ও দাম বাড়ছে এমন ফসল",
   "bannerPlanTitle": "চাষের পরিকল্পনা",
-  "bannerPlanSub": "বোনার আগে নিশ্চিত চাহিদা দেখুন"
+  "bannerPlanSub": "বোনার আগে নিশ্চিত চাহিদা দেখুন",
+  "assignInspTitle": "পরিদর্শক পাঠান",
+  "assignInspBody": "আপনার লোক লোডের সময় মান ও ওজন যাচাই করবেন। তিনি এই নম্বর দিয়ে গোলাঘর অ্যাপে লগইন করবেন।",
+  "fieldInspName": "পরিদর্শকের নাম",
+  "fieldInspPhone": "পরিদর্শকের মোবাইল নম্বর",
+  "sendInvite": "আমন্ত্রণ পাঠান",
+  "errNameRequired": "নাম লিখুন",
+  "errInspNotSelf": "নিজের নম্বর দেওয়া যাবে না",
+  "inspInviteText": "{name}, গোলাঘর অ্যাপে আপনাকে পরিদর্শক করা হয়েছে ({no} · {crop})। অ্যাপ খুলে এই নম্বর দিয়ে লগইন করুন: {phone}",
+  "@inspInviteText": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "no": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "inspHomeTitle": "পরিদর্শকের কাজ",
+  "inspInvitedBy": "{buyer} আপনাকে পরিদর্শক করেছেন",
+  "@inspInvitedBy": {
+    "placeholders": {
+      "buyer": {
+        "type": "String"
+      }
+    }
+  },
+  "inspOrderLine": "{no} · {crop} {qty} · {date}",
+  "@inspOrderLine": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      },
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "inspTruckBooked": "ট্রাক বুক হয়েছে · {name}",
+  "@inspTruckBooked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inspTruckBookedBody": "{place} · ট্রাক পৌঁছালে মান যাচাই শুরু করুন",
+  "@inspTruckBookedBody": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "inspPickups": "পিকআপ ({n})",
+  "@inspPickups": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "inspNone": "এখনো কোনো পরিদর্শনের কাজ নেই",
+  "numberedName": "{n}. {name}",
+  "@numberedName": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inspStart": "শুরু",
+  "inspClosed": "শেষ",
+  "inspChalan": "চালানের তথ্য",
+  "inspGrade": "মান",
+  "inspGradeValue": "গ্রেড {grade} (চুক্তি অনুযায়ী)",
+  "@inspGradeValue": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "inspTruck": "ট্রাক",
+  "callDriver": "ড্রাইভারকে কল",
+  "seeRouteMap": "ম্যাপে পথ দেখুন",
+  "qcTitle": "মান যাচাই · {name}",
+  "@qcTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "partialTitle": "আংশিক লোড · {name}",
+  "@partialTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelLoadTitle": "লোড বাতিল · {name}",
+  "@cancelLoadTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gradeChecklist": "গ্রেড {grade} চেকলিস্ট",
+  "@gradeChecklist": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "chkSize": "ন্যূনতম আকার ঠিক আছে",
+  "chkNoSprout": "সবুজ বা অঙ্কুর নেই",
+  "chkFirm": "শক্ত, নরম বা পচা নয়",
+  "chkDamage": "সর্বোচ্চ {pct}% ক্ষতিগ্রস্ত",
+  "@chkDamage": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "chkPacking": "প্যাকেজিং ঠিক আছে",
+  "chkOk": "ঠিক",
+  "chkProblem": "সমস্যা",
+  "rowDigitalWeight": "ডিজিটাল ওজন",
+  "goodsPhotos": "মালের ছবি তুলুন ({n}/{max})",
+  "@goodsPhotos": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "rejectPhotos": "বাদ দেওয়া মালের ছবি তুলুন ({n}/{max})",
+  "@rejectPhotos": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "decApprove": "অনুমোদন",
+  "decApproved": "অনুমোদিত",
+  "decPartial": "আংশিক",
+  "decPartialTake": "আংশিক (কম নিন)",
+  "decCancel": "বাতিল",
+  "qcNote": "অনুমোদনের পর কৃষক OTP দিলে টাকা ছাড় হবে। এই রিপোর্ট চূড়ান্ত।",
+  "submitReport": "রিপোর্ট জমা দিন",
+  "howMuchTake": "কতটুকু মাল নেবেন?",
+  "rowLeftOut": "বাদ যাবে",
+  "howMuchGood": "ভালো মাল কত কেজি নেবেন?",
+  "scaleWeight": "{qty} (স্কেল থেকে)",
+  "@scaleWeight": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "reasonSmall": "আকার ছোট",
+  "reasonDamaged": "নষ্ট মাল",
+  "reasonLowGrade": "গ্রেড কম",
+  "partialNote": "শুধু {qty} লোড হবে। কৃষক OTP দিলে এর টাকা ছাড় হবে। বাকি ফসলের দাম ও ফি ক্রেতা ফেরত পাবেন। ট্রাক ভাড়া একই থাকবে।",
+  "@partialNote": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "errAcceptKg": "০ থেকে {qty}-এর কম লিখুন",
+  "@errAcceptKg": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "whyCancel": "কেন বাতিল করছেন?",
+  "rowWillLoad": "লোড হবে",
+  "cancelLoadNote": "মাল লোড হবে না, কৃষক টাকা পাবেন না। ক্রেতা ফসলের দাম ও ফি ফেরত পাবেন। ট্রাক ভাড়া ক্রেতা দেবেন।",
+  "cancelLoadBtn": "লোড বাতিল করুন",
+  "cancelLoadQ": "লোড বাতিল করবেন?",
+  "cancelLoadBody": "অর্ডারটি বাতিল হবে। এই রিপোর্ট আর বদলানো যাবে না।",
+  "reportSentTitle": "রিপোর্ট জমা হয়েছে",
+  "reportReachedBuyer": "রিপোর্ট ক্রেতার কাছে পৌঁছেছে",
+  "rowStop": "স্টপ",
+  "stopLine": "{i}/{n} · {name}",
+  "@stopLine": {
+    "placeholders": {
+      "i": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rowDecision": "সিদ্ধান্ত",
+  "decApproveLine": "অনুমোদন · {ok}/{n} ঠিক",
+  "@decApproveLine": {
+    "placeholders": {
+      "ok": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "decPartialLine": "আংশিক · {qty} নেওয়া",
+  "@decPartialLine": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "decCancelLine": "বাতিল · {reason}",
+  "@decCancelLine": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rowWeight": "ওজন",
+  "weightLeftOut": "{w} ({left} বাদ)",
+  "@weightLeftOut": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "weightNoneTaken": "{w} (কিছুই নেওয়া হয়নি)",
+  "@weightNoneTaken": {
+    "placeholders": {
+      "w": {
+        "type": "String"
+      }
+    }
+  },
+  "rowTime": "সময়",
+  "whatNext": "এরপর কী হবে",
+  "nextApprove": "ড্রাইভার কৃষকের OTP নিলে মাল গাড়িতে উঠবে। এই রিপোর্ট আর বদলানো যাবে না।",
+  "nextPartial": "ড্রাইভার শুধু {qty} তুলবেন। এই রিপোর্ট আর বদলানো যাবে না।",
+  "@nextPartial": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "nextCancel": "এই স্টপে কোনো মাল উঠবে না। এই রিপোর্ট আর বদলানো যাবে না।",
+  "nextPickups": "পরের পিকআপ দেখুন",
+  "inspReportTitle": "পরিদর্শন রিপোর্ট",
+  "loadRecordTitle": "লোডের রেকর্ড",
+  "loadDoneBadge": "লোড হয়েছে",
+  "rowInspector": "পরিদর্শক",
+  "inspYours": "{name} (আপনার)",
+  "@inspYours": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inspNotSent": "পাঠাননি",
+  "rowTimePlace": "সময় ও স্থান",
+  "rowWeighedBy": "ওজন নিয়েছেন",
+  "weighedByDriver": "ড্রাইভার {name}",
+  "@weighedByDriver": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "weighedBySelf": "আপনি (নিজের গাড়ি)",
+  "rowReceivedFarmer": "কৃষক পেয়েছেন",
+  "rowChecklist": "চেকলিস্ট",
+  "okOutOf": "{ok}/{n} ঠিক",
+  "@okOutOf": {
+    "placeholders": {
+      "ok": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "rowTaken": "নেওয়া হয়েছে",
+  "leftOutWhy": "{qty} ({reason})",
+  "@leftOutWhy": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rowCropValueBack": "ফসলের দাম ফেরত",
+  "reasonNotMet": "মান মেলেনি ({reason})",
+  "@reasonNotMet": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "yourResponsibility": "মান ও পরিমাণের দায় আপনার",
+  "yourResponsibilityBody": "আপনি পরিদর্শক পাঠাননি। ড্রাইভার শুধু ওজন ও ছবি নিয়েছেন। লোডের পর মান নিয়ে অভিযোগ করা যাবে না।",
+  "yourResponsibilitySelf": "আপনি নিজে ওজন ও ছবি নিয়ে লোড নিশ্চিত করেছেন। লোডের পর মান বা ওজন নিয়ে অভিযোগ করা যাবে না।",
+  "reportIsProof": "এই রিপোর্টই প্রমাণ",
+  "reportIsProofBody": "লোডের সময় আপনার পরিদর্শক মান অনুমোদন করেছেন। পরে আপত্তি হলে এই রিপোর্ট দেখা হবে; কৃষকের টাকা আটকানো যাবে না।",
+  "fareSame": "ট্রাক ভাড়া একই থাকবে",
+  "fareSameBody": "ট্রাক আপনি বুক করেছেন, তাই ভাড়া {fare} আপনি দেবেন। ফেরতের টাকা ৩ কর্মদিবসের মধ্যে একই মাধ্যমে যাবে।",
+  "@fareSameBody": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "farePayYou": "ট্রাক ভাড়া আপনি দেবেন",
+  "farePayYouBody": "ট্রাক আপনি বুক করেছেন, তাই ভাড়া {fare} ফেরত হবে না।",
+  "@farePayYouBody": {
+    "placeholders": {
+      "fare": {
+        "type": "String"
+      }
+    }
+  },
+  "rowInspectorAssign": "পরিদর্শক",
+  "inspSend": "পাঠান",
+  "rowInspReport": "পরিদর্শন রিপোর্ট",
+  "rowLoadRecord": "লোডের রেকর্ড",
+  "inspPresent": "{name} (ক্রেতার)",
+  "@inspPresent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rowInspDecision": "পরিদর্শকের সিদ্ধান্ত",
+  "inspWaitNote": "পরিদর্শকের সিদ্ধান্তের অপেক্ষা — রিপোর্টের পর লোড করুন",
+  "inspPartialNote": "পরিদর্শক শুধু {qty} নিতে বলেছেন",
+  "@inspPartialNote": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "rowInspectorWork": "পরিদর্শকের কাজ",
+  "nInspectionDone": "পরিদর্শন রিপোর্ট: {no}",
+  "@nInspectionDone": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "rowInspReason": "কারণ",
+  "errInspPhoto": "অন্তত একটি ছবি তুলুন",
+  "rowLeftOutPast": "বাদ গেছে"
 }

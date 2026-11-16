@@ -16,6 +16,12 @@ service cloud.firestore {
     function isMod() { return isActive() && (myRole() == 'moderator' || myRole() == 'admin'); }
     function changed() { return request.resource.data.diff(resource.data).affectedKeys(); }
     function onlyChanges(keys) { return changed().hasOnly(keys); }
+    // The buyer's inspector for an order (88–94), matched by phone number.
+    function isInspectorOf(orderId) {
+      let p = /databases/$(database)/documents/inspections/$(orderId);
+      return signedIn() && exists(p)
+        && get(p).data.inspectorPhone == request.auth.token.phone_number;
+    }
 
     // ---------- users/{userId} ----------
     match /users/{userId} {
@@ -125,7 +131,7 @@ service cloud.firestore {
         let after = getAfter(/databases/$(database)/documents/orders/$(oid)).data;
         return isActive()
           && onlyChanges(['availableKg', 'status', 'lastCancelOrder', 'updatedAt'])
-          && before.listingId == id && before.buyerId == uid()
+          && before.listingId == id && (before.buyerId == uid() || isInspectorOf(oid))
           && before.status in ['confirmed', 'transportBooked']
           && after.status == 'cancelled'
           && request.resource.data.availableKg == resource.data.availableKg + before.quantityKg
@@ -205,7 +211,7 @@ service cloud.firestore {
         return signedIn() && (resource.data.buyerId == uid() || resource.data.farmerId == uid()
           || resource.data.get('transporterId', null) == uid());
       }
-      allow read: if isOrderParty() || isMod();
+      allow read: if isOrderParty() || isMod() || isInspectorOf(id);
       allow create: if isActive() && myRole() == 'buyer'
         && request.resource.data.buyerId == uid()
         && request.resource.data.status == 'confirmed'
@@ -264,11 +270,45 @@ service cloud.firestore {
         // Buyer completes after rating (111).
         || (resource.data.buyerId == uid() && statusOnly()
           && from('delivered') && to('completed'))
-        // Buyer cancels before pickup (D5).
-        || (resource.data.buyerId == uid()
+        // Buyer cancels before pickup (D5), or the buyer's inspector rejects
+        // the crop at the farm (91).
+        || ((resource.data.buyerId == uid() || isInspectorOf(id))
           && (from('confirmed') || from('transportBooked')) && to('cancelled')
           && onlyChanges(['status', 'timeline', 'updatedAt', 'refund', 'cancelFee']))
       ));
+    }
+
+    // ---------- inspections/{orderId} (buyer's inspector, 88–94) ----------
+    match /inspections/{orderId} {
+      function order() { return get(/databases/$(database)/documents/orders/$(orderId)).data; }
+      function invited() {
+        return signedIn() && resource.data.inspectorPhone == request.auth.token.phone_number;
+      }
+      // Order parties may also read a not-yet-created inspection (null).
+      allow read: if isMod() || (signedIn() && (order().buyerId == uid()
+        || order().farmerId == uid()
+        || order().get('transporterId', null) == uid())) || invited();
+      // Buyer names the inspector (platform-truck orders, before loading).
+      allow create, update: if isActive() && order().buyerId == uid()
+        && order().transportMode == 'platform'
+        && order().status in ['confirmed', 'transportBooked']
+        && (resource == null || resource.data.status == 'invited')
+        && request.resource.data.buyerId == uid()
+        && request.resource.data.status == 'invited'
+        && request.resource.data.inspectorPhone is string
+        && request.resource.data.inspectorPhone.size() == 14;
+      allow delete: if isActive() && resource.data.buyerId == uid()
+        && resource.data.status == 'invited';
+      // Inspector sends the report once (89–91).
+      allow update: if isActive() && invited() && resource.data.status == 'invited'
+        && order().status in ['confirmed', 'transportBooked']
+        && onlyChanges(['status', 'decision', 'checks', 'weighedKg', 'acceptKg',
+                        'reason', 'photos', 'doneAt', 'updatedAt'])
+        && request.resource.data.status == 'done'
+        && request.resource.data.decision in ['approve', 'partial', 'cancel']
+        && request.resource.data.weighedKg is number
+        && request.resource.data.acceptKg is number
+        && request.resource.data.acceptKg <= request.resource.data.weighedKg;
     }
 
     // ---------- priceAlerts/{uid}_{crop} (Price Trend 30) ----------
@@ -334,8 +374,8 @@ service cloud.firestore {
         // Transporter rated the buyer.
         || (d().get('transporterId', null) == uid()
           && onlyChanges(['transporterRated', 'updatedAt']))
-        // Buyer cancels the order before pickup (D5).
-        || (d().buyerId == uid() && d().status in ['open', 'assigned']
+        // Buyer (D5) or the buyer's inspector (91) cancels before pickup.
+        || ((d().buyerId == uid() || isInspectorOf(id)) && d().status in ['open', 'assigned']
           && nd().status == 'cancelled'
           && onlyChanges(['status', 'timeline', 'updatedAt']))
       );

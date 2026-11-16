@@ -89,6 +89,16 @@ class NotificationsScreen extends ConsumerWidget {
       'extra_declined' => (l.nExtraDeclined(p['no'] ?? ''), ''),
       'weight_less' => (l.nWeightLess(p['no'] ?? ''), crop),
       'loaded_paid' => (l.nLoadedPaid(p['no'] ?? ''), crop),
+      'inspection_done' => (
+          l.nInspectionDone(p['no'] ?? ''),
+          l.nameDot(
+              p['farmer'] ?? '',
+              switch (p['decision']) {
+                'partial' => l.decPartial,
+                'cancel' => l.decCancel,
+                _ => l.decApproved,
+              })
+        ),
       'price_alert' => (
           l.nPriceAlert(crop),
           l.nPriceAlertBody(
@@ -118,6 +128,7 @@ class NotificationsScreen extends ConsumerWidget {
       'extra' => Routes.extraWeight(id),
       'weight' => Routes.weightDiff(id),
       'rescue' => Routes.rescue(id),
+      'inspection' => Routes.loadReport(id),
       'trace' => Routes.trace(id),
       _ => null,
     };

@@ -25,6 +25,7 @@ import '../widgets/ks_blocks.dart';
 import '../widgets/ks_button.dart';
 import '../widgets/ks_dialogs.dart';
 import '../widgets/ks_list_item.dart';
+import '../../features/inspection/data/inspection_repository.dart';
 import '../widgets/ks_net_image.dart';
 import '../widgets/ks_option_card.dart';
 import '../../features/profile/presentation/payment_method_screens.dart';
@@ -234,6 +235,8 @@ class SimpleProfileTab extends ConsumerWidget {
               () => context.push(Routes.paymentMethods),
             ),
           ],
+          if ((ref.watch(myInvitesProvider).value ?? const []).isNotEmpty)
+            row(l.rowInspectorWork, null, () => context.push(Routes.inspector)),
           row(
             l.rowLanguage,
             l.languageSub(lang == 'bn' ? l.langBangla : l.langEnglish),

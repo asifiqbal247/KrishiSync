@@ -29,6 +29,8 @@ import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
 import '../../chat/presentation/chat_screens.dart';
+import '../../inspection/data/inspection_repository.dart';
+import '../../inspection/presentation/inspection_screens.dart';
 import '../../profile/presentation/payment_method_screens.dart';
 import '../../trade/data/payment_service.dart';
 import '../../trade/data/trade_repository.dart';
@@ -365,7 +367,8 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
     super.dispose();
   }
 
-  Future<void> _submit(Delivery d, TradeOrder o, AppUser me) async {
+  Future<void> _submit(Delivery d, TradeOrder o, AppUser me,
+      {num? maxKg}) async {
     final l = AppLocalizations.of(context);
     final repo = ref.read(transportRepositoryProvider);
     final weighed = num.tryParse(Fmt.latinDigits(_kg.text.trim())) ?? 0;
@@ -375,13 +378,14 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
     });
     if (_kgErr != null) return;
 
-    // More than ordered: ask the buyer first (52 / 134).
-    var loadKg = weighed;
-    if (weighed > o.quantityKg) {
+    // More than ordered: ask the buyer first (52 / 134). After a partial
+    // inspection only the approved amount may be loaded.
+    var loadKg = maxKg != null && weighed > maxKg ? maxKg : weighed;
+    if (loadKg > o.quantityKg) {
       if (o.extraStatus == null) {
         setState(() => _busy = true);
         try {
-          await repo.requestExtra(o, weighed, me.uid);
+          await repo.requestExtra(o, loadKg, me.uid);
         } catch (_) {
           if (mounted) KsToast.show(context, l.errorGeneric);
         } finally {
@@ -396,7 +400,7 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
       final allowed = o.extraStatus == 'approved'
           ? o.quantityKg + (o.extraKg ?? 0)
           : o.quantityKg;
-      if (weighed > allowed) loadKg = allowed;
+      if (loadKg > allowed) loadKg = allowed;
     }
 
     final otp = Fmt.latinDigits(_otp.text.trim());
@@ -438,10 +442,18 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
     final me = ref.watch(currentUserProvider).value;
     final d = ref.watch(deliveryProvider(widget.deliveryId)).value;
     final o = d == null ? null : ref.watch(orderProvider(d.orderId)).value;
-    if (d == null || o == null || me == null) return _loading(l.weighTitle);
+    final xAsync = d == null ? null : ref.watch(inspectionProvider(d.orderId));
+    if (d == null || o == null || me == null || xAsync == null || xAsync.isLoading) {
+      return _loading(l.weighTitle);
+    }
+    // 88–94: buyer's inspector, if one was sent.
+    final x = xAsync.value;
+    final inspWait = x != null && !x.done;
+    final partialKg =
+        x?.decision == InspectionDecision.partial ? x!.acceptKg : null;
     if (!_filled) {
       _filled = true;
-      _kg.text = '${o.extraStatus == 'approved' ? o.quantityKg + (o.extraKg ?? 0) : o.quantityKg}';
+      _kg.text = '${partialKg ?? (x?.decision == InspectionDecision.approve ? x!.weighedKg : null) ?? (o.extraStatus == 'approved' ? o.quantityKg + (o.extraKg ?? 0) : o.quantityKg)}';
     }
     final farmer = ref.watch(userByIdProvider(d.farmerId)).value;
     final extra = o.extraKg ?? 0;
@@ -475,9 +487,23 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
           ),
           const SizedBox(height: AppSpacing.block),
           KsInfoBox(children: [
+            if (x != null) ...[
+              KsInfoRow(l.rowInspector, l.inspPresent(x.inspectorName)),
+              KsInfoRow(l.rowInspDecision,
+                  x.done ? decisionLabel(l, x.decision!) : l.stepWaiting),
+            ],
             KsInfoRow(l.oneMon,
                 l.monFixed(Fmt.digits(context, '$kgPerMon'))),
           ]),
+          if (inspWait || partialKg != null) ...[
+            const SizedBox(height: AppSpacing.block),
+            KsNoteBox(
+              warning: true,
+              title: inspWait
+                  ? l.inspWaitNote
+                  : l.inspPartialNote(qtyText(context, partialKg!)),
+            ),
+          ],
           const SizedBox(height: AppSpacing.block),
           // Big weight, "২,০০০ কেজি" style: the number is editable.
           Row(children: [
@@ -552,7 +578,9 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
           KsButton(
             label: l.otpAndLoad,
             loading: _busy,
-            onPressed: waiting ? null : () => _submit(d, o, me),
+            onPressed: waiting || inspWait
+                ? null
+                : () => _submit(d, o, me, maxKg: partialKg),
           ),
         ],
       ),

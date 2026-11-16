@@ -23,6 +23,8 @@ import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
+import '../../inspection/data/inspection_repository.dart';
+import '../../inspection/presentation/inspection_screens.dart';
 import '../../market/presentation/opportunity_screens.dart';
 import '../../transport/data/transport_repository.dart';
 import '../data/trade_repository.dart';
@@ -272,6 +274,7 @@ class OrderDetailsScreen extends ConsumerWidget {
       );
     }
     final iAmFarmer = me.uid == o.farmerId;
+    final insp = iAmFarmer ? null : ref.watch(inspectionProvider(o.id)).value;
     final (badge, bg, fg) = orderBadge(l, o.status);
 
     String when(DateTime? d) {
@@ -353,6 +356,25 @@ class OrderDetailsScreen extends ConsumerWidget {
                   label: l.rowWeightDiff,
                   value: Fmt.taka(context, o.weightRefund),
                   onTap: () => context.push(Routes.weightDiff(o.id)),
+                ),
+              // 88: buyer sends own inspector (platform truck, before loading).
+              if (!iAmFarmer &&
+                  o.transportMode == TransportMode.platform &&
+                  (o.status == OrderStatus.confirmed ||
+                      o.status == OrderStatus.transportBooked) &&
+                  !(insp?.done ?? false))
+                KsLinkRow(
+                  label: l.rowInspectorAssign,
+                  value: insp?.inspectorName ?? l.inspSend,
+                  onTap: () => showAssignInspectorSheet(context, ref, o, insp),
+                ),
+              // 92–95: inspection report, or the load record without one.
+              if (!iAmFarmer &&
+                  ((insp?.done ?? false) || o.timeline.containsKey('pickedUp')))
+                KsLinkRow(
+                  label: (insp?.done ?? false) ? l.rowInspReport : l.rowLoadRecord,
+                  value: l.seeLinkShort,
+                  onTap: () => context.push(Routes.loadReport(o.id)),
                 ),
               // 109: farm-to-door record once the crop is loaded.
               if (!iAmFarmer &&
