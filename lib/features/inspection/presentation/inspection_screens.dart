@@ -190,6 +190,12 @@ class InspectorHomeScreen extends ConsumerWidget {
       appBar: KsAppBar(
         title: l.inspHomeTitle,
         showBack: me?.hasRole ?? false,
+        // Opened from the profile: back; after a fresh start: role home.
+        onBack: () => context.canPop()
+            ? context.pop()
+            : context.go(me?.role == null
+                ? Routes.inspector
+                : Routes.homeFor(me!.role!)),
       ),
       body: ListView(
         padding: _pad,
@@ -376,7 +382,7 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
           title: l.cancelLoadQ,
           body: l.cancelLoadBody,
           noLabel: l.noGoBack,
-          yesLabel: l.cancelLoadBtn);
+          yesLabel: l.yesCancelIt);
       if (!ok) return;
     }
     setState(() => _busy = true);
@@ -678,7 +684,9 @@ class ReportSentScreen extends ConsumerWidget {
           const SizedBox(height: _gapBeforeCta),
           KsButton(
             label: l.nextPickups,
-            onPressed: () => context.go(Routes.inspector),
+            onPressed: () => context.canPop()
+                ? context.pop()
+                : context.go(Routes.inspector),
           ),
         ],
       ),

@@ -159,6 +159,10 @@ class InspectionRepository {
     RejectReason reason = RejectReason.lowGrade,
     List<String> photos = const [],
   }) async {
+    // Cancel first: if it fails, nothing is saved and the inspector can retry.
+    if (decision == InspectionDecision.cancel) {
+      await _trade.cancelOrder(o, byUid, keepFare: true);
+    }
     await _col.doc(o.id).update({
       'status': 'done',
       'decision': decision.name,
@@ -170,9 +174,6 @@ class InspectionRepository {
       'doneAt': FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
     });
-    if (decision == InspectionDecision.cancel) {
-      await _trade.cancelOrder(o, byUid, keepFare: true);
-    }
     final params = {
       'no': o.orderNo,
       'farmer': o.farmerName,

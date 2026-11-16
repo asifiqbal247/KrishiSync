@@ -300,8 +300,10 @@ service cloud.firestore {
       allow delete: if isActive() && resource.data.buyerId == uid()
         && resource.data.status == 'invited';
       // Inspector sends the report once (89–91).
+      // A cancel report is written right after the order is cancelled (91).
       allow update: if isActive() && invited() && resource.data.status == 'invited'
-        && order().status in ['confirmed', 'transportBooked']
+        && (order().status in ['confirmed', 'transportBooked']
+            || (request.resource.data.decision == 'cancel' && order().status == 'cancelled'))
         && onlyChanges(['status', 'decision', 'checks', 'weighedKg', 'acceptKg',
                         'reason', 'photos', 'doneAt', 'updatedAt'])
         && request.resource.data.status == 'done'
@@ -345,7 +347,7 @@ service cloud.firestore {
         return signedIn() && (d().buyerId == uid() || d().farmerId == uid()
           || d().get('transporterId', null) == uid());
       }
-      allow read: if isDelParty() || isMod()
+      allow read: if isDelParty() || isMod() || isInspectorOf(id)
         || (isActive() && myRole() == 'transporter' && d().status == 'open');
 
       // Created by the buyer in the order transaction.
