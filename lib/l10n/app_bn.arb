@@ -3963,5 +3963,17 @@
   },
   "rowInspReason": "কারণ",
   "errInspPhoto": "অন্তত একটি ছবি তুলুন",
-  "rowLeftOutPast": "বাদ গেছে"
+  "rowLeftOutPast": "বাদ গেছে",
+  "rowLeftKm": "বাকি দূরত্ব",
+  "rowTruckSeen": "ট্রাকের অবস্থান",
+  "liveMinAgo": "{n} মিনিট আগে",
+  "@liveMinAgo": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "liveJustNow": "এইমাত্র",
+  "liveOff": "চালকের অ্যাপ খোলা থাকলে দেখাবে"
 }

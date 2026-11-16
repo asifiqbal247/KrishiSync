@@ -382,6 +382,22 @@ service cloud.firestore {
           && onlyChanges(['status', 'timeline', 'updatedAt']))
       );
 
+      // Truck's live position: the assigned driver writes it while the trip
+      // is assigned or on the way; buyer, farmer and driver read it.
+      match /live/{doc} {
+        function del() {
+          return get(/databases/$(database)/documents/deliveries/$(id)).data;
+        }
+        allow read: if signedIn() && (del().buyerId == uid() || del().farmerId == uid()
+          || del().get('transporterId', null) == uid());
+        allow write: if isActive() && doc == 'pos'
+          && del().get('transporterId', null) == uid()
+          && del().status in ['assigned', 'pickedUp']
+          && request.resource.data.keys().hasOnly(['geo', 'at'])
+          && request.resource.data.geo is latlng
+          && request.resource.data.at == request.time;
+      }
+
       // 4-digit loading code (45): only the farmer may read or make it.
       match /load/{doc} {
         allow read: if signedIn()

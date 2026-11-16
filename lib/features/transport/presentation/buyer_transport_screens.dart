@@ -30,6 +30,7 @@ import '../../../shared/widgets/photo_source_sheet.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../trade/data/trade_repository.dart';
+import '../data/live_location.dart';
 import '../data/transport_repository.dart';
 import '../domain/delivery.dart';
 import '../../chat/presentation/chat_screens.dart';
@@ -336,6 +337,10 @@ class AssignedTransportScreen extends ConsumerWidget {
     if (d == null || d.transporterId == null) {
       return _loading(l.assignedTitle);
     }
+    final live = d.status == DeliveryStatus.assigned ||
+            d.status == DeliveryStatus.pickedUp
+        ? ref.watch(livePosProvider(d.id)).value
+        : null;
     final driver = ref.watch(userByIdProvider(d.transporterId!)).value;
     final rating = driver == null || driver.ratingCount == 0
         ? l.notAvailable
@@ -376,7 +381,12 @@ class AssignedTransportScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.block),
-          KsRouteMap(height: _mapH, from: d.pickup.geo, to: d.dropoff.geo),
+          KsRouteMap(
+            height: _mapH,
+            from: d.pickup.geo,
+            to: d.dropoff.geo,
+            truck: live?.geo,
+          ),
           const SizedBox(
             height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
           ),
@@ -509,9 +519,10 @@ class _ReceiveState extends ConsumerState<ReceiveDeliveryScreen> {
   }
 }
 
-/// 108 Tracking (buyer, Figma 292:2665). No live GPS in v1: the route map,
-/// trip status and an arrival estimate (pickup date + road time) from the
-/// delivery's real data.
+/// 108 Tracking (buyer, Figma 292:2665; farmer from 45): route map with
+/// the truck's live position (sent by the driver's phone while the trip is
+/// active), trip status, arrival estimate and distance left. Without a
+/// live position: pickup date + road time and the whole road distance.
 class TrackingScreen extends ConsumerWidget {
   const TrackingScreen({super.key, required this.deliveryId});
   final String deliveryId;
@@ -528,12 +539,24 @@ class TrackingScreen extends ConsumerWidget {
     final rating = driver == null || driver.ratingCount == 0
         ? l.notAvailable
         : Fmt.number(context, driver.ratingAvg, decimals: 1);
+    final active = d.status == DeliveryStatus.assigned ||
+        d.status == DeliveryStatus.pickedUp;
+    final live = active ? ref.watch(livePosProvider(d.id)).value : null;
+    // Share of the road still left; only once the crop is on the truck.
+    final left =
+        d.status == DeliveryStatus.pickedUp ? tripLeft(d, live) : null;
     final start = d.timeline['pickedUp'] ?? d.pickupDate;
     final eta =
         d.timeline['delivered'] ??
-        (start == null || d.hours == null
-            ? null
-            : start.add(Duration(hours: d.hours!)));
+        (left != null && d.hours != null
+            ? DateTime.now().add(
+                Duration(minutes: (d.hours! * 60 * left).round()))
+            : start == null || d.hours == null
+                ? null
+                : start.add(Duration(hours: d.hours!)));
+    final seen = live?.at == null
+        ? null
+        : DateTime.now().difference(live!.at!).inMinutes;
     final status = switch (d.status) {
       DeliveryStatus.pickedUp => l.tsOnWay,
       DeliveryStatus.delivered => l.tsDelivered,
@@ -546,7 +569,12 @@ class TrackingScreen extends ConsumerWidget {
       body: ListView(
         padding: _contentPad,
         children: [
-          KsRouteMap(height: _mapH, from: d.pickup.geo, to: d.dropoff.geo),
+          KsRouteMap(
+            height: _mapH,
+            from: d.pickup.geo,
+            to: d.dropoff.geo,
+            truck: live?.geo,
+          ),
           const SizedBox(height: AppSpacing.block),
           KsListItem(
             thumb: KsNetImage(
@@ -577,11 +605,25 @@ class TrackingScreen extends ConsumerWidget {
                     Fmt.digits(context, DateFormat('H:mm').format(eta)),
                   ),
                 ),
-              if (d.roadKm != null)
+              if (active)
                 KsInfoRow(
-                  l.rowRemaining,
-                  l.kmOnly(Fmt.number(context, d.roadKm!)),
+                  l.rowTruckSeen,
+                  seen == null
+                      ? l.liveOff
+                      : seen < 1
+                          ? l.liveJustNow
+                          : l.liveMinAgo(Fmt.digits(context, '$seen')),
                 ),
+              if (d.roadKm != null)
+                left == null
+                    ? KsInfoRow(
+                        l.rowRemaining,
+                        l.kmOnly(Fmt.number(context, d.roadKm!)),
+                      )
+                    : KsInfoRow(
+                        l.rowLeftKm,
+                        l.kmOnly(Fmt.number(context, (d.roadKm! * left).round())),
+                      ),
             ],
           ),
           const SizedBox(

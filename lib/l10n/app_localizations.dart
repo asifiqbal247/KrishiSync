@@ -9072,6 +9072,36 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বাদ গেছে'**
   String get rowLeftOutPast;
+
+  /// No description provided for @rowLeftKm.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাকি দূরত্ব'**
+  String get rowLeftKm;
+
+  /// No description provided for @rowTruckSeen.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাকের অবস্থান'**
+  String get rowTruckSeen;
+
+  /// No description provided for @liveMinAgo.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} মিনিট আগে'**
+  String liveMinAgo(String n);
+
+  /// No description provided for @liveJustNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'এইমাত্র'**
+  String get liveJustNow;
+
+  /// No description provided for @liveOff.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালকের অ্যাপ খোলা থাকলে দেখাবে'**
+  String get liveOff;
 }
 
 class _AppLocalizationsDelegate

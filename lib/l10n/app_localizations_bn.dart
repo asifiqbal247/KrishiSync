@@ -5165,4 +5165,21 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get rowLeftOutPast => 'বাদ গেছে';
+
+  @override
+  String get rowLeftKm => 'বাকি দূরত্ব';
+
+  @override
+  String get rowTruckSeen => 'ট্রাকের অবস্থান';
+
+  @override
+  String liveMinAgo(String n) {
+    return '$n মিনিট আগে';
+  }
+
+  @override
+  String get liveJustNow => 'এইমাত্র';
+
+  @override
+  String get liveOff => 'চালকের অ্যাপ খোলা থাকলে দেখাবে';
 }

@@ -26,6 +26,7 @@ class KsRouteMap extends StatelessWidget {
     this.from,
     this.to,
     this.points = const [],
+    this.truck,
     this.onTap,
   });
 
@@ -33,11 +34,15 @@ class KsRouteMap extends StatelessWidget {
   final GeoPoint? from;
   final GeoPoint? to;
   final List<GeoPoint> points;
+
+  /// Live truck position (108): a truck pin, and the map fits it too.
+  final GeoPoint? truck;
   final VoidCallback? onTap;
 
   static const _pin = 28.0;
   static const _line = 4.0;
   static const _pad = 28.0;
+  static const _truck = 32.0;
 
   Marker _marker(LatLng p) => Marker(
         point: p,
@@ -52,17 +57,19 @@ class KsRouteMap extends StatelessWidget {
   Widget build(BuildContext context) {
     final a = _ll(from);
     final b = _ll(to);
+    final t = _ll(truck);
     final all = [?a, ?b, for (final p in points) ?_ll(p)];
+    final fit = [...all, ?t];
     final map = all.isEmpty
         ? Image.asset(AppImages.mapStrip, fit: BoxFit.cover)
         : FlutterMap(
-            key: ValueKey(all.join()),
+            key: ValueKey(fit.join()),
             options: MapOptions(
-              initialCenter: all.first,
+              initialCenter: fit.first,
               initialZoom: 12,
-              initialCameraFit: all.length > 1
+              initialCameraFit: fit.length > 1
                   ? CameraFit.coordinates(
-                      coordinates: all,
+                      coordinates: fit,
                       padding: const EdgeInsets.all(_pad),
                       maxZoom: 13)
                   : null,
@@ -81,7 +88,23 @@ class KsRouteMap extends StatelessWidget {
                       strokeWidth: _line,
                       color: AppColors.bgBrand),
                 ]),
-              MarkerLayer(markers: [for (final p in all) _marker(p)]),
+              MarkerLayer(markers: [
+                for (final p in all) _marker(p),
+                if (t != null)
+                  Marker(
+                    point: t,
+                    width: _truck,
+                    height: _truck,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          color: AppColors.bgBrand, shape: BoxShape.circle),
+                      padding: const EdgeInsets.all(AppSpacing.xs),
+                      child: SvgPicture.asset(AppIcons.truck,
+                          colorFilter: const ColorFilter.mode(
+                              AppColors.textOnBrand, BlendMode.srcIn)),
+                    ),
+                  ),
+              ]),
             ],
           );
     return ClipRRect(

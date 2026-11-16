@@ -5170,4 +5170,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rowLeftOutPast => 'Left out';
+
+  @override
+  String get rowLeftKm => 'Distance left';
+
+  @override
+  String get rowTruckSeen => 'Truck location';
+
+  @override
+  String liveMinAgo(String n) {
+    return '$n min ago';
+  }
+
+  @override
+  String get liveJustNow => 'Just now';
+
+  @override
+  String get liveOff => 'Shows while the driver\'s app is open';
 }

@@ -1494,5 +1494,10 @@
   "nInspectionDone": "Inspection report: {no}",
   "rowInspReason": "Reason",
   "errInspPhoto": "Take at least one photo",
-  "rowLeftOutPast": "Left out"
+  "rowLeftOutPast": "Left out",
+  "rowLeftKm": "Distance left",
+  "rowTruckSeen": "Truck location",
+  "liveMinAgo": "{n} min ago",
+  "liveJustNow": "Just now",
+  "liveOff": "Shows while the driver's app is open"
 }
