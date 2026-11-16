@@ -222,17 +222,14 @@ class SupplierProfileScreen extends ConsumerWidget {
       );
     }
 
-    // Orders that reached the farm: loaded, or stopped by the inspector.
+    // Orders checked at the farm (weighing or the buyer's inspector).
     final checked = <(TradeOrder, double)>[];
     for (final o in all) {
       final x = ref.watch(inspectionProvider(o.id)).value;
       final loaded = o.timeline.containsKey('pickedUp');
-      final stoppedAtFarm =
-          o.status == OrderStatus.cancelled &&
-          x != null &&
-          x.done &&
-          x.decision == InspectionDecision.cancel;
-      if (loaded || stoppedAtFarm) checked.add((o, _accepted(o, x)));
+      // Loaded, or the buyer's inspector already decided at the farm.
+      final inspected = x != null && x.done;
+      if (loaded || inspected) checked.add((o, _accepted(o, x)));
     }
     num kgOf(TradeOrder o) => o.orderedKg ?? o.quantityKg;
     double? ratio(
