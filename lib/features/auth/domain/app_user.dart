@@ -104,9 +104,6 @@ class AppUser {
     this.ratingCount = 0,
     this.createdAt,
     this.savedAddresses = const [],
-    this.completedOrders = 0,
-    this.onTimeRate,
-    this.complaintCount = 0,
     this.vehicle,
     this.verificationDocs = const {},
     this.business,
@@ -127,11 +124,6 @@ class AppUser {
   final int ratingCount;
   final DateTime? createdAt;
   final List<SavedAddress> savedAddresses;
-
-  /// Trade stats, updated when orders complete (Parts 5–6).
-  final int completedOrders;
-  final int? onTimeRate; // 0–100, null until first delivery
-  final int complaintCount;
 
   /// Transporters only (Figma 194). Null until the vehicle form is saved.
   final Vehicle? vehicle;
@@ -179,9 +171,6 @@ class AppUser {
       ratingAvg: (m['ratingAvg'] as num?)?.toDouble() ?? 0,
       ratingCount: (m['ratingCount'] as num?)?.toInt() ?? 0,
       createdAt: (m['createdAt'] as Timestamp?)?.toDate(),
-      completedOrders: (m['completedOrders'] as num?)?.toInt() ?? 0,
-      onTimeRate: (m['onTimeRate'] as num?)?.toInt(),
-      complaintCount: (m['complaintCount'] as num?)?.toInt() ?? 0,
       verificationDocs: {
         for (final e in (m['verificationDocs'] as Map<String, dynamic>? ?? const {}).entries)
           e.key: '${e.value}',

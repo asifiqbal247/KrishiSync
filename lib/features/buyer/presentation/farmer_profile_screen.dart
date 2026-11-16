@@ -18,6 +18,7 @@ import '../../../shared/widgets/ks_net_image.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/listing_repository.dart';
 import '../../chat/presentation/chat_screens.dart';
+import '../../../shared/data/trade_stats_repository.dart';
 import 'buyer_common.dart';
 
 /// 76 Farmer Profile (Figma 292:1026), seen by buyers.
@@ -30,6 +31,8 @@ class FarmerProfileScreen extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final lang = Localizations.localeOf(context).languageCode;
     final farmer = ref.watch(userByIdProvider(farmerId)).value;
+    final stats =
+        ref.watch(tradeStatsProvider(farmerId)).value ?? TradeStats.empty;
     final listings =
         ref.watch(farmerActiveListingsProvider(farmerId)).value ?? const [];
     String n(int v) => l.countTi(Fmt.digits(context, '$v'));
@@ -70,9 +73,9 @@ class FarmerProfileScreen extends ConsumerWidget {
                   Expanded(
                     child: KsStatCard(
                       label: l.statOnTime,
-                      value: farmer.onTimeRate == null
+                      value: stats.onTimePct == null
                           ? l.notAvailable
-                          : '${Fmt.digits(context, '${farmer.onTimeRate}')}%',
+                          : '${Fmt.digits(context, '${stats.onTimePct}')}%',
                     ),
                   ),
                 ]),
@@ -81,13 +84,13 @@ class FarmerProfileScreen extends ConsumerWidget {
                   Expanded(
                     child: KsStatCard(
                         label: l.statCompleted,
-                        value: n(farmer.completedOrders)),
+                        value: n(stats.done)),
                   ),
                   const SizedBox(width: AppSpacing.lg),
                   Expanded(
                     child: KsStatCard(
                         label: l.statComplaints,
-                        value: n(farmer.complaintCount)),
+                        value: n(stats.complaints)),
                   ),
                 ]),
                 if (listings.isNotEmpty) ...[

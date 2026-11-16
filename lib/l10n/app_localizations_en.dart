@@ -5391,4 +5391,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stdPackClean => 'Clean sack or crate';
+
+  @override
+  String get tpProfileTitle => 'Transporter profile';
+
+  @override
+  String get tpVerifiedDriver => 'Verified driver';
+
+  @override
+  String get tpDriver => 'Driver';
+
+  @override
+  String tpSince(String date) {
+    return 'On Golaghor since $date';
+  }
+
+  @override
+  String get tpTrips => 'Completed trips';
+
+  @override
+  String get tpOnTime => 'On time';
+
+  @override
+  String get tpCancelRate => 'Cancel rate';
+
+  @override
+  String get tpDamage => 'Damage complaints';
+
+  @override
+  String tpTruckLine(String type, String cap, String status) {
+    return '$type · $cap · $status';
+  }
+
+  @override
+  String get tpFitness => 'Fitness & licence';
+
+  @override
+  String get tpValid => 'Valid';
+
+  @override
+  String get tpMainRoute => 'Main route';
+
+  @override
+  String tpRoute(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get tpChoose => 'Choose this transporter';
+
+  @override
+  String pctText(String n) {
+    return '$n%';
+  }
 }

@@ -20,6 +20,7 @@ import '../../farmer/data/listing_repository.dart';
 import '../../trade/data/trade_repository.dart';
 import '../../trade/domain/trade_models.dart';
 import 'buyer_common.dart';
+import '../../../shared/data/trade_stats_repository.dart';
 
 /// 71 Buyer Home (Figma 292:2325). Demand / pooling / procurement sections
 /// are Tier C and stay hidden; order stats fill in with Part 5–6 data.
@@ -203,9 +204,11 @@ class BuyerHomeScreen extends ConsumerWidget {
                     BdPlace.display(u.location.district, lang),
                     Fmt.number(context, u.ratingAvg, decimals: 1),
                   ].join(' · '),
-                  line3: u.onTimeRate == null
-                      ? l.notAvailable
-                      : l.onTimePct(Fmt.digits(context, '${u.onTimeRate}')),
+                  line3: switch (
+                      ref.watch(tradeStatsProvider(u.uid)).value?.onTimePct) {
+                    null => l.notAvailable,
+                    final p => l.onTimePct(Fmt.digits(context, '$p')),
+                  },
                   onTap: () => context.push(Routes.buyerFarmer(u.uid)),
                 ),
             ]),

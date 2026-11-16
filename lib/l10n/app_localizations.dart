@@ -9444,6 +9444,96 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'পরিষ্কার বস্তা বা ক্রেট'**
   String get stdPackClean;
+
+  /// No description provided for @tpProfileTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রান্সপোর্টারের প্রোফাইল'**
+  String get tpProfileTitle;
+
+  /// No description provided for @tpVerifiedDriver.
+  ///
+  /// In bn, this message translates to:
+  /// **'যাচাইকৃত চালক'**
+  String get tpVerifiedDriver;
+
+  /// No description provided for @tpDriver.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালক'**
+  String get tpDriver;
+
+  /// No description provided for @tpSince.
+  ///
+  /// In bn, this message translates to:
+  /// **'{date} থেকে গোলাঘরে'**
+  String tpSince(String date);
+
+  /// No description provided for @tpTrips.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পন্ন ট্রিপ'**
+  String get tpTrips;
+
+  /// No description provided for @tpOnTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়মতো'**
+  String get tpOnTime;
+
+  /// No description provided for @tpCancelRate.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিলের হার'**
+  String get tpCancelRate;
+
+  /// No description provided for @tpDamage.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্ষতির অভিযোগ'**
+  String get tpDamage;
+
+  /// No description provided for @tpTruckLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{type} · {cap} · {status}'**
+  String tpTruckLine(String type, String cap, String status);
+
+  /// No description provided for @tpFitness.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিটনেস ও লাইসেন্স'**
+  String get tpFitness;
+
+  /// No description provided for @tpValid.
+  ///
+  /// In bn, this message translates to:
+  /// **'বৈধ'**
+  String get tpValid;
+
+  /// No description provided for @tpMainRoute.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রধান রুট'**
+  String get tpMainRoute;
+
+  /// No description provided for @tpRoute.
+  ///
+  /// In bn, this message translates to:
+  /// **'{from} – {to}'**
+  String tpRoute(String from, String to);
+
+  /// No description provided for @tpChoose.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ট্রান্সপোর্টার বাছুন'**
+  String get tpChoose;
+
+  /// No description provided for @pctText.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}%'**
+  String pctText(String n);
 }
 
 class _AppLocalizationsDelegate

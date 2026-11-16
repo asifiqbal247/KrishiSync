@@ -5385,4 +5385,57 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get stdPackClean => 'পরিষ্কার বস্তা বা ক্রেট';
+
+  @override
+  String get tpProfileTitle => 'ট্রান্সপোর্টারের প্রোফাইল';
+
+  @override
+  String get tpVerifiedDriver => 'যাচাইকৃত চালক';
+
+  @override
+  String get tpDriver => 'চালক';
+
+  @override
+  String tpSince(String date) {
+    return '$date থেকে গোলাঘরে';
+  }
+
+  @override
+  String get tpTrips => 'সম্পন্ন ট্রিপ';
+
+  @override
+  String get tpOnTime => 'সময়মতো';
+
+  @override
+  String get tpCancelRate => 'বাতিলের হার';
+
+  @override
+  String get tpDamage => 'ক্ষতির অভিযোগ';
+
+  @override
+  String tpTruckLine(String type, String cap, String status) {
+    return '$type · $cap · $status';
+  }
+
+  @override
+  String get tpFitness => 'ফিটনেস ও লাইসেন্স';
+
+  @override
+  String get tpValid => 'বৈধ';
+
+  @override
+  String get tpMainRoute => 'প্রধান রুট';
+
+  @override
+  String tpRoute(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get tpChoose => 'এই ট্রান্সপোর্টার বাছুন';
+
+  @override
+  String pctText(String n) {
+    return '$n%';
+  }
 }

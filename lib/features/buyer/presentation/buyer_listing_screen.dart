@@ -23,6 +23,7 @@ import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../farmer/data/listing_repository.dart';
 import 'buyer_common.dart';
+import '../../../shared/data/trade_stats_repository.dart';
 
 /// 75 Crop Details for buyers (Figma 292:2483), with sticky CTA bar.
 /// Rows shown only when backed by real data.
@@ -135,8 +136,8 @@ class BuyerListingScreen extends ConsumerWidget {
                             ? l.notAvailable
                             : Fmt.number(context, farmer.ratingAvg,
                                 decimals: 1),
-                        Fmt.digits(
-                            context, '${farmer?.completedOrders ?? 0}'),
+                        Fmt.digits(context,
+                            '${ref.watch(tradeStatsProvider(x.farmerId)).value?.done ?? 0}'),
                       ),
                       trailingText: l.profileLink,
                       onTap: () =>

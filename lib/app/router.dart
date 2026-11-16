@@ -45,6 +45,7 @@ import '../features/transport/presentation/buyer_transport_screens.dart';
 import '../features/transport/presentation/loads_screens.dart';
 import '../features/transport/presentation/rate_screens.dart';
 import '../features/transport/presentation/transporter_shell.dart';
+import '../features/transport/presentation/transporter_profile_screen.dart';
 import '../features/transport/presentation/trip_screens.dart';
 import '../features/transport/presentation/vehicle_screen.dart';
 import '../features/chat/presentation/chat_screens.dart';
@@ -135,6 +136,8 @@ abstract final class Routes {
   static const buyerSearch = '/search';
   static String buyerListing(String id) => '/listing/$id';
   static String buyerFarmer(String uid) => '/people/farmer/$uid';
+  static String transporterProfile(String uid, {bool pick = false}) =>
+      '/people/transporter/$uid${pick ? '?pick=1' : ''}';
   static String buyerProfile(String uid) => '/people/buyer/$uid';
 
   // Trade (farmer + buyer)
@@ -540,6 +543,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/people/farmer/:uid',
         builder: (_, s) =>
             FarmerProfileScreen(farmerId: s.pathParameters['uid']!),
+      ),
+      GoRoute(
+        path: '/people/transporter/:uid',
+        builder: (_, s) => TransporterProfileScreen(
+          uid: s.pathParameters['uid']!,
+          pick: s.uri.queryParameters['pick'] == '1',
+        ),
       ),
       GoRoute(
         path: '/people/buyer/:uid',

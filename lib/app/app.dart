@@ -9,6 +9,7 @@ import '../core/theme/app_theme.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/user_repository.dart';
 import '../features/transport/data/live_location.dart';
+import '../shared/data/trade_stats_repository.dart';
 import '../l10n/app_localizations.dart';
 import 'router.dart';
 
@@ -21,6 +22,8 @@ class KrishiSyncApp extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     // Driver's phone sends the truck position while a trip is active.
     ref.watch(liveTrackerProvider);
+    // Farmer / driver: adds finished deals to their public track record.
+    ref.watch(tradeStatsSyncProvider);
 
     // If someone is signed in but has no users/{uid} yet (e.g. the app was
     // closed right after OTP), create it.

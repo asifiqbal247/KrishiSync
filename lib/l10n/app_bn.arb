@@ -4143,5 +4143,57 @@
       }
     }
   },
-  "stdPackClean": "পরিষ্কার বস্তা বা ক্রেট"
+  "stdPackClean": "পরিষ্কার বস্তা বা ক্রেট",
+  "tpProfileTitle": "ট্রান্সপোর্টারের প্রোফাইল",
+  "tpVerifiedDriver": "যাচাইকৃত চালক",
+  "tpDriver": "চালক",
+  "tpSince": "{date} থেকে গোলাঘরে",
+  "@tpSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "tpTrips": "সম্পন্ন ট্রিপ",
+  "tpOnTime": "সময়মতো",
+  "tpCancelRate": "বাতিলের হার",
+  "tpDamage": "ক্ষতির অভিযোগ",
+  "tpTruckLine": "{type} · {cap} · {status}",
+  "@tpTruckLine": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "cap": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "tpFitness": "ফিটনেস ও লাইসেন্স",
+  "tpValid": "বৈধ",
+  "tpMainRoute": "প্রধান রুট",
+  "tpRoute": "{from} – {to}",
+  "@tpRoute": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "tpChoose": "এই ট্রান্সপোর্টার বাছুন",
+  "pctText": "{n}%",
+  "@pctText": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  }
 }

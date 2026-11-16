@@ -94,28 +94,59 @@ class ReportRepository {
   CollectionReference<Map<String, dynamic>> get _col =>
       _db.collection('reports');
 
+  /// Who a report is about, for their public complaint count (76/80):
+  /// driver behaviour or late delivery → the transporter; "other" from the
+  /// buyer → the farmer; app problems → nobody.
+  static String? complaintTarget(AppUser me, TradeOrder? o, String reason) {
+    if (o == null) return null;
+    final driver = o.transporterId;
+    if ((reason == 'driver_behavior' || reason == 'late_delivery') &&
+        driver != null &&
+        driver != me.uid) {
+      return driver;
+    }
+    if (reason == 'other' && me.uid == o.buyerId) return o.farmerId;
+    return null;
+  }
+
   Future<void> create({
     required AppUser me,
     TradeOrder? order,
     required String reason,
     required String details,
     String? photoUrl,
-  }) => _col.add({
-    'reporterId': me.uid,
-    'reporterName': me.name,
-    'reporterRole': me.role?.name ?? '',
-    'orderId': order?.id,
-    'orderNo': order?.orderNo,
-    'cropNameBn': order?.cropNameBn,
-    'cropNameEn': order?.cropNameEn,
-    'reason': reason,
-    'details': details,
-    'photoUrl': photoUrl,
-    'status': ReportStatus.open.name,
-    'escalated': false,
-    'createdAt': FieldValue.serverTimestamp(),
-    'updatedAt': FieldValue.serverTimestamp(),
-  });
+  }) {
+    final ref = _col.doc();
+    final b = _db.batch();
+    final target = complaintTarget(me, order, reason);
+    if (target != null) {
+      b.set(
+        _db
+            .collection('stats')
+            .doc(target)
+            .collection('complaints')
+            .doc(ref.id),
+        {'orderId': order!.id, 'at': FieldValue.serverTimestamp()},
+      );
+    }
+    b.set(ref, {
+      'reporterId': me.uid,
+      'reporterName': me.name,
+      'reporterRole': me.role?.name ?? '',
+      'orderId': order?.id,
+      'orderNo': order?.orderNo,
+      'cropNameBn': order?.cropNameBn,
+      'cropNameEn': order?.cropNameEn,
+      'reason': reason,
+      'details': details,
+      'photoUrl': photoUrl,
+      'status': ReportStatus.open.name,
+      'escalated': false,
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+    return b.commit();
+  }
 
   Stream<List<Report>> watchByStatus(ReportStatus s) => _col
       .where('status', isEqualTo: s.name)

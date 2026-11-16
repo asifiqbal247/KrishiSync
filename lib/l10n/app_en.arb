@@ -1556,5 +1556,20 @@
   "stdPackSack": "{n} kg sack",
   "stdPackNet": "{n} kg net bag",
   "stdPackBag": "{n} kg bag",
-  "stdPackClean": "Clean sack or crate"
+  "stdPackClean": "Clean sack or crate",
+  "tpProfileTitle": "Transporter profile",
+  "tpVerifiedDriver": "Verified driver",
+  "tpDriver": "Driver",
+  "tpSince": "On Golaghor since {date}",
+  "tpTrips": "Completed trips",
+  "tpOnTime": "On time",
+  "tpCancelRate": "Cancel rate",
+  "tpDamage": "Damage complaints",
+  "tpTruckLine": "{type} · {cap} · {status}",
+  "tpFitness": "Fitness & licence",
+  "tpValid": "Valid",
+  "tpMainRoute": "Main route",
+  "tpRoute": "{from} – {to}",
+  "tpChoose": "Choose this transporter",
+  "pctText": "{n}%"
 }

@@ -302,8 +302,16 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
               ),
               trailingText: Fmt.taka(context, b.fare),
               highlighted: b.transporterId == pick,
+              // 80: see the driver's profile; "choose" selects this bid.
               onTap: d.status == DeliveryStatus.open
-                  ? () => setState(() => _pick = b.transporterId)
+                  ? () async {
+                      final ok = await context.push<bool>(
+                          Routes.transporterProfile(b.transporterId,
+                              pick: true));
+                      if (ok == true && mounted) {
+                        setState(() => _pick = b.transporterId);
+                      }
+                    }
                   : null,
             ),
           ],
@@ -363,7 +371,8 @@ class AssignedTransportScreen extends ConsumerWidget {
             subtitle: (driver?.isVerified ?? false)
                 ? l.verifiedDriverRating(rating)
                 : l.driverRating(rating),
-            showChevron: false,
+            onTap: () =>
+                context.push(Routes.transporterProfile(d.transporterId!)),
           ),
           const SizedBox(height: AppSpacing.block),
           KsInfoBox(

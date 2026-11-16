@@ -453,6 +453,60 @@ service cloud.firestore {
     }
 
     // ---------- reports/{id} (Report Issue 203/204 → M4/M5) ----------
+    // ---------- stats/{uid} (public track record: 76, 80, 119/120) ----------
+    // One entry per finished deal, written once by the person's own app and
+    // checked against the real order / delivery. Read by any signed-in user
+    // (only outcome, on-time flag, districts).
+    match /stats/{sid}/deals/{oid} {
+      function o() { return get(/databases/$(database)/documents/orders/$(oid)).data; }
+      function dl() { return get(/databases/$(database)/documents/deliveries/$(oid)).data; }
+      function nd() { return request.resource.data; }
+      function farmerOk() {
+        let t = o().get('timeline', {});
+        return o().farmerId == uid()
+          && nd().role == 'farmer' && nd().outcome == 'done'
+          && o().status in ['delivered', 'completed']
+          && nd().onTime == ('pickedUp' in t
+               && t.pickedUp <= o().pickupDate + duration.value(1, 'd'))
+          && nd().from == o().pickup.get('district', '')
+          && nd().to == o().dropoff.get('district', '');
+      }
+      function transporterOk() {
+        let t = dl().get('timeline', {});
+        return dl().get('transporterId', null) == uid()
+          && nd().role == 'transporter'
+          && ((nd().outcome == 'done' && dl().status == 'delivered'
+               && nd().onTime == ('pickedUp' in t && 'delivered' in t
+                    && t.delivered <= t.pickedUp
+                       + duration.value(int(dl().get('distanceKm', 0) * 2.925) + 60, 'm')))
+              || (nd().outcome == 'cancelled' && dl().status == 'cancelled'
+                  && nd().onTime == false))
+          && nd().from == dl().pickup.get('district', '')
+          && nd().to == dl().dropoff.get('district', '');
+      }
+      allow read: if signedIn();
+      allow create: if isActive() && sid == uid()
+        && nd().keys().hasOnly(['role', 'outcome', 'onTime', 'from', 'to', 'at'])
+        && nd().at == request.time
+        && (farmerOk() || transporterOk());
+    }
+
+    // A trip-related report about a trade partner, created in the same
+    // batch as reports/{rid} by someone in that order.
+    match /stats/{sid}/complaints/{rid} {
+      function rep() { return getAfter(/databases/$(database)/documents/reports/$(rid)).data; }
+      function ord() { return get(/databases/$(database)/documents/orders/$(request.resource.data.orderId)).data; }
+      allow read: if signedIn();
+      allow create: if isActive() && sid != uid()
+        && request.resource.data.keys().hasOnly(['orderId', 'at'])
+        && request.resource.data.at == request.time
+        && rep().reporterId == uid()
+        && rep().orderId == request.resource.data.orderId
+        && (ord().buyerId == uid() || ord().farmerId == uid()
+            || ord().get('transporterId', null) == uid())
+        && (ord().farmerId == sid || ord().get('transporterId', null) == sid);
+    }
+
     match /reports/{id} {
       allow read: if isMod() || (signedIn() && resource.data.reporterId == uid());
       allow create: if isActive()
