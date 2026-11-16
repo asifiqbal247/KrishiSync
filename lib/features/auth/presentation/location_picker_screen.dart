@@ -111,8 +111,10 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
         throw Exception('no-permission');
       }
       final pos = await Geolocator.getCurrentPosition(
-        locationSettings:
-            const LocationSettings(timeLimit: Duration(seconds: 20)),
+        // Plain Android GPS: no Google "Location Accuracy" pop-up.
+        locationSettings: AndroidSettings(
+            timeLimit: const Duration(seconds: 20),
+            forceLocationManager: true),
       );
       final path = data.nearest(pos.latitude, pos.longitude);
       if (path == null) throw Exception('not-found');

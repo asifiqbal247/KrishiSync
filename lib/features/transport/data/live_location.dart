@@ -148,16 +148,20 @@ final liveTrackerProvider = Provider<void>((ref) {
       }
       // A cached fix only if it is fresh; an old one would show the truck
       // where the phone was hours ago.
-      final first = await Geolocator.getLastKnownPosition();
+      final first = await Geolocator.getLastKnownPosition(
+          forceAndroidLocationManager: true);
       if (first != null &&
           DateTime.now().difference(first.timestamp) < _freshFix) {
         send(first);
       }
       if (stopped) return;
       sub = Geolocator.getPositionStream(
-        locationSettings: const LocationSettings(
+        // Plain Android GPS: no Google "Location Accuracy" pop-up (English
+        // only) and works on phones without Google services too.
+        locationSettings: AndroidSettings(
           accuracy: LocationAccuracy.high,
           distanceFilter: _moveM,
+          forceLocationManager: true,
         ),
       ).listen(send, onError: (_) {});
     } catch (_) {
