@@ -64,6 +64,20 @@ double? tripLeft(Delivery d, LivePos? live) {
   return min(1, kmBetween(live.geo, b) / whole);
 }
 
+/// True when the driver should be asked for location (an active trip and
+/// no permission yet). The transporter shell shows a short note in the
+/// app's language, then Android's permission dialog (which follows the
+/// phone's system language, not the app's).
+class LocationAsk extends Notifier<bool> {
+  @override
+  bool build() => false;
+  void ask() => state = true;
+  void done() => state = false;
+}
+
+final locationAskProvider =
+    NotifierProvider<LocationAsk, bool>(LocationAsk.new);
+
 /// Runs for a signed-in transporter: while any of their trips is assigned
 /// or on the way and the app is open, the phone's position is sent to
 /// those trips (at most every [_every], after moving [_moveM] metres).
@@ -120,9 +134,12 @@ final liveTrackerProvider = Provider<void>((ref) {
   Future<void> start() async {
     try {
       if (!await Geolocator.isLocationServiceEnabled()) return;
-      var perm = await Geolocator.checkPermission();
-      if (perm == LocationPermission.denied) {
-        perm = await Geolocator.requestPermission();
+      final perm = await Geolocator.checkPermission();
+      if (perm == LocationPermission.denied && !stopped) {
+        // Not asked yet: the transporter shell first explains in the app's
+        // language, then Android's own dialog is shown (see LocationAsk).
+        ref.read(locationAskProvider.notifier).ask();
+        return;
       }
       if (perm == LocationPermission.denied ||
           perm == LocationPermission.deniedForever ||

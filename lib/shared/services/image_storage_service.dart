@@ -46,6 +46,9 @@ abstract interface class ImageStorageService {
 
   /// Returns a smaller/cropped delivery URL for lists and thumbnails.
   String thumbnail(String url, {int size = 200});
+
+  /// Short voice message (chat). Returns the file's URL.
+  Future<String> uploadAudio(File file, {required String ownerUid});
 }
 
 class CloudinaryImageStorageService implements ImageStorageService {
@@ -94,6 +97,33 @@ class CloudinaryImageStorageService implements ImageStorageService {
       width: (json['width'] as num).toInt(),
       height: (json['height'] as num).toInt(),
     );
+  }
+
+  /// Voice messages are small AAC files (~16 KB per 10 s), so no
+  /// compression step. Cloudinary keeps audio under the "video" type.
+  @override
+  Future<String> uploadAudio(File file, {required String ownerUid}) async {
+    if (await file.length() > _maxBytes) {
+      throw ImageUploadException('too_large');
+    }
+    final req = http.MultipartRequest(
+        'POST',
+        Uri.parse('https://api.cloudinary.com/v1_1/'
+            '${AppSecrets.cloudinaryCloudName}/video/upload'))
+      ..fields['upload_preset'] = AppSecrets.cloudinaryUploadPreset
+      ..fields['tags'] = 'krishisync,voice,$ownerUid'
+      ..files.add(await http.MultipartFile.fromPath('file', file.path));
+    final http.StreamedResponse streamed;
+    try {
+      streamed = await _client.send(req).timeout(const Duration(seconds: 60));
+    } on SocketException {
+      throw ImageUploadException('network');
+    }
+    final body = await streamed.stream.bytesToString();
+    if (streamed.statusCode != 200) {
+      throw ImageUploadException('http_${streamed.statusCode}');
+    }
+    return (jsonDecode(body) as Map<String, dynamic>)['secure_url'] as String;
   }
 
   Future<File> _compress(File file) async {

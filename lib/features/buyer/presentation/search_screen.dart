@@ -22,7 +22,10 @@ import 'buyer_common.dart';
 /// 73 Search (Figma 292:2599). Recent searches are kept on the phone;
 /// popular crops and suggestions come from approved listings.
 class SearchScreen extends ConsumerStatefulWidget {
-  const SearchScreen({super.key});
+  const SearchScreen({super.key, this.initialQuery});
+
+  /// Words from voice search on a home screen (V1).
+  final String? initialQuery;
 
   @override
   ConsumerState<SearchScreen> createState() => _SearchScreenState();
@@ -41,6 +44,11 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     super.initState();
     _recent =
         ref.read(sharedPrefsProvider).getStringList(_recentKey) ?? const [];
+    final q = widget.initialQuery;
+    if (q != null && q.isNotEmpty) {
+      _q.text = q;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _remember(q));
+    }
   }
 
   @override

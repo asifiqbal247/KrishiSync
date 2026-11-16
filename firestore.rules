@@ -536,7 +536,7 @@ service cloud.firestore {
         && uid() in request.resource.data.members
         && request.resource.data.members.size() == 2
         && id == request.resource.data.members[0] + '_' + request.resource.data.members[1];
-      allow update: if isActive() && member() && onlyChanges(['lastText', 'lastAt']);
+      allow update: if isActive() && member() && onlyChanges(['lastText', 'lastVoice', 'lastAt']);
 
       match /messages/{mid} {
         function inChat() {
@@ -546,8 +546,14 @@ service cloud.firestore {
         allow create: if isActive() && inChat()
           && request.resource.data.from == uid()
           && request.resource.data.text is string
-          && request.resource.data.text.size() > 0
-          && request.resource.data.text.size() <= 2000;
+          && request.resource.data.text.size() <= 2000
+          && (request.resource.data.text.size() > 0
+              // Voice message (V2): a Cloudinary audio file, max 2 minutes.
+              || (request.resource.data.voiceUrl is string
+                  && request.resource.data.voiceUrl.matches('https://res[.]cloudinary[.]com/.*')
+                  && request.resource.data.voiceSec is int
+                  && request.resource.data.voiceSec > 0
+                  && request.resource.data.voiceSec <= 120));
       }
     }
 

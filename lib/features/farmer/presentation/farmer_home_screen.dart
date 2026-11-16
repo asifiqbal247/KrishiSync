@@ -60,6 +60,7 @@ class FarmerHomeScreen extends ConsumerWidget {
             hint: l.farmerSearchHint,
             readOnly: true,
             onTap: () => context.push(Routes.buyerSearch),
+            onVoice: (w) => context.push(Routes.buyerSearch, extra: w),
           ),
           if (newOffers.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),

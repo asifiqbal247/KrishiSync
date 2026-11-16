@@ -13,6 +13,7 @@ class ChatThread {
     required this.photos,
     required this.roles,
     required this.lastText,
+    this.lastVoice = false,
     this.lastAt,
   });
 
@@ -22,7 +23,12 @@ class ChatThread {
   final Map<String, String> photos;
   final Map<String, String> roles;
   final String lastText;
+
+  /// The last message was a voice message (lastText is then empty).
+  final bool lastVoice;
   final DateTime? lastAt;
+
+  bool get hasMessages => lastText.isNotEmpty || lastVoice;
 
   String other(String me) =>
       members.firstWhere((m) => m != me, orElse: () => me);
@@ -42,16 +48,23 @@ class ChatThread {
       photos: map('photos'),
       roles: map('roles'),
       lastText: m['lastText'] as String? ?? '',
+      lastVoice: m['lastVoice'] == true,
       lastAt: (m['lastAt'] as Timestamp?)?.toDate(),
     );
   }
 }
 
 class ChatMessage {
-  const ChatMessage(this.from, this.text, this.at);
+  const ChatMessage(this.from, this.text, this.at,
+      {this.voiceUrl, this.voiceSec});
   final String from;
   final String text;
   final DateTime? at;
+
+  /// Voice message (V2): audio URL and length in seconds.
+  final String? voiceUrl;
+  final int? voiceSec;
+  bool get isVoice => voiceUrl != null;
 
   factory ChatMessage.fromDoc(DocumentSnapshot<Map<String, dynamic>> d) {
     final m = d.data() ?? const {};
@@ -59,6 +72,8 @@ class ChatMessage {
       m['from'] as String? ?? '',
       m['text'] as String? ?? '',
       (m['at'] as Timestamp?)?.toDate(),
+      voiceUrl: m['voiceUrl'] as String?,
+      voiceSec: (m['voiceSec'] as num?)?.toInt(),
     );
   }
 }
@@ -121,7 +136,24 @@ class ChatRepository {
       'text': text,
       'at': now,
     });
-    b.update(_chats.doc(chatId), {'lastText': text, 'lastAt': now});
+    b.update(_chats.doc(chatId),
+        {'lastText': text, 'lastVoice': false, 'lastAt': now});
+    return b.commit();
+  }
+
+  Future<void> sendVoice(String chatId, String from,
+      {required String url, required int seconds}) {
+    final b = _db.batch();
+    final now = FieldValue.serverTimestamp();
+    b.set(_chats.doc(chatId).collection('messages').doc(), {
+      'from': from,
+      'text': '',
+      'voiceUrl': url,
+      'voiceSec': seconds,
+      'at': now,
+    });
+    b.update(_chats.doc(chatId),
+        {'lastText': '', 'lastVoice': true, 'lastAt': now});
     return b.commit();
   }
 

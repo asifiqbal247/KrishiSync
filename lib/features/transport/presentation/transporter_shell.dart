@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -8,7 +9,9 @@ import '../../../core/theme/app_assets.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/presentation/simple_tabs.dart';
 import '../../../shared/widgets/ks_bottom_nav.dart';
+import '../../../shared/widgets/ks_dialogs.dart';
 import '../../auth/data/auth_repository.dart';
+import '../data/live_location.dart';
 import 'earnings_screen.dart';
 import 'transporter_home_screen.dart';
 import 'trip_screens.dart';
@@ -39,6 +42,21 @@ class TransporterShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final index = ref.watch(transporterTabProvider);
+    ref.listen(locationAskProvider, (_, ask) async {
+      if (!ask) return;
+      ref.read(locationAskProvider.notifier).done();
+      final ok = await showKsConfirm(
+        context,
+        title: l.locAskTitle,
+        body: l.locAskBody,
+        noLabel: l.locAskLater,
+        yesLabel: l.locAskAllow,
+        positive: true,
+      );
+      if (!ok) return;
+      await Geolocator.requestPermission();
+      ref.invalidate(liveTrackerProvider);
+    });
     final pages = [
       const TransporterHomeScreen(),
       const MyJobsScreen(),

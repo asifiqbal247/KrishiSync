@@ -5187,4 +5187,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get liveOff => 'Shows while the driver\'s app is open';
+
+  @override
+  String get voiceMessage => 'Voice message';
+
+  @override
+  String voiceMessageLen(String len) {
+    return 'Voice message · $len';
+  }
+
+  @override
+  String voiceRecording(String len) {
+    return 'Recording voice... $len';
+  }
+
+  @override
+  String get voiceSend => 'Send';
+
+  @override
+  String get voiceSendSub => 'Send the recorded message';
+
+  @override
+  String get voiceCancel => 'Cancel';
+
+  @override
+  String get voiceCancelSub => 'Delete the recording';
+
+  @override
+  String get micDenied => 'Allow the microphone (Settings → Apps → Golaghor)';
+
+  @override
+  String get voiceSearchListening => 'Listening... say a crop or area';
+
+  @override
+  String get voiceSearchStop => 'Stop';
+
+  @override
+  String get voiceSearchStopSub => 'Tap when you finish speaking';
+
+  @override
+  String get voiceSearchExample => 'Example';
+
+  @override
+  String get voiceSearchExampleSub => '“Tomato”, “Potato Netrokona”';
+
+  @override
+  String get voiceSearchUnavailable =>
+      'Voice search is not available on this phone';
+
+  @override
+  String get pdfMaking => 'Making PDF...';
+
+  @override
+  String get locAskTitle => 'Allow location to share your truck\'s position';
+
+  @override
+  String get locAskBody =>
+      'During a trip, the buyer and farmer see your truck on the map. In the next box, tap “While using the app”.';
+
+  @override
+  String get locAskLater => 'Later';
+
+  @override
+  String get locAskAllow => 'Allow';
 }

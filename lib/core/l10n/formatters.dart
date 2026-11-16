@@ -32,6 +32,44 @@ abstract final class Fmt {
   static String digits(BuildContext context, String s) =>
       isBn(context) ? bnDigits(s) : s;
 
+  /// Vehicle plate in the app's language: "DHA-METRO-T-12-3456" →
+  /// "ঢাকা-মেট্রো-ট-১২-৩৪৫৬" in Bangla. The first part is the city, the
+  /// part after it (or after METRO) the vehicle class letter; unknown parts
+  /// stay as typed.
+  static String plate(BuildContext context, String plate) {
+    if (!isBn(context)) return plate;
+    final parts = plate.split(RegExp(r'([-\s])'));
+    final seps = RegExp(r'[-\s]').allMatches(plate).map((m) => m[0]!).toList();
+    final out = StringBuffer();
+    for (var i = 0; i < parts.length; i++) {
+      final t = parts[i].toUpperCase();
+      final mapped = i == 0
+          ? _plateCity[t]
+          : t == 'METRO'
+              ? 'মেট্রো'
+              : _plateClass[t];
+      out.write(mapped ?? bnDigits(parts[i]));
+      if (i < seps.length) out.write(seps[i]);
+    }
+    return out.toString();
+  }
+
+  static const _plateCity = {
+    'DHA': 'ঢাকা', 'DHAKA': 'ঢাকা', 'CTG': 'চট্ট', 'CHATTA': 'চট্ট',
+    'KHU': 'খুলনা', 'KHULNA': 'খুলনা', 'RAJ': 'রাজ', 'RAJSHAHI': 'রাজ',
+    'SYL': 'সিলেট', 'SYLHET': 'সিলেট', 'BAR': 'বরিশাল', 'BARISAL': 'বরিশাল',
+    'MYM': 'ময়মনসিংহ', 'RANG': 'রংপুর', 'RANGPUR': 'রংপুর',
+    'GAZ': 'গাজীপুর', 'NAR': 'নারায়ণগঞ্জ', 'COM': 'কুমিল্লা', 'BOG': 'বগুড়া',
+  };
+
+  static const _plateClass = {
+    'KA': 'ক', 'KHA': 'খ', 'GA': 'গ', 'GHA': 'ঘ', 'CHA': 'চ', 'CHHA': 'ছ',
+    'JA': 'জ', 'JHA': 'ঝ', 'TA': 'ত', 'THA': 'থ', 'T': 'ট', 'TH': 'ঠ',
+    'D': 'ড', 'DA': 'দ', 'DHA': 'ঢ', 'NA': 'ন', 'PA': 'প', 'FA': 'ফ',
+    'BA': 'ব', 'BHA': 'ভ', 'MA': 'ম', 'LA': 'ল', 'SHA': 'শ', 'SA': 'স',
+    'HA': 'হ', 'U': 'উ', 'E': 'এ',
+  };
+
   /// 12500 → "12,500" / "১২,৫০০".
   static String number(BuildContext context, num n, {int decimals = 0}) {
     final f = NumberFormat.decimalPatternDigits(

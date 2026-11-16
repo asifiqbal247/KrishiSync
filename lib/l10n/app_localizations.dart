@@ -179,7 +179,7 @@ abstract class AppLocalizations {
   /// No description provided for @onb2Body.
   ///
   /// In bn, this message translates to:
-  /// **'মাল গাড়িতে উঠলেই কৃষকের টাকা, ক্রেতার কাছে পৌঁছালেই ট্রান্সপোর্টারের টাকা।'**
+  /// **'পণ্য গাড়িতে উঠলেই কৃষকের টাকা, ক্রেতার কাছে পৌঁছালেই ট্রান্সপোর্টারের টাকা।'**
   String get onb2Body;
 
   /// No description provided for @onb3Title.
@@ -2285,7 +2285,7 @@ abstract class AppLocalizations {
   /// No description provided for @orderPlacedBody.
   ///
   /// In bn, this message translates to:
-  /// **'টাকা নিরাপদ লেনদেনে জমা আছে। মাল গাড়িতে উঠলেই কৃষক টাকা পাবেন।'**
+  /// **'টাকা নিরাপদ লেনদেনে জমা আছে। পণ্য গাড়িতে উঠলেই কৃষক টাকা পাবেন।'**
   String get orderPlacedBody;
 
   /// No description provided for @errQtyTooMuch.
@@ -2897,7 +2897,7 @@ abstract class AppLocalizations {
   /// No description provided for @rowGoods.
   ///
   /// In bn, this message translates to:
-  /// **'মালামাল'**
+  /// **'পণ্য'**
   String get rowGoods;
 
   /// No description provided for @rowDestination.
@@ -3227,7 +3227,7 @@ abstract class AppLocalizations {
   /// No description provided for @loadConfirmTitle.
   ///
   /// In bn, this message translates to:
-  /// **'মাল গাড়িতে উঠেছে?'**
+  /// **'পণ্য গাড়িতে উঠেছে?'**
   String get loadConfirmTitle;
 
   /// No description provided for @loadConfirmBody.
@@ -3695,7 +3695,7 @@ abstract class AppLocalizations {
   /// No description provided for @goodsWeight.
   ///
   /// In bn, this message translates to:
-  /// **'মালামাল ও ওজন'**
+  /// **'পণ্য ও ওজন'**
   String get goodsWeight;
 
   /// No description provided for @dateLabel.
@@ -3893,7 +3893,7 @@ abstract class AppLocalizations {
   /// No description provided for @handedOverBody.
   ///
   /// In bn, this message translates to:
-  /// **'ক্রেতার গাড়িতে মাল তোলা হলে নিশ্চিত করুন।'**
+  /// **'ক্রেতার গাড়িতে পণ্য তোলা হলে নিশ্চিত করুন।'**
   String get handedOverBody;
 
   /// No description provided for @receivedSelf.
@@ -3941,7 +3941,7 @@ abstract class AppLocalizations {
   /// No description provided for @nTripPicked.
   ///
   /// In bn, this message translates to:
-  /// **'মাল গাড়িতে উঠেছে: {no}'**
+  /// **'পণ্য গাড়িতে উঠেছে: {no}'**
   String nTripPicked(String no);
 
   /// No description provided for @nTripDelivered.
@@ -4049,7 +4049,7 @@ abstract class AppLocalizations {
   /// No description provided for @safePayExplain.
   ///
   /// In bn, this message translates to:
-  /// **'মাল গাড়িতে উঠলে কৃষক, আর আপনার কাছে পৌঁছালে ট্রান্সপোর্টার নিরাপদ লেনদেন থেকে টাকা পাবেন। ১% ফি শুধু ক্রেতা দেবেন, লোড হলে কাটা হবে। ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি সব গোলাঘর থেকে ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়।'**
+  /// **'পণ্য গাড়িতে উঠলে কৃষক, আর আপনার কাছে পৌঁছালে ট্রান্সপোর্টার নিরাপদ লেনদেন থেকে টাকা পাবেন। ১% ফি শুধু ক্রেতা দেবেন, লোড হলে কাটা হবে। ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি সব গোলাঘর থেকে ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়।'**
   String get safePayExplain;
 
   /// No description provided for @payBank.
@@ -4895,7 +4895,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsS3Body.
   ///
   /// In bn, this message translates to:
-  /// **'ক্রেতার টাকা নিরাপদ লেনদেনে জমা থাকে। মাল গাড়িতে উঠলে কৃষক এবং ডেলিভারি OTP দিলে পরিবহনকারী টাকা পান। ১% প্ল্যাটফর্ম ফি শুধু ক্রেতা দেন। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়।'**
+  /// **'ক্রেতার টাকা নিরাপদ লেনদেনে জমা থাকে। পণ্য গাড়িতে উঠলে কৃষক এবং ডেলিভারি OTP দিলে পরিবহনকারী টাকা পান। ১% প্ল্যাটফর্ম ফি শুধু ক্রেতা দেন। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়।'**
   String get termsS3Body;
 
   /// No description provided for @termsS4Title.
@@ -6131,13 +6131,13 @@ abstract class AppLocalizations {
   /// No description provided for @q2Farmer.
   ///
   /// In bn, this message translates to:
-  /// **'ট্রাকে মাল লোড শেষ হলেই আপনার টাকা নিরাপদ লেনদেন থেকে ছাড় হয়। এই পেমেন্ট চূড়ান্ত — পরে আটকানো বা ফেরত নেওয়া যাবে না।'**
+  /// **'ট্রাকে পণ্য লোড শেষ হলেই আপনার টাকা নিরাপদ লেনদেন থেকে ছাড় হয়। এই পেমেন্ট চূড়ান্ত — পরে আটকানো বা ফেরত নেওয়া যাবে না।'**
   String get q2Farmer;
 
   /// No description provided for @q2Transporter.
   ///
   /// In bn, this message translates to:
-  /// **'ক্রেতার কাছে মাল পৌঁছে ক্রেতার OTP দিলে ভাড়া পাবেন। রওনার আগে অর্ডার বাতিল হলে ভাড়ার ১০% পাবেন।'**
+  /// **'ক্রেতার কাছে পণ্য পৌঁছে ক্রেতার OTP দিলে ভাড়া পাবেন। রওনার আগে অর্ডার বাতিল হলে ভাড়ার ১০% পাবেন।'**
   String get q2Transporter;
 
   /// No description provided for @q2Buyer.
@@ -6155,7 +6155,7 @@ abstract class AppLocalizations {
   /// No description provided for @q3Buyer.
   ///
   /// In bn, this message translates to:
-  /// **'অর্ডারে \"প্ল্যাটফর্মের ট্রাক\" বাছলে ট্রাকচালকরা ভাড়ার প্রস্তাব দেন, আপনি একটি বেছে বুক করেন। \"নিজে পরিবহন করব\" বাছলে আপনি নিজে মাল নিয়ে যাবেন।'**
+  /// **'অর্ডারে \"প্ল্যাটফর্মের ট্রাক\" বাছলে ট্রাকচালকরা ভাড়ার প্রস্তাব দেন, আপনি একটি বেছে বুক করেন। \"নিজে পরিবহন করব\" বাছলে আপনি নিজে পণ্য নিয়ে যাবেন।'**
   String get q3Buyer;
 
   /// No description provided for @q4.
@@ -6167,7 +6167,7 @@ abstract class AppLocalizations {
   /// No description provided for @q4Body.
   ///
   /// In bn, this message translates to:
-  /// **'ক্রেতার টাকা গোলাঘরে জমা থাকে। মাল লোড হলে কৃষক এবং ডেলিভারি হলে পরিবহনকারী টাকা পান। এতে কেউ ঠকেন না।'**
+  /// **'ক্রেতার টাকা গোলাঘরে জমা থাকে। পণ্য লোড হলে কৃষক এবং ডেলিভারি হলে পরিবহনকারী টাকা পান। এতে কেউ ঠকেন না।'**
   String get q4Body;
 
   /// No description provided for @q5.
@@ -7163,7 +7163,7 @@ abstract class AppLocalizations {
   /// No description provided for @cancelContractBody.
   ///
   /// In bn, this message translates to:
-  /// **'বাকি সরবরাহ বন্ধ হবে। আগে লোড হওয়া মালের পেমেন্ট ফেরত হবে না — যা হয়েছে তা চূড়ান্ত।'**
+  /// **'বাকি সরবরাহ বন্ধ হবে। আগে লোড হওয়া পণ্যের পেমেন্ট ফেরত হবে না — যা হয়েছে তা চূড়ান্ত।'**
   String get cancelContractBody;
 
   /// No description provided for @yesCancelIt.
@@ -7319,7 +7319,7 @@ abstract class AppLocalizations {
   /// No description provided for @orderDeliveryBody.
   ///
   /// In bn, this message translates to:
-  /// **'{qty} · {amount} নিরাপদ লেনদেনে জমা থাকবে, মাল পৌঁছালে কৃষক পাবেন।'**
+  /// **'{qty} · {amount} নিরাপদ লেনদেনে জমা থাকবে, পণ্য পৌঁছালে কৃষক পাবেন।'**
   String orderDeliveryBody(String qty, String amount);
 
   /// No description provided for @orderNow.
@@ -7367,7 +7367,7 @@ abstract class AppLocalizations {
   /// No description provided for @truckComingTitle.
   ///
   /// In bn, this message translates to:
-  /// **'আপনার মাল নিতে ট্রাক'**
+  /// **'আপনার পণ্য নিতে ট্রাক'**
   String get truckComingTitle;
 
   /// No description provided for @truckBookedByBuyer.
@@ -7433,7 +7433,7 @@ abstract class AppLocalizations {
   /// No description provided for @yourLoadOtpBody.
   ///
   /// In bn, this message translates to:
-  /// **'মাল প্রস্তুত রাখুন। ওজন দেখে তবেই ড্রাইভারকে এই OTP দিন, সাথে সাথে টাকা পাবেন।'**
+  /// **'পণ্য প্রস্তুত রাখুন। ওজন দেখে তবেই ড্রাইভারকে এই OTP দিন, সাথে সাথে টাকা পাবেন।'**
   String get yourLoadOtpBody;
 
   /// No description provided for @weightMoreTitle.
@@ -7451,7 +7451,7 @@ abstract class AppLocalizations {
   /// No description provided for @waitingBuyerBody.
   ///
   /// In bn, this message translates to:
-  /// **'স্কেলে {qty} বেশি এসেছে। ক্রেতা অনুমোদন দিলে বাড়তি মালের টাকাও পাবেন।'**
+  /// **'স্কেলে {qty} বেশি এসেছে। ক্রেতা অনুমোদন দিলে বাড়তি পণ্যের টাকাও পাবেন।'**
   String waitingBuyerBody(String qty);
 
   /// No description provided for @rowWeighed.
@@ -7511,7 +7511,7 @@ abstract class AppLocalizations {
   /// No description provided for @loadedTitle.
   ///
   /// In bn, this message translates to:
-  /// **'মাল লোড হয়েছে'**
+  /// **'পণ্য লোড হয়েছে'**
   String get loadedTitle;
 
   /// No description provided for @weightLessHeading.
@@ -7535,7 +7535,7 @@ abstract class AppLocalizations {
   /// No description provided for @moneySentBody.
   ///
   /// In bn, this message translates to:
-  /// **'মাল গাড়িতে ওঠার সাথে সাথে আপনার টাকা ছাড় হয়েছে।'**
+  /// **'পণ্য গাড়িতে ওঠার সাথে সাথে আপনার টাকা ছাড় হয়েছে।'**
   String get moneySentBody;
 
   /// No description provided for @rowWeightDigital.
@@ -7619,7 +7619,7 @@ abstract class AppLocalizations {
   /// No description provided for @scalePhotos.
   ///
   /// In bn, this message translates to:
-  /// **'স্কেল ও মালের ছবি তুলুন ({n}/{max})'**
+  /// **'স্কেল ও পণ্যের ছবি তুলুন ({n}/{max})'**
   String scalePhotos(String n, String max);
 
   /// No description provided for @farmerOtp.
@@ -7763,7 +7763,7 @@ abstract class AppLocalizations {
   /// No description provided for @extraNeedApprovalBody.
   ///
   /// In bn, this message translates to:
-  /// **'{farmer} · {crop}। বাড়তি মাল নিতে চাইলে বাড়তি টাকা দিন, তারপর লোড নিশ্চিত হবে।'**
+  /// **'{farmer} · {crop}। বাড়তি পণ্য নিতে চাইলে বাড়তি টাকা দিন, তারপর লোড নিশ্চিত হবে।'**
   String extraNeedApprovalBody(String farmer, String crop);
 
   /// No description provided for @rowScaleWeighed.
@@ -7991,7 +7991,7 @@ abstract class AppLocalizations {
   /// No description provided for @nLoadedPaid.
   ///
   /// In bn, this message translates to:
-  /// **'মাল লোড হয়েছে, টাকা পাঠানো হয়েছে: {no}'**
+  /// **'পণ্য লোড হয়েছে, টাকা পাঠানো হয়েছে: {no}'**
   String nLoadedPaid(String no);
 
   /// No description provided for @traceTitle.
@@ -8266,7 +8266,7 @@ abstract class AppLocalizations {
   /// No description provided for @planWhenPaidBody.
   ///
   /// In bn, this message translates to:
-  /// **'হারভেস্টের পর মাল গাড়িতে উঠলেই। কোনো অগ্রিম টাকা নেই।'**
+  /// **'হারভেস্টের পর পণ্য গাড়িতে উঠলেই। কোনো অগ্রিম টাকা নেই।'**
   String get planWhenPaidBody;
 
   /// No description provided for @planCta.
@@ -8596,13 +8596,13 @@ abstract class AppLocalizations {
   /// No description provided for @goodsPhotos.
   ///
   /// In bn, this message translates to:
-  /// **'মালের ছবি তুলুন ({n}/{max})'**
+  /// **'পণ্যের ছবি তুলুন ({n}/{max})'**
   String goodsPhotos(String n, String max);
 
   /// No description provided for @rejectPhotos.
   ///
   /// In bn, this message translates to:
-  /// **'বাদ দেওয়া মালের ছবি তুলুন ({n}/{max})'**
+  /// **'বাদ দেওয়া পণ্যের ছবি তুলুন ({n}/{max})'**
   String rejectPhotos(String n, String max);
 
   /// No description provided for @decApprove.
@@ -8650,7 +8650,7 @@ abstract class AppLocalizations {
   /// No description provided for @howMuchTake.
   ///
   /// In bn, this message translates to:
-  /// **'কতটুকু মাল নেবেন?'**
+  /// **'কতটুকু পণ্য নেবেন?'**
   String get howMuchTake;
 
   /// No description provided for @rowLeftOut.
@@ -8662,7 +8662,7 @@ abstract class AppLocalizations {
   /// No description provided for @howMuchGood.
   ///
   /// In bn, this message translates to:
-  /// **'ভালো মাল কত কেজি নেবেন?'**
+  /// **'ভালো পণ্য কত কেজি নেবেন?'**
   String get howMuchGood;
 
   /// No description provided for @scaleWeight.
@@ -8680,7 +8680,7 @@ abstract class AppLocalizations {
   /// No description provided for @reasonDamaged.
   ///
   /// In bn, this message translates to:
-  /// **'নষ্ট মাল'**
+  /// **'নষ্ট পণ্য'**
   String get reasonDamaged;
 
   /// No description provided for @reasonLowGrade.
@@ -8716,7 +8716,7 @@ abstract class AppLocalizations {
   /// No description provided for @cancelLoadNote.
   ///
   /// In bn, this message translates to:
-  /// **'মাল লোড হবে না, কৃষক টাকা পাবেন না। ক্রেতা ফসলের দাম ও ফি ফেরত পাবেন। ট্রাক ভাড়া ক্রেতা দেবেন।'**
+  /// **'পণ্য লোড হবে না, কৃষক টাকা পাবেন না। ক্রেতা ফসলের দাম ও ফি ফেরত পাবেন। ট্রাক ভাড়া ক্রেতা দেবেন।'**
   String get cancelLoadNote;
 
   /// No description provided for @cancelLoadBtn.
@@ -8818,7 +8818,7 @@ abstract class AppLocalizations {
   /// No description provided for @nextApprove.
   ///
   /// In bn, this message translates to:
-  /// **'ড্রাইভার কৃষকের OTP নিলে মাল গাড়িতে উঠবে। এই রিপোর্ট আর বদলানো যাবে না।'**
+  /// **'ড্রাইভার কৃষকের OTP নিলে পণ্য গাড়িতে উঠবে। এই রিপোর্ট আর বদলানো যাবে না।'**
   String get nextApprove;
 
   /// No description provided for @nextPartial.
@@ -8830,7 +8830,7 @@ abstract class AppLocalizations {
   /// No description provided for @nextCancel.
   ///
   /// In bn, this message translates to:
-  /// **'এই স্টপে কোনো মাল উঠবে না। এই রিপোর্ট আর বদলানো যাবে না।'**
+  /// **'এই স্টপে কোনো পণ্য উঠবে না। এই রিপোর্ট আর বদলানো যাবে না।'**
   String get nextCancel;
 
   /// No description provided for @nextPickups.
@@ -9102,6 +9102,120 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'চালকের অ্যাপ খোলা থাকলে দেখাবে'**
   String get liveOff;
+
+  /// No description provided for @voiceMessage.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভয়েস বার্তা'**
+  String get voiceMessage;
+
+  /// No description provided for @voiceMessageLen.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভয়েস বার্তা · {len}'**
+  String voiceMessageLen(String len);
+
+  /// No description provided for @voiceRecording.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভয়েস রেকর্ড হচ্ছে... {len}'**
+  String voiceRecording(String len);
+
+  /// No description provided for @voiceSend.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠান'**
+  String get voiceSend;
+
+  /// No description provided for @voiceSendSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেকর্ড করা বার্তা পাঠান'**
+  String get voiceSendSub;
+
+  /// No description provided for @voiceCancel.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get voiceCancel;
+
+  /// No description provided for @voiceCancelSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেকর্ড মুছে ফেলুন'**
+  String get voiceCancelSub;
+
+  /// No description provided for @micDenied.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাইক্রোফোনের অনুমতি দিন (সেটিংস → অ্যাপ → গোলাঘর)'**
+  String get micDenied;
+
+  /// No description provided for @voiceSearchListening.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুনছি... ফসল বা এলাকার নাম বলুন'**
+  String get voiceSearchListening;
+
+  /// No description provided for @voiceSearchStop.
+  ///
+  /// In bn, this message translates to:
+  /// **'থামান'**
+  String get voiceSearchStop;
+
+  /// No description provided for @voiceSearchStopSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'বলা শেষ হলে চাপুন'**
+  String get voiceSearchStopSub;
+
+  /// No description provided for @voiceSearchExample.
+  ///
+  /// In bn, this message translates to:
+  /// **'উদাহরণ'**
+  String get voiceSearchExample;
+
+  /// No description provided for @voiceSearchExampleSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'“টমেটো”, “আলু নেত্রকোনা”'**
+  String get voiceSearchExampleSub;
+
+  /// No description provided for @voiceSearchUnavailable.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ফোনে ভয়েস সার্চ চালু নেই'**
+  String get voiceSearchUnavailable;
+
+  /// No description provided for @pdfMaking.
+  ///
+  /// In bn, this message translates to:
+  /// **'PDF তৈরি হচ্ছে...'**
+  String get pdfMaking;
+
+  /// No description provided for @locAskTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাকের অবস্থান জানাতে অনুমতি দিন'**
+  String get locAskTitle;
+
+  /// No description provided for @locAskBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রিপ চলার সময় ক্রেতা ও কৃষক ম্যাপে আপনার ট্রাক দেখতে পাবেন। পরের বক্সে “While using the app” চাপুন।'**
+  String get locAskBody;
+
+  /// No description provided for @locAskLater.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরে'**
+  String get locAskLater;
+
+  /// No description provided for @locAskAllow.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমতি দিন'**
+  String get locAskAllow;
 }
 
 class _AppLocalizationsDelegate

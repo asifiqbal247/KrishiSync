@@ -12,6 +12,7 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/domain/crop_catalog.dart';
+import '../../../shared/services/pdf_service.dart';
 import '../../../shared/widgets/app_icon.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_blocks.dart';
@@ -22,7 +23,6 @@ import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_search_bar.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
@@ -409,7 +409,19 @@ class _StatementState extends ConsumerState<StatementScreen> {
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
           KsButton(
               label: l.pdfDownloadFull,
-              onPressed: () => KsToast.comingSoon(context)),
+              onPressed: () => PdfService.share(context,
+                      title: l.statementTitle,
+                      fileName: 'Golaghor-statement',
+                      children: [
+                        KsInfoBox(children: [
+                          KsInfoRow(l.rowPeriod, period),
+                          KsInfoRow(l.rowTotalDeals,
+                              l.countTi(Fmt.digits(context, '${rows.length}'))),
+                          KsInfoRow(totalLabel, Fmt.taka(context, total)),
+                        ]),
+                        const SizedBox(height: AppSpacing.block),
+                        Text(text, style: AppTypography.caption.normal),
+                      ])),
         ],
       ),
     );

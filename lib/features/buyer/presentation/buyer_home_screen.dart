@@ -79,6 +79,7 @@ class BuyerHomeScreen extends ConsumerWidget {
             hint: l.buyerSearchHint,
             readOnly: true,
             onTap: () => context.push(Routes.buyerSearch),
+            onVoice: (w) => context.push(Routes.buyerSearch, extra: w),
           ),
           const SizedBox(height: AppSpacing.block),
           Row(children: [

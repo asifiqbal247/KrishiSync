@@ -10,6 +10,7 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/domain/crop_catalog.dart';
+import '../../../shared/services/pdf_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
@@ -17,7 +18,6 @@ import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../buyer/presentation/buyer_common.dart';
 import '../../transport/data/transport_repository.dart';
 import '../../transport/presentation/load_screens.dart';
@@ -100,7 +100,7 @@ class _TraceState extends ConsumerState<TraceScreen> {
             : l.traceTransport(o.transporterName ?? l.stepWaiting),
         d?.vehicle == null
             ? (o.transportMode == TransportMode.self ? o.buyerName : l.stepWaiting)
-            : l.nameDot(vehicleTypeLabel(l, d!.vehicle!.type), d.vehicle!.plateNo),
+            : l.nameDot(vehicleTypeLabel(l, d!.vehicle!.type), Fmt.plate(context, d.vehicle!.plateNo)),
         o.transporterId != null || o.transportMode == TransportMode.self,
         null,
       ),
@@ -171,7 +171,37 @@ class _TraceState extends ConsumerState<TraceScreen> {
             Expanded(
               child: KsButton.outline(
                 label: l.pdfShort,
-                onPressed: () => KsToast.comingSoon(context),
+                onPressed: () => PdfService.share(
+                  context,
+                  title: l.traceTitle,
+                  fileName: 'trace-${main.orderNo}',
+                  children: [
+                    Text(
+                        l.traceOrderTitle(main.orderNo, o.cropName(lang),
+                            qtyText(context, totalKg)),
+                        style: AppTypography.bodyMediumStrong.normal),
+                    for (final x in group)
+                      Text(
+                          l.traceFarmerLine(
+                              x.farmerName,
+                              districtOf(context, x.pickup),
+                              qtyText(context, x.quantityKg),
+                              l.gradeLabel(x.grade)),
+                          style: AppTypography.caption.normal),
+                    for (final s in steps) ...[
+                      const SizedBox(height: AppSpacing.block),
+                      KsTimelineItem(
+                          title: s.$1, subtitle: s.$2, done: s.$3),
+                    ],
+                    const SizedBox(height: AppSpacing.block),
+                    Center(
+                      child: ColoredBox(
+                        color: AppColors.bgPage,
+                        child: QrImageView(data: summary, size: _qr),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(width: AppSpacing.md),

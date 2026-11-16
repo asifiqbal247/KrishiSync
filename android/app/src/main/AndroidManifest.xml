@@ -5,6 +5,8 @@
     <!-- "Use my current location" (screen 09) and pickup map pin -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Chat voice messages (V2) and voice search (V1) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:label="Golaghor"
         android:name="${applicationName}"
@@ -46,6 +48,10 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- Voice search (V1): find the phone's speech recognition service -->
+        <intent>
+            <action android:name="android.speech.RecognitionService" />
         </intent>
     </queries>
 </manifest>

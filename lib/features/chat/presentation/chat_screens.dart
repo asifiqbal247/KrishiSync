@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +27,9 @@ import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../moderator/presentation/report_screens.dart';
+import '../../../shared/services/image_storage_service.dart';
 import '../data/chat_repository.dart';
+import 'voice_sheet.dart';
 
 const _pad = EdgeInsets.fromLTRB(
   AppSpacing.screen,
@@ -101,7 +106,7 @@ class _MessagesState extends ConsumerState<MessagesScreen> {
       body: switch (async) {
         AsyncData(value: final all) when me != null => () {
           final list = all
-              .where((c) => c.lastText.isNotEmpty)
+              .where((c) => c.hasMessages)
               .where(
                 (c) =>
                     (c.names[c.other(me.uid)] ?? '').toLowerCase().contains(q),
@@ -136,7 +141,7 @@ class _MessagesState extends ConsumerState<MessagesScreen> {
                     fallbackAsset: avatarFor(c.roles[c.other(me.uid)]),
                   ),
                   title: chatName(l, c, c.other(me.uid)),
-                  subtitle: c.lastText,
+                  subtitle: c.lastVoice ? l.voiceMessage : c.lastText,
                   trailingText: chatTime(context, c.lastAt),
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -154,8 +159,8 @@ class _MessagesState extends ConsumerState<MessagesScreen> {
   }
 }
 
-/// 66 / 136 / 190 Chat (Figma 292:845). Text messages are real; voice,
-/// attachments and video calls are Tier C.
+/// 66 / 136 / 190 Chat (Figma 292:845). Text and voice messages (V2) are
+/// real; attachments and video calls are Tier C.
 class ChatScreen extends ConsumerStatefulWidget {
   const ChatScreen({super.key, required this.chatId});
   final String chatId;
@@ -170,11 +175,79 @@ class _ChatState extends ConsumerState<ChatScreen> {
   static const _btn = 44.0;
   static const _bubbleMax = 0.72;
 
+  final _player = AudioPlayer();
+  StreamSubscription<Duration>? _posSub;
+  StreamSubscription<void>? _endSub;
+  String? _playing; // voice URL now playing
+  int _playedSec = 0;
+  bool _sendingVoice = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _posSub = _player.onPositionChanged.listen((p) {
+      if (mounted && p.inSeconds != _playedSec) {
+        setState(() => _playedSec = p.inSeconds);
+      }
+    });
+    _endSub = _player.onPlayerComplete.listen((_) {
+      if (mounted) setState(() => _playing = null);
+    });
+  }
+
   @override
   void dispose() {
+    _posSub?.cancel();
+    _endSub?.cancel();
+    _player.dispose();
     _text.dispose();
     _scroll.dispose();
     super.dispose();
+  }
+
+  /// Tap a voice bubble: play it, or stop it when it is playing.
+  Future<void> _toggle(String url) async {
+    if (_playing == url) {
+      await _player.stop();
+      if (mounted) setState(() => _playing = null);
+      return;
+    }
+    setState(() {
+      _playing = url;
+      _playedSec = 0;
+    });
+    try {
+      await _player.play(UrlSource(url));
+    } catch (_) {
+      if (mounted) {
+        setState(() => _playing = null);
+        KsToast.show(context, AppLocalizations.of(context).errorGeneric);
+      }
+    }
+  }
+
+  /// Mic: record (V2), upload, send.
+  Future<void> _voice(String uid) async {
+    if (_sendingVoice) return;
+    FocusManager.instance.primaryFocus?.unfocus();
+    final rec = await recordVoice(context);
+    if (rec == null || !mounted) return;
+    final (file, sec) = rec;
+    setState(() => _sendingVoice = true);
+    try {
+      final url = await ref
+          .read(imageStorageProvider)
+          .uploadAudio(file, ownerUid: uid);
+      await ref
+          .read(chatRepositoryProvider)
+          .sendVoice(widget.chatId, uid, url: url, seconds: sec);
+    } catch (_) {
+      if (mounted) {
+        KsToast.show(context, AppLocalizations.of(context).errorGeneric);
+      }
+    } finally {
+      if (mounted) setState(() => _sendingVoice = false);
+    }
   }
 
   Future<void> _send(String uid) async {
@@ -246,26 +319,43 @@ class _ChatState extends ConsumerState<ChatScreen> {
                           alignment: mine
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: width * _bubbleMax,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.md,
-                              vertical: AppSpacing.x10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: mine
-                                  ? AppColors.bgBrand
-                                  : AppColors.bgSurface,
-                              borderRadius: BorderRadius.circular(AppRadius.lg),
-                            ),
-                            child: Text(
-                              m.text,
-                              style: AppTypography.bodyMedium.normal.withColor(
-                                mine
-                                    ? AppColors.textOnBrand
-                                    : AppColors.textPrimary,
+                          child: GestureDetector(
+                            onTap: m.isVoice
+                                ? () => _toggle(m.voiceUrl!)
+                                : null,
+                            child: Container(
+                              constraints: BoxConstraints(
+                                maxWidth: width * _bubbleMax,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.md,
+                                vertical: AppSpacing.x10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: mine
+                                    ? AppColors.bgBrand
+                                    : AppColors.bgSurface,
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.lg,
+                                ),
+                              ),
+                              child: Text(
+                                m.isVoice
+                                    ? l.voiceMessageLen(
+                                        voiceLen(
+                                          context,
+                                          _playing == m.voiceUrl
+                                              ? _playedSec
+                                              : (m.voiceSec ?? 0),
+                                        ),
+                                      )
+                                    : m.text,
+                                style: AppTypography.bodyMedium.normal
+                                    .withColor(
+                                      mine
+                                          ? AppColors.textOnBrand
+                                          : AppColors.textPrimary,
+                                    ),
                               ),
                             ),
                           ),
@@ -315,7 +405,9 @@ class _ChatState extends ConsumerState<ChatScreen> {
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   GestureDetector(
-                    onTap: soon,
+                    onTap: me == null || _sendingVoice
+                        ? null
+                        : () => _voice(me.uid),
                     child: Image.asset(
                       AppUi.chatVoice,
                       width: _btn,

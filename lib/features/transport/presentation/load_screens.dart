@@ -162,7 +162,7 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
               subtitle: [
                 if (d.vehicle != null) ...[
                   vehicleTypeLabel(l, d.vehicle!.type),
-                  d.vehicle!.plateNo,
+                  Fmt.plate(context, d.vehicle!.plateNo),
                 ],
                 if ((driver?.ratingCount ?? 0) > 0)
                   Fmt.number(context, driver!.ratingAvg, decimals: 1),

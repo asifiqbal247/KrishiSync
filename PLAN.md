@@ -14,7 +14,8 @@
 - **Loading & weighing (2026-11-16):** 45 farmer sees the truck + own 4-digit loading OTP, 162 driver weighs (photos, farmer OTP checked by rules), 48 loaded & paid / 51 weight less (farmer), 133 weight difference + 132 refund status (buyer; also for cancelled orders), 52/134 extra weight → buyer approves or keeps ordered amount (30 min). Tested on emulator: KS-1053 200→180 kg (৳444 back), KS-1054 100→115 kg approved.
 - **Insights (2026-11-16):** 34 market opportunities (real demands + rising prices), 35 production planning (demands by season), 55 surplus rescue after a cancel (other buyers' open demands, best price first), 109 traceability record (farm → weighing → truck → delivery, QR + share). Farmer home banner is now a 3-slide slider (export / opportunities / planning). Tested on emulator.
 - **Buyer's inspector (2026-11-16):** buyer adds inspector (name + phone) on order details (platform truck, before loading) and shares the invite by SMS/WhatsApp; inspector logs in with that number → 88 work list (role-less users go straight there; users with a role get a profile row) → 89 checklist + weight + photos → approve / 90 partial / 91 cancel → 92-S/93-S/94-S sent; buyer sees 92/93/94 report, or 95/95-S load record without an inspector; driver's 162 shows the decision, waits for it and loads only the approved kg. Inspector cancel = order cancelled, crop + fee refunded, fare kept, stock back. Tested on emulator: KS-1048 partial 150/200 (৳1,869 back), KS-1056 cancel (৳909 back, onion stock restored).
-- **Next step:** Asif tests on phone; then remaining Tier C (live GPS, PDF, voice messages).
+- **Tier C extras (2026-11-16, later):** inspector role-less login (01700000009) and driver's 162 with a partial inspection tested on emulator (KS-1057: 80 of 100 kg). **Live GPS**: driver's phone sends its position every 30 s while a trip is assigned/on the way and the app is open (deliveries/{id}/live/pos); buyer/farmer see the truck pin, last-seen time, distance left and ETA on 108 and the assigned screen. **PDF**: receipt 58/125, statement 63, trace 109, inspection report 92–95 (share menu → save/print). **Voice messages** in chat (V2 sheet, Cloudinary audio, tap bubble to play). **Voice search** (V1) on every search bar.
+- **Next step:** test voice on emulator; 97 Quality Standard; Asif tests on phone.
 
 ## Timeline — defence in 12 days (~2026-11-25)
 Work is clustered into **Parts**. Each Part ends with a runnable app, a commit and a push.
@@ -243,6 +244,11 @@ counters/orders    next: int
 | flutter_map + latlong2 *(if OSM chosen)* | Map pin for pickup |
 | geolocator | "Use my location" on map pin |
 | url_launcher | Call farmer/driver, open Google Maps for navigation |
+| share_plus, qr_flutter | Share text/PDF through the phone's share menu, QR codes |
+| cupertino_ui | Cupertino localizations (removes a startup warning) |
+| pdf | Receipts, statement, trace record, inspection report as PDF (page is drawn with app widgets and captured as an image, so Bangla stays correct) |
+| record, audioplayers | Chat voice messages (V2): record AAC from the mic, play in chat |
+| speech_to_text | Voice search (V1) with the phone's speech service (bn-BD / en-US) |
 
 ---
 
@@ -326,4 +332,5 @@ counters/orders    next: int
 | 2026-11-16 | Contracts: term is fixed at 3 months (monthly = 3 deliveries, weekly = 12), first delivery one week after sending (Figma 122 has no date field). The buyer orders each delivery in turn from 123; the order is paid/booked like a demand order. Cancel keeps orders already made. Renew = a new pending contract with the same terms (farmer accepts again). |
 | 2026-11-16 | Weighing at loading: order quantity/totals become the weighed amount (orderedKg keeps the original, weightRefund = difference incl. 1% fee; fare unchanged). Farmer's loading OTP lives in deliveries/{id}/load/code (farmer-only); the pickup rule compares it. More than ordered needs buyer approval (extraStatus); no reply in 30 min → only the ordered amount loads (checked in the app). Inspector rows and QR check on 162 are Tier C. |
 | 2026-11-16 | 34/35 entry = farmer home banner slides 2 and 3 (Figma shows 3 dots on the banner). 35's "your land / expected yield" box is left out: profiles have no farm-size field. 109's PDF button = Tier C; QR holds a text summary. |
+| 2026-11-16 | Live GPS only while the driver's app is open (no background service: simpler, no extra Android permissions). PDF pages are images of app widgets (pdf package has no Bangla shaping). Voice messages: max 120 s, AAC mono, Cloudinary /video/upload with the same unsigned preset. |
 | 2026-11-16 | Inspector = invited by phone (Asif's choice), not a new role. inspections/{orderId}; rules match `inspectorPhone` with the auth token. 88-0's code entry is the normal login OTP. Checklist is 5 generic lines (damage % by grade). 97 Quality Standard not built yet. To test the role-less path, add a spare Firebase test number (e.g. 01700000009). |

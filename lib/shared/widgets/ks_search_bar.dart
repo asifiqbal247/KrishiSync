@@ -5,11 +5,13 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_dimens.dart';
 import '../../core/theme/app_typography.dart';
 import 'app_icon.dart';
-import 'ks_toast.dart';
+import 'voice_search_sheet.dart';
 
 /// HF/Search Bar (292:59): surface fill, radius 16, h 48, pl 16 pr 8, gap 8,
 /// 20px search icon (border/strong), Regular 14 text, 32px white mic circle
-/// with 16px brand mic.
+/// with 16px brand mic. The mic does voice search (V1): the words go into
+/// the field ([onChanged] + [onSubmitted]); a button-style bar passes them
+/// to [onVoice] instead (e.g. open the search screen with them).
 class KsSearchBar extends StatelessWidget {
   const KsSearchBar({
     super.key,
@@ -19,6 +21,7 @@ class KsSearchBar extends StatelessWidget {
     this.onSubmitted,
     this.onTap,
     this.onMic,
+    this.onVoice,
     this.readOnly = false,
     this.autofocus = false,
   });
@@ -31,6 +34,7 @@ class KsSearchBar extends StatelessWidget {
   /// When set (and [readOnly]), the whole bar acts as a button.
   final VoidCallback? onTap;
   final VoidCallback? onMic;
+  final ValueChanged<String>? onVoice;
   final bool readOnly;
   final bool autofocus;
 
@@ -48,6 +52,20 @@ class KsSearchBar extends StatelessWidget {
             child: bar,
           )
         : bar;
+  }
+
+  Future<void> _voice(BuildContext context) async {
+    final words = await listenForSearch(context);
+    if (words == null) return;
+    if (onVoice != null) {
+      onVoice!(words);
+      return;
+    }
+    if (controller == null) return;
+    controller!.text = words;
+    controller!.selection = TextSelection.collapsed(offset: words.length);
+    onChanged?.call(words);
+    onSubmitted?.call(words);
   }
 
   Widget _bar(BuildContext context, bool asButton) {
@@ -96,8 +114,7 @@ class KsSearchBar extends StatelessWidget {
             shape: const CircleBorder(),
             child: InkWell(
               customBorder: const CircleBorder(),
-              // Voice search is planned for a later version.
-              onTap: onMic ?? () => KsToast.comingSoon(context),
+              onTap: onMic ?? () => _voice(context),
               child: const SizedBox.square(
                 dimension: _micBox,
                 child: Center(

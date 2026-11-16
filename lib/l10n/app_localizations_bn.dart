@@ -53,7 +53,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get onb2Body =>
-      'মাল গাড়িতে উঠলেই কৃষকের টাকা, ক্রেতার কাছে পৌঁছালেই ট্রান্সপোর্টারের টাকা।';
+      'পণ্য গাড়িতে উঠলেই কৃষকের টাকা, ক্রেতার কাছে পৌঁছালেই ট্রান্সপোর্টারের টাকা।';
 
   @override
   String get onb3Title => 'সহজে ট্রাক, ঝামেলা ছাড়াই পরিবহন';
@@ -1213,7 +1213,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get orderPlacedBody =>
-      'টাকা নিরাপদ লেনদেনে জমা আছে। মাল গাড়িতে উঠলেই কৃষক টাকা পাবেন।';
+      'টাকা নিরাপদ লেনদেনে জমা আছে। পণ্য গাড়িতে উঠলেই কৃষক টাকা পাবেন।';
 
   @override
   String get errQtyTooMuch => 'উপলব্ধ পরিমাণের চেয়ে বেশি';
@@ -1570,7 +1570,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get loadDetailsTitle => 'লোডের বিবরণ';
 
   @override
-  String get rowGoods => 'মালামাল';
+  String get rowGoods => 'পণ্য';
 
   @override
   String get rowDestination => 'গন্তব্য';
@@ -1768,7 +1768,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get startLoading => 'পিকআপে লোড শুরু করুন';
 
   @override
-  String get loadConfirmTitle => 'মাল গাড়িতে উঠেছে?';
+  String get loadConfirmTitle => 'পণ্য গাড়িতে উঠেছে?';
 
   @override
   String get loadConfirmBody =>
@@ -2022,7 +2022,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get pickupLocation => 'পিকআপ লোকেশন';
 
   @override
-  String get goodsWeight => 'মালামাল ও ওজন';
+  String get goodsWeight => 'পণ্য ও ওজন';
 
   @override
   String get dateLabel => 'তারিখ';
@@ -2135,7 +2135,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get handedOverTitle => 'পণ্য হস্তান্তর করেছেন?';
 
   @override
-  String get handedOverBody => 'ক্রেতার গাড়িতে মাল তোলা হলে নিশ্চিত করুন।';
+  String get handedOverBody => 'ক্রেতার গাড়িতে পণ্য তোলা হলে নিশ্চিত করুন।';
 
   @override
   String get receivedSelf => 'পণ্য পেয়েছি';
@@ -2166,7 +2166,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String nTripPicked(String no) {
-    return 'মাল গাড়িতে উঠেছে: $no';
+    return 'পণ্য গাড়িতে উঠেছে: $no';
   }
 
   @override
@@ -2225,7 +2225,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get safePayExplain =>
-      'মাল গাড়িতে উঠলে কৃষক, আর আপনার কাছে পৌঁছালে ট্রান্সপোর্টার নিরাপদ লেনদেন থেকে টাকা পাবেন। ১% ফি শুধু ক্রেতা দেবেন, লোড হলে কাটা হবে। ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি সব গোলাঘর থেকে ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়।';
+      'পণ্য গাড়িতে উঠলে কৃষক, আর আপনার কাছে পৌঁছালে ট্রান্সপোর্টার নিরাপদ লেনদেন থেকে টাকা পাবেন। ১% ফি শুধু ক্রেতা দেবেন, লোড হলে কাটা হবে। ট্রাক রওনার আগে অর্ডার বাতিল করলে ভাড়ার ১০% কাটা যাবে, বাকি সব গোলাঘর থেকে ফেরত পাবেন। এরপর লোড বাতিল হলে ফসলের দাম ও ফি ফেরত পাবেন, ভাড়া নয়।';
 
   @override
   String get payBank => 'ব্যাংক ট্রান্সফার';
@@ -2673,7 +2673,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get termsS3Body =>
-      'ক্রেতার টাকা নিরাপদ লেনদেনে জমা থাকে। মাল গাড়িতে উঠলে কৃষক এবং ডেলিভারি OTP দিলে পরিবহনকারী টাকা পান। ১% প্ল্যাটফর্ম ফি শুধু ক্রেতা দেন। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়।';
+      'ক্রেতার টাকা নিরাপদ লেনদেনে জমা থাকে। পণ্য গাড়িতে উঠলে কৃষক এবং ডেলিভারি OTP দিলে পরিবহনকারী টাকা পান। ১% প্ল্যাটফর্ম ফি শুধু ক্রেতা দেন। মান ও পরিমাণ লোডের সময়ই চূড়ান্ত হয়।';
 
   @override
   String get termsS4Title => '৪. বাতিল ও ফেরত';
@@ -3376,11 +3376,11 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get q2Farmer =>
-      'ট্রাকে মাল লোড শেষ হলেই আপনার টাকা নিরাপদ লেনদেন থেকে ছাড় হয়। এই পেমেন্ট চূড়ান্ত — পরে আটকানো বা ফেরত নেওয়া যাবে না।';
+      'ট্রাকে পণ্য লোড শেষ হলেই আপনার টাকা নিরাপদ লেনদেন থেকে ছাড় হয়। এই পেমেন্ট চূড়ান্ত — পরে আটকানো বা ফেরত নেওয়া যাবে না।';
 
   @override
   String get q2Transporter =>
-      'ক্রেতার কাছে মাল পৌঁছে ক্রেতার OTP দিলে ভাড়া পাবেন। রওনার আগে অর্ডার বাতিল হলে ভাড়ার ১০% পাবেন।';
+      'ক্রেতার কাছে পণ্য পৌঁছে ক্রেতার OTP দিলে ভাড়া পাবেন। রওনার আগে অর্ডার বাতিল হলে ভাড়ার ১০% পাবেন।';
 
   @override
   String get q2Buyer =>
@@ -3391,14 +3391,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get q3Buyer =>
-      'অর্ডারে \"প্ল্যাটফর্মের ট্রাক\" বাছলে ট্রাকচালকরা ভাড়ার প্রস্তাব দেন, আপনি একটি বেছে বুক করেন। \"নিজে পরিবহন করব\" বাছলে আপনি নিজে মাল নিয়ে যাবেন।';
+      'অর্ডারে \"প্ল্যাটফর্মের ট্রাক\" বাছলে ট্রাকচালকরা ভাড়ার প্রস্তাব দেন, আপনি একটি বেছে বুক করেন। \"নিজে পরিবহন করব\" বাছলে আপনি নিজে পণ্য নিয়ে যাবেন।';
 
   @override
   String get q4 => 'নিরাপদ লেনদেন কী?';
 
   @override
   String get q4Body =>
-      'ক্রেতার টাকা গোলাঘরে জমা থাকে। মাল লোড হলে কৃষক এবং ডেলিভারি হলে পরিবহনকারী টাকা পান। এতে কেউ ঠকেন না।';
+      'ক্রেতার টাকা গোলাঘরে জমা থাকে। পণ্য লোড হলে কৃষক এবং ডেলিভারি হলে পরিবহনকারী টাকা পান। এতে কেউ ঠকেন না।';
 
   @override
   String get q5 => 'অফার বাতিল করলে কী হবে?';
@@ -3965,7 +3965,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get cancelContractBody =>
-      'বাকি সরবরাহ বন্ধ হবে। আগে লোড হওয়া মালের পেমেন্ট ফেরত হবে না — যা হয়েছে তা চূড়ান্ত।';
+      'বাকি সরবরাহ বন্ধ হবে। আগে লোড হওয়া পণ্যের পেমেন্ট ফেরত হবে না — যা হয়েছে তা চূড়ান্ত।';
 
   @override
   String get yesCancelIt => 'হ্যাঁ, বাতিল করুন';
@@ -4054,7 +4054,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String orderDeliveryBody(String qty, String amount) {
-    return '$qty · $amount নিরাপদ লেনদেনে জমা থাকবে, মাল পৌঁছালে কৃষক পাবেন।';
+    return '$qty · $amount নিরাপদ লেনদেনে জমা থাকবে, পণ্য পৌঁছালে কৃষক পাবেন।';
   }
 
   @override
@@ -4089,7 +4089,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get truckComingTitle => 'আপনার মাল নিতে ট্রাক';
+  String get truckComingTitle => 'আপনার পণ্য নিতে ট্রাক';
 
   @override
   String get truckBookedByBuyer => 'ক্রেতা ট্রাক বুক করেছেন';
@@ -4132,7 +4132,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get yourLoadOtpBody =>
-      'মাল প্রস্তুত রাখুন। ওজন দেখে তবেই ড্রাইভারকে এই OTP দিন, সাথে সাথে টাকা পাবেন।';
+      'পণ্য প্রস্তুত রাখুন। ওজন দেখে তবেই ড্রাইভারকে এই OTP দিন, সাথে সাথে টাকা পাবেন।';
 
   @override
   String get weightMoreTitle => 'বেশি ওজন';
@@ -4142,7 +4142,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String waitingBuyerBody(String qty) {
-    return 'স্কেলে $qty বেশি এসেছে। ক্রেতা অনুমোদন দিলে বাড়তি মালের টাকাও পাবেন।';
+    return 'স্কেলে $qty বেশি এসেছে। ক্রেতা অনুমোদন দিলে বাড়তি পণ্যের টাকাও পাবেন।';
   }
 
   @override
@@ -4177,7 +4177,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get weightLessTitle => 'ওজন কম';
 
   @override
-  String get loadedTitle => 'মাল লোড হয়েছে';
+  String get loadedTitle => 'পণ্য লোড হয়েছে';
 
   @override
   String get weightLessHeading => 'ওজন কম ধরা পড়েছে';
@@ -4191,7 +4191,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get moneySentBody =>
-      'মাল গাড়িতে ওঠার সাথে সাথে আপনার টাকা ছাড় হয়েছে।';
+      'পণ্য গাড়িতে ওঠার সাথে সাথে আপনার টাকা ছাড় হয়েছে।';
 
   @override
   String get rowWeightDigital => 'ওজন (ডিজিটাল)';
@@ -4242,7 +4242,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String scalePhotos(String n, String max) {
-    return 'স্কেল ও মালের ছবি তুলুন ($n/$max)';
+    return 'স্কেল ও পণ্যের ছবি তুলুন ($n/$max)';
   }
 
   @override
@@ -4339,7 +4339,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String extraNeedApprovalBody(String farmer, String crop) {
-    return '$farmer · $crop। বাড়তি মাল নিতে চাইলে বাড়তি টাকা দিন, তারপর লোড নিশ্চিত হবে।';
+    return '$farmer · $crop। বাড়তি পণ্য নিতে চাইলে বাড়তি টাকা দিন, তারপর লোড নিশ্চিত হবে।';
   }
 
   @override
@@ -4488,7 +4488,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String nLoadedPaid(String no) {
-    return 'মাল লোড হয়েছে, টাকা পাঠানো হয়েছে: $no';
+    return 'পণ্য লোড হয়েছে, টাকা পাঠানো হয়েছে: $no';
   }
 
   @override
@@ -4672,7 +4672,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get planWhenPaidBody =>
-      'হারভেস্টের পর মাল গাড়িতে উঠলেই। কোনো অগ্রিম টাকা নেই।';
+      'হারভেস্টের পর পণ্য গাড়িতে উঠলেই। কোনো অগ্রিম টাকা নেই।';
 
   @override
   String get planCta => 'চুক্তি দেখুন ও অংশ নিন';
@@ -4875,12 +4875,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String goodsPhotos(String n, String max) {
-    return 'মালের ছবি তুলুন ($n/$max)';
+    return 'পণ্যের ছবি তুলুন ($n/$max)';
   }
 
   @override
   String rejectPhotos(String n, String max) {
-    return 'বাদ দেওয়া মালের ছবি তুলুন ($n/$max)';
+    return 'বাদ দেওয়া পণ্যের ছবি তুলুন ($n/$max)';
   }
 
   @override
@@ -4906,13 +4906,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get submitReport => 'রিপোর্ট জমা দিন';
 
   @override
-  String get howMuchTake => 'কতটুকু মাল নেবেন?';
+  String get howMuchTake => 'কতটুকু পণ্য নেবেন?';
 
   @override
   String get rowLeftOut => 'বাদ যাবে';
 
   @override
-  String get howMuchGood => 'ভালো মাল কত কেজি নেবেন?';
+  String get howMuchGood => 'ভালো পণ্য কত কেজি নেবেন?';
 
   @override
   String scaleWeight(String qty) {
@@ -4923,7 +4923,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get reasonSmall => 'আকার ছোট';
 
   @override
-  String get reasonDamaged => 'নষ্ট মাল';
+  String get reasonDamaged => 'নষ্ট পণ্য';
 
   @override
   String get reasonLowGrade => 'গ্রেড কম';
@@ -4946,7 +4946,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get cancelLoadNote =>
-      'মাল লোড হবে না, কৃষক টাকা পাবেন না। ক্রেতা ফসলের দাম ও ফি ফেরত পাবেন। ট্রাক ভাড়া ক্রেতা দেবেন।';
+      'পণ্য লোড হবে না, কৃষক টাকা পাবেন না। ক্রেতা ফসলের দাম ও ফি ফেরত পাবেন। ট্রাক ভাড়া ক্রেতা দেবেন।';
 
   @override
   String get cancelLoadBtn => 'লোড বাতিল করুন';
@@ -5011,7 +5011,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get nextApprove =>
-      'ড্রাইভার কৃষকের OTP নিলে মাল গাড়িতে উঠবে। এই রিপোর্ট আর বদলানো যাবে না।';
+      'ড্রাইভার কৃষকের OTP নিলে পণ্য গাড়িতে উঠবে। এই রিপোর্ট আর বদলানো যাবে না।';
 
   @override
   String nextPartial(String qty) {
@@ -5020,7 +5020,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get nextCancel =>
-      'এই স্টপে কোনো মাল উঠবে না। এই রিপোর্ট আর বদলানো যাবে না।';
+      'এই স্টপে কোনো পণ্য উঠবে না। এই রিপোর্ট আর বদলানো যাবে না।';
 
   @override
   String get nextPickups => 'পরের পিকআপ দেখুন';
@@ -5182,4 +5182,66 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get liveOff => 'চালকের অ্যাপ খোলা থাকলে দেখাবে';
+
+  @override
+  String get voiceMessage => 'ভয়েস বার্তা';
+
+  @override
+  String voiceMessageLen(String len) {
+    return 'ভয়েস বার্তা · $len';
+  }
+
+  @override
+  String voiceRecording(String len) {
+    return 'ভয়েস রেকর্ড হচ্ছে... $len';
+  }
+
+  @override
+  String get voiceSend => 'পাঠান';
+
+  @override
+  String get voiceSendSub => 'রেকর্ড করা বার্তা পাঠান';
+
+  @override
+  String get voiceCancel => 'বাতিল';
+
+  @override
+  String get voiceCancelSub => 'রেকর্ড মুছে ফেলুন';
+
+  @override
+  String get micDenied => 'মাইক্রোফোনের অনুমতি দিন (সেটিংস → অ্যাপ → গোলাঘর)';
+
+  @override
+  String get voiceSearchListening => 'শুনছি... ফসল বা এলাকার নাম বলুন';
+
+  @override
+  String get voiceSearchStop => 'থামান';
+
+  @override
+  String get voiceSearchStopSub => 'বলা শেষ হলে চাপুন';
+
+  @override
+  String get voiceSearchExample => 'উদাহরণ';
+
+  @override
+  String get voiceSearchExampleSub => '“টমেটো”, “আলু নেত্রকোনা”';
+
+  @override
+  String get voiceSearchUnavailable => 'এই ফোনে ভয়েস সার্চ চালু নেই';
+
+  @override
+  String get pdfMaking => 'PDF তৈরি হচ্ছে...';
+
+  @override
+  String get locAskTitle => 'ট্রাকের অবস্থান জানাতে অনুমতি দিন';
+
+  @override
+  String get locAskBody =>
+      'ট্রিপ চলার সময় ক্রেতা ও কৃষক ম্যাপে আপনার ট্রাক দেখতে পাবেন। পরের বক্সে “While using the app” চাপুন।';
+
+  @override
+  String get locAskLater => 'পরে';
+
+  @override
+  String get locAskAllow => 'অনুমতি দিন';
 }

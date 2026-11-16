@@ -10,6 +10,7 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/domain/crop_catalog.dart';
+import '../../../shared/services/pdf_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
@@ -17,7 +18,6 @@ import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
@@ -269,6 +269,21 @@ class ReceiptScreen extends ConsumerWidget {
         ),
     };
 
+    final receipt = [
+      Text(tk(amount),
+          textAlign: TextAlign.center,
+          style: AppTypography.display28.normal),
+      const SizedBox(height: AppSpacing.sm),
+      Text(paid ? l.receiptPaid(method) : l.receiptHeld,
+          textAlign: TextAlign.center,
+          style: AppTypography.bodySmall.normal
+              .withColor(AppColors.textSecondary)),
+      const SizedBox(height: AppSpacing.block),
+      KsInfoBox(children: [
+        for (final (k, v) in rows) KsInfoRow(k, v),
+      ]),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.receiptTitle),
@@ -276,24 +291,13 @@ class ReceiptScreen extends ConsumerWidget {
         padding: _pad,
         children: [
           const SizedBox(height: AppSpacing.block),
-          Text(tk(amount),
-              textAlign: TextAlign.center,
-              style: AppTypography.display28.normal),
-          const SizedBox(height: AppSpacing.sm),
-          Text(paid ? l.receiptPaid(method) : l.receiptHeld,
-              textAlign: TextAlign.center,
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
-          const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            for (final (k, v) in rows) KsInfoRow(k, v),
-          ]),
+          ...receipt,
           const SizedBox(
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-          // PDF export is Tier C.
           KsButton.outline(
               label: l.pdfDownload,
-              onPressed: () => KsToast.comingSoon(context)),
+              onPressed: () => PdfService.share(context,
+                  title: l.receiptTitle, fileName: no, children: receipt)),
         ],
       ),
     );

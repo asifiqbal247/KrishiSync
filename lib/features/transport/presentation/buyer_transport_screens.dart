@@ -369,7 +369,7 @@ class AssignedTransportScreen extends ConsumerWidget {
           KsInfoBox(
             children: [
               if (v != null) ...[
-                KsInfoRow(l.rowTruck, v.plateNo),
+                KsInfoRow(l.rowTruck, Fmt.plate(context, v.plateNo)),
                 KsInfoRow(l.rowCapacity, tonsText(context, v.capacityKg)),
               ],
               if (d.pickupDate != null)
@@ -587,7 +587,7 @@ class TrackingScreen extends ConsumerWidget {
                 ? rating
                 : l.truckCapRating(
                     vehicleTypeLabel(l, v.type),
-                    v.plateNo,
+                    Fmt.plate(context, v.plateNo),
                     rating,
                   ),
             badge: (driver?.isVerified ?? false) ? l.verifiedBadge : null,

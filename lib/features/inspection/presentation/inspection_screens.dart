@@ -16,6 +16,7 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/services/image_storage_service.dart';
+import '../../../shared/services/pdf_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
@@ -844,7 +845,21 @@ class LoadReportScreen extends ConsumerWidget {
           Row(children: [
             Expanded(
               child: KsButton.outline(
-                  label: l.pdfShort, onPressed: () => KsToast.comingSoon(context)),
+                  label: l.pdfShort,
+                  onPressed: () => PdfService.share(
+                        context,
+                        title: inspected ? l.inspReportTitle : l.loadRecordTitle,
+                        fileName: 'report-${o.orderNo}',
+                        children: [
+                          Text(l.nameDot(o.farmerName, o.cropName(lang)),
+                              style: AppTypography.bodyMediumStrong.normal),
+                          Text(l.nameDot(o.orderNo, badge),
+                              style: AppTypography.caption.normal
+                                  .withColor(fg)),
+                          const SizedBox(height: AppSpacing.block),
+                          KsInfoBox(children: rows),
+                        ],
+                      )),
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(

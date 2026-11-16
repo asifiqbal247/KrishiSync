@@ -521,7 +521,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/order/:id',
         builder: (_, s) => OrderDetailsScreen(orderId: s.pathParameters['id']!),
       ),
-      GoRoute(path: '/search', builder: (_, _) => const SearchScreen()),
+      GoRoute(
+          path: '/search',
+          builder: (_, s) => SearchScreen(initialQuery: s.extra as String?)),
       GoRoute(
         path: '/listing/:id',
         builder: (_, s) =>
