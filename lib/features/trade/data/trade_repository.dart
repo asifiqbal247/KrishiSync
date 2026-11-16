@@ -282,7 +282,9 @@ class TradeRepository {
       },
       link: 'order:${orderRef.id}',
     );
-    return TradeOrder.fromDoc(await orderRef.get());
+    final placed = TradeOrder.fromDoc(await orderRef.get());
+    if (mode == TransportMode.platform) await alertReturnDrivers(placed, buyer.uid);
+    return placed;
   }
 
   /// Order doc + (platform truck) delivery "load" and the buyer-only OTP.
@@ -410,7 +412,50 @@ class TradeRepository {
       },
       link: 'order:${orderRef.id}',
     );
-    return TradeOrder.fromDoc(await orderRef.get());
+    final placed = TradeOrder.fromDoc(await orderRef.get());
+    await alertReturnDrivers(placed, buyer.uid);
+    return placed;
+  }
+
+  /// 176 "load alert": drivers whose saved return route (175) goes from
+  /// this pickup district to this drop district hear about the new load.
+  Future<void> alertReturnDrivers(TradeOrder o, String fromUid) async {
+    final from = o.pickup.district, to = o.dropoff.district;
+    if (from == null || to == null) return;
+    try {
+      final q = await _db
+          .collection('users')
+          .where('returnRoute.from', isEqualTo: from)
+          .where('returnRoute.to', isEqualTo: to)
+          .limit(20)
+          .get();
+      final today = DateTime.now().subtract(const Duration(days: 1));
+      for (final d in q.docs) {
+        final u = AppUser.fromDoc(d);
+        final r = u.returnRoute;
+        if (u.role != UserRole.transporter ||
+            r == null ||
+            r.date.isBefore(today) ||
+            o.quantityKg > r.spaceKg) {
+          continue;
+        }
+        await notify(
+          toUid: u.uid,
+          fromUid: fromUid,
+          type: 'return_load',
+          params: {
+            'no': o.orderNo,
+            'cropBn': o.cropNameBn,
+            'cropEn': o.cropNameEn,
+            'from': from,
+            'to': to,
+          },
+          link: 'load:${o.id}',
+        );
+      }
+    } catch (_) {
+      // Alerts are a bonus; the order itself is already placed.
+    }
   }
 
   /// 10% of a booked truck fare goes to the transporter on cancel (D5).

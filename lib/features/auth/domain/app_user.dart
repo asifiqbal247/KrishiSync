@@ -109,6 +109,7 @@ class AppUser {
     this.business,
     this.payoutMethods = const [],
     this.favSuppliers = const [],
+    this.returnRoute,
   });
 
   final String uid;
@@ -141,6 +142,9 @@ class AppUser {
 
   /// Buyer's favourite farmers (119/120), uids.
   final List<String> favSuppliers;
+
+  /// Transporter's planned way back (174/175), for return loads.
+  final ReturnRoute? returnRoute;
 
   PayoutMethod? get defaultPayout {
     for (final m in payoutMethods) {
@@ -179,6 +183,7 @@ class AppUser {
         for (final e in (m['verificationDocs'] as Map<String, dynamic>? ?? const {}).entries)
           e.key: '${e.value}',
       },
+      returnRoute: ReturnRoute.fromMap(m['returnRoute']),
       favSuppliers: [
         for (final x in (m['favSuppliers'] as List<dynamic>? ?? const [])) '$x',
       ],
@@ -275,4 +280,39 @@ class PayoutMethod {
         'branch': branch,
         'isDefault': isDefault,
       };
+}
+
+/// users/{uid}.returnRoute — where an empty truck goes back (175).
+/// Districts are stored "bn|en".
+class ReturnRoute {
+  const ReturnRoute({
+    required this.from,
+    required this.to,
+    required this.date,
+    required this.spaceKg,
+  });
+
+  final String from;
+  final String to;
+  final DateTime date;
+  final num spaceKg;
+
+  Map<String, dynamic> toMap() => {
+        'from': from,
+        'to': to,
+        'date': Timestamp.fromDate(date),
+        'spaceKg': spaceKg,
+      };
+
+  static ReturnRoute? fromMap(Object? v) {
+    if (v is! Map) return null;
+    final from = v['from'], to = v['to'], date = v['date'];
+    if (from is! String || to is! String || date is! Timestamp) return null;
+    return ReturnRoute(
+      from: from,
+      to: to,
+      date: date.toDate(),
+      spaceKg: (v['spaceKg'] as num?) ?? 0,
+    );
+  }
 }

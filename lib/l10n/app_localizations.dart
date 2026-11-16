@@ -9786,6 +9786,222 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'৳ {n} লাখ'**
   String takaLakh(String n);
+
+  /// No description provided for @retTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিরতি লোড'**
+  String get retTitle;
+
+  /// No description provided for @retMyRoute.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার ফিরতি রুট'**
+  String get retMyRoute;
+
+  /// No description provided for @retRouteSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{from} → {to} · {date} · {space} খালি'**
+  String retRouteSub(String from, String to, String date, String space);
+
+  /// No description provided for @retChange.
+  ///
+  /// In bn, this message translates to:
+  /// **'বদলান'**
+  String get retChange;
+
+  /// No description provided for @retSetRoute.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিরতি রুট সেট করুন'**
+  String get retSetRoute;
+
+  /// No description provided for @retNoRouteSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোথায় ফিরবেন বলুন, আপনার রুটের লোড দেখাব'**
+  String get retNoRouteSub;
+
+  /// No description provided for @retForYou.
+  ///
+  /// In bn, this message translates to:
+  /// **'{from} → {to} রুটে আপনার জন্য লোড'**
+  String retForYou(String from, String to);
+
+  /// No description provided for @retLoadTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{from} → {to}'**
+  String retLoadTitle(String from, String to);
+
+  /// No description provided for @retLoadSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} · {qty} · {when}'**
+  String retLoadSub(String crop, String qty, String when);
+
+  /// No description provided for @retAccept.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিরতি লোড গ্রহণ করুন'**
+  String get retAccept;
+
+  /// No description provided for @retFrom.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোথা থেকে'**
+  String get retFrom;
+
+  /// No description provided for @retFromHere.
+  ///
+  /// In bn, this message translates to:
+  /// **'{place} (বর্তমান অবস্থান)'**
+  String retFromHere(String place);
+
+  /// No description provided for @retTo.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোথায় ফিরবেন'**
+  String get retTo;
+
+  /// No description provided for @retWhen.
+  ///
+  /// In bn, this message translates to:
+  /// **'কবে ফিরবেন'**
+  String get retWhen;
+
+  /// No description provided for @retToday.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজ'**
+  String get retToday;
+
+  /// No description provided for @retTomorrow.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাল'**
+  String get retTomorrow;
+
+  /// No description provided for @retSpace.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাকে খালি জায়গা'**
+  String get retSpace;
+
+  /// No description provided for @retSave.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংরক্ষণ করুন ও লোড খুঁজুন'**
+  String get retSave;
+
+  /// No description provided for @retNoneTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো মিলছে এমন লোড নেই'**
+  String get retNoneTitle;
+
+  /// No description provided for @retNoneSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{from} → {to} রুটে এই মুহূর্তে উপযুক্ত লোড নেই।'**
+  String retNoneSub(String from, String to);
+
+  /// No description provided for @retPaidTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের ভাড়া আপনি পেয়ে গেছেন'**
+  String get retPaidTitle;
+
+  /// No description provided for @retPaidBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} · {fare} পাঠানো হয়েছে।'**
+  String retPaidBody(String no, String fare);
+
+  /// No description provided for @retOtherDest.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্য গন্তব্য বাছুন'**
+  String get retOtherDest;
+
+  /// No description provided for @retOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্যান্য'**
+  String get retOther;
+
+  /// No description provided for @retAlertOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড পেলে সাথে সাথে জানাব (এলার্ট চালু)'**
+  String get retAlertOn;
+
+  /// No description provided for @retSearchAgain.
+  ///
+  /// In bn, this message translates to:
+  /// **'আবার খুঁজুন'**
+  String get retSearchAgain;
+
+  /// No description provided for @retGoHome.
+  ///
+  /// In bn, this message translates to:
+  /// **'হোমে যান'**
+  String get retGoHome;
+
+  /// No description provided for @retDoneBar.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড নিশ্চিত'**
+  String get retDoneBar;
+
+  /// No description provided for @retDoneTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিরতি লোড নিশ্চিত হয়েছে'**
+  String get retDoneTitle;
+
+  /// No description provided for @retPickupLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{date} · {km} কিমি দূরে'**
+  String retPickupLine(String date, String km);
+
+  /// No description provided for @retPaySafeTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট নিরাপদ'**
+  String get retPaySafeTitle;
+
+  /// No description provided for @retPaySafeBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাড়া নিরাপদ লেনদেনে জমা আছে। ক্রেতার কাছে পৌঁছালেই পাবেন।'**
+  String get retPaySafeBody;
+
+  /// No description provided for @retNavigate.
+  ///
+  /// In bn, this message translates to:
+  /// **'নেভিগেশন শুরু করুন'**
+  String get retNavigate;
+
+  /// No description provided for @retCallBuyer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতাকে কল করুন'**
+  String get retCallBuyer;
+
+  /// No description provided for @retBidSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাড়ার প্রস্তাব পাঠানো হয়েছে — ক্রেতা বুক করলে জানাব'**
+  String get retBidSent;
+
+  /// No description provided for @nReturnLoad.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিরতি লোড পাওয়া গেছে: {from} → {to}'**
+  String nReturnLoad(String from, String to);
 }
 
 class _AppLocalizationsDelegate

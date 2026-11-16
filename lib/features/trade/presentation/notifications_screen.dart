@@ -9,6 +9,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/services/bd_location_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_states.dart';
@@ -99,6 +100,11 @@ class NotificationsScreen extends ConsumerWidget {
                 _ => l.decApproved,
               })
         ),
+      'return_load' => (
+          l.nReturnLoad(BdPlace.display(p['from'], bn ? 'bn' : 'en'),
+              BdPlace.display(p['to'], bn ? 'bn' : 'en')),
+          crop
+        ),
       'price_alert' => (
           l.nPriceAlert(crop),
           l.nPriceAlertBody(
@@ -121,6 +127,8 @@ class NotificationsScreen extends ConsumerWidget {
       'listing' => Routes.farmerListingDetails(id),
       'book' => Routes.buyerBook(id),
       'job' => Routes.trJob(id),
+      'return' => Routes.trReturnDone(id),
+      'load' => Routes.trLoad(id),
       'demand' => Routes.demandOffers(id),
       'price' => Routes.priceTrend(id),
       'contract' => Routes.contractStatus(id),

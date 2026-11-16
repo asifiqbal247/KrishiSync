@@ -5581,4 +5581,132 @@ class AppLocalizationsBn extends AppLocalizations {
   String takaLakh(String n) {
     return '৳ $n লাখ';
   }
+
+  @override
+  String get retTitle => 'ফিরতি লোড';
+
+  @override
+  String get retMyRoute => 'আমার ফিরতি রুট';
+
+  @override
+  String retRouteSub(String from, String to, String date, String space) {
+    return '$from → $to · $date · $space খালি';
+  }
+
+  @override
+  String get retChange => 'বদলান';
+
+  @override
+  String get retSetRoute => 'ফিরতি রুট সেট করুন';
+
+  @override
+  String get retNoRouteSub => 'কোথায় ফিরবেন বলুন, আপনার রুটের লোড দেখাব';
+
+  @override
+  String retForYou(String from, String to) {
+    return '$from → $to রুটে আপনার জন্য লোড';
+  }
+
+  @override
+  String retLoadTitle(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String retLoadSub(String crop, String qty, String when) {
+    return '$crop · $qty · $when';
+  }
+
+  @override
+  String get retAccept => 'ফিরতি লোড গ্রহণ করুন';
+
+  @override
+  String get retFrom => 'কোথা থেকে';
+
+  @override
+  String retFromHere(String place) {
+    return '$place (বর্তমান অবস্থান)';
+  }
+
+  @override
+  String get retTo => 'কোথায় ফিরবেন';
+
+  @override
+  String get retWhen => 'কবে ফিরবেন';
+
+  @override
+  String get retToday => 'আজ';
+
+  @override
+  String get retTomorrow => 'কাল';
+
+  @override
+  String get retSpace => 'ট্রাকে খালি জায়গা';
+
+  @override
+  String get retSave => 'সংরক্ষণ করুন ও লোড খুঁজুন';
+
+  @override
+  String get retNoneTitle => 'এখনো মিলছে এমন লোড নেই';
+
+  @override
+  String retNoneSub(String from, String to) {
+    return '$from → $to রুটে এই মুহূর্তে উপযুক্ত লোড নেই।';
+  }
+
+  @override
+  String get retPaidTitle => 'আগের ভাড়া আপনি পেয়ে গেছেন';
+
+  @override
+  String retPaidBody(String no, String fare) {
+    return '$no · $fare পাঠানো হয়েছে।';
+  }
+
+  @override
+  String get retOtherDest => 'অন্য গন্তব্য বাছুন';
+
+  @override
+  String get retOther => 'অন্যান্য';
+
+  @override
+  String get retAlertOn => 'লোড পেলে সাথে সাথে জানাব (এলার্ট চালু)';
+
+  @override
+  String get retSearchAgain => 'আবার খুঁজুন';
+
+  @override
+  String get retGoHome => 'হোমে যান';
+
+  @override
+  String get retDoneBar => 'লোড নিশ্চিত';
+
+  @override
+  String get retDoneTitle => 'ফিরতি লোড নিশ্চিত হয়েছে';
+
+  @override
+  String retPickupLine(String date, String km) {
+    return '$date · $km কিমি দূরে';
+  }
+
+  @override
+  String get retPaySafeTitle => 'পেমেন্ট নিরাপদ';
+
+  @override
+  String get retPaySafeBody =>
+      'ভাড়া নিরাপদ লেনদেনে জমা আছে। ক্রেতার কাছে পৌঁছালেই পাবেন।';
+
+  @override
+  String get retNavigate => 'নেভিগেশন শুরু করুন';
+
+  @override
+  String get retCallBuyer => 'ক্রেতাকে কল করুন';
+
+  @override
+  String get retBidSent =>
+      'ভাড়ার প্রস্তাব পাঠানো হয়েছে — ক্রেতা বুক করলে জানাব';
+
+  @override
+  String nReturnLoad(String from, String to) {
+    return 'ফিরতি লোড পাওয়া গেছে: $from → $to';
+  }
 }

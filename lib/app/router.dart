@@ -46,6 +46,7 @@ import '../features/trade/presentation/safe_payment_screen.dart';
 import '../features/transport/presentation/buyer_transport_screens.dart';
 import '../features/transport/presentation/loads_screens.dart';
 import '../features/transport/presentation/rate_screens.dart';
+import '../features/transport/presentation/return_load_screens.dart';
 import '../features/transport/presentation/transporter_shell.dart';
 import '../features/transport/presentation/transporter_profile_screen.dart';
 import '../features/transport/presentation/trip_screens.dart';
@@ -166,7 +167,8 @@ abstract final class Routes {
 
   // Transporter
   static const trLoads = '/transporter/loads';
-  static const trReturnLoads = '/transporter/loads?return=1';
+  static const trReturnLoads = '/transporter/return';
+  static String trReturnDone(String id) => '/transporter/return/$id';
   static String trLoad(String id) => '/transporter/load/$id';
   static String trFareOffer(String id) => '/transporter/load/$id/offer';
   static String trJob(String id) => '/transporter/job/$id';
@@ -685,6 +687,17 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.transporterHome,
         builder: (_, _) => const TransporterShell(),
         routes: [
+          GoRoute(
+            path: 'return',
+            builder: (_, _) => const ReturnLoadsScreen(),
+            routes: [
+              GoRoute(
+                path: ':id',
+                builder: (_, s) =>
+                    ReturnDoneScreen(deliveryId: s.pathParameters['id']!),
+              ),
+            ],
+          ),
           GoRoute(
             path: 'loads',
             builder: (_, s) => LoadsScreen(

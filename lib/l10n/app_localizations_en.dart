@@ -5586,4 +5586,133 @@ class AppLocalizationsEn extends AppLocalizations {
   String takaLakh(String n) {
     return '৳ $n lakh';
   }
+
+  @override
+  String get retTitle => 'Return loads';
+
+  @override
+  String get retMyRoute => 'My return route';
+
+  @override
+  String retRouteSub(String from, String to, String date, String space) {
+    return '$from → $to · $date · $space free';
+  }
+
+  @override
+  String get retChange => 'Change';
+
+  @override
+  String get retSetRoute => 'Set return route';
+
+  @override
+  String get retNoRouteSub =>
+      'Tell us where you\'re heading back, we\'ll show loads on the way';
+
+  @override
+  String retForYou(String from, String to) {
+    return 'Loads for you on $from → $to';
+  }
+
+  @override
+  String retLoadTitle(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String retLoadSub(String crop, String qty, String when) {
+    return '$crop · $qty · $when';
+  }
+
+  @override
+  String get retAccept => 'Take this return load';
+
+  @override
+  String get retFrom => 'From';
+
+  @override
+  String retFromHere(String place) {
+    return '$place (current location)';
+  }
+
+  @override
+  String get retTo => 'Going back to';
+
+  @override
+  String get retWhen => 'When';
+
+  @override
+  String get retToday => 'Today';
+
+  @override
+  String get retTomorrow => 'Tomorrow';
+
+  @override
+  String get retSpace => 'Free space in truck';
+
+  @override
+  String get retSave => 'Save and find loads';
+
+  @override
+  String get retNoneTitle => 'No matching load yet';
+
+  @override
+  String retNoneSub(String from, String to) {
+    return 'No suitable load on $from → $to right now.';
+  }
+
+  @override
+  String get retPaidTitle => 'You got your last fare';
+
+  @override
+  String retPaidBody(String no, String fare) {
+    return '$no · $fare sent.';
+  }
+
+  @override
+  String get retOtherDest => 'Pick another destination';
+
+  @override
+  String get retOther => 'Other';
+
+  @override
+  String get retAlertOn => 'We\'ll tell you as soon as a load comes (alert on)';
+
+  @override
+  String get retSearchAgain => 'Search again';
+
+  @override
+  String get retGoHome => 'Go home';
+
+  @override
+  String get retDoneBar => 'Load confirmed';
+
+  @override
+  String get retDoneTitle => 'Return load confirmed';
+
+  @override
+  String retPickupLine(String date, String km) {
+    return '$date · $km km away';
+  }
+
+  @override
+  String get retPaySafeTitle => 'Payment safe';
+
+  @override
+  String get retPaySafeBody =>
+      'The fare is held in safe payment. You get it when you reach the buyer.';
+
+  @override
+  String get retNavigate => 'Start navigation';
+
+  @override
+  String get retCallBuyer => 'Call buyer';
+
+  @override
+  String get retBidSent =>
+      'Fare offer sent — we\'ll tell you when the buyer books';
+
+  @override
+  String nReturnLoad(String from, String to) {
+    return 'Return load found: $from → $to';
+  }
 }

@@ -147,12 +147,25 @@ class TransportRepository {
       'updatedAt': now,
     });
     await b.commit();
+    // A booking on the driver's saved way back opens 177 (return load
+    // confirmed) instead of the plain job screen.
+    var link = 'job:${d.id}';
+    try {
+      final r = AppUser.fromDoc(
+              await _db.collection('users').doc(bid.transporterId).get())
+          .returnRoute;
+      if (r != null &&
+          r.from == d.pickup.district &&
+          r.to == d.dropoff.district) {
+        link = 'return:${d.id}';
+      }
+    } catch (_) {}
     await _trade.notify(
       toUid: bid.transporterId,
       fromUid: d.buyerId,
       type: 'job_assigned',
       params: {'no': d.orderNo, 'cropBn': d.cropNameBn, 'cropEn': d.cropNameEn},
-      link: 'job:${d.id}',
+      link: link,
     );
     // 45: the farmer sees the truck and the loading code.
     await _trade.notify(
