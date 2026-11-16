@@ -55,6 +55,13 @@ class _VoiceSheetState extends State<_VoiceSheet> {
   int _sec = 0;
   bool _done = false;
 
+  // The recording is streamed as plain AAC (ADTS) into a .aac file.
+  // Saving straight to a file gives an MP4 container (.m4a), which
+  // Cloudinary reads as "mp4"; the audio preset allows aac/m4a/mp3 only.
+  File? _file;
+  IOSink? _sink;
+  final _ended = Completer<void>();
+
   @override
   void initState() {
     super.initState();
@@ -62,15 +69,22 @@ class _VoiceSheetState extends State<_VoiceSheet> {
   }
 
   Future<void> _start() async {
-    final path =
-        '${Directory.systemTemp.path}/ks_voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
     try {
-      // Small mono AAC: ~16 KB per 10 seconds.
-      await widget.rec.start(
-        const RecordConfig(bitRate: 24000, sampleRate: 16000, numChannels: 1),
-        path: path,
-      );
+      _file = File('${Directory.systemTemp.path}/'
+          'ks_voice_${DateTime.now().millisecondsSinceEpoch}.aac');
+      _sink = _file!.openWrite();
+      // Small mono AAC: ~30 KB per 10 seconds.
+      final stream = await widget.rec.startStream(const RecordConfig(
+        encoder: AudioEncoder.aacLc,
+        bitRate: 24000,
+        sampleRate: 16000,
+        numChannels: 1,
+      ));
+      stream.listen(_sink!.add, onDone: () {
+        if (!_ended.isCompleted) _ended.complete();
+      });
     } catch (_) {
+      await _closeFile(delete: true);
       if (mounted) Navigator.pop(context);
       return;
     }
@@ -81,14 +95,27 @@ class _VoiceSheetState extends State<_VoiceSheet> {
     });
   }
 
+  Future<void> _closeFile({bool delete = false}) async {
+    final sink = _sink;
+    _sink = null;
+    try {
+      await sink?.flush();
+      await sink?.close();
+      if (delete) await _file?.delete();
+    } catch (_) {}
+  }
+
   Future<void> _send() async {
     if (_done) return;
     _done = true;
     _tick?.cancel();
-    final path = await widget.rec.stop();
+    await widget.rec.stop();
+    // Last audio chunks arrive just after stop.
+    await _ended.future.timeout(const Duration(seconds: 2), onTimeout: () {});
+    await _closeFile();
     if (!mounted) return;
-    Navigator.pop(
-        context, path == null || _sec < 1 ? null : (File(path), _sec));
+    final f = _file;
+    Navigator.pop(context, f == null || _sec < 1 ? null : (f, _sec));
   }
 
   Future<void> _cancel() async {
@@ -96,12 +123,14 @@ class _VoiceSheetState extends State<_VoiceSheet> {
     _done = true;
     _tick?.cancel();
     await widget.rec.cancel();
+    await _closeFile(delete: true);
     if (mounted) Navigator.pop(context);
   }
 
   @override
   void dispose() {
     _tick?.cancel();
+    if (!_done) _closeFile(delete: true); // sheet dragged away
     super.dispose();
   }
 
