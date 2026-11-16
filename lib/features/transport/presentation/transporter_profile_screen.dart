@@ -43,10 +43,11 @@ class TransporterProfileScreen extends ConsumerWidget {
         body: const KsSkeletonList(rows: 3),
       );
     }
+    // "5%", or "0.5%" when it has a fraction.
     String pct(num? v) => v == null
         ? l.notAvailable
-        : l.pctText(Fmt.digits(
-            context, v is int ? '$v' : v.toStringAsFixed(1)));
+        : l.pctText(Fmt.digits(context,
+            v == v.roundToDouble() ? '${v.round()}' : v.toStringAsFixed(1)));
     final v = u.vehicle;
     final since = u.createdAt == null
         ? null
