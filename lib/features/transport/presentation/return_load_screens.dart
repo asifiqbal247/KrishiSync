@@ -118,11 +118,12 @@ Future<void> showReturnRouteSheet(
   if (!context.mounted) return;
   final districts = [for (final dv in data.divisions) ...dv.children]
     ..sort((a, b) => a.name(lang).compareTo(b.name(lang)));
+  final tons = start.spaceKg / 1000;
   final space = TextEditingController(
       text: start.spaceKg <= 0
           ? ''
-          : Fmt.number(context, start.spaceKg / 1000, decimals: 1)
-              .replaceAll(RegExp(r'[.,]0$'), ''));
+          : Fmt.number(context, tons,
+              decimals: tons == tons.roundToDouble() ? 0 : 1));
   var from = start.from, to = start.to;
   final today = DateTime.now();
   final days = [for (var i = 0; i < 3; i++) DateTime(today.year, today.month, today.day + i)];
@@ -477,10 +478,13 @@ class ReturnDoneScreen extends ConsumerWidget {
     final km = live == null || d.pickup.geo == null
         ? null
         : kmBetween(live.geo, d.pickup.geo!).round();
-    final when = d.pickupDate == null
+    final p = d.pickupDate;
+    // Pickup dates are stored without a time: show the time only if set.
+    final when = p == null
         ? l.notAvailable
-        : Fmt.digits(context,
-            DateFormat('d MMM, H:mm', lang).format(d.pickupDate!));
+        : (p.hour == 0 && p.minute == 0)
+            ? Fmt.date(context, p)
+            : Fmt.digits(context, DateFormat('d MMM, H:mm', lang).format(p));
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
