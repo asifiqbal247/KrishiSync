@@ -108,6 +108,7 @@ class AppUser {
     this.verificationDocs = const {},
     this.business,
     this.payoutMethods = const [],
+    this.favSuppliers = const [],
   });
 
   final String uid;
@@ -137,6 +138,9 @@ class AppUser {
 
   /// 197–201 payment methods (bkash / nagad / rocket / bank).
   final List<PayoutMethod> payoutMethods;
+
+  /// Buyer's favourite farmers (119/120), uids.
+  final List<String> favSuppliers;
 
   PayoutMethod? get defaultPayout {
     for (final m in payoutMethods) {
@@ -175,6 +179,9 @@ class AppUser {
         for (final e in (m['verificationDocs'] as Map<String, dynamic>? ?? const {}).entries)
           e.key: '${e.value}',
       },
+      favSuppliers: [
+        for (final x in (m['favSuppliers'] as List<dynamic>? ?? const [])) '$x',
+      ],
       payoutMethods: [
         for (final x in (m['payoutMethods'] as List<dynamic>? ?? const []))
           PayoutMethod.fromMap(x as Map<String, dynamic>),

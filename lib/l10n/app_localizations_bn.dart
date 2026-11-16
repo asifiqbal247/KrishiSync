@@ -5438,4 +5438,70 @@ class AppLocalizationsBn extends AppLocalizations {
   String pctText(String n) {
     return '$n%';
   }
+
+  @override
+  String get supTitle => 'সরবরাহকারী';
+
+  @override
+  String get supSearchHint => 'কৃষক বা এলাকা খুঁজুন';
+
+  @override
+  String get supAll => 'সব';
+
+  @override
+  String get supFav => 'পছন্দের';
+
+  @override
+  String get supNew => 'নতুন';
+
+  @override
+  String get supFavTag => 'পছন্দের';
+
+  @override
+  String supLine(String district, String rating, String n) {
+    return '$district · $rating · $n লেনদেন';
+  }
+
+  @override
+  String get supEmpty => 'এখনো কোনো সরবরাহকারী নেই — বাজার থেকে অর্ডার করুন';
+
+  @override
+  String get supProfileTitle => 'সরবরাহকারীর প্রোফাইল';
+
+  @override
+  String supStatusLine(String status, String district) {
+    return '$status · $district';
+  }
+
+  @override
+  String get supQuality => 'মানের স্কোর';
+
+  @override
+  String get supTotal => 'মোট সরবরাহ';
+
+  @override
+  String supPerf(String n) {
+    return 'পারফরম্যান্স ($n মাস)';
+  }
+
+  @override
+  String get supCommitted => 'প্রতিশ্রুত বনাম সরবরাহকৃত';
+
+  @override
+  String get supAcceptance => 'মান গ্রহণযোগ্যতা';
+
+  @override
+  String get supAddFav => 'পছন্দের তালিকায়';
+
+  @override
+  String get supRemoveFav => 'পছন্দ থেকে সরান';
+
+  @override
+  String get toastFavAdded => 'পছন্দের তালিকায় যোগ হয়েছে';
+
+  @override
+  String get toastFavRemoved => 'পছন্দের তালিকা থেকে সরানো হয়েছে';
+
+  @override
+  String get toastUndo => 'বাতিল';
 }

@@ -5444,4 +5444,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String pctText(String n) {
     return '$n%';
   }
+
+  @override
+  String get supTitle => 'Suppliers';
+
+  @override
+  String get supSearchHint => 'Search farmer or area';
+
+  @override
+  String get supAll => 'All';
+
+  @override
+  String get supFav => 'Favourites';
+
+  @override
+  String get supNew => 'New';
+
+  @override
+  String get supFavTag => 'Favourite';
+
+  @override
+  String supLine(String district, String rating, String n) {
+    return '$district · $rating · $n deals';
+  }
+
+  @override
+  String get supEmpty => 'No suppliers yet — order from the market';
+
+  @override
+  String get supProfileTitle => 'Supplier profile';
+
+  @override
+  String supStatusLine(String status, String district) {
+    return '$status · $district';
+  }
+
+  @override
+  String get supQuality => 'Quality score';
+
+  @override
+  String get supTotal => 'Total supplied';
+
+  @override
+  String supPerf(String n) {
+    return 'Performance ($n months)';
+  }
+
+  @override
+  String get supCommitted => 'Promised vs delivered';
+
+  @override
+  String get supAcceptance => 'Quality acceptance';
+
+  @override
+  String get supAddFav => 'Add to favourites';
+
+  @override
+  String get supRemoveFav => 'Remove favourite';
+
+  @override
+  String get toastFavAdded => 'Added to favourites';
+
+  @override
+  String get toastFavRemoved => 'Removed from favourites';
+
+  @override
+  String get toastUndo => 'Undo';
 }

@@ -9534,6 +9534,126 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'{n}%'**
   String pctText(String n);
+
+  /// No description provided for @supTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরবরাহকারী'**
+  String get supTitle;
+
+  /// No description provided for @supSearchHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক বা এলাকা খুঁজুন'**
+  String get supSearchHint;
+
+  /// No description provided for @supAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব'**
+  String get supAll;
+
+  /// No description provided for @supFav.
+  ///
+  /// In bn, this message translates to:
+  /// **'পছন্দের'**
+  String get supFav;
+
+  /// No description provided for @supNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন'**
+  String get supNew;
+
+  /// No description provided for @supFavTag.
+  ///
+  /// In bn, this message translates to:
+  /// **'পছন্দের'**
+  String get supFavTag;
+
+  /// No description provided for @supLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{district} · {rating} · {n} লেনদেন'**
+  String supLine(String district, String rating, String n);
+
+  /// No description provided for @supEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো সরবরাহকারী নেই — বাজার থেকে অর্ডার করুন'**
+  String get supEmpty;
+
+  /// No description provided for @supProfileTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরবরাহকারীর প্রোফাইল'**
+  String get supProfileTitle;
+
+  /// No description provided for @supStatusLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{status} · {district}'**
+  String supStatusLine(String status, String district);
+
+  /// No description provided for @supQuality.
+  ///
+  /// In bn, this message translates to:
+  /// **'মানের স্কোর'**
+  String get supQuality;
+
+  /// No description provided for @supTotal.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট সরবরাহ'**
+  String get supTotal;
+
+  /// No description provided for @supPerf.
+  ///
+  /// In bn, this message translates to:
+  /// **'পারফরম্যান্স ({n} মাস)'**
+  String supPerf(String n);
+
+  /// No description provided for @supCommitted.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিশ্রুত বনাম সরবরাহকৃত'**
+  String get supCommitted;
+
+  /// No description provided for @supAcceptance.
+  ///
+  /// In bn, this message translates to:
+  /// **'মান গ্রহণযোগ্যতা'**
+  String get supAcceptance;
+
+  /// No description provided for @supAddFav.
+  ///
+  /// In bn, this message translates to:
+  /// **'পছন্দের তালিকায়'**
+  String get supAddFav;
+
+  /// No description provided for @supRemoveFav.
+  ///
+  /// In bn, this message translates to:
+  /// **'পছন্দ থেকে সরান'**
+  String get supRemoveFav;
+
+  /// No description provided for @toastFavAdded.
+  ///
+  /// In bn, this message translates to:
+  /// **'পছন্দের তালিকায় যোগ হয়েছে'**
+  String get toastFavAdded;
+
+  /// No description provided for @toastFavRemoved.
+  ///
+  /// In bn, this message translates to:
+  /// **'পছন্দের তালিকা থেকে সরানো হয়েছে'**
+  String get toastFavRemoved;
+
+  /// No description provided for @toastUndo.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get toastUndo;
 }
 
 class _AppLocalizationsDelegate

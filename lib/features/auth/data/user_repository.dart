@@ -27,6 +27,9 @@ abstract interface class UserRepository {
 
   Future<void> setLanguage(String uid, String language);
 
+  /// Buyer adds / removes a favourite supplier (119/120).
+  Future<void> setFavSupplier(String uid, String farmerId, bool fav);
+
   /// Adds/replaces the saved address with the same tag (max one per tag).
   Future<void> saveAddress(String uid, SavedAddress address, List<SavedAddress> current);
 
@@ -133,6 +136,15 @@ class FirestoreUserRepository implements UserRepository {
   @override
   Future<void> setLanguage(String uid, String language) => _doc(uid).update({
         'language': language,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+  @override
+  Future<void> setFavSupplier(String uid, String farmerId, bool fav) =>
+      _doc(uid).update({
+        'favSuppliers': fav
+            ? FieldValue.arrayUnion([farmerId])
+            : FieldValue.arrayRemove([farmerId]),
         'updatedAt': FieldValue.serverTimestamp(),
       });
 

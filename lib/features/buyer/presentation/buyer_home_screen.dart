@@ -192,7 +192,11 @@ class BuyerHomeScreen extends ConsumerWidget {
           ],
           if (suppliers.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
-            KsSectionHeader(title: l.topSuppliers),
+            KsSectionHeader(
+              title: l.topSuppliers,
+              actionLabel: l.commonSeeAll,
+              onAction: () => context.push(Routes.suppliers),
+            ),
             const SizedBox(height: AppSpacing.block),
             KsCarousel(children: [
               for (final u in suppliers)
