@@ -163,7 +163,7 @@ class BuyerHomeScreen extends ConsumerWidget {
                 icon: AppUi.tipClipboard,
                 title: l.actProcurement,
                 hint: l.actProcurementSub,
-                onTap: () => context.push(Routes.myDemands),
+                onTap: () => context.push(Routes.procurement),
               ),
             ),
             const SizedBox(width: AppSpacing.lg),

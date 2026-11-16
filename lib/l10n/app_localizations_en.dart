@@ -5510,4 +5510,80 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toastUndo => 'Undo';
+
+  @override
+  String get procTitle => 'Procurement dashboard';
+
+  @override
+  String get procOpenDemands => 'Open demands';
+
+  @override
+  String get procCommitted => 'Total committed';
+
+  @override
+  String get procFarmers => 'Farmers joined';
+
+  @override
+  String get procSafePay => 'Safe payment';
+
+  @override
+  String procPeople(String n) {
+    return '$n';
+  }
+
+  @override
+  String get procOngoing => 'Ongoing procurement';
+
+  @override
+  String procLine(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String get procNone => 'No open demands';
+
+  @override
+  String get procAnalytics => 'Purchase analytics';
+
+  @override
+  String get procAnalyticsSub => 'Spend, price trend and supplier performance';
+
+  @override
+  String get anMonth => 'This month';
+
+  @override
+  String get an3Months => '3 months';
+
+  @override
+  String get anYear => 'This year';
+
+  @override
+  String get anSpend => 'Total spend';
+
+  @override
+  String anAvgPrice(String crop) {
+    return 'Avg price ($crop)';
+  }
+
+  @override
+  String get anSuppliers => 'Supplier performance';
+
+  @override
+  String get anDeliveredLeft => 'Delivered / left';
+
+  @override
+  String get anWithInspector => 'Orders with inspector';
+
+  @override
+  String anSlash(String a, String b) {
+    return '$a / $b';
+  }
+
+  @override
+  String get anNoData => 'No orders in this period';
+
+  @override
+  String takaLakh(String n) {
+    return '৳ $n lakh';
+  }
 }

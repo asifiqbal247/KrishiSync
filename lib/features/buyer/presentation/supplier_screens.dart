@@ -66,6 +66,22 @@ List<_Supplier> _suppliersOf(List<TradeOrder> orders) {
     ..sort((a, b) => b.orders.length.compareTo(a.orders.length));
 }
 
+/// Share of the ordered kg the buyer accepted on one order:
+/// inspection decision when there is one, else the order was taken.
+double acceptedShare(TradeOrder o, Inspection? x) {
+  if (x != null && x.done) {
+    return switch (x.decision) {
+      InspectionDecision.cancel => 0,
+      InspectionDecision.partial =>
+        (x.weighedKg ?? 0) <= 0
+            ? 0
+            : ((x.acceptKg ?? 0) / x.weighedKg!).clamp(0, 1).toDouble(),
+      _ => 1,
+    };
+  }
+  return 1;
+}
+
 enum _Filter { all, fav, fresh }
 
 /// 119 Suppliers (Figma 292:1358): the farmers this buyer has ordered from.
@@ -189,22 +205,6 @@ class SupplierProfileScreen extends ConsumerWidget {
   const SupplierProfileScreen({super.key, required this.farmerId});
   final String farmerId;
 
-  /// Share of the ordered kg the buyer accepted on one order:
-  /// inspection decision when there is one, else the order was taken.
-  static double _accepted(TradeOrder o, Inspection? x) {
-    if (x != null && x.done) {
-      return switch (x.decision) {
-        InspectionDecision.cancel => 0,
-        InspectionDecision.partial =>
-          (x.weighedKg ?? 0) <= 0
-              ? 0
-              : ((x.acceptKg ?? 0) / x.weighedKg!).clamp(0, 1).toDouble(),
-        _ => 1,
-      };
-    }
-    return 1;
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
@@ -229,7 +229,7 @@ class SupplierProfileScreen extends ConsumerWidget {
       final loaded = o.timeline.containsKey('pickedUp');
       // Loaded, or the buyer's inspector already decided at the farm.
       final inspected = x != null && x.done;
-      if (loaded || inspected) checked.add((o, _accepted(o, x)));
+      if (loaded || inspected) checked.add((o, acceptedShare(o, x)));
     }
     num kgOf(TradeOrder o) => o.orderedKg ?? o.quantityKg;
     double? ratio(
@@ -335,13 +335,13 @@ class SupplierProfileScreen extends ConsumerWidget {
             title: l.supPerf(Fmt.digits(context, '$_perfMonths')),
           ),
           const SizedBox(height: AppSpacing.block),
-          _Progress(
+          ProgressRow(
             label: l.supCommitted,
             value: delivered,
             text: pct(delivered),
           ),
           const SizedBox(height: AppSpacing.block),
-          _Progress(label: l.supAcceptance, value: accept, text: pct(accept)),
+          ProgressRow(label: l.supAcceptance, value: accept, text: pct(accept)),
           const SizedBox(
             height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
           ),
@@ -369,8 +369,9 @@ class SupplierProfileScreen extends ConsumerWidget {
 }
 
 /// Figma "Progress": label + value, 8px track (muted) with brand fill.
-class _Progress extends StatelessWidget {
-  const _Progress({
+class ProgressRow extends StatelessWidget {
+  const ProgressRow({
+    super.key,
     required this.label,
     required this.value,
     required this.text,

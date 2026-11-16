@@ -47,6 +47,9 @@ abstract final class AppTypography {
   static final bodySmallStrong = _s(13, _semiBold, 20);
   static final caption = _s(12, _regular, 17);
   static final labelSmall = _s(11, _medium, 14);
+
+  /// Bar-chart axis labels (101: 10px Regular, text/secondary).
+  static final chartLabel = _s(10, _regular, 13);
   static final numberLarge = _s(28, _bold, 36);
   static final numberMedium = _s(18, _semiBold, 24);
   static final numberSmall = _s(14, _medium, 20);

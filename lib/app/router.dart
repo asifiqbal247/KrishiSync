@@ -16,6 +16,7 @@ import '../features/auth/presentation/profile_setup_screen.dart';
 import '../features/auth/presentation/role_screen.dart';
 import '../features/auth/presentation/splash_screen.dart';
 import '../features/auth/presentation/terms_screen.dart';
+import '../features/buyer/presentation/procurement_screens.dart';
 import '../features/buyer/presentation/supplier_screens.dart';
 import '../features/buyer/presentation/buyer_listing_screen.dart';
 import '../features/buyer/presentation/buyer_profile_screen.dart';
@@ -138,6 +139,8 @@ abstract final class Routes {
   static String buyerListing(String id) => '/listing/$id';
   static String buyerFarmer(String uid) => '/people/farmer/$uid';
   static const suppliers = '/suppliers';
+  static const procurement = '/procurement';
+  static const procurementAnalytics = '/procurement/analytics';
   static String supplier(String uid) => '/suppliers/$uid';
   static String transporterProfile(String uid, {bool pick = false}) =>
       '/people/transporter/$uid${pick ? '?pick=1' : ''}';
@@ -546,6 +549,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/people/farmer/:uid',
         builder: (_, s) =>
             FarmerProfileScreen(farmerId: s.pathParameters['uid']!),
+      ),
+      GoRoute(
+        path: '/procurement',
+        builder: (_, _) => const ProcurementDashboardScreen(),
+        routes: [
+          GoRoute(
+            path: 'analytics',
+            builder: (_, _) => const ProcurementAnalyticsScreen(),
+          ),
+        ],
       ),
       GoRoute(
         path: '/suppliers',

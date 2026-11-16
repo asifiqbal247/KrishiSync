@@ -4245,5 +4245,68 @@
   "supRemoveFav": "পছন্দ থেকে সরান",
   "toastFavAdded": "পছন্দের তালিকায় যোগ হয়েছে",
   "toastFavRemoved": "পছন্দের তালিকা থেকে সরানো হয়েছে",
-  "toastUndo": "বাতিল"
+  "toastUndo": "বাতিল",
+  "procTitle": "সংগ্রহ ড্যাশবোর্ড",
+  "procOpenDemands": "চলমান চাহিদা",
+  "procCommitted": "মোট প্রতিশ্রুত",
+  "procFarmers": "কৃষক যুক্ত",
+  "procSafePay": "নিরাপদ লেনদেন",
+  "procPeople": "{n} জন",
+  "@procPeople": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "procOngoing": "চলমান সংগ্রহ",
+  "procLine": "{crop} – {qty}",
+  "@procLine": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "procNone": "কোনো চলমান চাহিদা নেই",
+  "procAnalytics": "ক্রয় বিশ্লেষণ",
+  "procAnalyticsSub": "খরচ, দামের প্রবণতা ও সরবরাহকারীর পারফরম্যান্স",
+  "anMonth": "এ মাস",
+  "an3Months": "৩ মাস",
+  "anYear": "এ বছর",
+  "anSpend": "মোট খরচ",
+  "anAvgPrice": "গড় দাম ({crop})",
+  "@anAvgPrice": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      }
+    }
+  },
+  "anSuppliers": "সরবরাহকারীর পারফরম্যান্স",
+  "anDeliveredLeft": "ডেলিভারি / বাকি",
+  "anWithInspector": "পরিদর্শকসহ অর্ডার",
+  "anSlash": "{a} / {b}",
+  "@anSlash": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "anNoData": "এই সময়ে কোনো অর্ডার নেই",
+  "takaLakh": "৳ {n} লাখ",
+  "@takaLakh": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  }
 }

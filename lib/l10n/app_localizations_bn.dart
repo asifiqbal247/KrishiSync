@@ -5504,4 +5504,81 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get toastUndo => 'বাতিল';
+
+  @override
+  String get procTitle => 'সংগ্রহ ড্যাশবোর্ড';
+
+  @override
+  String get procOpenDemands => 'চলমান চাহিদা';
+
+  @override
+  String get procCommitted => 'মোট প্রতিশ্রুত';
+
+  @override
+  String get procFarmers => 'কৃষক যুক্ত';
+
+  @override
+  String get procSafePay => 'নিরাপদ লেনদেন';
+
+  @override
+  String procPeople(String n) {
+    return '$n জন';
+  }
+
+  @override
+  String get procOngoing => 'চলমান সংগ্রহ';
+
+  @override
+  String procLine(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String get procNone => 'কোনো চলমান চাহিদা নেই';
+
+  @override
+  String get procAnalytics => 'ক্রয় বিশ্লেষণ';
+
+  @override
+  String get procAnalyticsSub =>
+      'খরচ, দামের প্রবণতা ও সরবরাহকারীর পারফরম্যান্স';
+
+  @override
+  String get anMonth => 'এ মাস';
+
+  @override
+  String get an3Months => '৩ মাস';
+
+  @override
+  String get anYear => 'এ বছর';
+
+  @override
+  String get anSpend => 'মোট খরচ';
+
+  @override
+  String anAvgPrice(String crop) {
+    return 'গড় দাম ($crop)';
+  }
+
+  @override
+  String get anSuppliers => 'সরবরাহকারীর পারফরম্যান্স';
+
+  @override
+  String get anDeliveredLeft => 'ডেলিভারি / বাকি';
+
+  @override
+  String get anWithInspector => 'পরিদর্শকসহ অর্ডার';
+
+  @override
+  String anSlash(String a, String b) {
+    return '$a / $b';
+  }
+
+  @override
+  String get anNoData => 'এই সময়ে কোনো অর্ডার নেই';
+
+  @override
+  String takaLakh(String n) {
+    return '৳ $n লাখ';
+  }
 }

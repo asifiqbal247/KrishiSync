@@ -9654,6 +9654,138 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বাতিল'**
   String get toastUndo;
+
+  /// No description provided for @procTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংগ্রহ ড্যাশবোর্ড'**
+  String get procTitle;
+
+  /// No description provided for @procOpenDemands.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান চাহিদা'**
+  String get procOpenDemands;
+
+  /// No description provided for @procCommitted.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট প্রতিশ্রুত'**
+  String get procCommitted;
+
+  /// No description provided for @procFarmers.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক যুক্ত'**
+  String get procFarmers;
+
+  /// No description provided for @procSafePay.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেন'**
+  String get procSafePay;
+
+  /// No description provided for @procPeople.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} জন'**
+  String procPeople(String n);
+
+  /// No description provided for @procOngoing.
+  ///
+  /// In bn, this message translates to:
+  /// **'চলমান সংগ্রহ'**
+  String get procOngoing;
+
+  /// No description provided for @procLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {qty}'**
+  String procLine(String crop, String qty);
+
+  /// No description provided for @procNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো চলমান চাহিদা নেই'**
+  String get procNone;
+
+  /// No description provided for @procAnalytics.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রয় বিশ্লেষণ'**
+  String get procAnalytics;
+
+  /// No description provided for @procAnalyticsSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'খরচ, দামের প্রবণতা ও সরবরাহকারীর পারফরম্যান্স'**
+  String get procAnalyticsSub;
+
+  /// No description provided for @anMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাস'**
+  String get anMonth;
+
+  /// No description provided for @an3Months.
+  ///
+  /// In bn, this message translates to:
+  /// **'৩ মাস'**
+  String get an3Months;
+
+  /// No description provided for @anYear.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ বছর'**
+  String get anYear;
+
+  /// No description provided for @anSpend.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট খরচ'**
+  String get anSpend;
+
+  /// No description provided for @anAvgPrice.
+  ///
+  /// In bn, this message translates to:
+  /// **'গড় দাম ({crop})'**
+  String anAvgPrice(String crop);
+
+  /// No description provided for @anSuppliers.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরবরাহকারীর পারফরম্যান্স'**
+  String get anSuppliers;
+
+  /// No description provided for @anDeliveredLeft.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি / বাকি'**
+  String get anDeliveredLeft;
+
+  /// No description provided for @anWithInspector.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিদর্শকসহ অর্ডার'**
+  String get anWithInspector;
+
+  /// No description provided for @anSlash.
+  ///
+  /// In bn, this message translates to:
+  /// **'{a} / {b}'**
+  String anSlash(String a, String b);
+
+  /// No description provided for @anNoData.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই সময়ে কোনো অর্ডার নেই'**
+  String get anNoData;
+
+  /// No description provided for @takaLakh.
+  ///
+  /// In bn, this message translates to:
+  /// **'৳ {n} লাখ'**
+  String takaLakh(String n);
 }
 
 class _AppLocalizationsDelegate
