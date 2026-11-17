@@ -24,7 +24,7 @@
   "loginSub": "We will send a 6-digit code",
   "loginPhoneLabel": "Mobile number",
   "loginPhoneHint": "01X XXXX XXXX",
-  "loginCountryCode": "+880",
+  "loginCountryCode": "+88",
   "loginTerms": "By continuing you agree to the Terms and Privacy Policy.",
   "loginSendCode": "Send code",
   "loginInvalidPhone": "Enter a valid 11-digit mobile number",

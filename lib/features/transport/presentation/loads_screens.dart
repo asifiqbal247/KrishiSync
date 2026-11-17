@@ -12,6 +12,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/utils/geo.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_input.dart';
@@ -43,7 +44,9 @@ class LoadsScreen extends ConsumerStatefulWidget {
 
 class _LoadsScreenState extends ConsumerState<LoadsScreen> {
   _LoadFilter _f = _LoadFilter.all;
-  static const _mapH = 126.0;
+
+  /// Figma hero map height (full-bleed, square corners).
+  static const _heroH = 222.0;
 
   /// A load counts as "full" when it fills at least 70% of the truck.
   static const _fullShare = 0.7;
@@ -70,76 +73,97 @@ class _LoadsScreenState extends ConsumerState<LoadsScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
+      extendBodyBehindAppBar: true,
       appBar: KsAppBar(
         title: widget.returnOnly ? l.trReturnLoads : l.loadsTitle,
+        onImage: true,
       ),
-      body: switch (async) {
-        AsyncError(:final error) => KsErrorState.from(
-          error,
-          onRetry: () => ref.invalidate(openLoadsProvider),
-        ),
-        AsyncData(value: final all) => () {
-          final loads = widget.returnOnly
-              ? returnLoads(all, (current?.dropoff ?? me?.location)?.district)
-              : all;
-          final shown = Trip.group(loads).where(keep).toList();
-          return ListView(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.screen,
-              AppSpacing.contentTop,
-              AppSpacing.screen,
-              AppSpacing.lg,
+      body: Stack(
+        children: [
+          switch (async) {
+            AsyncError(:final error) => KsErrorState.from(
+              error,
+              onRetry: () => ref.invalidate(openLoadsProvider),
             ),
-            children: [
-              KsRouteMap(
-                height: _mapH,
-                points: [
-                  for (final t in shown)
-                    for (final d in t.stops) ?d.pickup.geo,
-                ],
-              ),
-              const SizedBox(height: AppSpacing.block),
-              Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.sm,
+            AsyncData(value: final all) => () {
+              final loads = widget.returnOnly
+                  ? returnLoads(
+                      all,
+                      (current?.dropoff ?? me?.location)?.district,
+                    )
+                  : all;
+              final shown = Trip.group(loads).where(keep).toList();
+              return ListView(
+                padding: const EdgeInsets.only(bottom: AppSpacing.lg),
                 children: [
-                  for (final (f, label) in [
-                    (_LoadFilter.all, l.filterAll),
-                    (_LoadFilter.nearby, l.filterNearby),
-                    (_LoadFilter.full, l.filterFullLoad),
-                    (_LoadFilter.multi, l.filterMultiPickup),
-                  ])
-                    KsPill(
-                      label: label,
-                      selected: _f == f,
-                      onTap: () => setState(() => _f = f),
+                  KsHeroPhoto(
+                    figmaHeight: _heroH,
+                    image: KsRouteMap(
+                      height: double.infinity,
+                      fitPadding: heroMapFit(context),
+                      points: [
+                        for (final t in shown)
+                          for (final d in t.stops) ?d.pickup.geo,
+                      ],
                     ),
-                ],
-              ),
-              if (shown.isEmpty) ...[
-                const SizedBox(height: AppSpacing.block),
-                Text(
-                  l.noLoads,
-                  textAlign: TextAlign.center,
-                  style: AppTypography.bodyMedium.normal.withColor(
-                    AppColors.textSecondary,
                   ),
-                ),
-              ],
-              for (final t in shown) ...[
-                const SizedBox(height: AppSpacing.block),
-                LoadTile(
-                  d: t.summary,
-                  stops: t.stops.length,
-                  withDate: widget.returnOnly,
-                  onTap: () => context.push(Routes.trLoad(t.lead.id)),
-                ),
-              ],
-            ],
-          );
-        }(),
-        _ => const KsSkeletonList(),
-      },
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.screen,
+                      KsHeroPhoto.gap,
+                      AppSpacing.screen,
+                      0,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Wrap(
+                          spacing: AppSpacing.sm,
+                          runSpacing: AppSpacing.sm,
+                          children: [
+                            for (final (f, label) in [
+                              (_LoadFilter.all, l.filterAll),
+                              (_LoadFilter.nearby, l.filterNearby),
+                              (_LoadFilter.full, l.filterFullLoad),
+                              (_LoadFilter.multi, l.filterMultiPickup),
+                            ])
+                              KsPill(
+                                label: label,
+                                selected: _f == f,
+                                onTap: () => setState(() => _f = f),
+                              ),
+                          ],
+                        ),
+                        if (shown.isEmpty) ...[
+                          const SizedBox(height: AppSpacing.block),
+                          Text(
+                            l.noLoads,
+                            textAlign: TextAlign.center,
+                            style: AppTypography.bodyMedium.normal.withColor(
+                              AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                        for (final t in shown) ...[
+                          const SizedBox(height: AppSpacing.block),
+                          LoadTile(
+                            d: t.summary,
+                            stops: t.stops.length,
+                            withDate: widget.returnOnly,
+                            onTap: () => context.push(Routes.trLoad(t.lead.id)),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }(),
+            _ => const KsSkeletonList(),
+          },
+          const KsHeroShade(figmaHeight: 140),
+        ],
+      ),
     );
   }
 }
@@ -163,7 +187,9 @@ class LoadDetailsScreen extends ConsumerStatefulWidget {
 
 class _LoadDetailsScreenState extends ConsumerState<LoadDetailsScreen> {
   bool _busy = false;
-  static const _mapH = 146.0;
+
+  /// Figma hero map height (full-bleed, square corners).
+  static const _heroH = 242.0;
 
   Future<void> _accept(Trip t, AppUser me) async {
     if (!ensureVehicle(context, me)) return;
@@ -189,8 +215,14 @@ class _LoadDetailsScreenState extends ConsumerState<LoadDetailsScreen> {
     final t = ref.watch(tripProvider(widget.deliveryId));
     if (t == null || me == null) {
       return Scaffold(
-        appBar: KsAppBar(title: l.loadDetailsTitle),
-        body: const Center(child: CircularProgressIndicator()),
+        extendBodyBehindAppBar: true,
+        appBar: KsAppBar(title: l.loadDetailsTitle, onImage: true),
+        body: Stack(
+          children: [
+            const Center(child: CircularProgressIndicator()),
+            const KsHeroShade(figmaHeight: 140),
+          ],
+        ),
       );
     }
     final d = t.summary;
@@ -212,115 +244,128 @@ class _LoadDetailsScreenState extends ConsumerState<LoadDetailsScreen> {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.loadDetailsTitle),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.screen,
-          AppSpacing.contentTop,
-          AppSpacing.screen,
-          AppSpacing.lg,
-        ),
+        padding: const EdgeInsets.only(bottom: AppSpacing.lg),
         children: [
-          KsRouteMap(
-            height: _mapH,
-            from: d.pickup.geo,
-            to: d.dropoff.geo,
-            points: [for (final s in t.stops.skip(1)) ?s.pickup.geo],
+          KsHeroPhoto(
+            figmaHeight: _heroH,
+            image: KsRouteMap(
+              height: double.infinity,
+              fitPadding: heroMapFit(context),
+              from: d.pickup.geo,
+              to: d.dropoff.geo,
+              points: [for (final s in t.stops.skip(1)) ?s.pickup.geo],
+            ),
           ),
-          const SizedBox(height: AppSpacing.block),
-          KsInfoBox(
-            children: [
-              KsInfoRow(
-                l.rowGoods,
-                l.loadSub(d.cropName(lang), qtyKgText(context, d.weightKg)),
-              ),
-              if (t.multi)
-                KsInfoRow(
-                  l.fieldPickup,
-                  l.pickupsLine(
-                    Fmt.digits(context, '${t.stops.length}'),
-                    {for (final s in t.stops) districtOf(context, s.pickup)}
-                        .join(', '),
-                  ),
-                )
-              else
-                KsInfoRow(
-                  l.fieldPickup,
-                  l.placeDate(placeFull(context, d.pickup), when),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.screen,
+              KsHeroPhoto.gap,
+              AppSpacing.screen,
+              0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                KsInfoBox(
+                  children: [
+                    KsInfoRow(
+                      l.rowGoods,
+                      l.loadSub(
+                        d.cropName(lang),
+                        qtyKgText(context, d.weightKg),
+                      ),
+                    ),
+                    if (t.multi)
+                      KsInfoRow(
+                        l.fieldPickup,
+                        l.pickupsLine(
+                          Fmt.digits(context, '${t.stops.length}'),
+                          {
+                            for (final s in t.stops)
+                              districtOf(context, s.pickup),
+                          }.join(', '),
+                        ),
+                      )
+                    else
+                      KsInfoRow(
+                        l.fieldPickup,
+                        l.placeDate(placeFull(context, d.pickup), when),
+                      ),
+                    KsInfoRow(l.rowDestination, placeFull(context, d.dropoff)),
+                    // Several farms: the whole way (every farm, then the buyer).
+                    if (t.multi)
+                      KsInfoRow(l.rowDistance, () {
+                        final km = routeKm(null, t.stops, d.dropoff.geo);
+                        return l.nameDot(
+                          l.kmOnly(Fmt.number(context, km.round())),
+                          driveTime(context, km),
+                        );
+                      }())
+                    else if (d.roadKm != null)
+                      KsInfoRow(
+                        l.rowDistance,
+                        l.distanceLine(
+                          Fmt.number(context, d.roadKm!),
+                          Fmt.number(context, d.hours!),
+                        ),
+                      ),
+                    KsInfoRow(
+                      l.rowFare,
+                      l.fareSafeLine(Fmt.taka(context, d.suggestedFare)),
+                    ),
+                    KsInfoRow(
+                      l.rowCustomer,
+                      (buyer?.isVerified ?? false)
+                          ? l.nameVerified(d.buyerName)
+                          : d.buyerName,
+                    ),
+                  ],
                 ),
-              KsInfoRow(l.rowDestination, placeFull(context, d.dropoff)),
-              // Several farms: the whole way (every farm, then the buyer).
-              if (t.multi)
-                KsInfoRow(
-                  l.rowDistance,
-                  () {
-                    final km = routeKm(null, t.stops, d.dropoff.geo);
-                    return l.nameDot(
-                      l.kmOnly(Fmt.number(context, km.round())),
-                      driveTime(context, km),
-                    );
-                  }(),
-                )
-              else if (d.roadKm != null)
-                KsInfoRow(
-                  l.rowDistance,
-                  l.distanceLine(
-                    Fmt.number(context, d.roadKm!),
-                    Fmt.number(context, d.hours!),
+                if (cap != null && cap > 0) ...[
+                  const SizedBox(height: AppSpacing.block),
+                  Text(
+                    d.weightKg <= cap
+                        ? l.fitsTruck(tonsText(context, cap))
+                        : l.tooBigTruck(tonsText(context, cap)),
+                    style: AppTypography.bodySmall.normal.withColor(
+                      d.weightKg <= cap
+                          ? AppColors.textSecondary
+                          : AppColors.textError,
+                    ),
                   ),
+                ],
+                const SizedBox(
+                  height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
                 ),
-              KsInfoRow(
-                l.rowFare,
-                l.fareSafeLine(Fmt.taka(context, d.suggestedFare)),
-              ),
-              KsInfoRow(
-                l.rowCustomer,
-                (buyer?.isVerified ?? false)
-                    ? l.nameVerified(d.buyerName)
-                    : d.buyerName,
-              ),
-            ],
+                if (d.status != DeliveryStatus.open)
+                  KsNoteBox(
+                    title: d.transporterId == me.uid
+                        ? l.nJobAssigned(d.orderNo)
+                        : l.loadTaken,
+                  )
+                else if (mine != null)
+                  KsNoteBox(title: l.myBidLine(Fmt.taka(context, mine)))
+                else ...[
+                  KsButton.secondary(
+                    label: l.sendFareOffer,
+                    onPressed: _busy
+                        ? null
+                        : () {
+                            if (ensureVehicle(context, me)) {
+                              context.push(Routes.trFareOffer(d.id));
+                            }
+                          },
+                  ),
+                  const SizedBox(height: AppSpacing.block),
+                  KsButton(
+                    label: l.acceptJob,
+                    loading: _busy,
+                    onPressed: () => _accept(t, me),
+                  ),
+                ],
+              ],
+            ),
           ),
-          if (cap != null && cap > 0) ...[
-            const SizedBox(height: AppSpacing.block),
-            Text(
-              d.weightKg <= cap
-                  ? l.fitsTruck(tonsText(context, cap))
-                  : l.tooBigTruck(tonsText(context, cap)),
-              style: AppTypography.bodySmall.normal.withColor(
-                d.weightKg <= cap
-                    ? AppColors.textSecondary
-                    : AppColors.textError,
-              ),
-            ),
-          ],
-          const SizedBox(
-            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
-          ),
-          if (d.status != DeliveryStatus.open)
-            KsNoteBox(
-              title: d.transporterId == me.uid
-                  ? l.nJobAssigned(d.orderNo)
-                  : l.loadTaken,
-            )
-          else if (mine != null)
-            KsNoteBox(title: l.myBidLine(Fmt.taka(context, mine)))
-          else ...[
-            KsButton.secondary(
-              label: l.sendFareOffer,
-              onPressed: _busy
-                  ? null
-                  : () {
-                      if (ensureVehicle(context, me)) {
-                        context.push(Routes.trFareOffer(d.id));
-                      }
-                    },
-            ),
-            const SizedBox(height: AppSpacing.block),
-            KsButton(
-              label: l.acceptJob,
-              loading: _busy,
-              onPressed: () => _accept(t, me),
-            ),
-          ],
         ],
       ),
     );

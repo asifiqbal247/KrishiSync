@@ -17,6 +17,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/services/image_storage_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
@@ -294,7 +295,8 @@ class TripStatusScreen extends ConsumerStatefulWidget {
 }
 
 class _TripStatusScreenState extends ConsumerState<TripStatusScreen> {
-  static const _mapH = 138.0;
+  /// Figma hero map height (full-bleed, square corners).
+  static const _heroH = 242.0;
 
   @override
   Widget build(BuildContext context) {
@@ -312,102 +314,122 @@ class _TripStatusScreenState extends ConsumerState<TripStatusScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: l.tripStatusTitle),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.screen,
-          AppSpacing.contentTop,
-          AppSpacing.screen,
-          AppSpacing.lg,
-        ),
+      extendBodyBehindAppBar: true,
+      appBar: KsAppBar(title: l.tripStatusTitle, onImage: true),
+      body: Stack(
         children: [
-          KsRouteMap(
-            height: _mapH,
-            from: d.pickup.geo,
-            to: d.dropoff.geo,
-            points: [for (final s in t.stops.skip(1)) ?s.pickup.geo],
-            onTap: () => context.push(Routes.trNav(d.id)),
-          ),
-          if (!done && freeKg > 0) ...[
-            const SizedBox(height: AppSpacing.block),
-            KsListItem(
-              highlighted: true,
-              thumb: Image.asset(AppUi.thumbLoad, fit: BoxFit.cover),
-              title: l.freeSpaceTitle(
-                Fmt.number(
-                  context,
-                  freeKg / 1000,
-                  decimals: freeKg % 1000 == 0 ? 0 : 1,
+          ListView(
+            padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+            children: [
+              KsHeroPhoto(
+                figmaHeight: _heroH,
+                image: KsRouteMap(
+                  height: double.infinity,
+                  fitPadding: heroMapFit(context),
+                  from: d.pickup.geo,
+                  to: d.dropoff.geo,
+                  points: [for (final s in t.stops.skip(1)) ?s.pickup.geo],
+                  onTap: () => context.push(Routes.trNav(d.id)),
                 ),
               ),
-              subtitle: l.freeSpaceSub,
-              trailingText: l.seeLink,
-              onTap: () => context.push(Routes.trShared),
-            ),
-          ],
-          for (final (i, s) in t.stops.indexed) ...[
-            const SizedBox(height: AppSpacing.block),
-            () {
-              final loaded =
-                  s.status == DeliveryStatus.pickedUp ||
-                  s.status == DeliveryStatus.delivered;
-              final at = s.timeline['pickedUp'];
-              return KsTimelineItem(
-                title: l.stepPickupN(
-                  Fmt.digits(context, '${i + 1}'),
-                  s.farmerName,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.screen,
+                  0,
+                  AppSpacing.screen,
+                  0,
                 ),
-                subtitle: !loaded
-                    ? l.stepWaiting
-                    : at == null
-                    ? l.stepLoadedDone
-                    : l.stepLoadedAt(Fmt.time(context, at)),
-                done: loaded,
-              );
-            }(),
-          ],
-          const SizedBox(height: AppSpacing.block),
-          KsTimelineItem(
-            title: l.stepDeliveryTo(d.buyerName),
-            subtitle: done ? l.dsDelivered : l.stepWaiting,
-            done: done,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (!done && freeKg > 0) ...[
+                      const SizedBox(height: AppSpacing.block),
+                      KsListItem(
+                        highlighted: true,
+                        thumb: Image.asset(AppUi.thumbLoad, fit: BoxFit.cover),
+                        title: l.freeSpaceTitle(
+                          Fmt.number(
+                            context,
+                            freeKg / 1000,
+                            decimals: freeKg % 1000 == 0 ? 0 : 1,
+                          ),
+                        ),
+                        subtitle: l.freeSpaceSub,
+                        trailingText: l.seeLink,
+                        onTap: () => context.push(Routes.trShared),
+                      ),
+                    ],
+                    for (final (i, s) in t.stops.indexed) ...[
+                      const SizedBox(height: AppSpacing.block),
+                      () {
+                        final loaded =
+                            s.status == DeliveryStatus.pickedUp ||
+                            s.status == DeliveryStatus.delivered;
+                        final at = s.timeline['pickedUp'];
+                        return KsTimelineItem(
+                          title: l.stepPickupN(
+                            Fmt.digits(context, '${i + 1}'),
+                            s.farmerName,
+                          ),
+                          subtitle: !loaded
+                              ? l.stepWaiting
+                              : at == null
+                              ? l.stepLoadedDone
+                              : l.stepLoadedAt(Fmt.time(context, at)),
+                          done: loaded,
+                        );
+                      }(),
+                    ],
+                    const SizedBox(height: AppSpacing.block),
+                    KsTimelineItem(
+                      title: l.stepDeliveryTo(d.buyerName),
+                      subtitle: done ? l.dsDelivered : l.stepWaiting,
+                      done: done,
+                    ),
+                    const SizedBox(height: AppSpacing.block),
+                    Text(
+                      l.offlineSafeNote,
+                      style: AppTypography.bodySmall.normal.withColor(
+                        AppColors.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.block),
+                    KsListItem(
+                      title: l.tripProblem,
+                      subtitle: l.orderProblemSub,
+                      onTap: () =>
+                          context.push(Routes.report(orderId: d.orderId)),
+                    ),
+                    const SizedBox(
+                      height:
+                          AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+                    ),
+                    // Load the next farm; when all are loaded, go to the buyer.
+                    if (next != null)
+                      KsButton(
+                        label: t.multi
+                            ? l.startWeighingStop(
+                                Fmt.digits(context, '${t.stopNo(next)}'),
+                              )
+                            : l.startWeighing,
+                        onPressed: () => context.push(Routes.trWeigh(next.id)),
+                      )
+                    else if (!done)
+                      KsButton(
+                        label: l.deliverNow,
+                        onPressed: () => context.push(Routes.trDeliver(d.id)),
+                      )
+                    else
+                      KsButton(
+                        label: l.tripDoneBtn,
+                        onPressed: () => context.push(Routes.trDone(d.id)),
+                      ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.block),
-          Text(
-            l.offlineSafeNote,
-            style: AppTypography.bodySmall.normal.withColor(
-              AppColors.textSecondary,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.block),
-          KsListItem(
-            title: l.tripProblem,
-            subtitle: l.orderProblemSub,
-            onTap: () => context.push(Routes.report(orderId: d.orderId)),
-          ),
-          const SizedBox(
-            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
-          ),
-          // Load the next farm; when all are loaded, go to the buyer.
-          if (next != null)
-            KsButton(
-              label: t.multi
-                  ? l.startWeighingStop(
-                      Fmt.digits(context, '${t.stopNo(next)}'),
-                    )
-                  : l.startWeighing,
-              onPressed: () => context.push(Routes.trWeigh(next.id)),
-            )
-          else if (!done)
-            KsButton(
-              label: l.deliverNow,
-              onPressed: () => context.push(Routes.trDeliver(d.id)),
-            )
-          else
-            KsButton(
-              label: l.tripDoneBtn,
-              onPressed: () => context.push(Routes.trDone(d.id)),
-            ),
+          const KsHeroShade(figmaHeight: 140),
         ],
       ),
     );

@@ -9,6 +9,7 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
@@ -122,42 +123,57 @@ class TipScreen extends StatelessWidget {
 class GlobalBuyersScreen extends StatelessWidget {
   const GlobalBuyersScreen({super.key});
 
-  static const _imgH = 120.0;
+  /// Figma hero photo height (full-bleed, square corners).
+  static const _heroH = 212.0;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: l.globalBuyersTitle),
-      body: ListView(
-        padding: _pad,
+      extendBodyBehindAppBar: true,
+      appBar: KsAppBar(title: l.globalBuyersTitle, onImage: true),
+      body: Stack(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.xl),
-            child: Image.asset(
-              AppImages.port,
-              height: _imgH,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
+          ListView(
+            padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+            children: [
+              KsHeroPhoto(
+                figmaHeight: _heroH,
+                image: Image.asset(AppImages.port, fit: BoxFit.cover),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.screen,
+                  KsHeroPhoto.gap,
+                  AppSpacing.screen,
+                  0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      l.globalBuyersIntro,
+                      style: AppTypography.bodySmall.normal.withColor(
+                        AppColors.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.block),
+                    KsNoteBoxLite(text: l.noExportDemand),
+                    const SizedBox(
+                      height:
+                          AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+                    ),
+                    KsButton.outline(
+                      label: l.seeExportGuide,
+                      onPressed: () => context.push(Routes.exportGuide),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.block),
-          Text(
-            l.globalBuyersIntro,
-            style: AppTypography.bodySmall.normal.withColor(
-              AppColors.textSecondary,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.block),
-          KsNoteBoxLite(text: l.noExportDemand),
-          const SizedBox(
-            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
-          ),
-          KsButton.outline(
-            label: l.seeExportGuide,
-            onPressed: () => context.push(Routes.exportGuide),
-          ),
+          const KsHeroShade(),
         ],
       ),
     );

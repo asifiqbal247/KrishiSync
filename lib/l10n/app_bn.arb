@@ -31,7 +31,7 @@
   "loginSub": "আমরা একটি ৬ সংখ্যার কোড পাঠাব",
   "loginPhoneLabel": "মোবাইল নম্বর",
   "loginPhoneHint": "01X XXXX XXXX",
-  "loginCountryCode": "+880",
+  "loginCountryCode": "+88",
   "loginTerms": "চালিয়ে গেলে আপনি শর্তাবলী ও গোপনীয়তা নীতিতে সম্মত হচ্ছেন।",
   "loginSendCode": "কোড পাঠান",
   "loginInvalidPhone": "সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন",

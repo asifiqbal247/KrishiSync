@@ -7,7 +7,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_dimens.dart';
 import 'app_icon.dart';
 
-/// HF/Image Placeholder used as a map (12, 19): radius 16. Shows an
+/// HF/Image Placeholder used as a map (12, 19, 98): square corners. Shows an
 /// OpenStreetMap tile view with a brand pin when a point is known,
 /// otherwise the Figma map art.
 class KsMapPreview extends StatelessWidget {
@@ -32,7 +32,7 @@ class KsMapPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.xl),
+      borderRadius: BorderRadius.circular(AppRadius.photo),
       child: SizedBox(
         height: height,
         width: double.infinity,
@@ -52,17 +52,24 @@ class KsMapPreview extends StatelessWidget {
                 ),
                 children: [
                   TileLayer(
-                      urlTemplate: tileUrl, userAgentPackageName: userAgent),
-                  MarkerLayer(markers: [
-                    Marker(
-                      point: point!,
-                      width: _pin,
-                      height: _pin,
-                      alignment: Alignment.topCenter,
-                      child: const AppIcon(AppIcons.location,
-                          size: _pin, color: AppColors.iconBrand),
-                    ),
-                  ]),
+                    urlTemplate: tileUrl,
+                    userAgentPackageName: userAgent,
+                  ),
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        point: point!,
+                        width: _pin,
+                        height: _pin,
+                        alignment: Alignment.topCenter,
+                        child: const AppIcon(
+                          AppIcons.location,
+                          size: _pin,
+                          color: AppColors.iconBrand,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
       ),

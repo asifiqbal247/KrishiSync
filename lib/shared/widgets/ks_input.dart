@@ -24,8 +24,8 @@ BoxDecoration _fieldBox({bool focused = false, bool error = false}) =>
         color: error
             ? AppColors.borderError
             : focused
-                ? AppColors.borderBrand
-                : AppColors.borderDefault,
+            ? AppColors.borderBrand
+            : AppColors.borderDefault,
       ),
     );
 
@@ -57,7 +57,7 @@ class KsTextField extends StatefulWidget {
   final String? suffixText;
   final Color suffixColor;
 
-  /// Fixed text before the input, e.g. country code "+880".
+  /// Fixed text before the input, e.g. country code "+88".
   final String? prefixText;
   final Color prefixColor;
   final TextInputType? keyboardType;
@@ -110,8 +110,9 @@ class _KsTextFieldState extends State<KsTextField> {
               if (widget.prefixText != null) ...[
                 Text(
                   widget.prefixText!,
-                  style: AppTypography.bodyMediumEmphasis.normal
-                      .withColor(widget.prefixColor),
+                  style: AppTypography.bodyMediumEmphasis.normal.withColor(
+                    widget.prefixColor,
+                  ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
               ],
@@ -134,8 +135,9 @@ class _KsTextFieldState extends State<KsTextField> {
                     border: InputBorder.none,
                     counterText: '',
                     hintText: widget.hint,
-                    hintStyle: AppTypography.bodyMedium.normal
-                        .withColor(AppColors.textSecondary),
+                    hintStyle: AppTypography.bodyMedium.normal.withColor(
+                      AppColors.textSecondary,
+                    ),
                   ),
                 ),
               ),
@@ -143,8 +145,9 @@ class _KsTextFieldState extends State<KsTextField> {
                 const SizedBox(width: AppSpacing.sm),
                 Text(
                   widget.suffixText!,
-                  style: AppTypography.bodyMediumEmphasis.normal
-                      .withColor(widget.suffixColor),
+                  style: AppTypography.bodyMediumEmphasis.normal.withColor(
+                    widget.suffixColor,
+                  ),
                 ),
               ],
               // Figma keeps an invisible 18px "Picker" slot in every field.
@@ -154,8 +157,10 @@ class _KsTextFieldState extends State<KsTextField> {
         ),
         if (hasError) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text(widget.errorText!,
-              style: AppTypography.caption.withColor(AppColors.textError)),
+          Text(
+            widget.errorText!,
+            style: AppTypography.caption.withColor(AppColors.textError),
+          ),
         ],
       ],
     );
@@ -209,15 +214,19 @@ class KsSelectField extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppTypography.bodyMedium.normal.withColor(
-                          hasValue
-                              ? AppColors.textPrimary
-                              : AppColors.textSecondary),
+                        hasValue
+                            ? AppColors.textPrimary
+                            : AppColors.textSecondary,
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   if (showChevron)
-                    const AppIcon(AppIcons.chevronDown,
-                        size: AppSizes.iconSm, color: AppColors.iconBrand)
+                    const AppIcon(
+                      AppIcons.chevronDown,
+                      size: AppSizes.iconSm,
+                      color: AppColors.iconBrand,
+                    )
                   else
                     const SizedBox(width: AppSizes.iconSm),
                 ],
@@ -227,8 +236,10 @@ class KsSelectField extends StatelessWidget {
         ),
         if (errorText != null) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text(errorText!,
-              style: AppTypography.caption.withColor(AppColors.textError)),
+          Text(
+            errorText!,
+            style: AppTypography.caption.withColor(AppColors.textError),
+          ),
         ],
       ],
     );

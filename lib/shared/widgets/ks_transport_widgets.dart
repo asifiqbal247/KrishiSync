@@ -18,7 +18,7 @@ import 'ks_search_bar.dart';
 
 LatLng? _ll(GeoPoint? g) => g == null ? null : LatLng(g.latitude, g.longitude);
 
-/// Route map (Figma 117/143/144/159 map image, radius 16): OSM tiles with
+/// Route map (Figma 102/108/117/174 map image, square corners; 155: radius 16): OSM tiles with
 /// pickup → drop line and pins. Falls back to the Figma map art when the
 /// points are unknown. [points] adds extra pins (Available Loads, 143).
 class KsRouteMap extends StatelessWidget {
@@ -44,7 +44,7 @@ class KsRouteMap extends StatelessWidget {
   /// Route through every stop in order (155–158); drawn instead of from→to.
   final List<GeoPoint> path;
 
-  /// Corners (full-screen navigation map: bottom only).
+  /// Corners (default square; 155 Route Map: radius 16).
   final BorderRadius? radius;
   final GeoPoint? from;
   final GeoPoint? to;
@@ -141,7 +141,7 @@ class KsRouteMap extends StatelessWidget {
             ],
           );
     return ClipRRect(
-      borderRadius: radius ?? BorderRadius.circular(AppRadius.xl),
+      borderRadius: radius ?? BorderRadius.circular(AppRadius.photo),
       child: SizedBox(height: height, width: double.infinity, child: map),
     );
   }

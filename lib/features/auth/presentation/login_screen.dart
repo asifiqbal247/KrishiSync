@@ -13,6 +13,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_input.dart';
 import 'auth_error_text.dart';
 import 'phone_auth_controller.dart';
@@ -31,7 +32,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   late final _termsTap = TapGestureRecognizer()
     ..onTap = () => context.push(Routes.terms);
 
-  static const _imageHeight = 260.0;
+  /// Figma hero photo height (the heading starts below it).
+  static const _heroH = 352.0;
 
   @override
   void initState() {
@@ -65,83 +67,109 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final st = ref.watch(phoneAuthProvider);
-    final error = _fieldError ??
-        (st.error == null ? null : authErrorText(l, st.error!));
+    final error =
+        _fieldError ?? (st.error == null ? null : authErrorText(l, st.error!));
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
+      extendBodyBehindAppBar: true,
       appBar: KsAppBar(
         title: l.loginTitle,
+        onImage: true,
         // Login is reached by redirect (no history): back = onboarding again.
         onBack: () => ref.read(onboardingDoneProvider.notifier).reset(),
       ),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-              AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(AppRadius.xl),
-                child: Image.asset(AppImages.handshake,
-                    height: _imageHeight,
-                    width: double.infinity,
-                    fit: BoxFit.cover),
-              ),
-              const SizedBox(height: AppSpacing.block),
-              Text(l.loginHeading, style: AppTypography.headingBold22.normal),
-              const SizedBox(height: AppSpacing.block),
-              Text(l.loginSub,
-                  style: AppTypography.bodyMedium.normal
-                      .withColor(AppColors.textSecondary)),
-              const SizedBox(height: AppSpacing.block),
-              KsTextField(
-                label: l.loginPhoneLabel,
-                hint: l.loginPhoneHint,
-                controller: _phone,
-                prefixText: l.loginCountryCode,
-                prefixColor: AppColors.textSuccess,
-                keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.done,
-                maxLength: 14,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯+\s-]')),
-                ],
-                errorText: error,
-                onSubmitted: (_) => _submit(),
-              ),
-              const SizedBox(
-                  height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-              Text.rich(
-                TextSpan(
-                  style: AppTypography.caption.normal
-                      .withColor(AppColors.textSecondary),
-                  children: [
-                    TextSpan(text: l.loginTermsPre),
-                    TextSpan(
-                      text: l.loginTermsLink,
-                      style: const TextStyle(
-                        color: AppColors.textBrand,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.textBrand,
-                      ),
-                      recognizer: _termsTap,
+      body: Stack(
+        children: [
+          SafeArea(
+            top: false,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  KsHeroPhoto(
+                    figmaHeight: _heroH,
+                    image: Image.asset(AppImages.handshake, fit: BoxFit.cover),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.screen,
+                      KsHeroPhoto.gap,
+                      AppSpacing.screen,
+                      AppSpacing.lg,
                     ),
-                    TextSpan(text: l.loginTermsPost),
-                  ],
-                ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l.loginHeading,
+                          style: AppTypography.headingBold22.normal,
+                        ),
+                        const SizedBox(height: AppSpacing.block),
+                        Text(
+                          l.loginSub,
+                          style: AppTypography.bodyMedium.normal.withColor(
+                            AppColors.textSecondary,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.block),
+                        KsTextField(
+                          label: l.loginPhoneLabel,
+                          hint: l.loginPhoneHint,
+                          controller: _phone,
+                          prefixText: l.loginCountryCode,
+                          prefixColor: AppColors.textSuccess,
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.done,
+                          maxLength: 14,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'[0-9০-৯+\s-]'),
+                            ),
+                          ],
+                          errorText: error,
+                          onSubmitted: (_) => _submit(),
+                        ),
+                        const SizedBox(
+                          height:
+                              AppSpacing.block +
+                              AppSpacing.xs +
+                              AppSpacing.block,
+                        ),
+                        Text.rich(
+                          TextSpan(
+                            style: AppTypography.caption.normal.withColor(
+                              AppColors.textSecondary,
+                            ),
+                            children: [
+                              TextSpan(text: l.loginTermsPre),
+                              TextSpan(
+                                text: l.loginTermsLink,
+                                style: const TextStyle(
+                                  color: AppColors.textBrand,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppColors.textBrand,
+                                ),
+                                recognizer: _termsTap,
+                              ),
+                              TextSpan(text: l.loginTermsPost),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.block),
+                        KsButton(
+                          label: l.loginSendCode,
+                          loading: st.sending,
+                          onPressed: _submit,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: AppSpacing.block),
-              KsButton(
-                label: l.loginSendCode,
-                loading: st.sending,
-                onPressed: _submit,
-              ),
-            ],
+            ),
           ),
-        ),
+          const KsHeroShade(),
+        ],
       ),
     );
   }

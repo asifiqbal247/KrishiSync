@@ -41,8 +41,8 @@ class SellCropScreen extends ConsumerStatefulWidget {
 }
 
 class _SellCropScreenState extends ConsumerState<SellCropScreen> {
-  static const _mapHeight = 120.0;
-  static const _reviewImageHeight = 120.0;
+  static const _mapHeight = 200.0; // Figma 19: 328×200, square
+  static const _reviewImageHeight = 200.0; // Figma 20: 328×200, square
   static const _grades = ['A', 'B', 'C'];
 
   int _step = 1;
@@ -432,7 +432,7 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
     final crop = _lang == 'bn' ? bn : en;
     return [
       ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.xl),
+        borderRadius: BorderRadius.circular(AppRadius.photo),
         child: Image.file(
           _photo!,
           height: _reviewImageHeight,

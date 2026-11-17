@@ -382,7 +382,7 @@ class AssignedTransportScreen extends ConsumerWidget {
   const AssignedTransportScreen({super.key, required this.deliveryId});
   final String deliveryId;
 
-  static const _mapH = 150.0;
+  static const _mapH = 200.0; // Figma 117: 328×200, square
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -588,7 +588,7 @@ class TrackingScreen extends ConsumerWidget {
   const TrackingScreen({super.key, required this.deliveryId});
   final String deliveryId;
 
-  static const _mapH = 300.0;
+  static const _mapH = 320.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -637,89 +637,105 @@ class TrackingScreen extends ConsumerWidget {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.trackTitle),
       body: ListView(
-        padding: _contentPad,
+        padding: const EdgeInsets.only(bottom: AppSpacing.lg),
         children: [
+          // Figma 108: full-width map right under the app bar, square.
           KsRouteMap(
             height: _mapH,
             from: d.pickup.geo,
             to: d.dropoff.geo,
             truck: live?.geo,
           ),
-          const SizedBox(height: AppSpacing.block),
-          KsListItem(
-            thumb: KsNetImage(
-              url: d.transporterPhotoUrl ?? driver?.photoUrl,
-              thumbSize: KsListItem.thumbSize.round(),
-              fallbackAsset: AppUi.avatarDriver,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.screen,
+              AppSpacing.block,
+              AppSpacing.screen,
+              0,
             ),
-            title: d.transporterName ?? '',
-            subtitle: v == null
-                ? rating
-                : l.truckCapRating(
-                    vehicleTypeLabel(l, v.type),
-                    Fmt.plate(context, v.plateNo),
-                    rating,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                KsListItem(
+                  thumb: KsNetImage(
+                    url: d.transporterPhotoUrl ?? driver?.photoUrl,
+                    thumbSize: KsListItem.thumbSize.round(),
+                    fallbackAsset: AppUi.avatarDriver,
                   ),
-            badge: (driver?.isVerified ?? false) ? l.verifiedBadge : null,
-            showChevron: false,
-          ),
-          const SizedBox(height: AppSpacing.block),
-          KsInfoBox(
-            children: [
-              KsInfoRow(l.rowStatus, status),
-              if (eta != null)
-                KsInfoRow(
-                  l.rowEta,
-                  l.dateTime(
-                    Fmt.date(context, eta),
-                    Fmt.digits(context, DateFormat('H:mm').format(eta)),
-                  ),
+                  title: d.transporterName ?? '',
+                  subtitle: v == null
+                      ? rating
+                      : l.truckCapRating(
+                          vehicleTypeLabel(l, v.type),
+                          Fmt.plate(context, v.plateNo),
+                          rating,
+                        ),
+                  badge: (driver?.isVerified ?? false) ? l.verifiedBadge : null,
+                  showChevron: false,
                 ),
-              if (active)
-                KsInfoRow(
-                  l.rowTruckSeen,
-                  seen == null
-                      ? l.liveOff
-                      : seen < 1
-                      ? l.liveJustNow
-                      : l.liveMinAgo(Fmt.digits(context, '$seen')),
-                ),
-              if (d.roadKm != null)
-                left == null
-                    ? KsInfoRow(
-                        l.rowRemaining,
-                        l.kmOnly(Fmt.number(context, d.roadKm!)),
-                      )
-                    : KsInfoRow(
-                        l.rowLeftKm,
-                        l.kmOnly(
-                          Fmt.number(context, (d.roadKm! * left).round()),
+                const SizedBox(height: AppSpacing.block),
+                KsInfoBox(
+                  children: [
+                    KsInfoRow(l.rowStatus, status),
+                    if (eta != null)
+                      KsInfoRow(
+                        l.rowEta,
+                        l.dateTime(
+                          Fmt.date(context, eta),
+                          Fmt.digits(context, DateFormat('H:mm').format(eta)),
                         ),
                       ),
-            ],
-          ),
-          const SizedBox(
-            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: KsButton.outline(
-                  label: l.callBtn,
-                  onPressed: driver == null
-                      ? null
-                      : () => launchUrl(Uri(scheme: 'tel', path: driver.phone)),
+                    if (active)
+                      KsInfoRow(
+                        l.rowTruckSeen,
+                        seen == null
+                            ? l.liveOff
+                            : seen < 1
+                            ? l.liveJustNow
+                            : l.liveMinAgo(Fmt.digits(context, '$seen')),
+                      ),
+                    if (d.roadKm != null)
+                      left == null
+                          ? KsInfoRow(
+                              l.rowRemaining,
+                              l.kmOnly(Fmt.number(context, d.roadKm!)),
+                            )
+                          : KsInfoRow(
+                              l.rowLeftKm,
+                              l.kmOnly(
+                                Fmt.number(context, (d.roadKm! * left).round()),
+                              ),
+                            ),
+                  ],
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                // In-app chat is Tier C.
-                child: KsButton.outline(
-                  label: l.messageBtn,
-                  onPressed: () => openChatWith(context, ref, d.transporterId!),
+                const SizedBox(
+                  height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
                 ),
-              ),
-            ],
+                Row(
+                  children: [
+                    Expanded(
+                      child: KsButton.outline(
+                        label: l.callBtn,
+                        onPressed: driver == null
+                            ? null
+                            : () => launchUrl(
+                                Uri(scheme: 'tel', path: driver.phone),
+                              ),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      // In-app chat is Tier C.
+                      child: KsButton.outline(
+                        label: l.messageBtn,
+                        onPressed: () =>
+                            openChatWith(context, ref, d.transporterId!),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -29,7 +29,7 @@ const _pad = EdgeInsets.fromLTRB(
   AppSpacing.screen,
   AppSpacing.lg,
 );
-const _mapH = 120.0;
+const _mapH = 200.0; // Figma 328×200 map, square corners
 const _gapBeforeCta = AppSpacing.block + AppSpacing.xs + AppSpacing.block;
 
 num _sum(Iterable<Commit> cs) => cs.fold<num>(0, (a, c) => a + c.quantityKg);

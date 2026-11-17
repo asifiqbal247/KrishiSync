@@ -12,6 +12,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../buyer/presentation/buyer_common.dart' show qtyText;
@@ -25,12 +26,8 @@ class FarmerDeliveredScreen extends ConsumerWidget {
   const FarmerDeliveredScreen({super.key, required this.orderId});
   final String orderId;
 
-  /// Figma sizes below its 28px status bar (the phone's own bar is added).
-  static const _heroH = 232.0 - 28;
-  static const _shadeH = 120.0 - 28;
-
-  /// Figma "Hero Space": the info box starts below the photo.
-  static const _heroSpace = 140.0;
+  /// Figma hero photo height (the info box starts below it).
+  static const _heroH = 232.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,10 +36,22 @@ class FarmerDeliveredScreen extends ConsumerWidget {
     final o = ref.watch(orderProvider(orderId)).value;
     // Platform truck: the load's weighed and delivered amounts.
     final d = ref.watch(deliveryProvider(orderId)).value;
-    final top = MediaQuery.of(context).padding.top;
 
+    final hero = KsHeroPhoto(
+      figmaHeight: _heroH,
+      image: Image.asset(AppImages.truckRoad, fit: BoxFit.cover),
+    );
     final body = o == null || me == null
-        ? const KsSkeletonList(rows: 3)
+        ? ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              hero,
+              const Padding(
+                padding: EdgeInsets.all(AppSpacing.screen),
+                child: KsSkeletonList(rows: 3, padded: false),
+              ),
+            ],
+          )
         : () {
             final rated =
                 ref
@@ -53,47 +62,55 @@ class FarmerDeliveredScreen extends ConsumerWidget {
             final got = d?.deliveredKg ?? sent;
             final at = d?.timeline['delivered'] ?? o.timeline['delivered'];
             return ListView(
-              padding: EdgeInsets.fromLTRB(
-                AppSpacing.screen,
-                top + AppSizes.appBarHeight + AppSpacing.contentTop,
-                AppSpacing.screen,
-                AppSpacing.lg,
-              ),
+              padding: EdgeInsets.zero,
               children: [
-                const SizedBox(height: _heroSpace),
-                const SizedBox(height: AppSpacing.block),
-                KsInfoBox(
-                  children: [
-                    KsInfoRow(l.rowBuyer, o.buyerName),
-                    KsInfoRow(l.rowSentQty, qtyText(context, sent)),
-                    KsInfoRow(l.rowReceivedQty, qtyText(context, got)),
-                    if (at != null)
-                      KsInfoRow(
-                        l.rowDeliveredAt,
-                        '${Fmt.date(context, at)}, ${Fmt.time(context, at)}',
-                      ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.block),
-                Text(
-                  l.farmerDeliveredNote,
-                  style: AppTypography.bodyMedium.normal.withColor(
-                    AppColors.textSecondary,
+                hero,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.screen,
+                    KsHeroPhoto.gap,
+                    AppSpacing.screen,
+                    AppSpacing.lg,
                   ),
-                ),
-                const SizedBox(
-                  height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
-                ),
-                KsButton.secondary(
-                  label: rated ? l.alreadyRated : l.rateBuyerBtn,
-                  onPressed: rated
-                      ? null
-                      : () => context.push(Routes.farmerRateBuyer(o.id)),
-                ),
-                const SizedBox(height: AppSpacing.block),
-                KsButton(
-                  label: l.seePayStatus,
-                  onPressed: () => context.push(Routes.receipt(o.id)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      KsInfoBox(
+                        children: [
+                          KsInfoRow(l.rowBuyer, o.buyerName),
+                          KsInfoRow(l.rowSentQty, qtyText(context, sent)),
+                          KsInfoRow(l.rowReceivedQty, qtyText(context, got)),
+                          if (at != null)
+                            KsInfoRow(
+                              l.rowDeliveredAt,
+                              '${Fmt.date(context, at)}, ${Fmt.time(context, at)}',
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.block),
+                      Text(
+                        l.farmerDeliveredNote,
+                        style: AppTypography.bodyMedium.normal.withColor(
+                          AppColors.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(
+                        height:
+                            AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+                      ),
+                      KsButton.secondary(
+                        label: rated ? l.alreadyRated : l.rateBuyerBtn,
+                        onPressed: rated
+                            ? null
+                            : () => context.push(Routes.farmerRateBuyer(o.id)),
+                      ),
+                      const SizedBox(height: AppSpacing.block),
+                      KsButton(
+                        label: l.seePayStatus,
+                        onPressed: () => context.push(Routes.receipt(o.id)),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             );
@@ -103,34 +120,7 @@ class FarmerDeliveredScreen extends ConsumerWidget {
       backgroundColor: AppColors.bgPage,
       extendBodyBehindAppBar: true,
       appBar: KsAppBar(title: l.farmerDeliveredTitle, onImage: true),
-      body: Stack(
-        children: [
-          // Hero photo (bottom corners 24) with a dark top shade so the
-          // white app bar stays readable.
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(
-              bottom: Radius.circular(AppRadius.modal),
-            ),
-            child: Image.asset(
-              AppImages.truckRoad,
-              height: _heroH + top,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Container(
-            height: _shadeH + top,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [AppColors.heroShade, AppColors.heroShadeEnd],
-              ),
-            ),
-          ),
-          body,
-        ],
-      ),
+      body: Stack(children: [body, const KsHeroShade()]),
     );
   }
 }

@@ -188,6 +188,8 @@ class _RouteMapState extends ConsumerState<RouteMapScreen> {
             truck: me,
             points: [for (final d in t.stops) ?d.pickup.geo, ?drop],
             path: [?start, for (final d in chosen) ?d.pickup.geo, ?drop],
+            // 155 keeps its rounded map (Figma radius 16).
+            radius: BorderRadius.circular(AppRadius.xl),
           ),
           const SizedBox(height: AppSpacing.block),
           Row(
@@ -314,9 +316,8 @@ class NavigationScreen extends ConsumerWidget {
                   for (final d in todo) ?d.pickup.geo,
                   ?t.lead.dropoff.geo,
                 ],
-                radius: const BorderRadius.vertical(
-                  bottom: Radius.circular(AppRadius.modal),
-                ),
+                // Figma 156: full-bleed, square corners.
+                radius: BorderRadius.zero,
                 fitPadding: EdgeInsets.fromLTRB(
                   _fitSide,
                   MediaQuery.of(context).padding.top +

@@ -430,7 +430,7 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
               ),
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(AppRadius.xl),
+                  borderRadius: BorderRadius.circular(AppRadius.photo),
                   child: SizedBox(
                     height: _imageHeight,
                     child: KsNetImage(

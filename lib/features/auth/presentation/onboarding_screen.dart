@@ -9,6 +9,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_page_dots.dart';
 
 /// 03–05 Onboarding (Figma 292:2570, 299:12376, 299:12393).
@@ -23,12 +24,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _pager = PageController();
   int _page = 0;
 
-  /// Figma sizes below its 28px status bar (the phone's own bar is added).
-  static const _heroH = 472.0 - 28;
-  static const _shadeH = 120.0 - 28;
-
-  /// Figma "Hero Space": the dots start below the photo.
-  static const _heroSpace = 380.0;
+  /// Figma hero photo height (the dots start below it).
+  static const _heroH = 472.0;
   static const _images = [
     AppImages.farmerField,
     AppImages.handshake,
@@ -72,8 +69,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final titles = [l.onb1Title, l.onb2Title, l.onb3Title];
     final bodies = [l.onb1Body, l.onb2Body, l.onb3Body];
 
-    final top = MediaQuery.of(context).padding.top;
-
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
@@ -83,80 +78,70 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         backgroundColor: AppColors.bgPage,
         extendBodyBehindAppBar: true,
         appBar: KsAppBar(onBack: _back, onImage: true),
-        body: PageView.builder(
-          controller: _pager,
-          itemCount: _images.length,
-          onPageChanged: (i) => setState(() => _page = i),
-          itemBuilder: (_, i) => Stack(
-            children: [
-              // Full-bleed hero (bottom corners 24) with a dark top shade so
-              // the white back arrow stays readable.
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  bottom: Radius.circular(AppRadius.modal),
-                ),
-                child: Image.asset(
-                  _images[i],
-                  height: _heroH + top,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Container(
-                height: _shadeH + top,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [AppColors.heroShade, AppColors.heroShadeEnd],
-                  ),
-                ),
-              ),
-              SafeArea(
+        body: Stack(
+          children: [
+            PageView.builder(
+              controller: _pager,
+              itemCount: _images.length,
+              onPageChanged: (i) => setState(() => _page = i),
+              itemBuilder: (_, i) => SafeArea(
                 top: false,
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(
-                    AppSpacing.screen,
-                    top + AppSizes.appBarHeight + AppSpacing.contentTop,
-                    AppSpacing.screen,
-                    AppSpacing.lg,
-                  ),
                   child: Column(
                     children: [
-                      const SizedBox(height: _heroSpace),
-                      const SizedBox(height: AppSpacing.block),
-                      KsPageDots(count: _images.length, index: i),
-                      const SizedBox(height: AppSpacing.block),
-                      Text(
-                        titles[i],
-                        textAlign: TextAlign.center,
-                        style: AppTypography.headingBold22.normal,
+                      KsHeroPhoto(
+                        figmaHeight: _heroH,
+                        image: Image.asset(_images[i], fit: BoxFit.cover),
                       ),
-                      const SizedBox(height: AppSpacing.block),
-                      Text(
-                        bodies[i],
-                        textAlign: TextAlign.center,
-                        style: AppTypography.bodyMedium.normal.withColor(
-                          AppColors.textSecondary,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          AppSpacing.screen,
+                          KsHeroPhoto.gap,
+                          AppSpacing.screen,
+                          AppSpacing.lg,
+                        ),
+                        child: Column(
+                          children: [
+                            KsPageDots(count: _images.length, index: i),
+                            const SizedBox(height: AppSpacing.block),
+                            Text(
+                              titles[i],
+                              textAlign: TextAlign.center,
+                              style: AppTypography.headingBold22.normal,
+                            ),
+                            const SizedBox(height: AppSpacing.block),
+                            Text(
+                              bodies[i],
+                              textAlign: TextAlign.center,
+                              style: AppTypography.bodyMedium.normal.withColor(
+                                AppColors.textSecondary,
+                              ),
+                            ),
+                            // gap 14 + Spacer(4) + gap 14, then buttons (Figma 03–05)
+                            const SizedBox(
+                              height:
+                                  AppSpacing.block +
+                                  AppSpacing.xs +
+                                  AppSpacing.block,
+                            ),
+                            KsButton(
+                              label: i == _images.length - 1
+                                  ? l.onbStart
+                                  : l.onbNext,
+                              onPressed: _next,
+                            ),
+                            const SizedBox(height: AppSpacing.block),
+                            KsButton.text(label: l.onbSkip, onPressed: _finish),
+                          ],
                         ),
                       ),
-                      // gap 14 + Spacer(4) + gap 14, then buttons (Figma 03–05)
-                      const SizedBox(
-                        height:
-                            AppSpacing.block + AppSpacing.xs + AppSpacing.block,
-                      ),
-                      KsButton(
-                        label: i == _images.length - 1 ? l.onbStart : l.onbNext,
-                        onPressed: _next,
-                      ),
-                      const SizedBox(height: AppSpacing.block),
-                      KsButton.text(label: l.onbSkip, onPressed: _finish),
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            const KsHeroShade(),
+          ],
         ),
       ),
     );

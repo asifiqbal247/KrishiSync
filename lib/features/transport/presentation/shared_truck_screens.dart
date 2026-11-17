@@ -14,6 +14,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_list_item.dart';
@@ -178,10 +179,13 @@ class _SharedTruckState extends ConsumerState<SharedTruckScreen> {
     if (plan == null) {
       return Scaffold(
         backgroundColor: AppColors.bgPage,
-        appBar: KsAppBar(title: l.sharedTitle),
-        body: KsEmptyState(
-          title: l.sharedNoTripTitle,
-          body: l.sharedNoTripBody,
+        extendBodyBehindAppBar: true,
+        appBar: KsAppBar(title: l.sharedTitle, onImage: true),
+        body: Stack(
+          children: [
+            KsEmptyState(title: l.sharedNoTripTitle, body: l.sharedNoTripBody),
+            const KsHeroShade(figmaHeight: 140),
+          ],
         ),
       );
     }
@@ -300,7 +304,8 @@ class SharedLoadScreen extends ConsumerStatefulWidget {
 }
 
 class _SharedLoadState extends ConsumerState<SharedLoadScreen> {
-  static const _mapH = 242.0;
+  /// Figma hero map height (full-bleed, square corners).
+  static const _heroH = 242.0;
   bool _busy = false;
 
   @override
@@ -333,73 +338,93 @@ class _SharedLoadState extends ConsumerState<SharedLoadScreen> {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.loadDetailsTitle),
       body: ListView(
-        padding: _pad,
+        padding: const EdgeInsets.only(bottom: AppSpacing.lg),
         children: [
-          KsRouteMap(
-            height: _mapH,
-            from: d.pickup.geo,
-            to: d.dropoff.geo,
-            points: [...?plan?.path],
-          ),
-          const SizedBox(height: AppSpacing.block),
-          KsInfoBox(
-            children: [
-              KsInfoRow(
-                l.rowGoods,
-                l.loadSub(d.cropName(lang), qtyKgText(context, d.weightKg)),
-              ),
-              KsInfoRow(
-                l.fieldPickup,
-                l.nameDot(districtOf(context, d.pickup), when),
-              ),
-              KsInfoRow(l.rowDestination, placeFull(context, d.dropoff)),
-              if (km != null) KsInfoRow(l.rowDistance, detourText(context, km)),
-              KsInfoRow(
-                l.rowFare,
-                l.fareSafeLine(Fmt.taka(context, fareOf(d))),
-              ),
-              KsInfoRow(
-                l.rowCustomer,
-                (buyer?.isVerified ?? false)
-                    ? l.nameVerified(d.buyerName)
-                    : d.buyerName,
-              ),
-            ],
-          ),
-          if (plan != null) ...[
-            const SizedBox(height: AppSpacing.block),
-            Text(
-              d.weightKg <= plan.freeKg
-                  ? l.sharedFits(tonsText(context, plan.freeKg))
-                  : l.tooBigTruck(tonsText(context, plan.freeKg)),
-              style: AppTypography.bodySmall.normal.withColor(
-                d.weightKg <= plan.freeKg
-                    ? AppColors.textSecondary
-                    : AppColors.textError,
-              ),
+          KsHeroPhoto(
+            figmaHeight: _heroH,
+            image: KsRouteMap(
+              height: double.infinity,
+              fitPadding: heroMapFit(context),
+              from: d.pickup.geo,
+              to: d.dropoff.geo,
+              points: [...?plan?.path],
             ),
-          ],
-          const SizedBox(
-            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
           ),
-          if (d.status != DeliveryStatus.open)
-            KsNoteBox(
-              title: d.transporterId == me.uid
-                  ? l.nJobAssigned(d.orderNo)
-                  : l.loadTaken,
-            )
-          else if (myBid != null)
-            KsNoteBox(title: l.myBidLine(Fmt.taka(context, myBid.fare)))
-          else
-            KsButton(
-              label: l.addThisLoad,
-              loading: _busy,
-              onPressed: () async {
-                setState(() => _busy = true);
-                await _addLoad(context, ref, d, me);
-                if (mounted) setState(() => _busy = false);
-              },
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.screen,
+              KsHeroPhoto.gap,
+              AppSpacing.screen,
+              0,
             ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                KsInfoBox(
+                  children: [
+                    KsInfoRow(
+                      l.rowGoods,
+                      l.loadSub(
+                        d.cropName(lang),
+                        qtyKgText(context, d.weightKg),
+                      ),
+                    ),
+                    KsInfoRow(
+                      l.fieldPickup,
+                      l.nameDot(districtOf(context, d.pickup), when),
+                    ),
+                    KsInfoRow(l.rowDestination, placeFull(context, d.dropoff)),
+                    if (km != null)
+                      KsInfoRow(l.rowDistance, detourText(context, km)),
+                    KsInfoRow(
+                      l.rowFare,
+                      l.fareSafeLine(Fmt.taka(context, fareOf(d))),
+                    ),
+                    KsInfoRow(
+                      l.rowCustomer,
+                      (buyer?.isVerified ?? false)
+                          ? l.nameVerified(d.buyerName)
+                          : d.buyerName,
+                    ),
+                  ],
+                ),
+                if (plan != null) ...[
+                  const SizedBox(height: AppSpacing.block),
+                  Text(
+                    d.weightKg <= plan.freeKg
+                        ? l.sharedFits(tonsText(context, plan.freeKg))
+                        : l.tooBigTruck(tonsText(context, plan.freeKg)),
+                    style: AppTypography.bodySmall.normal.withColor(
+                      d.weightKg <= plan.freeKg
+                          ? AppColors.textSecondary
+                          : AppColors.textError,
+                    ),
+                  ),
+                ],
+                const SizedBox(
+                  height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+                ),
+                if (d.status != DeliveryStatus.open)
+                  KsNoteBox(
+                    title: d.transporterId == me.uid
+                        ? l.nJobAssigned(d.orderNo)
+                        : l.loadTaken,
+                  )
+                else if (myBid != null)
+                  KsNoteBox(title: l.myBidLine(Fmt.taka(context, myBid.fare)))
+                else
+                  KsButton(
+                    label: l.addThisLoad,
+                    loading: _busy,
+                    onPressed: () async {
+                      setState(() => _busy = true);
+                      await _addLoad(context, ref, d, me);
+                      if (mounted) setState(() => _busy = false);
+                    },
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );

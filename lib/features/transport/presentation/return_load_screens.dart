@@ -40,8 +40,8 @@ const _pad = EdgeInsets.fromLTRB(
   AppSpacing.screen,
   AppSpacing.lg,
 );
-const _heroH = 96.0;
-const _mapH = 120.0;
+const _heroH = 200.0; // Figma 328×200 photo, square corners
+const _mapH = 200.0; // Figma 328×200 map, square corners
 
 /// A load counts as "on the way back" when it starts within this distance
 /// of the return-from district and ends within it of the return-to one.
@@ -473,7 +473,7 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
         padding: _pad,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.xl),
+            borderRadius: BorderRadius.circular(AppRadius.photo),
             child: Image.asset(
               AppImages.stateEmpty,
               height: _heroH,
@@ -582,7 +582,7 @@ class ReturnDoneScreen extends ConsumerWidget {
         padding: _pad,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.xl),
+            borderRadius: BorderRadius.circular(AppRadius.photo),
             child: Image.asset(
               AppImages.handshake,
               height: _heroH,

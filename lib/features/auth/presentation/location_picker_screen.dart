@@ -63,9 +63,9 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
   String get _lang => Localizations.localeOf(context).languageCode;
 
   void _go(int step) => setState(() {
-        _step = step;
-        _search.clear();
-      });
+    _step = step;
+    _search.clear();
+  });
 
   void _back() {
     if (_step > 1) {
@@ -113,8 +113,9 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
       final pos = await Geolocator.getCurrentPosition(
         // Plain Android GPS: no Google "Location Accuracy" pop-up.
         locationSettings: AndroidSettings(
-            timeLimit: const Duration(seconds: 20),
-            forceLocationManager: true),
+          timeLimit: const Duration(seconds: 20),
+          forceLocationManager: true,
+        ),
       );
       final path = data.nearest(pos.latitude, pos.longitude);
       if (path == null) throw Exception('not-found');
@@ -181,7 +182,10 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
       // Optional shortcut ("বাড়ি", "খামার"…); failure must not block the flow.
       repo
           .saveAddress(
-              me.uid, SavedAddress(tag: _tag, location: loc), me.savedAddresses)
+            me.uid,
+            SavedAddress(tag: _tag, location: loc),
+            me.savedAddresses,
+          )
           .catchError((_) {});
     }
   }
@@ -214,24 +218,25 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
             child: switch (_step) {
               1 => _divisionStep(l, d, me),
               2 => _listStep(
-                  l,
-                  step: 2,
-                  level: l.locLevelDistrict,
-                  searchHint: l.locSearchDistrict,
-                  items: _division?.children ?? const [],
-                  count: (p) => l.locUpazilaCount(
-                      Fmt.digits(context, '${p.children.length}')),
-                  onPick: _pickDistrict,
+                l,
+                step: 2,
+                level: l.locLevelDistrict,
+                searchHint: l.locSearchDistrict,
+                items: _division?.children ?? const [],
+                count: (p) => l.locUpazilaCount(
+                  Fmt.digits(context, '${p.children.length}'),
                 ),
+                onPick: _pickDistrict,
+              ),
               3 => _listStep(
-                  l,
-                  step: 3,
-                  level: l.locLevelUpazila,
-                  searchHint: l.locSearchUpazila,
-                  items: _district?.children ?? const [],
-                  count: null,
-                  onPick: _pickUpazila,
-                ),
+                l,
+                step: 3,
+                level: l.locLevelUpazila,
+                searchHint: l.locSearchUpazila,
+                items: _district?.children ?? const [],
+                count: null,
+                onPick: _pickUpazila,
+              ),
               _ => _villageStep(l, me),
             },
           ),
@@ -243,11 +248,16 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
   // ---------- shared bits ----------
 
   Widget _stepLabel(AppLocalizations l, int step, String level) => Text(
-        l.locStep(Fmt.digits(context, '$step'),
-            Fmt.digits(context, '$_total'), level),
-        style: AppTypography.caption.normal.copyWith(
-            fontWeight: FontWeight.w600, color: AppColors.textSecondary),
-      );
+    l.locStep(
+      Fmt.digits(context, '$step'),
+      Fmt.digits(context, '$_total'),
+      level,
+    ),
+    style: AppTypography.caption.normal.copyWith(
+      fontWeight: FontWeight.w600,
+      color: AppColors.textSecondary,
+    ),
+  );
 
   Widget _breadcrumb(AppLocalizations l) {
     final crumbs = <(String, VoidCallback?)>[];
@@ -280,8 +290,12 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
     );
   }
 
-  static const _contentPadding = EdgeInsets.fromLTRB(AppSpacing.screen,
-      AppSpacing.contentTop, AppSpacing.screen, AppSpacing.s2xl);
+  static const _contentPadding = EdgeInsets.fromLTRB(
+    AppSpacing.screen,
+    AppSpacing.contentTop,
+    AppSpacing.screen,
+    AppSpacing.s2xl,
+  );
 
   // ---------- 09 Division ----------
 
@@ -310,7 +324,8 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
           highlighted: true,
           thumb: Image.asset(AppImages.locationThumb, fit: BoxFit.cover),
           title: _gpsBusy ? l.locGpsLocating : l.locUseGps,
-          subtitle: _gpsError ??
+          subtitle:
+              _gpsError ??
               (me?.location.isComplete == true
                   ? _placeLine(me!.location)
                   : null),
@@ -323,8 +338,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
             height: AppSizes.sectionHeader,
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(l.locRecent,
-                  style: AppTypography.labelButton.normal),
+              child: Text(l.locRecent, style: AppTypography.labelButton.normal),
             ),
           ),
           for (final a in saved) ...[
@@ -352,9 +366,12 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
         if (searching) ...[
           if (hits.isEmpty) ...[
             const SizedBox(height: AppSpacing.md),
-            Text(l.locNoResults,
-                style: AppTypography.bodyMedium
-                    .withColor(AppColors.textSecondary)),
+            Text(
+              l.locNoResults,
+              style: AppTypography.bodyMedium.withColor(
+                AppColors.textSecondary,
+              ),
+            ),
           ],
           for (final (dv, ds, up) in hits.take(40)) ...[
             const SizedBox(height: AppSpacing.md),
@@ -380,7 +397,8 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
             KsListItem(
               title: dv.name(_lang),
               trailingText: l.locDistrictCount(
-                  Fmt.digits(context, '${dv.children.length}')),
+                Fmt.digits(context, '${dv.children.length}'),
+              ),
               onTap: () => _pickDivision(dv),
             ),
           ],
@@ -414,9 +432,10 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
         _stepLabel(l, step, level),
         if (shown.isEmpty) ...[
           const SizedBox(height: AppSpacing.md),
-          Text(l.locNoResults,
-              style:
-                  AppTypography.bodyMedium.withColor(AppColors.textSecondary)),
+          Text(
+            l.locNoResults,
+            style: AppTypography.bodyMedium.withColor(AppColors.textSecondary),
+          ),
         ],
         for (final p in shown) ...[
           const SizedBox(height: AppSpacing.md),
@@ -432,7 +451,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
 
   // ---------- 12 Union, Village & Map Pin ----------
 
-  static const _mapHeight = 110.0;
+  static const _mapHeight = 160.0; // Figma 12: 328×160, square
   static const _mapZoom = 13.0;
   static const _pinSize = 28.0;
 
@@ -467,7 +486,7 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
         ),
         const SizedBox(height: AppSpacing.md),
         ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadius.xl),
+          borderRadius: BorderRadius.circular(AppRadius.photo),
           child: SizedBox(
             height: _mapHeight,
             child: _pin == null
@@ -484,16 +503,21 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
                             'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                         userAgentPackageName: 'com.asif.krishisync',
                       ),
-                      MarkerLayer(markers: [
-                        Marker(
-                          point: _pin!,
-                          width: _pinSize,
-                          height: _pinSize,
-                          alignment: Alignment.topCenter,
-                          child: const AppIcon(AppIcons.location,
-                              size: _pinSize, color: AppColors.iconBrand),
-                        ),
-                      ]),
+                      MarkerLayer(
+                        markers: [
+                          Marker(
+                            point: _pin!,
+                            width: _pinSize,
+                            height: _pinSize,
+                            alignment: Alignment.topCenter,
+                            child: const AppIcon(
+                              AppIcons.location,
+                              size: _pinSize,
+                              color: AppColors.iconBrand,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
           ),
@@ -507,7 +531,9 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
         const SizedBox(height: AppSpacing.md),
         Container(
           padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md, vertical: AppSpacing.x10),
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.x10,
+          ),
           decoration: BoxDecoration(
             color: AppColors.bgSurface,
             borderRadius: BorderRadius.circular(AppRadius.lg),
@@ -517,9 +543,12 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
             children: [
               Text(l.locWhyTitle, style: AppTypography.bodySmallStrong.normal),
               const SizedBox(height: AppSpacing.xs),
-              Text(l.locWhyBody,
-                  style: AppTypography.caption.normal
-                      .withColor(AppColors.textSecondary)),
+              Text(
+                l.locWhyBody,
+                style: AppTypography.caption.normal.withColor(
+                  AppColors.textSecondary,
+                ),
+              ),
             ],
           ),
         ),
@@ -544,27 +573,23 @@ class _LocationPickerScreenState extends ConsumerState<LocationPickerScreen> {
             ),
           ),
         ],
-        const SizedBox(
-            height: AppSpacing.md + AppSpacing.xs + AppSpacing.md),
-        KsButton(
-          label: l.locConfirm,
-          onPressed: () => _confirm(me),
-        ),
+        const SizedBox(height: AppSpacing.md + AppSpacing.xs + AppSpacing.md),
+        KsButton(label: l.locConfirm, onPressed: () => _confirm(me)),
       ],
     );
   }
 
   String _placeLine(UserLocation loc) => [
-        BdPlace.display(loc.upazila, _lang),
-        BdPlace.display(loc.district, _lang),
-      ].where((s) => s.isNotEmpty).join(', ');
+    BdPlace.display(loc.upazila, _lang),
+    BdPlace.display(loc.district, _lang),
+  ].where((s) => s.isNotEmpty).join(', ');
 
   String _tagLabel(AppLocalizations l, AddressTag t) => switch (t) {
-        AddressTag.home => l.locTagHome,
-        AddressTag.farm => l.locTagFarm,
-        AddressTag.store => l.locTagStore,
-        AddressTag.other => l.locTagOther,
-      };
+    AddressTag.home => l.locTagHome,
+    AddressTag.farm => l.locTagFarm,
+    AddressTag.store => l.locTagStore,
+    AddressTag.other => l.locTagOther,
+  };
 }
 
 /// Union list shown from the "ইউনিয়ন / পৌরসভা" field.
@@ -596,7 +621,11 @@ class _UnionSheetState extends State<_UnionSheet> {
       maxChildSize: 0.95,
       builder: (_, scroll) => Padding(
         padding: const EdgeInsets.fromLTRB(
-            AppSpacing.screen, AppSpacing.lg, AppSpacing.screen, 0),
+          AppSpacing.screen,
+          AppSpacing.lg,
+          AppSpacing.screen,
+          0,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

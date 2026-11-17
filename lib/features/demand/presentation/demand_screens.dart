@@ -72,7 +72,7 @@ class _PostDemandState extends ConsumerState<PostDemandScreen> {
   bool _monthly = false;
   final Map<String, String?> _err = {};
   bool _busy = false;
-  static const _mapH = 110.0;
+  static const _mapH = 200.0; // Figma 98: 328×200, square
   static const _optImg = 36.0;
 
   @override

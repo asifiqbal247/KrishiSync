@@ -52,6 +52,10 @@ abstract final class AppRadius {
   static const double statTile = 10; // 64 track-record stat tile
   static const double modal = 24; // HF/Modal
   static const double actionIcon = 22; // action tile icon wrap (44/2)
+
+  /// Big photos and map images (Figma update 2026-11-17: square corners;
+  /// only the 155 route map and 207 document viewer keep [xl]).
+  static const double photo = 0;
 }
 
 /// Fixed sizes from HF components.

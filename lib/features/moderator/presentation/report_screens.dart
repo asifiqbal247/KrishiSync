@@ -445,7 +445,7 @@ class _ReportDetailState extends ConsumerState<ReportDetailScreen> {
           if (r.photoUrl != null) ...[
             const SizedBox(height: AppSpacing.block),
             ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.xl),
+              borderRadius: BorderRadius.circular(AppRadius.photo),
               child: SizedBox(
                 height: KsUploadBox.previewHeight * 1.5,
                 child: KsNetImage(url: r.photoUrl),

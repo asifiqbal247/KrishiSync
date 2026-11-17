@@ -47,47 +47,54 @@ const _pad = EdgeInsets.fromLTRB(
   AppSpacing.lg,
 );
 const _gapBeforeCta = AppSpacing.block + AppSpacing.xs + AppSpacing.block;
-const _heroH = 96.0;
+const _heroH = 200.0; // Figma 328×200 photo, square corners
 const _maxPhotos = 3;
 
 Widget _loading(String title) => Scaffold(
-      backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: title),
-      body: const KsSkeletonList(),
-    );
+  backgroundColor: AppColors.bgPage,
+  appBar: KsAppBar(title: title),
+  body: const KsSkeletonList(),
+);
 
 /// Five checklist lines (Figma 89). Allowed damage depends on the grade.
 /// 89 checklist = the crop's grade standard (97), one line per item.
 List<String> checklistLabels(
-        BuildContext context, String cropKey, String grade) =>
-    [
-      for (final (k, v) in qualityStandardRows(context, cropKey, grade))
-        AppLocalizations.of(context).stdCheckLine(k, v),
-    ];
+  BuildContext context,
+  String cropKey,
+  String grade,
+) => [
+  for (final (k, v) in qualityStandardRows(context, cropKey, grade))
+    AppLocalizations.of(context).stdCheckLine(k, v),
+];
 
 String decisionLabel(AppLocalizations l, InspectionDecision d) => switch (d) {
-      InspectionDecision.approve => l.decApprove,
-      InspectionDecision.partial => l.decPartial,
-      InspectionDecision.cancel => l.decCancel,
-    };
+  InspectionDecision.approve => l.decApprove,
+  InspectionDecision.partial => l.decPartial,
+  InspectionDecision.cancel => l.decCancel,
+};
 
 String reasonLabel(AppLocalizations l, RejectReason r) => switch (r) {
-      RejectReason.small => l.reasonSmall,
-      RejectReason.damaged => l.reasonDamaged,
-      RejectReason.lowGrade => l.reasonLowGrade,
-    };
+  RejectReason.small => l.reasonSmall,
+  RejectReason.damaged => l.reasonDamaged,
+  RejectReason.lowGrade => l.reasonLowGrade,
+};
 
 // ───────────────────────── Buyer: assign ─────────────────────────
 
 /// Buyer names the inspector (name + phone). The inspector logs in to the
 /// app with that number; the buyer can also send the invite as a message.
 Future<void> showAssignInspectorSheet(
-    BuildContext context, WidgetRef ref, TradeOrder o, Inspection? current) async {
+  BuildContext context,
+  WidgetRef ref,
+  TradeOrder o,
+  Inspection? current,
+) async {
   final l = AppLocalizations.of(context);
   final lang = Localizations.localeOf(context).languageCode;
   final name = TextEditingController(text: current?.inspectorName ?? '');
   final phone = TextEditingController(
-      text: current == null ? '' : current.inspectorPhone.replaceFirst('+88', ''));
+    text: current == null ? '' : current.inspectorPhone.replaceFirst('+88', ''),
+  );
   String? nameErr;
   String? phoneErr;
   var busy = false;
@@ -96,17 +103,24 @@ Future<void> showAssignInspectorSheet(
     isScrollControlled: true,
     builder: (ctx) => StatefulBuilder(
       builder: (ctx, setS) => Padding(
-        padding: EdgeInsets.fromLTRB(AppSpacing.screen, AppSpacing.xl,
-            AppSpacing.screen, AppSpacing.s2xl + MediaQuery.of(ctx).viewInsets.bottom),
+        padding: EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.xl,
+          AppSpacing.screen,
+          AppSpacing.s2xl + MediaQuery.of(ctx).viewInsets.bottom,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(l.assignInspTitle, style: AppTypography.headingBold20.normal),
             const SizedBox(height: AppSpacing.sm),
-            Text(l.assignInspBody,
-                style: AppTypography.bodySmall.normal
-                    .withColor(AppColors.textSecondary)),
+            Text(
+              l.assignInspBody,
+              style: AppTypography.bodySmall.normal.withColor(
+                AppColors.textSecondary,
+              ),
+            ),
             const SizedBox(height: AppSpacing.block),
             KsTextField(
               label: l.fieldInspName,
@@ -119,7 +133,7 @@ Future<void> showAssignInspectorSheet(
               hint: l.loginPhoneHint,
               controller: phone,
               keyboardType: TextInputType.phone,
-              prefixText: '+880',
+              prefixText: l.loginCountryCode,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯]')),
                 LengthLimitingTextInputFormatter(11),
@@ -131,27 +145,40 @@ Future<void> showAssignInspectorSheet(
               label: l.sendInvite,
               loading: busy,
               onPressed: () async {
-                final local = BdPhone.normalizeLocal(Fmt.latinDigits(phone.text));
+                final local = BdPhone.normalizeLocal(
+                  Fmt.latinDigits(phone.text),
+                );
                 final me = ref.read(currentUserProvider).value;
                 setS(() {
                   nameErr = name.text.trim().isEmpty ? l.errNameRequired : null;
                   phoneErr = local == null
                       ? l.loginInvalidPhone
                       : (me != null && BdPhone.toE164(local) == me.phone)
-                          ? l.errInspNotSelf
-                          : null;
+                      ? l.errInspNotSelf
+                      : null;
                 });
                 if (nameErr != null || phoneErr != null) return;
                 setS(() => busy = true);
                 try {
-                  await ref.read(inspectionRepositoryProvider).invite(o,
-                      name: name.text.trim(), phoneE164: BdPhone.toE164(local!));
+                  await ref
+                      .read(inspectionRepositoryProvider)
+                      .invite(
+                        o,
+                        name: name.text.trim(),
+                        phoneE164: BdPhone.toE164(local!),
+                      );
                   if (ctx.mounted) Navigator.pop(ctx);
                   // Let the buyer send the invite by SMS / WhatsApp.
-                  await SharePlus.instance.share(ShareParams(
-                      text: l.inspInviteText(name.text.trim(), o.orderNo,
-                          o.cropName(lang),
-                          BdPhone.pretty(local))));
+                  await SharePlus.instance.share(
+                    ShareParams(
+                      text: l.inspInviteText(
+                        name.text.trim(),
+                        o.orderNo,
+                        o.cropName(lang),
+                        BdPhone.pretty(local),
+                      ),
+                    ),
+                  );
                 } catch (_) {
                   setS(() => busy = false);
                   if (context.mounted) KsToast.show(context, l.errorGeneric);
@@ -181,8 +208,12 @@ class InspectorHomeScreen extends ConsumerWidget {
     final list = async.value ?? const <Inspection>[];
     if (async.isLoading && list.isEmpty) return _loading(l.inspHomeTitle);
     final open = list.where((i) => !i.done).toList();
-    final head = open.isNotEmpty ? open.first : (list.isEmpty ? null : list.first);
-    final headOrder = head == null ? null : ref.watch(orderProvider(head.orderId)).value;
+    final head = open.isNotEmpty
+        ? open.first
+        : (list.isEmpty ? null : list.first);
+    final headOrder = head == null
+        ? null
+        : ref.watch(orderProvider(head.orderId)).value;
     final driver = headOrder?.transporterId == null
         ? null
         : ref.watch(userByIdProvider(headOrder!.transporterId!)).value;
@@ -195,9 +226,9 @@ class InspectorHomeScreen extends ConsumerWidget {
         // Opened from the profile: back; after a fresh start: role home.
         onBack: () => context.canPop()
             ? context.pop()
-            : context.go(me?.role == null
-                ? Routes.inspector
-                : Routes.homeFor(me!.role!)),
+            : context.go(
+                me?.role == null ? Routes.inspector : Routes.homeFor(me!.role!),
+              ),
       ),
       body: ListView(
         padding: _pad,
@@ -208,29 +239,39 @@ class InspectorHomeScreen extends ConsumerWidget {
               title: l.inspInvitedBy(head.buyerName),
               body: headOrder == null
                   ? head.orderNo
-                  : l.inspOrderLine(head.orderNo, head.cropName(lang),
+                  : l.inspOrderLine(
+                      head.orderNo,
+                      head.cropName(lang),
                       qtyText(context, headOrder.quantityKg),
                       headOrder.pickupDate == null
                           ? ''
-                          : Fmt.date(context, headOrder.pickupDate!)),
+                          : Fmt.date(context, headOrder.pickupDate!),
+                    ),
             ),
             if (headOrder?.transporterName != null) ...[
               const SizedBox(height: AppSpacing.block),
               KsNoteBox(
                 title: l.inspTruckBooked(headOrder!.transporterName!),
-                body: l.inspTruckBookedBody(placeFull(context, headOrder.pickup)),
+                body: l.inspTruckBookedBody(
+                  placeFull(context, headOrder.pickup),
+                ),
               ),
             ],
           ],
           const SizedBox(height: AppSpacing.block),
-          Text(l.inspPickups(Fmt.digits(context, '${list.length}')),
-              style: AppTypography.bodyMediumStrong.normal),
+          Text(
+            l.inspPickups(Fmt.digits(context, '${list.length}')),
+            style: AppTypography.bodyMediumStrong.normal,
+          ),
           if (list.isEmpty) ...[
             const SizedBox(height: AppSpacing.block),
-            Text(l.inspNone,
-                textAlign: TextAlign.center,
-                style: AppTypography.bodyMedium.normal
-                    .withColor(AppColors.textSecondary)),
+            Text(
+              l.inspNone,
+              textAlign: TextAlign.center,
+              style: AppTypography.bodyMedium.normal.withColor(
+                AppColors.textSecondary,
+              ),
+            ),
           ],
           for (final (i, x) in list.indexed) ...[
             const SizedBox(height: AppSpacing.block),
@@ -240,36 +281,48 @@ class InspectorHomeScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.block),
             Text(l.inspChalan, style: AppTypography.bodyMediumStrong.normal),
             const SizedBox(height: AppSpacing.block),
-            KsInfoBox(children: [
-              KsInfoRow(l.inspGrade, l.inspGradeValue(headOrder.grade)),
-              KsInfoRow(l.inspTruck, headOrder.transporterName ?? l.stepWaiting),
-            ]),
+            KsInfoBox(
+              children: [
+                KsInfoRow(l.inspGrade, l.inspGradeValue(headOrder.grade)),
+                KsInfoRow(
+                  l.inspTruck,
+                  headOrder.transporterName ?? l.stepWaiting,
+                ),
+              ],
+            ),
             const SizedBox(height: AppSpacing.block),
-            Row(children: [
-              Expanded(
-                child: KsButton.outline(
-                  label: l.callDriver,
-                  compact: true,
-                  onPressed: driver?.phone == null
-                      ? null
-                      : () => launchUrl(Uri(scheme: 'tel', path: driver!.phone)),
+            Row(
+              children: [
+                Expanded(
+                  child: KsButton.outline(
+                    label: l.callDriver,
+                    compact: true,
+                    onPressed: driver?.phone == null
+                        ? null
+                        : () => launchUrl(
+                            Uri(scheme: 'tel', path: driver!.phone),
+                          ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: KsButton.outline(
-                  label: l.seeRouteMap,
-                  compact: true,
-                  onPressed: headOrder.pickup.geo == null
-                      ? null
-                      : () => launchUrl(
-                          Uri.parse('https://www.google.com/maps/dir/?api=1'
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: KsButton.outline(
+                    label: l.seeRouteMap,
+                    compact: true,
+                    onPressed: headOrder.pickup.geo == null
+                        ? null
+                        : () => launchUrl(
+                            Uri.parse(
+                              'https://www.google.com/maps/dir/?api=1'
                               '&destination=${headOrder.pickup.geo!.latitude},'
-                              '${headOrder.pickup.geo!.longitude}'),
-                          mode: LaunchMode.externalApplication),
+                              '${headOrder.pickup.geo!.longitude}',
+                            ),
+                            mode: LaunchMode.externalApplication,
+                          ),
+                  ),
                 ),
-              ),
-            ]),
+              ],
+            ),
           ],
           if (!(me?.hasRole ?? true)) ...[
             const SizedBox(height: _gapBeforeCta),
@@ -285,7 +338,11 @@ class InspectorHomeScreen extends ConsumerWidget {
 }
 
 class _PickupRow extends ConsumerWidget {
-  const _PickupRow({required this.index, required this.x, required this.highlighted});
+  const _PickupRow({
+    required this.index,
+    required this.x,
+    required this.highlighted,
+  });
   final int index;
   final Inspection x;
   final bool highlighted;
@@ -295,15 +352,19 @@ class _PickupRow extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final o = ref.watch(orderProvider(x.orderId)).value;
     final farmer = ref.watch(userByIdProvider(x.farmerId)).value;
-    final closed = o != null &&
+    final closed =
+        o != null &&
         (o.status == OrderStatus.cancelled ||
             o.timeline.containsKey('pickedUp'));
     final (badge, bg, fg) = x.done
-        ? (decisionLabel(l, x.decision ?? InspectionDecision.approve),
-            AppColors.bgMuted, AppColors.textSecondary)
+        ? (
+            decisionLabel(l, x.decision ?? InspectionDecision.approve),
+            AppColors.bgMuted,
+            AppColors.textSecondary,
+          )
         : closed
-            ? (l.inspClosed, AppColors.bgMuted, AppColors.textSecondary)
-            : (l.inspStart, AppColors.bgSuccessSubtle, AppColors.textSuccess);
+        ? (l.inspClosed, AppColors.bgMuted, AppColors.textSecondary)
+        : (l.inspStart, AppColors.bgSuccessSubtle, AppColors.textSuccess);
     return KsListItem(
       highlighted: highlighted,
       thumb: KsNetImage(
@@ -322,9 +383,11 @@ class _PickupRow extends ConsumerWidget {
       badge: badge,
       badgeColor: bg,
       badgeTextColor: fg,
-      onTap: () => context.push(x.done || closed
-          ? Routes.inspSent(x.orderId)
-          : Routes.inspCheck(x.orderId)),
+      onTap: () => context.push(
+        x.done || closed
+            ? Routes.inspSent(x.orderId)
+            : Routes.inspCheck(x.orderId),
+      ),
     );
   }
 }
@@ -344,7 +407,10 @@ class QualityCheckScreen extends ConsumerStatefulWidget {
 class _QualityState extends ConsumerState<QualityCheckScreen> {
   _Mode _mode = _Mode.check;
   InspectionDecision _decision = InspectionDecision.approve;
-  final List<bool?> _checks = List.filled(InspectionRepository.checklistSize, true);
+  final List<bool?> _checks = List.filled(
+    InspectionRepository.checklistSize,
+    true,
+  );
   final _kg = TextEditingController();
   final _accept = TextEditingController();
   RejectReason _reason = RejectReason.small;
@@ -372,30 +438,41 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
     setState(() {
       _err = _weighed <= 0
           ? l.errQtyInvalid
-          : (_mode == _Mode.partial && (_acceptKg <= 0 || _acceptKg >= _weighed))
-              ? l.errAcceptKg(qtyText(context, _weighed))
-              : shots.isEmpty
-                  ? l.errInspPhoto
-                  : null;
+          : (_mode == _Mode.partial &&
+                (_acceptKg <= 0 || _acceptKg >= _weighed))
+          ? l.errAcceptKg(qtyText(context, _weighed))
+          : shots.isEmpty
+          ? l.errInspPhoto
+          : null;
     });
     if (_err != null) return;
     if (_mode == _Mode.cancel) {
-      final ok = await showKsConfirm(context,
-          title: l.cancelLoadQ,
-          body: l.cancelLoadBody,
-          noLabel: l.noGoBack,
-          yesLabel: l.yesCancelIt);
+      final ok = await showKsConfirm(
+        context,
+        title: l.cancelLoadQ,
+        body: l.cancelLoadBody,
+        noLabel: l.noGoBack,
+        yesLabel: l.yesCancelIt,
+      );
       if (!ok) return;
     }
     setState(() => _busy = true);
     try {
       final urls = <String>[];
-      for (final f in [..._photos, if (_mode == _Mode.partial) ..._rejectPhotos]) {
-        urls.add((await ref.read(imageStorageProvider).upload(f,
-                kind: ImageKind.delivery, ownerUid: me.uid))
-            .url);
+      for (final f in [
+        ..._photos,
+        if (_mode == _Mode.partial) ..._rejectPhotos,
+      ]) {
+        urls.add(
+          (await ref
+                  .read(imageStorageProvider)
+                  .upload(f, kind: ImageKind.delivery, ownerUid: me.uid))
+              .url,
+        );
       }
-      await ref.read(inspectionRepositoryProvider).submit(
+      await ref
+          .read(inspectionRepositoryProvider)
+          .submit(
             o,
             me.uid,
             decision: _decision,
@@ -437,63 +514,84 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
     final labels = checklistLabels(context, o.cropKey, o.grade);
 
     Widget photoBox(List<File> list, String label) => KsUploadBox(
-          label: label,
-          file: list.isEmpty ? null : list.last,
-          height: list.isEmpty ? KsUploadBox.defaultHeight : KsUploadBox.previewHeight,
-          onTap: list.length >= _maxPhotos
-              ? () {}
-              : () async {
-                  final f = await pickPhoto(context);
-                  if (f != null) setState(() => list.add(f));
-                },
-        );
+      label: label,
+      file: list.isEmpty ? null : list.last,
+      height: list.isEmpty
+          ? KsUploadBox.defaultHeight
+          : KsUploadBox.previewHeight,
+      onTap: list.length >= _maxPhotos
+          ? () {}
+          : () async {
+              final f = await pickPhoto(context);
+              if (f != null) setState(() => list.add(f));
+            },
+    );
 
     Widget reasonPills() => Wrap(
-          spacing: AppSpacing.sm,
-          runSpacing: AppSpacing.sm,
-          children: [
-            for (final r in RejectReason.values)
-              KsPill(
-                  label: reasonLabel(l, r),
-                  selected: _reason == r,
-                  onTap: () => setState(() => _reason = r)),
-          ],
-        );
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      children: [
+        for (final r in RejectReason.values)
+          KsPill(
+            label: reasonLabel(l, r),
+            selected: _reason == r,
+            onTap: () => setState(() => _reason = r),
+          ),
+      ],
+    );
 
     final weighText = l.scaleWeight(qtyText(context, _weighed));
     final body = switch (_mode) {
       _Mode.check => [
-          Text(l.gradeChecklist(o.grade), style: AppTypography.bodyMediumStrong.normal),
-          for (var i = 0; i < labels.length; i++) ...[
-            const SizedBox(height: AppSpacing.block),
-            Row(children: [
-              Expanded(child: Text(labels[i], style: AppTypography.bodyMedium.normal)),
+        Text(
+          l.gradeChecklist(o.grade),
+          style: AppTypography.bodyMediumStrong.normal,
+        ),
+        for (var i = 0; i < labels.length; i++) ...[
+          const SizedBox(height: AppSpacing.block),
+          Row(
+            children: [
+              Expanded(
+                child: Text(labels[i], style: AppTypography.bodyMedium.normal),
+              ),
               KsPill(
-                  label: l.chkOk,
-                  selected: _checks[i] == true,
-                  onTap: () => setState(() => _checks[i] = true)),
+                label: l.chkOk,
+                selected: _checks[i] == true,
+                onTap: () => setState(() => _checks[i] = true),
+              ),
               const SizedBox(width: AppSpacing.sm),
               KsPill(
-                  label: l.chkProblem,
-                  selected: _checks[i] == false,
-                  onTap: () => setState(() => _checks[i] = false)),
-            ]),
-          ],
-          const SizedBox(height: AppSpacing.block),
-          KsTextField(
-            label: l.rowDigitalWeight,
-            controller: _kg,
-            suffixText: l.unitKg,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]'))],
-            onChanged: (_) => setState(() {}),
+                label: l.chkProblem,
+                selected: _checks[i] == false,
+                onTap: () => setState(() => _checks[i] = false),
+              ),
+            ],
           ),
-          const SizedBox(height: AppSpacing.block),
-          photoBox(_photos,
-              l.goodsPhotos(Fmt.digits(context, '${_photos.length}'),
-                  Fmt.digits(context, '$_maxPhotos'))),
-          const SizedBox(height: AppSpacing.block),
-          Wrap(spacing: AppSpacing.sm, runSpacing: AppSpacing.sm, children: [
+        ],
+        const SizedBox(height: AppSpacing.block),
+        KsTextField(
+          label: l.rowDigitalWeight,
+          controller: _kg,
+          suffixText: l.unitKg,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
+          ],
+          onChanged: (_) => setState(() {}),
+        ),
+        const SizedBox(height: AppSpacing.block),
+        photoBox(
+          _photos,
+          l.goodsPhotos(
+            Fmt.digits(context, '${_photos.length}'),
+            Fmt.digits(context, '$_maxPhotos'),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.block),
+        Wrap(
+          spacing: AppSpacing.sm,
+          runSpacing: AppSpacing.sm,
+          children: [
             for (final d in InspectionDecision.values)
               KsPill(
                 label: switch (d) {
@@ -512,58 +610,87 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
                   }
                 }),
               ),
-          ]),
-          const SizedBox(height: AppSpacing.block),
-          Text(l.qcNote,
-              style: AppTypography.bodySmall.normal.withColor(AppColors.textSecondary)),
-        ],
-      _Mode.partial => [
-          Text(l.howMuchTake, style: AppTypography.bodyMediumStrong.normal),
-          const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(l.rowDigitalWeight, weighText),
-            KsInfoRow(l.rowLeftOut,
-                qtyText(context, (_weighed - _acceptKg).clamp(0, _weighed))),
-          ]),
-          const SizedBox(height: AppSpacing.block),
-          Text(l.howMuchGood, style: AppTypography.bodyMediumStrong.normal),
-          const SizedBox(height: AppSpacing.block),
-          KsTextField(
-            label: '',
-            hint: Fmt.number(context, _weighed),
-            controller: _accept,
-            suffixText: l.unitKg,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]'))],
-            onChanged: (_) => setState(() {}),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.block),
+        Text(
+          l.qcNote,
+          style: AppTypography.bodySmall.normal.withColor(
+            AppColors.textSecondary,
           ),
-          const SizedBox(height: AppSpacing.block),
-          photoBox(_rejectPhotos,
-              l.rejectPhotos(Fmt.digits(context, '${_rejectPhotos.length}'),
-                  Fmt.digits(context, '$_maxPhotos'))),
-          const SizedBox(height: AppSpacing.block),
-          reasonPills(),
-          const SizedBox(height: AppSpacing.block),
-          Text(l.partialNote(qtyText(context, _acceptKg)),
-              style: AppTypography.bodySmall.normal.withColor(AppColors.textSecondary)),
-        ],
+        ),
+      ],
+      _Mode.partial => [
+        Text(l.howMuchTake, style: AppTypography.bodyMediumStrong.normal),
+        const SizedBox(height: AppSpacing.block),
+        KsInfoBox(
+          children: [
+            KsInfoRow(l.rowDigitalWeight, weighText),
+            KsInfoRow(
+              l.rowLeftOut,
+              qtyText(context, (_weighed - _acceptKg).clamp(0, _weighed)),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.block),
+        Text(l.howMuchGood, style: AppTypography.bodyMediumStrong.normal),
+        const SizedBox(height: AppSpacing.block),
+        KsTextField(
+          label: '',
+          hint: Fmt.number(context, _weighed),
+          controller: _accept,
+          suffixText: l.unitKg,
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
+          ],
+          onChanged: (_) => setState(() {}),
+        ),
+        const SizedBox(height: AppSpacing.block),
+        photoBox(
+          _rejectPhotos,
+          l.rejectPhotos(
+            Fmt.digits(context, '${_rejectPhotos.length}'),
+            Fmt.digits(context, '$_maxPhotos'),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.block),
+        reasonPills(),
+        const SizedBox(height: AppSpacing.block),
+        Text(
+          l.partialNote(qtyText(context, _acceptKg)),
+          style: AppTypography.bodySmall.normal.withColor(
+            AppColors.textSecondary,
+          ),
+        ),
+      ],
       _Mode.cancel => [
-          Text(l.whyCancel, style: AppTypography.bodyMediumStrong.normal),
-          const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
+        Text(l.whyCancel, style: AppTypography.bodyMediumStrong.normal),
+        const SizedBox(height: AppSpacing.block),
+        KsInfoBox(
+          children: [
             KsInfoRow(l.rowDigitalWeight, weighText),
             KsInfoRow(l.rowWillLoad, qtyText(context, 0)),
-          ]),
-          const SizedBox(height: AppSpacing.block),
-          photoBox(_photos,
-              l.goodsPhotos(Fmt.digits(context, '${_photos.length}'),
-                  Fmt.digits(context, '$_maxPhotos'))),
-          const SizedBox(height: AppSpacing.block),
-          reasonPills(),
-          const SizedBox(height: AppSpacing.block),
-          Text(l.cancelLoadNote,
-              style: AppTypography.bodySmall.normal.withColor(AppColors.textSecondary)),
-        ],
+          ],
+        ),
+        const SizedBox(height: AppSpacing.block),
+        photoBox(
+          _photos,
+          l.goodsPhotos(
+            Fmt.digits(context, '${_photos.length}'),
+            Fmt.digits(context, '$_maxPhotos'),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.block),
+        reasonPills(),
+        const SizedBox(height: AppSpacing.block),
+        Text(
+          l.cancelLoadNote,
+          style: AppTypography.bodySmall.normal.withColor(
+            AppColors.textSecondary,
+          ),
+        ),
+      ],
     };
 
     return PopScope(
@@ -583,9 +710,9 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
           onBack: _mode == _Mode.check
               ? null
               : () => setState(() {
-                    _mode = _Mode.check;
-                    _decision = InspectionDecision.approve;
-                  }),
+                  _mode = _Mode.check;
+                  _decision = InspectionDecision.approve;
+                }),
         ),
         body: ListView(
           padding: _pad,
@@ -593,8 +720,12 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
             ...body,
             if (_err != null) ...[
               const SizedBox(height: AppSpacing.sm),
-              Text(_err!,
-                  style: AppTypography.caption.normal.withColor(AppColors.textError)),
+              Text(
+                _err!,
+                style: AppTypography.caption.normal.withColor(
+                  AppColors.textError,
+                ),
+              ),
             ],
             const SizedBox(height: _gapBeforeCta),
             KsButton(
@@ -633,44 +764,59 @@ class ReportSentScreen extends ConsumerWidget {
         padding: _pad,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.xl),
-            child: Image.asset(AppImages.scale,
-                height: _heroH, width: double.infinity, fit: BoxFit.cover),
+            borderRadius: BorderRadius.circular(AppRadius.photo),
+            child: Image.asset(
+              AppImages.scale,
+              height: _heroH,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(height: AppSpacing.block),
-          Text(x.done ? l.reportReachedBuyer : l.inspClosed,
-              textAlign: TextAlign.center,
-              style: AppTypography.headingBold22.normal),
+          Text(
+            x.done ? l.reportReachedBuyer : l.inspClosed,
+            textAlign: TextAlign.center,
+            style: AppTypography.headingBold22.normal,
+          ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(
+          KsInfoBox(
+            children: [
+              KsInfoRow(
                 l.rowStop,
-                l.stopLine(Fmt.digits(context, '${idx < 0 ? 1 : idx + 1}'),
-                    Fmt.digits(context, '${list.isEmpty ? 1 : list.length}'),
-                    x.farmerName)),
-            if (x.done)
-              KsInfoRow(
-                  l.rowDecision,
-                  switch (d) {
-                    InspectionDecision.approve => l.decApproveLine(
-                        Fmt.digits(context, '${x.okCount}'),
-                        Fmt.digits(context, '${x.checks.length}')),
-                    InspectionDecision.partial =>
-                      l.decPartialLine(qtyText(context, a)),
-                    InspectionDecision.cancel =>
-                      l.decCancelLine(reasonLabel(l, x.reason)),
-                  }),
-            if (x.done)
-              KsInfoRow(
-                  l.rowWeight,
-                  switch (d) {
-                    InspectionDecision.approve => qtyText(context, w),
-                    InspectionDecision.partial => l.weightLeftOut(
-                        qtyText(context, w), qtyText(context, w - a)),
-                    InspectionDecision.cancel => l.weightNoneTaken(qtyText(context, w)),
-                  }),
-            if (x.doneAt != null) KsInfoRow(l.rowTime, l10nTime(context, x.doneAt!)),
-          ]),
+                l.stopLine(
+                  Fmt.digits(context, '${idx < 0 ? 1 : idx + 1}'),
+                  Fmt.digits(context, '${list.isEmpty ? 1 : list.length}'),
+                  x.farmerName,
+                ),
+              ),
+              if (x.done)
+                KsInfoRow(l.rowDecision, switch (d) {
+                  InspectionDecision.approve => l.decApproveLine(
+                    Fmt.digits(context, '${x.okCount}'),
+                    Fmt.digits(context, '${x.checks.length}'),
+                  ),
+                  InspectionDecision.partial => l.decPartialLine(
+                    qtyText(context, a),
+                  ),
+                  InspectionDecision.cancel => l.decCancelLine(
+                    reasonLabel(l, x.reason),
+                  ),
+                }),
+              if (x.done)
+                KsInfoRow(l.rowWeight, switch (d) {
+                  InspectionDecision.approve => qtyText(context, w),
+                  InspectionDecision.partial => l.weightLeftOut(
+                    qtyText(context, w),
+                    qtyText(context, w - a),
+                  ),
+                  InspectionDecision.cancel => l.weightNoneTaken(
+                    qtyText(context, w),
+                  ),
+                }),
+              if (x.doneAt != null)
+                KsInfoRow(l.rowTime, l10nTime(context, x.doneAt!)),
+            ],
+          ),
           if (x.done) ...[
             const SizedBox(height: AppSpacing.block),
             KsNoteBox(
@@ -678,7 +824,9 @@ class ReportSentScreen extends ConsumerWidget {
               title: l.whatNext,
               body: switch (d) {
                 InspectionDecision.approve => l.nextApprove,
-                InspectionDecision.partial => l.nextPartial(qtyText(context, a)),
+                InspectionDecision.partial => l.nextPartial(
+                  qtyText(context, a),
+                ),
                 InspectionDecision.cancel => l.nextCancel,
               },
             ),
@@ -686,9 +834,8 @@ class ReportSentScreen extends ConsumerWidget {
           const SizedBox(height: _gapBeforeCta),
           KsButton(
             label: l.nextPickups,
-            onPressed: () => context.canPop()
-                ? context.pop()
-                : context.go(Routes.inspector),
+            onPressed: () =>
+                context.canPop() ? context.pop() : context.go(Routes.inspector),
           ),
         ],
       ),
@@ -730,12 +877,21 @@ class LoadReportScreen extends ConsumerWidget {
     final (badge, bg, fg) = !inspected
         ? (l.loadDoneBadge, AppColors.bgSuccessSubtle, AppColors.textSuccess)
         : switch (d) {
-            InspectionDecision.approve =>
-              (l.decApproved, AppColors.bgSuccessSubtle, AppColors.textSuccess),
-            InspectionDecision.partial =>
-              (l.decPartial, AppColors.bgWarningSubtle, AppColors.textWarning),
-            InspectionDecision.cancel =>
-              (l.decCancel, AppColors.bgErrorSubtle, AppColors.textError),
+            InspectionDecision.approve => (
+              l.decApproved,
+              AppColors.bgSuccessSubtle,
+              AppColors.textSuccess,
+            ),
+            InspectionDecision.partial => (
+              l.decPartial,
+              AppColors.bgWarningSubtle,
+              AppColors.textWarning,
+            ),
+            InspectionDecision.cancel => (
+              l.decCancel,
+              AppColors.bgErrorSubtle,
+              AppColors.textError,
+            ),
           };
     final at = x?.doneAt ?? o.timeline['pickedUp'];
     final self = o.transportMode == TransportMode.self;
@@ -744,50 +900,85 @@ class LoadReportScreen extends ConsumerWidget {
         : (o.loadPhotos.isNotEmpty ? o.loadPhotos.first : null);
 
     final rows = <Widget>[
-      if (!inspected || d == InspectionDecision.approve || d == InspectionDecision.cancel)
-        KsInfoRow(l.rowInspector,
-            inspected ? l.inspYours(x.inspectorName) : l.inspNotSent),
+      if (!inspected ||
+          d == InspectionDecision.approve ||
+          d == InspectionDecision.cancel)
+        KsInfoRow(
+          l.rowInspector,
+          inspected ? l.inspYours(x.inspectorName) : l.inspNotSent,
+        ),
       if (!inspected || d == InspectionDecision.approve)
-        KsInfoRow(l.rowTimePlace,
-            at == null ? l.stepWaiting : l.nameDot(l10nTime(context, at), districtOf(context, o.pickup))),
+        KsInfoRow(
+          l.rowTimePlace,
+          at == null
+              ? l.stepWaiting
+              : l.nameDot(l10nTime(context, at), districtOf(context, o.pickup)),
+        ),
       if (!inspected) ...[
         KsInfoRow(l.rowDigitalWeight, qtyText(context, o.quantityKg)),
-        KsInfoRow(l.rowWeighedBy,
-            self ? l.weighedBySelf : l.weighedByDriver(o.transporterName ?? '')),
+        KsInfoRow(
+          l.rowWeighedBy,
+          self ? l.weighedBySelf : l.weighedByDriver(o.transporterName ?? ''),
+        ),
         KsInfoRow(l.rowReceivedFarmer, tk(o.cropTotal)),
       ] else
         ...switch (d) {
           InspectionDecision.approve => [
-              KsInfoRow(l.rowDigitalWeight, qtyText(context, x.weighedKg ?? o.quantityKg)),
-              KsInfoRow(l.rowChecklist,
-                  l.okOutOf(Fmt.digits(context, '${x.okCount}'),
-                      Fmt.digits(context, '${x.checks.length}'))),
-              KsInfoRow(l.rowDecision, l.decApprove),
-              KsInfoRow(l.rowReceivedFarmer, tk(farmerGets)),
-            ],
+            KsInfoRow(
+              l.rowDigitalWeight,
+              qtyText(context, x.weighedKg ?? o.quantityKg),
+            ),
+            KsInfoRow(
+              l.rowChecklist,
+              l.okOutOf(
+                Fmt.digits(context, '${x.okCount}'),
+                Fmt.digits(context, '${x.checks.length}'),
+              ),
+            ),
+            KsInfoRow(l.rowDecision, l.decApprove),
+            KsInfoRow(l.rowReceivedFarmer, tk(farmerGets)),
+          ],
           InspectionDecision.partial => [
-              KsInfoRow(l.rowTaken, qtyText(context, takeKg)),
-              KsInfoRow(l.rowLeftOutPast,
-                  l.leftOutWhy(qtyText(context, (x.weighedKg ?? ordered) - takeKg),
-                      reasonLabel(l, x.reason))),
-              KsInfoRow(l.rowReceivedFarmer, tk(farmerGets)),
-              KsInfoRow(l.rowCropValueBack, tk(cropBack)),
-              KsInfoRow(l.rowFeeRefund(Fmt.digits(context, '$fee')), tk(feeBack)),
-              KsInfoRow(l.rowTotalRefund, tk(cropBack + feeBack), strong: true),
-            ],
+            KsInfoRow(l.rowTaken, qtyText(context, takeKg)),
+            KsInfoRow(
+              l.rowLeftOutPast,
+              l.leftOutWhy(
+                qtyText(context, (x.weighedKg ?? ordered) - takeKg),
+                reasonLabel(l, x.reason),
+              ),
+            ),
+            KsInfoRow(l.rowReceivedFarmer, tk(farmerGets)),
+            KsInfoRow(l.rowCropValueBack, tk(cropBack)),
+            KsInfoRow(l.rowFeeRefund(Fmt.digits(context, '$fee')), tk(feeBack)),
+            KsInfoRow(l.rowTotalRefund, tk(cropBack + feeBack), strong: true),
+          ],
           InspectionDecision.cancel => [
-              KsInfoRow(l.rowInspReason, l.reasonNotMet(reasonLabel(l, x.reason))),
-              KsInfoRow(l.rowReceivedFarmer, tk(0)),
-              KsInfoRow(l.rowCropValueBack, tk(o.cropTotal)),
-              KsInfoRow(l.rowFeeRefund(Fmt.digits(context, '$fee')), tk(o.platformFee)),
-              KsInfoRow(l.rowTotalRefund, tk(o.cropTotal + o.platformFee), strong: true),
-            ],
+            KsInfoRow(
+              l.rowInspReason,
+              l.reasonNotMet(reasonLabel(l, x.reason)),
+            ),
+            KsInfoRow(l.rowReceivedFarmer, tk(0)),
+            KsInfoRow(l.rowCropValueBack, tk(o.cropTotal)),
+            KsInfoRow(
+              l.rowFeeRefund(Fmt.digits(context, '$fee')),
+              tk(o.platformFee),
+            ),
+            KsInfoRow(
+              l.rowTotalRefund,
+              tk(o.cropTotal + o.platformFee),
+              strong: true,
+            ),
+          ],
         },
     ];
 
     final share = [
       inspected ? l.inspReportTitle : l.loadRecordTitle,
-      l.traceOrderLine(o.orderNo, o.cropName(lang), qtyText(context, o.quantityKg)),
+      l.traceOrderLine(
+        o.orderNo,
+        o.cropName(lang),
+        qtyText(context, o.quantityKg),
+      ),
       l.nameDot(o.farmerName, badge),
       if (at != null) l10nTime(context, at),
       l.statementVerified,
@@ -795,7 +986,9 @@ class LoadReportScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: inspected ? l.inspReportTitle : l.loadRecordTitle),
+      appBar: KsAppBar(
+        title: inspected ? l.inspReportTitle : l.loadRecordTitle,
+      ),
       body: ListView(
         padding: _pad,
         children: [
@@ -817,7 +1010,7 @@ class LoadReportScreen extends ConsumerWidget {
           KsInfoBox(children: rows),
           const SizedBox(height: AppSpacing.block),
           ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.xl),
+            borderRadius: BorderRadius.circular(AppRadius.photo),
             child: SizedBox(
               height: _heroH,
               width: double.infinity,
@@ -838,45 +1031,56 @@ class LoadReportScreen extends ConsumerWidget {
                 ? (self ? l.yourResponsibilitySelf : l.yourResponsibilityBody)
                 : switch (d) {
                     InspectionDecision.approve => l.reportIsProofBody,
-                    InspectionDecision.partial => l.fareSameBody(tk(o.transportFare)),
-                    InspectionDecision.cancel => l.farePayYouBody(tk(o.transportFare)),
+                    InspectionDecision.partial => l.fareSameBody(
+                      tk(o.transportFare),
+                    ),
+                    InspectionDecision.cancel => l.farePayYouBody(
+                      tk(o.transportFare),
+                    ),
                   },
           ),
           const SizedBox(height: _gapBeforeCta),
-          Row(children: [
-            Expanded(
-              child: KsButton.outline(
+          Row(
+            children: [
+              Expanded(
+                child: KsButton.outline(
                   label: l.pdfShort,
                   onPressed: () => PdfService.share(
-                        context,
-                        title: inspected ? l.inspReportTitle : l.loadRecordTitle,
-                        fileName: 'report-${o.orderNo}',
-                        children: [
-                          Text(l.nameDot(o.farmerName, o.cropName(lang)),
-                              style: AppTypography.bodyMediumStrong.normal),
-                          Text(l.nameDot(o.orderNo, badge),
-                              style: AppTypography.caption.normal
-                                  .withColor(fg)),
-                          const SizedBox(height: AppSpacing.block),
-                          KsInfoBox(children: rows),
-                        ],
-                      )),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: inspected && d != InspectionDecision.approve
-                  ? KsButton(
-                      label: l.seePayments,
-                      onPressed: () => context.push(Routes.payments))
-                  : KsButton(
-                      label: l.shareNow,
-                      onPressed: () =>
-                          SharePlus.instance.share(ShareParams(text: share))),
-            ),
-          ]),
+                    context,
+                    title: inspected ? l.inspReportTitle : l.loadRecordTitle,
+                    fileName: 'report-${o.orderNo}',
+                    children: [
+                      Text(
+                        l.nameDot(o.farmerName, o.cropName(lang)),
+                        style: AppTypography.bodyMediumStrong.normal,
+                      ),
+                      Text(
+                        l.nameDot(o.orderNo, badge),
+                        style: AppTypography.caption.normal.withColor(fg),
+                      ),
+                      const SizedBox(height: AppSpacing.block),
+                      KsInfoBox(children: rows),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: inspected && d != InspectionDecision.approve
+                    ? KsButton(
+                        label: l.seePayments,
+                        onPressed: () => context.push(Routes.payments),
+                      )
+                    : KsButton(
+                        label: l.shareNow,
+                        onPressed: () =>
+                            SharePlus.instance.share(ShareParams(text: share)),
+                      ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 }
-

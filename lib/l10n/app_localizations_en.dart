@@ -87,7 +87,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginPhoneHint => '01X XXXX XXXX';
 
   @override
-  String get loginCountryCode => '+880';
+  String get loginCountryCode => '+88';
 
   @override
   String get loginTerms =>

@@ -46,7 +46,7 @@ const _pad = EdgeInsets.fromLTRB(
   AppSpacing.lg,
 );
 const _gapBeforeCta = AppSpacing.block + AppSpacing.xs + AppSpacing.block;
-const _heroH = 96.0;
+const _heroH = 200.0; // Figma 328×200 photo, square corners
 
 /// One "mon" (মন) = 40 kg, the fixed unit shown on the weighing screen.
 const kgPerMon = 40;
@@ -72,7 +72,7 @@ class _ResultHead extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     children: [
       ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.xl),
+        borderRadius: BorderRadius.circular(AppRadius.photo),
         child: Image.asset(
           image,
           height: _heroH,
@@ -790,7 +790,7 @@ Future<void> showLoadPhotos(BuildContext context, TradeOrder o) async {
           for (final u in o.loadPhotos) ...[
             const SizedBox(height: AppSpacing.block),
             ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.lg),
+              borderRadius: BorderRadius.circular(AppRadius.photo),
               child: KsNetImage(url: u, fallbackAsset: AppImages.scale),
             ),
           ],

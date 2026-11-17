@@ -245,7 +245,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginCountryCode.
   ///
   /// In bn, this message translates to:
-  /// **'+880'**
+  /// **'+88'**
   String get loginCountryCode;
 
   /// No description provided for @loginTerms.
