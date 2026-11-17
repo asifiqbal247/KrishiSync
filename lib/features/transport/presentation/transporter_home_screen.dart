@@ -119,7 +119,6 @@ class TransporterHomeScreen extends ConsumerWidget {
             children: [
               Expanded(
                 child: KsActionTile(
-                  primary: true,
                   icon: AppUi.glyphBox,
                   title: l.trFindLoads,
                   hint: l.trFindLoadsSub(Fmt.digits(context, '$nearbyCount')),

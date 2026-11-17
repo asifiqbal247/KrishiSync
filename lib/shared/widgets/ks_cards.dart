@@ -51,27 +51,37 @@ class KsMiniCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.md),
               child: SizedBox(
-                  height: _thumbH, width: double.infinity, child: image),
+                height: _thumbH,
+                width: double.infinity,
+                child: image,
+              ),
             ),
             const SizedBox(height: AppSpacing.label),
-            Text(title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.bodyMediumStrong.normal),
+            Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.bodyMediumStrong.normal,
+            ),
             const SizedBox(height: AppSpacing.label),
-            Text(line2,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.caption.normal
-                    .withColor(AppColors.textSecondary)),
+            Text(
+              line2,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.caption.normal.withColor(
+                AppColors.textSecondary,
+              ),
+            ),
             // 4 (not 6): Hind Siliguri's line box is ~2px taller than
-            // Figma's, and the card height is fixed at 164.
-            const SizedBox(height: AppSpacing.xs),
-            Text(line3,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTypography.bodySmallStrong.normal
-                    .withColor(line3Color)),
+            // Figma's, and the card height is fixed at 164. Flexible: the gap
+            // shrinks when a Latin name's taller line box needs the room.
+            const Flexible(child: SizedBox(height: AppSpacing.xs)),
+            Text(
+              line3,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTypography.bodySmallStrong.normal.withColor(line3Color),
+            ),
           ],
         ),
       ),
@@ -112,14 +122,14 @@ class KsCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        height: KsMiniCard.height,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: children.length,
-          separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.md),
-          itemBuilder: (_, i) => children[i],
-        ),
-      );
+    height: KsMiniCard.height,
+    child: ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: children.length,
+      separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.md),
+      itemBuilder: (_, i) => children[i],
+    ),
+  );
 }
 
 /// HF/Category Item (292:219): 64 wide, 90 high, 56px round image,
@@ -163,15 +173,16 @@ class KsCategoryItem extends StatelessWidget {
               child: ClipOval(child: Image.asset(image, fit: BoxFit.cover)),
             ),
             const SizedBox(height: AppSpacing.label),
-            Text(label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: AppTypography.caption.normal.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: selected
-                        ? AppColors.textBrand
-                        : AppColors.textPrimary)),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: AppTypography.caption.normal.copyWith(
+                fontWeight: FontWeight.w500,
+                color: selected ? AppColors.textBrand : AppColors.textPrimary,
+              ),
+            ),
           ],
         ),
       ),

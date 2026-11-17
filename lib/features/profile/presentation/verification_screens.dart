@@ -161,9 +161,13 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
           label: label,
           file: _photos[key],
           networkUrl: _photos[key] == null ? url : null,
-          height: has
-              ? KsUploadBox.previewHeight
-              : (key == 'selfie' ? KsUploadBox.defaultHeight : _boxH),
+          // Figma 69 (updated): NID boxes 162, selfie 130, same with a
+          // photo. 139 (business licence) keeps the small box.
+          height: switch (key) {
+            'nidFront' || 'nidBack' => _nidH,
+            'selfie' => _selfieH,
+            _ => has ? KsUploadBox.previewHeight : _boxH,
+          },
           onTap: () => _pick(key),
         ),
         if (_err[key] != null)
@@ -178,8 +182,12 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
     );
   }
 
-  /// Figma 69: the two NID boxes are 92 high, selfie 61.
+  /// Figma 139: the licence box is 92 high.
   static const _boxH = 92.0;
+
+  /// Figma 69: the two NID boxes are 162 high, the selfie box 130.
+  static const _nidH = 162.0;
+  static const _selfieH = 130.0;
 
   @override
   Widget build(BuildContext context) {
@@ -341,13 +349,19 @@ class ReviewTile extends ConsumerWidget {
 /// 70 Farmer / 140 Buyer Ratings & Reviews (Figma 292:3681 / 292:3700).
 /// [withVerification] = 195 Verification & Ratings (transporter, 292:1949).
 class RatingsScreen extends ConsumerWidget {
-  const RatingsScreen({super.key, this.withVerification = false});
+  const RatingsScreen({super.key, this.withVerification = false, this.uid});
   final bool withVerification;
+
+  /// Someone else's reviews (e.g. a farmer's, from 76); null = my own.
+  final String? uid;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
-    final me = ref.watch(currentUserProvider).value;
+    final self = ref.watch(currentUserProvider).value;
+    final me = uid == null || uid == self?.uid
+        ? self
+        : ref.watch(userByIdProvider(uid!)).value;
     if (me == null) return const Scaffold(body: KsSkeletonList());
     final async = ref.watch(reviewsForProvider(me.uid));
     final avg = Fmt.number(context, me.ratingAvg, decimals: 1);

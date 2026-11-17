@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -116,7 +118,6 @@ class FarmerHomeScreen extends ConsumerWidget {
             children: [
               Expanded(
                 child: KsActionTile(
-                  primary: true,
                   icon: AppUi.glyphLeaf,
                   title: l.homeSellCrop,
                   hint: l.homeSellCropSub,
@@ -251,7 +252,40 @@ class _BannerSlider extends StatefulWidget {
 }
 
 class _BannerSliderState extends State<_BannerSlider> {
+  /// Endless pager: starts far from 0 so it can always slide forward;
+  /// the slide shown is page % slides.
+  static const _start = 3000;
   int _page = 0;
+  final _ctrl = PageController(initialPage: _start);
+  int _abs = _start;
+  Timer? _timer;
+
+  /// Figma: "each slide changes to the next after 3s".
+  static const _every = Duration(seconds: 3);
+  static const _slide = Duration(milliseconds: 450);
+
+  @override
+  void initState() {
+    super.initState();
+    _restart();
+  }
+
+  /// (Re)starts the auto-slide; called again after a manual swipe so the
+  /// new slide also stays 3 s.
+  void _restart() {
+    _timer?.cancel();
+    _timer = Timer.periodic(_every, (_) {
+      if (!mounted || !_ctrl.hasClients || widget.slides.length < 2) return;
+      _ctrl.animateToPage(_abs + 1, duration: _slide, curve: Curves.easeInOut);
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   static const _h = 140.0;
   static const _img = 96.0;
@@ -270,82 +304,89 @@ class _BannerSliderState extends State<_BannerSlider> {
       children: [
         SizedBox(
           height: _h,
-          child: PageView(
-            onPageChanged: (i) => setState(() => _page = i),
-            children: [
-              for (final (title, sub, image, route) in widget.slides)
-                GestureDetector(
-                  onTap: () => context.push(route),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.bgMuted,
-                      borderRadius: BorderRadius.circular(AppRadius.lg),
-                    ),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(AppSpacing.lg),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: _imgLeft - AppSpacing.lg * 2,
-                                child: Text(
-                                  title,
-                                  style: AppTypography.bold17.normal,
-                                ),
+          child: PageView.builder(
+            controller: _ctrl,
+            onPageChanged: (i) {
+              _abs = i;
+              setState(() => _page = i % widget.slides.length);
+              _restart();
+            },
+            itemBuilder: (_, i) {
+              final (title, sub, image, route) =
+                  widget.slides[i % widget.slides.length];
+              return GestureDetector(
+                onTap: () => context.push(route),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.bgMuted,
+                    borderRadius: BorderRadius.circular(AppRadius.lg),
+                  ),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(AppSpacing.lg),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: _imgLeft - AppSpacing.lg * 2,
+                              child: Text(
+                                title,
+                                style: AppTypography.bold17.normal,
                               ),
-                              const SizedBox(height: AppSpacing.xs),
-                              SizedBox(
-                                width: _imgLeft - AppSpacing.lg * 2,
-                                child: Text(
-                                  sub,
-                                  style: AppTypography.bodySmall.normal
-                                      .withColor(AppColors.textSecondary),
-                                ),
-                              ),
-                              const Spacer(),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: _ctaPx,
-                                  vertical: _ctaPy,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.bgBrand,
-                                  borderRadius: BorderRadius.circular(
-                                    AppRadius.xl,
-                                  ),
-                                ),
-                                child: Text(
-                                  l.homeSee,
-                                  style: AppTypography.caption.normal.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.textOnBrand,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          left: _imgLeft,
-                          top: _imgTop,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(_imgRadius),
-                            child: Image.asset(
-                              image,
-                              width: _img,
-                              height: _img,
-                              fit: BoxFit.cover,
                             ),
+                            const SizedBox(height: AppSpacing.xs),
+                            SizedBox(
+                              width: _imgLeft - AppSpacing.lg * 2,
+                              child: Text(
+                                sub,
+                                style: AppTypography.bodySmall.normal.withColor(
+                                  AppColors.textSecondary,
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: _ctaPx,
+                                vertical: _ctaPy,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.bgBrand,
+                                borderRadius: BorderRadius.circular(
+                                  AppRadius.xl,
+                                ),
+                              ),
+                              child: Text(
+                                l.homeSee,
+                                style: AppTypography.caption.normal.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textOnBrand,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        left: _imgLeft,
+                        top: _imgTop,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(_imgRadius),
+                          child: Image.asset(
+                            image,
+                            width: _img,
+                            height: _img,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-            ],
+              );
+            },
           ),
         ),
         const SizedBox(height: AppSpacing.sm),

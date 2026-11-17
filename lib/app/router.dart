@@ -134,6 +134,7 @@ abstract final class Routes {
   static String demandDetails(String id) => '/demands/$id';
   static const ratings = '/ratings';
   static const verifyAndRatings = '/ratings?verify=1';
+  static String userRatings(String uid) => '/ratings?uid=$uid';
   static String buyerTrack(String id) => '/buyer/track/$id';
   static String receipt(String orderId) => '/receipt/$orderId';
   // 13 Permissions (once, after login).
@@ -571,6 +572,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.ratings,
         builder: (_, s) => RatingsScreen(
           withVerification: s.uri.queryParameters['verify'] == '1',
+          uid: s.uri.queryParameters['uid'],
         ),
       ),
       GoRoute(

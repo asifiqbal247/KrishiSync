@@ -14,6 +14,7 @@ abstract final class AppIcons {
   static const chevronRight = '$_p/chevron_right.svg';
   static const starOn = '$_p/star_on.svg';
   static const starOff = '$_p/star_off.svg';
+
   /// Transporter bottom-nav FAB (HF/Bottom Nav / Transporter, 292:263).
   static const loadBox = '$_p/load_box.svg';
   static const video = '$_p/video.svg';
@@ -88,6 +89,7 @@ abstract final class AppImages {
   static const toastCheck = '$_p/ui/toast_check.webp';
   static const successCheck = '$_p/ui/success_check.webp';
   static const locationThumb = '$_p/location_thumb.webp';
+
   /// Static map art used before a map pin exists (screen 12).
   static const mapStrip = '$_p/map_strip.webp';
 }
@@ -121,6 +123,7 @@ abstract final class AppUi {
   static const catFruit = '$_p/cat_fruit.webp';
   static const catGrain = '$_p/cat_grain.webp';
   static const catSpice = '$_p/cat_spice.webp';
+  static const catFish = '$_p/cat_fish.webp';
   static const glyphDemand = '$_p/glyph_demand.webp';
   static const glyphMarket = '$_p/glyph_market.webp';
   static const glyphTruck = '$_p/glyph_truck.webp';

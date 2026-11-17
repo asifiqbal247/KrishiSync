@@ -51,13 +51,14 @@ class BuyerListingScreen extends ConsumerWidget {
           if (x == null) return Center(child: Text(l.errorGeneric));
           final market = ref.watch(marketPriceProvider(x.cropKey)).value;
           final farmer = ref.watch(userByIdProvider(x.farmerId)).value;
-          final similar = (ref.watch(similarListingsProvider(x.cropKey)).value ??
-                  const [])
-              .where((s) => s.id != x.id)
-              .toList();
+          final similar =
+              (ref.watch(similarListingsProvider(x.cropKey)).value ?? const [])
+                  .where((s) => s.id != x.id)
+                  .toList();
           final km = distanceKm(me?.location.geo, x.pickup.geo);
           final place = placeOf(context, x);
-          final fair = market != null &&
+          final fair =
+              market != null &&
               x.pricePerKg >= market.min &&
               x.pricePerKg <= market.max;
 
@@ -65,34 +66,48 @@ class BuyerListingScreen extends ConsumerWidget {
             children: [
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-                      AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.screen,
+                    AppSpacing.contentTop,
+                    AppSpacing.screen,
+                    AppSpacing.lg,
+                  ),
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(AppRadius.xl),
                       child: SizedBox(
                         height: _imageH,
                         child: KsNetImage(
-                            url: x.photo,
-                            fallbackAsset: CropCatalog.imageFor(x.cropKey)),
+                          url: x.photo,
+                          fallbackAsset: CropCatalog.imageFor(x.cropKey),
+                        ),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.block),
-                    Text(l.cropWithGrade(x.cropName(lang), x.grade),
-                        style: AppTypography.headingBold22.normal),
+                    Text(
+                      l.cropWithGrade(x.cropName(lang), x.grade),
+                      style: AppTypography.headingBold22.normal,
+                    ),
                     const SizedBox(height: AppSpacing.block),
-                    Text(l.priceLine(Fmt.number(context, x.pricePerKg)),
-                        style: AppTypography.h1.normal),
+                    Text(
+                      l.priceLine(Fmt.number(context, x.pricePerKg)),
+                      style: AppTypography.h1.normal,
+                    ),
                     if (market != null) ...[
                       const SizedBox(height: AppSpacing.block),
                       Text(
                         fair
-                            ? l.marketRangeFair(Fmt.number(context, market.min),
-                                Fmt.number(context, market.max))
-                            : l.marketRangeOnly(Fmt.number(context, market.min),
-                                Fmt.number(context, market.max)),
-                        style: AppTypography.bodySmallEmphasis.normal
-                            .withColor(AppColors.textSecondary),
+                            ? l.marketRangeFair(
+                                Fmt.number(context, market.min),
+                                Fmt.number(context, market.max),
+                              )
+                            : l.marketRangeOnly(
+                                Fmt.number(context, market.min),
+                                Fmt.number(context, market.max),
+                              ),
+                        style: AppTypography.bodySmallEmphasis.normal.withColor(
+                          AppColors.textSecondary,
+                        ),
                       ),
                     ],
                     const SizedBox(height: AppSpacing.block),
@@ -102,126 +117,148 @@ class BuyerListingScreen extends ConsumerWidget {
                       children: [
                         KsPill(label: l.gradeLabel(x.grade), selected: false),
                         KsPill(
-                            label: l.qtyAvailable(
-                                Fmt.number(context, x.availableKg)),
-                            selected: false),
+                          label: l.qtyAvailable(
+                            Fmt.number(context, x.availableKg),
+                          ),
+                          selected: false,
+                        ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.block),
-                    KsInfoCard(rows: [
-                      (l.fieldAvailable, qtyText(context, x.availableKg)),
-                      (
-                        l.fieldAvailability,
-                        l.availableFromDate(Fmt.date(context, x.availableFrom))
-                      ),
-                      (
-                        l.fieldLocation,
-                        km == null
-                            ? place
-                            : l.placeWithKm(
-                                place, Fmt.number(context, km.round()))
-                      ),
-                    ]),
+                    KsInfoCard(
+                      rows: [
+                        (l.fieldAvailable, qtyText(context, x.availableKg)),
+                        (
+                          l.fieldAvailability,
+                          l.availableFromDate(
+                            Fmt.date(context, x.availableFrom),
+                          ),
+                        ),
+                        (
+                          l.fieldLocation,
+                          km == null
+                              ? place
+                              : l.placeWithKm(
+                                  place,
+                                  Fmt.number(context, km.round()),
+                                ),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: AppSpacing.block),
                     KsSectionHeader(title: l.sectionFarmer),
                     const SizedBox(height: AppSpacing.block),
                     KsListItem(
                       thumb: KsNetImage(
-                          url: farmer?.photoUrl ?? x.farmerPhotoUrl,
-                          fallbackAsset: AppUi.avatarFarmer),
+                        url: farmer?.photoUrl ?? x.farmerPhotoUrl,
+                        fallbackAsset: AppUi.avatarFarmer,
+                      ),
                       title: x.farmerName,
                       subtitle: l.farmerCardSub(
                         (farmer?.isVerified ?? false) ? l.verifiedDot : '',
                         farmer == null || farmer.ratingCount == 0
                             ? l.notAvailable
-                            : Fmt.number(context, farmer.ratingAvg,
-                                decimals: 1),
-                        Fmt.digits(context,
-                            '${ref.watch(tradeStatsProvider(x.farmerId)).value?.done ?? 0}'),
+                            : Fmt.number(
+                                context,
+                                farmer.ratingAvg,
+                                decimals: 1,
+                              ),
+                        Fmt.digits(
+                          context,
+                          '${ref.watch(tradeStatsProvider(x.farmerId)).value?.done ?? 0}',
+                        ),
                       ),
                       trailingText: l.profileLink,
-                      onTap: () =>
-                          context.push(Routes.buyerFarmer(x.farmerId)),
+                      onTap: () => context.push(Routes.buyerFarmer(x.farmerId)),
                     ),
                     const SizedBox(height: AppSpacing.block),
                     KsSectionHeader(title: l.sectionDelivery),
                     const SizedBox(height: AppSpacing.block),
-                    KsInfoCard(rows: [
-                      (l.fieldPayment, l.safePayment),
-                    ]),
+                    KsInfoCard(rows: [(l.fieldPayment, l.safePayment)]),
                     if (similar.isNotEmpty) ...[
                       const SizedBox(height: AppSpacing.block),
                       KsSectionHeader(title: l.similarCrops),
                       const SizedBox(height: AppSpacing.block),
-                      KsCarousel(children: [
-                        for (final s in similar)
-                          KsMiniCard(
-                            image: KsNetImage(
+                      KsCarousel(
+                        children: [
+                          for (final s in similar)
+                            KsMiniCard(
+                              image: KsNetImage(
                                 url: s.photo,
-                                fallbackAsset:
-                                    CropCatalog.imageFor(s.cropKey)),
-                            title: l.cropWithGrade(s.cropName(lang), s.grade),
-                            line2: l.pricePerKg(
-                                Fmt.taka(context, s.pricePerKg)),
-                            line3: placeOf(context, s),
-                            onTap: () => context
-                                .pushReplacement(Routes.buyerListing(s.id)),
-                          ),
-                      ]),
+                                fallbackAsset: CropCatalog.imageFor(s.cropKey),
+                              ),
+                              title: l.cropWithGrade(s.cropName(lang), s.grade),
+                              line2: l.pricePerKg(
+                                Fmt.taka(context, s.pricePerKg),
+                              ),
+                              line3: placeOf(context, s),
+                              onTap: () => context.pushReplacement(
+                                Routes.buyerListing(s.id),
+                              ),
+                            ),
+                        ],
+                      ),
                     ],
                   ],
                 ),
               ),
               // Sticky CTA Bar (292:2563) — buyers only (farmers browse 28).
               if (me?.role == UserRole.buyer)
-              Container(
-                height: _ctaBarH + MediaQuery.of(context).padding.bottom,
-                padding: EdgeInsets.fromLTRB(
+                Container(
+                  height: _ctaBarH + MediaQuery.of(context).padding.bottom,
+                  padding: EdgeInsets.fromLTRB(
                     AppSpacing.screen,
                     AppSpacing.md,
                     AppSpacing.screen,
-                    AppSpacing.md + MediaQuery.of(context).padding.bottom),
-                decoration: const BoxDecoration(
-                  color: AppColors.bgPage,
-                  border:
-                      Border(top: BorderSide(color: AppColors.borderDefault)),
-                ),
-                child: Row(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(l.pricePerKg(Fmt.taka(context, x.pricePerKg)),
-                            style: AppTypography.labelButton.normal
-                                .copyWith(fontWeight: FontWeight.w700)),
-                        Text(
-                            l.qtyAvailable(
-                                Fmt.number(context, x.availableKg)),
+                    AppSpacing.md + MediaQuery.of(context).padding.bottom,
+                  ),
+                  decoration: const BoxDecoration(
+                    color: AppColors.bgPage,
+                    border: Border(
+                      top: BorderSide(color: AppColors.borderDefault),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l.pricePerKg(Fmt.taka(context, x.pricePerKg)),
+                            style: AppTypography.labelButton.normal.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            l.qtyAvailable(Fmt.number(context, x.availableKg)),
                             style: AppTypography.labelSmall.normal.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.textSecondary)),
-                      ],
-                    ),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: KsButton.secondary(
-                        label: l.makeOffer,
-                        onPressed: () =>
-                            context.push(Routes.makeOffer(x.id)),
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.md),
-                    Expanded(
-                      child: KsButton(
-                        label: l.placeOrder,
-                        onPressed: () =>
-                            context.push(Routes.placeOrder(x.id)),
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(
+                        child: KsButton.secondary(
+                          label: l.makeOffer,
+                          compact: true,
+                          onPressed: () => context.push(Routes.makeOffer(x.id)),
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(
+                        child: KsButton(
+                          label: l.placeOrder,
+                          compact: true,
+                          onPressed: () =>
+                              context.push(Routes.placeOrder(x.id)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           );
         },

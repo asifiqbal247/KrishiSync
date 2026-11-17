@@ -84,12 +84,18 @@ class KsButton extends StatelessWidget {
     return switch (type) {
       KsButtonType.primary => _primary(),
       KsButtonType.destructive => _primary(
-          fill: AppColors.bgError, shadow: AppShadows.destructiveButton),
+        fill: AppColors.bgError,
+        shadow: AppShadows.destructiveButton,
+      ),
       KsButtonType.warning => _primary(
-          fill: AppColors.bgAccent,
-          shadow: AppShadows.warningButton,
-          label: AppColors.textPrimary),
-      KsButtonType.secondary => _outline(fill: AppColors.bgSubtle, shadow: false),
+        fill: AppColors.bgAccent,
+        shadow: AppShadows.warningButton,
+        label: AppColors.textPrimary,
+      ),
+      KsButtonType.secondary => _outline(
+        fill: AppColors.bgSubtle,
+        shadow: false,
+      ),
       KsButtonType.outline => _outline(),
       KsButtonType.text => _text(),
     };
@@ -132,8 +138,14 @@ class KsButton extends StatelessWidget {
                         color: label,
                       ),
                     )
-                  : Text(this.label,
-                      style: AppTypography.labelButton.normal.withColor(fg)),
+                  : FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        this.label,
+                        maxLines: 1,
+                        style: AppTypography.labelButton.normal.withColor(fg),
+                      ),
+                    ),
             ),
           ),
         ),
@@ -159,8 +171,9 @@ class KsButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: radius,
           side: BorderSide(
-              color: _enabled ? AppColors.borderBrand : AppColors.borderDefault,
-              width: 1.5),
+            color: _enabled ? AppColors.borderBrand : AppColors.borderDefault,
+            width: 1.5,
+          ),
         ),
         child: InkWell(
           onTap: _enabled ? onPressed : null,
@@ -168,8 +181,14 @@ class KsButton extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: _px),
             child: Center(
-              child: Text(label,
-                  style: AppTypography.labelButton.normal.withColor(fg)),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  style: AppTypography.labelButton.normal.withColor(fg),
+                ),
+              ),
             ),
           ),
         ),

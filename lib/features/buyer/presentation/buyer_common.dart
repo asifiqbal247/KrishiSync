@@ -31,16 +31,17 @@ String placeOf(BuildContext context, Listing x) {
 
 /// Categories shown on 71 / 74 (Figma order) with their images.
 List<(CropCategory?, String, String)> marketCategories(
-        AppLocalizations l, {bool withAll = false}) =>
-    [
-      if (withAll) (null, AppUi.catAll, l.catAll),
-      (CropCategory.vegetable, AppUi.catVegetable, l.catVegetable),
-      (CropCategory.fruit, AppUi.catFruit, l.catFruit),
-      (CropCategory.grain, AppUi.catGrain, l.catGrain),
-      (CropCategory.fish, AppUi.catAll, l.catFish),
-      (CropCategory.spice, AppUi.catSpice, l.catSpice),
-      if (!withAll) (CropCategory.pulse, AppUi.catGrain, l.catPulse),
-    ];
+  AppLocalizations l, {
+  bool withAll = false,
+}) => [
+  if (withAll) (null, AppUi.catAll, l.catAll),
+  (CropCategory.vegetable, AppUi.catVegetable, l.catVegetable),
+  (CropCategory.fruit, AppUi.catFruit, l.catFruit),
+  (CropCategory.grain, AppUi.catGrain, l.catGrain),
+  (CropCategory.fish, AppUi.catFish, l.catFish),
+  (CropCategory.spice, AppUi.catSpice, l.catSpice),
+  if (!withAll) (CropCategory.pulse, AppUi.catGrain, l.catPulse),
+];
 
 /// Market filter shared by Buyer Home (categories) and Marketplace (74).
 class MarketFilter {
@@ -68,13 +69,12 @@ class MarketFilter {
     String? districtId,
     num? minQty,
     num? maxPrice,
-  }) =>
-      MarketFilter(
-        category: clearCategory ? null : (category ?? this.category),
-        districtId: districtId ?? this.districtId,
-        minQty: minQty ?? this.minQty,
-        maxPrice: maxPrice ?? this.maxPrice,
-      );
+  }) => MarketFilter(
+    category: clearCategory ? null : (category ?? this.category),
+    districtId: districtId ?? this.districtId,
+    minQty: minQty ?? this.minQty,
+    maxPrice: maxPrice ?? this.maxPrice,
+  );
 }
 
 class MarketFilterController extends Notifier<MarketFilter> {
@@ -85,7 +85,8 @@ class MarketFilterController extends Notifier<MarketFilter> {
 
 final marketFilterProvider =
     NotifierProvider<MarketFilterController, MarketFilter>(
-        MarketFilterController.new);
+      MarketFilterController.new,
+    );
 
 /// Selected tab in the buyer shell (Home can jump to Market).
 class BuyerTabController extends Notifier<int> {
@@ -99,8 +100,9 @@ class BuyerTabController extends Notifier<int> {
   void go(int i) => state = i;
 }
 
-final buyerTabProvider =
-    NotifierProvider<BuyerTabController, int>(BuyerTabController.new);
+final buyerTabProvider = NotifierProvider<BuyerTabController, int>(
+  BuyerTabController.new,
+);
 
 /// Marketplace row (74): photo, "Crop (Grade A)", "500 কেজি · জেলা · 4.7",
 /// "৳ 38", chevron. Rating comes from the farmer's profile.

@@ -45,9 +45,11 @@ class BuyerHomeScreen extends ConsumerWidget {
     final offers = ref.watch(myOffersProvider).value ?? const <Offer>[];
     final ongoing = orders.where((o) => o.status.isOngoing).length;
     final moving = orders
-        .where((o) =>
-            o.status == OrderStatus.pickedUp ||
-            o.status == OrderStatus.inTransit)
+        .where(
+          (o) =>
+              o.status == OrderStatus.pickedUp ||
+              o.status == OrderStatus.inTransit,
+        )
         .length;
     // Safe payment = money held for orders not yet completed.
     final held = orders
@@ -73,8 +75,12 @@ class BuyerHomeScreen extends ConsumerWidget {
         onAvatar: () => ref.read(buyerTabProvider.notifier).go(3),
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.s2xl),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.s2xl,
+        ),
         children: [
           KsSearchBar(
             hint: l.buyerSearchHint,
@@ -83,112 +89,134 @@ class BuyerHomeScreen extends ConsumerWidget {
             onVoice: (w) => context.push(Routes.buyerSearch, extra: w),
           ),
           const SizedBox(height: AppSpacing.block),
-          Row(children: [
-            Expanded(
+          Row(
+            children: [
+              Expanded(
                 child: KsStatCard(
-                    label: l.statOngoingOrders,
-                    value: n(ongoing),
-                    onTap: () => ref.read(buyerTabProvider.notifier).go(2))),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
+                  label: l.statOngoingOrders,
+                  value: n(ongoing),
+                  onTap: () => ref.read(buyerTabProvider.notifier).go(2),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
                 child: KsStatCard(
-                    label: l.statInTransit,
-                    value: n(moving),
-                    onTap: () => context.push(Routes.buyerTransport))),
-          ]),
+                  label: l.statInTransit,
+                  value: n(moving),
+                  onTap: () => context.push(Routes.buyerTransport),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          Row(children: [
-            Expanded(
+          Row(
+            children: [
+              Expanded(
                 child: KsStatCard(
-                    label: l.statSafePay,
-                    value: Fmt.taka(context, held),
-                    onTap: () => context.push(Routes.payments))),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
+                  label: l.statSafePay,
+                  value: Fmt.taka(context, held),
+                  onTap: () => context.push(Routes.payments),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
                 child: KsStatCard(
-                    label: l.statNewOffers,
-                    value: n(actionOffers.length),
-                    onTap: () => actionOffers.length == 1
-                        ? context.push(Routes.offer(actionOffers.first.id))
-                        : context.push(Routes.notifications))),
-          ]),
+                  label: l.statNewOffers,
+                  value: n(actionOffers.length),
+                  onTap: () => actionOffers.length == 1
+                      ? context.push(Routes.offer(actionOffers.first.id))
+                      : context.push(Routes.notifications),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
           SizedBox(
             height: _catRowH,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: marketCategories(l).length,
-              separatorBuilder: (_, _) =>
-                  const SizedBox(width: AppSpacing.md),
+              separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.md),
               itemBuilder: (_, i) {
                 final (cat, img, label) = marketCategories(l)[i];
                 return KsCategoryItem(
-                    image: img,
-                    label: label,
-                    onTap: () => openCategory(cat));
+                  image: img,
+                  label: label,
+                  onTap: () => openCategory(cat),
+                );
               },
             ),
           ),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.quickActions),
           const SizedBox(height: AppSpacing.block),
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-              child: KsActionTile(
-                primary: true,
-                icon: AppUi.glyphDemand,
-                title: l.actPostDemand,
-                hint: l.actPostDemandSub,
-                onTap: () => context.push(Routes.postDemand),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: KsActionTile(
+                  icon: AppUi.glyphDemand,
+                  title: l.actPostDemand,
+                  hint: l.actPostDemandSub,
+                  onTap: () => context.push(Routes.postDemand),
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              child: KsActionTile(
-                icon: AppUi.glyphMarket,
-                title: l.actMarket,
-                hint: l.actMarketSub(Fmt.digits(context, '${active.length}')),
-                onTap: () {
-                  ref.read(marketFilterProvider.notifier).set(
-                      const MarketFilter());
-                  ref.read(buyerTabProvider.notifier).go(1);
-                },
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: KsActionTile(
+                  icon: AppUi.glyphMarket,
+                  title: l.actMarket,
+                  hint: l.actMarketSub(Fmt.digits(context, '${active.length}')),
+                  onTap: () {
+                    ref
+                        .read(marketFilterProvider.notifier)
+                        .set(const MarketFilter());
+                    ref.read(buyerTabProvider.notifier).go(1);
+                  },
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-              child: KsActionTile(
-                icon: AppUi.tipClipboard,
-                title: l.actProcurement,
-                hint: l.actProcurementSub,
-                onTap: () => context.push(Routes.procurement),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: KsActionTile(
+                  icon: AppUi.tipClipboard,
+                  title: l.actProcurement,
+                  hint: l.actProcurementSub,
+                  onTap: () => context.push(Routes.procurement),
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              child: KsActionTile(
-                icon: AppUi.glyphTruck,
-                title: l.actBookTruck,
-                hint: l.actBookTruckSub,
-                onTap: () => context.push(Routes.buyerTransport),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: KsActionTile(
+                  icon: AppUi.glyphTruck,
+                  title: l.actBookTruck,
+                  hint: l.actBookTruckSub,
+                  onTap: () => context.push(Routes.buyerTransport),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
           if (prices.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
             KsSectionHeader(
-                title: l.homeTodayPrices,
-                actionLabel: l.commonSeeAll,
-                onAction: () => context.push(Routes.marketPrices)),
+              title: l.homeTodayPrices,
+              actionLabel: l.commonSeeAll,
+              onAction: () => context.push(Routes.marketPrices),
+            ),
             const SizedBox(height: AppSpacing.block),
-            KsCarousel(children: [
-              for (final p in prices)
-                KsPriceCard(
+            KsCarousel(
+              children: [
+                for (final p in prices)
+                  KsPriceCard(
                     price: p,
-                    onTap: () => context.push(Routes.priceTrend(p.cropKey))),
-            ]),
+                    onTap: () => context.push(Routes.priceTrend(p.cropKey)),
+                  ),
+              ],
+            ),
           ],
           if (suppliers.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
@@ -198,24 +226,30 @@ class BuyerHomeScreen extends ConsumerWidget {
               onAction: () => context.push(Routes.suppliers),
             ),
             const SizedBox(height: AppSpacing.block),
-            KsCarousel(children: [
-              for (final u in suppliers)
-                KsMiniCard(
-                  image: KsNetImage(
-                      url: u.photoUrl, fallbackAsset: AppUi.avatarFarmer),
-                  title: u.name,
-                  line2: [
-                    BdPlace.display(u.location.district, lang),
-                    Fmt.number(context, u.ratingAvg, decimals: 1),
-                  ].join(' · '),
-                  line3: switch (
-                      ref.watch(tradeStatsProvider(u.uid)).value?.onTimePct) {
-                    null => l.notAvailable,
-                    final p => l.onTimePct(Fmt.digits(context, '$p')),
-                  },
-                  onTap: () => context.push(Routes.buyerFarmer(u.uid)),
-                ),
-            ]),
+            KsCarousel(
+              children: [
+                for (final u in suppliers)
+                  KsMiniCard(
+                    image: KsNetImage(
+                      url: u.photoUrl,
+                      fallbackAsset: AppUi.avatarFarmer,
+                    ),
+                    title: u.name,
+                    line2: [
+                      BdPlace.display(u.location.district, lang),
+                      Fmt.number(context, u.ratingAvg, decimals: 1),
+                    ].join(' · '),
+                    line3: switch (ref
+                        .watch(tradeStatsProvider(u.uid))
+                        .value
+                        ?.onTimePct) {
+                      null => l.notAvailable,
+                      final p => l.onTimePct(Fmt.digits(context, '$p')),
+                    },
+                    onTap: () => context.push(Routes.buyerFarmer(u.uid)),
+                  ),
+              ],
+            ),
           ],
           if (active.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
