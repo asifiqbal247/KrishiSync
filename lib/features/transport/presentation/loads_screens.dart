@@ -25,6 +25,7 @@ import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../data/transport_repository.dart';
 import '../domain/delivery.dart';
+import 'nav_screens.dart' show routeKm, driveTime;
 import 'transport_common.dart';
 import 'transporter_home_screen.dart';
 
@@ -246,7 +247,19 @@ class _LoadDetailsScreenState extends ConsumerState<LoadDetailsScreen> {
                   l.placeDate(placeFull(context, d.pickup), when),
                 ),
               KsInfoRow(l.rowDestination, placeFull(context, d.dropoff)),
-              if (d.roadKm != null)
+              // Several farms: the whole way (every farm, then the buyer).
+              if (t.multi)
+                KsInfoRow(
+                  l.rowDistance,
+                  () {
+                    final km = routeKm(null, t.stops, d.dropoff.geo);
+                    return l.nameDot(
+                      l.kmOnly(Fmt.number(context, km.round())),
+                      driveTime(context, km),
+                    );
+                  }(),
+                )
+              else if (d.roadKm != null)
                 KsInfoRow(
                   l.rowDistance,
                   l.distanceLine(

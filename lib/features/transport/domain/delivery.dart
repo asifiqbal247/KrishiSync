@@ -186,9 +186,32 @@ class Trip {
           return t != 0 ? t : a.farmerName.compareTo(b.farmerName);
         });
 
+  /// Stops in exactly this order (the driver's chosen route, 155).
+  Trip.exact(this.stops);
+
+  /// This trip with the stops in [ids] order (unknown ids are ignored; when
+  /// the list does not cover every stop the normal order stays).
+  Trip ordered(List<String> ids) {
+    final byId = {for (final s in stops) s.id: s};
+    if (ids.length != stops.length || !ids.every(byId.containsKey)) {
+      return this;
+    }
+    return Trip.exact([for (final id in ids) byId[id]!]);
+  }
+
   final List<Delivery> stops;
 
-  Delivery get lead => stops.first;
+  /// The farm with the earliest pickup (lead stays the same in any order,
+  /// so links and receipts keep pointing at one delivery).
+  Delivery get lead => stops.reduce((a, b) => _byDate(a, b) <= 0 ? a : b);
+
+  static int _byDate(Delivery a, Delivery b) {
+    final t = (a.pickupDate ?? DateTime(0)).compareTo(
+      b.pickupDate ?? DateTime(0),
+    );
+    return t != 0 ? t : a.farmerName.compareTo(b.farmerName);
+  }
+
   bool get multi => stops.length > 1;
 
   /// "PO-2026-0001", or the order number for a single load.

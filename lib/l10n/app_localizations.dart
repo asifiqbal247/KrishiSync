@@ -10620,6 +10620,108 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'আপনার অ্যাকাউন্টে পাঠানো'**
   String get payStepSent;
+
+  /// No description provided for @routeMapTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রুট ম্যাপ'**
+  String get routeMapTitle;
+
+  /// No description provided for @routeOptimized.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপ্টিমাইজড রুট'**
+  String get routeOptimized;
+
+  /// No description provided for @routeYours.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার ক্রম'**
+  String get routeYours;
+
+  /// No description provided for @routeOptimizedShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'অপ্টিমাইজড'**
+  String get routeOptimizedShort;
+
+  /// No description provided for @rowTotalDistance.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট দূরত্ব'**
+  String get rowTotalDistance;
+
+  /// No description provided for @rowEstTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'আনুমানিক সময়'**
+  String get rowEstTime;
+
+  /// No description provided for @rowSaving.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাশ্রয়'**
+  String get rowSaving;
+
+  /// No description provided for @savingKm.
+  ///
+  /// In bn, this message translates to:
+  /// **'{km} কিমি কম'**
+  String savingKm(String km);
+
+  /// No description provided for @savingNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ক্রমই সবচেয়ে ছোট'**
+  String get savingNone;
+
+  /// No description provided for @startNav.
+  ///
+  /// In bn, this message translates to:
+  /// **'নেভিগেশন শুরু'**
+  String get startNav;
+
+  /// No description provided for @navTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নেভিগেশন'**
+  String get navTitle;
+
+  /// No description provided for @rowNextStop.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরবর্তী স্টপ'**
+  String get rowNextStop;
+
+  /// No description provided for @rowDistTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'দূরত্ব / সময়'**
+  String get rowDistTime;
+
+  /// No description provided for @arrivedBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'পৌঁছেছি'**
+  String get arrivedBtn;
+
+  /// No description provided for @minutesShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'{m} মি.'**
+  String minutesShort(String m);
+
+  /// No description provided for @hoursOnly.
+  ///
+  /// In bn, this message translates to:
+  /// **'{h} ঘণ্টা'**
+  String hoursOnly(String h);
+
+  /// No description provided for @hoursMinutes.
+  ///
+  /// In bn, this message translates to:
+  /// **'{h} ঘ. {m} মি.'**
+  String hoursMinutes(String h, String m);
 }
 
 class _AppLocalizationsDelegate

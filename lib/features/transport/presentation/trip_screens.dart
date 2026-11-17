@@ -270,7 +270,10 @@ class PickupScheduleScreen extends ConsumerWidget {
           ),
           KsButton(
             label: l.seeRoute,
-            onPressed: () => context.push(Routes.trTrip(d.id)),
+            // 155 route choice for several farms, else straight to 156.
+            onPressed: () => context.push(
+              t.multi ? Routes.trRoute(d.id) : Routes.trNav(d.id),
+            ),
           ),
         ],
       ),
@@ -323,7 +326,7 @@ class _TripStatusScreenState extends ConsumerState<TripStatusScreen> {
             from: d.pickup.geo,
             to: d.dropoff.geo,
             points: [for (final s in t.stops.skip(1)) ?s.pickup.geo],
-            onTap: () => t.multi ? openTripDirections(t) : openDirections(d),
+            onTap: () => context.push(Routes.trNav(d.id)),
           ),
           if (!done && freeKg > 0) ...[
             const SizedBox(height: AppSpacing.block),

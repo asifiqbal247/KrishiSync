@@ -4740,5 +4740,53 @@
   "paySentLine": "ভাড়া আপনার অ্যাকাউন্টে পাঠানো হয়েছে",
   "payStepCustomer": "গ্রাহক পেমেন্ট জমা দিয়েছেন",
   "payStepDelivered": "ডেলিভারি নিশ্চিত",
-  "payStepSent": "আপনার অ্যাকাউন্টে পাঠানো"
+  "payStepSent": "আপনার অ্যাকাউন্টে পাঠানো",
+  "routeMapTitle": "রুট ম্যাপ",
+  "routeOptimized": "অপ্টিমাইজড রুট",
+  "routeYours": "আপনার ক্রম",
+  "routeOptimizedShort": "অপ্টিমাইজড",
+  "rowTotalDistance": "মোট দূরত্ব",
+  "rowEstTime": "আনুমানিক সময়",
+  "rowSaving": "সাশ্রয়",
+  "savingKm": "{km} কিমি কম",
+  "@savingKm": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "savingNone": "এই ক্রমই সবচেয়ে ছোট",
+  "startNav": "নেভিগেশন শুরু",
+  "navTitle": "নেভিগেশন",
+  "rowNextStop": "পরবর্তী স্টপ",
+  "rowDistTime": "দূরত্ব / সময়",
+  "arrivedBtn": "পৌঁছেছি",
+  "minutesShort": "{m} মি.",
+  "@minutesShort": {
+    "placeholders": {
+      "m": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursOnly": "{h} ঘণ্টা",
+  "@hoursOnly": {
+    "placeholders": {
+      "h": {
+        "type": "String"
+      }
+    }
+  },
+  "hoursMinutes": "{h} ঘ. {m} মি.",
+  "@hoursMinutes": {
+    "placeholders": {
+      "h": {
+        "type": "String"
+      },
+      "m": {
+        "type": "String"
+      }
+    }
+  }
 }

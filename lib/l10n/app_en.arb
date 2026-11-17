@@ -1752,5 +1752,22 @@
   "paySentLine": "The fare was sent to your account",
   "payStepCustomer": "Customer paid in",
   "payStepDelivered": "Delivery confirmed",
-  "payStepSent": "Sent to your account"
+  "payStepSent": "Sent to your account",
+  "routeMapTitle": "Route map",
+  "routeOptimized": "Optimized route",
+  "routeYours": "Your order",
+  "routeOptimizedShort": "Optimized",
+  "rowTotalDistance": "Total distance",
+  "rowEstTime": "Estimated time",
+  "rowSaving": "Saving",
+  "savingKm": "{km} km less",
+  "savingNone": "This order is already the shortest",
+  "startNav": "Start navigation",
+  "navTitle": "Navigation",
+  "rowNextStop": "Next stop",
+  "rowDistTime": "Distance / time",
+  "arrivedBtn": "Arrived",
+  "minutesShort": "{m} min",
+  "hoursOnly": "{h} h",
+  "hoursMinutes": "{h} h {m} min"
 }

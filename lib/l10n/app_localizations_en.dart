@@ -6076,4 +6076,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payStepSent => 'Sent to your account';
+
+  @override
+  String get routeMapTitle => 'Route map';
+
+  @override
+  String get routeOptimized => 'Optimized route';
+
+  @override
+  String get routeYours => 'Your order';
+
+  @override
+  String get routeOptimizedShort => 'Optimized';
+
+  @override
+  String get rowTotalDistance => 'Total distance';
+
+  @override
+  String get rowEstTime => 'Estimated time';
+
+  @override
+  String get rowSaving => 'Saving';
+
+  @override
+  String savingKm(String km) {
+    return '$km km less';
+  }
+
+  @override
+  String get savingNone => 'This order is already the shortest';
+
+  @override
+  String get startNav => 'Start navigation';
+
+  @override
+  String get navTitle => 'Navigation';
+
+  @override
+  String get rowNextStop => 'Next stop';
+
+  @override
+  String get rowDistTime => 'Distance / time';
+
+  @override
+  String get arrivedBtn => 'Arrived';
+
+  @override
+  String minutesShort(String m) {
+    return '$m min';
+  }
+
+  @override
+  String hoursOnly(String h) {
+    return '$h h';
+  }
+
+  @override
+  String hoursMinutes(String h, String m) {
+    return '$h h $m min';
+  }
 }

@@ -57,6 +57,9 @@ abstract final class AppRadius {
 /// Fixed sizes from HF components.
 abstract final class AppSizes {
   static const double appBarHeight = 56;
+
+  /// Selected / Secondary / Outline border: 1.5px brand.
+  static const double borderBrand = 1.5;
   static const double backButton = 44;
   static const double buttonL = 48;
   static const double buttonM = 40;
@@ -91,47 +94,64 @@ abstract final class AppShadows {
   /// Button/Primary in screens: drop-shadow 0 4 5 rgba(46,125,50,.32).
   static const brandButton = [
     BoxShadow(
-        color: AppColors.shadowBrandButton,
-        offset: Offset(0, 4),
-        blurRadius: 5),
+      color: AppColors.shadowBrandButton,
+      offset: Offset(0, 4),
+      blurRadius: 5,
+    ),
   ];
 
   /// Button/Warning: drop-shadow 0 4 5 rgba(242,201,76,.50).
   static const warningButton = [
     BoxShadow(
-        color: AppColors.shadowWarning, offset: Offset(0, 4), blurRadius: 5),
+      color: AppColors.shadowWarning,
+      offset: Offset(0, 4),
+      blurRadius: 5,
+    ),
   ];
 
   /// Button/Destructive: drop-shadow 0 4 5 rgba(201,76,76,.30).
   static const destructiveButton = [
     BoxShadow(
-        color: AppColors.shadowDestructive, offset: Offset(0, 4), blurRadius: 5),
+      color: AppColors.shadowDestructive,
+      offset: Offset(0, 4),
+      blurRadius: 5,
+    ),
   ];
 
   /// Confirm dialogs (D1–D6): 0 8 24 rgba(0,0,0,.20).
   static const dialog = [
     BoxShadow(
-        color: AppColors.shadowDialog, offset: Offset(0, 8), blurRadius: 24),
+      color: AppColors.shadowDialog,
+      offset: Offset(0, 8),
+      blurRadius: 24,
+    ),
   ];
 
   /// Button/Outline: drop-shadow 0 2 3 rgba(31,31,31,.06).
   static const outlineButton = [
     BoxShadow(
-        color: AppColors.shadowOutline, offset: Offset(0, 2), blurRadius: 3),
+      color: AppColors.shadowOutline,
+      offset: Offset(0, 2),
+      blurRadius: 3,
+    ),
   ];
 
   /// Brand action tile (main action): drop-shadow 0 6 7 rgba(46,125,51,.30).
   static const brandTile = [
     BoxShadow(
-        color: AppColors.shadowBrandTileStrong,
-        offset: Offset(0, 6),
-        blurRadius: 7),
+      color: AppColors.shadowBrandTileStrong,
+      offset: Offset(0, 6),
+      blurRadius: 7,
+    ),
   ];
 
   /// HF/Modal: drop-shadow 0 12 16 rgba(0,0,0,.18).
   static const modal = [
     BoxShadow(
-        color: AppColors.shadowModal, offset: Offset(0, 12), blurRadius: 16),
+      color: AppColors.shadowModal,
+      offset: Offset(0, 12),
+      blurRadius: 16,
+    ),
   ];
 
   /// HF/List Item: drop-shadow 0 4 7 rgba(31,51,31,.08).
@@ -142,6 +162,9 @@ abstract final class AppShadows {
   /// HF/Action Tile: drop-shadow 0 4 6 rgba(46,125,51,.10).
   static const tile = [
     BoxShadow(
-        color: AppColors.shadowBrandTile, offset: Offset(0, 4), blurRadius: 6),
+      color: AppColors.shadowBrandTile,
+      offset: Offset(0, 4),
+      blurRadius: 6,
+    ),
   ];
 }

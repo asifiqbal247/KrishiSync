@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../utils/sheet_utils.dart';
+
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
@@ -28,9 +30,22 @@ class KsRouteMap extends StatelessWidget {
     this.points = const [],
     this.truck,
     this.onTap,
+    this.path = const [],
+    this.radius,
+    this.fitPadding,
   });
 
+  /// Room kept around the pins when fitting (full-screen map under an
+  /// app bar needs more at the top).
+  final EdgeInsets? fitPadding;
+
   final double height;
+
+  /// Route through every stop in order (155–158); drawn instead of from→to.
+  final List<GeoPoint> path;
+
+  /// Corners (full-screen navigation map: bottom only).
+  final BorderRadius? radius;
   final GeoPoint? from;
   final GeoPoint? to;
   final List<GeoPoint> points;
@@ -45,19 +60,23 @@ class KsRouteMap extends StatelessWidget {
   static const _truck = 32.0;
 
   Marker _marker(LatLng p) => Marker(
-        point: p,
-        width: _pin,
-        height: _pin,
-        alignment: Alignment.topCenter,
-        child: const AppIcon(AppIcons.location,
-            size: _pin, color: AppColors.iconBrand),
-      );
+    point: p,
+    width: _pin,
+    height: _pin,
+    alignment: Alignment.topCenter,
+    child: const AppIcon(
+      AppIcons.location,
+      size: _pin,
+      color: AppColors.iconBrand,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     final a = _ll(from);
     final b = _ll(to);
     final t = _ll(truck);
+    final line = [for (final p in path) ?_ll(p)];
     final all = [?a, ?b, for (final p in points) ?_ll(p)];
     final fit = [...all, ?t];
     final map = all.isEmpty
@@ -70,45 +89,59 @@ class KsRouteMap extends StatelessWidget {
               initialCameraFit: fit.length > 1
                   ? CameraFit.coordinates(
                       coordinates: fit,
-                      padding: const EdgeInsets.all(_pad),
-                      maxZoom: 13)
+                      padding: fitPadding ?? const EdgeInsets.all(_pad),
+                      maxZoom: 13,
+                    )
                   : null,
-              interactionOptions:
-                  const InteractionOptions(flags: InteractiveFlag.none),
+              interactionOptions: const InteractionOptions(
+                flags: InteractiveFlag.none,
+              ),
               onTap: onTap == null ? null : (_, _) => onTap!(),
             ),
             children: [
               TileLayer(
-                  urlTemplate: KsMapPreview.tileUrl,
-                  userAgentPackageName: KsMapPreview.userAgent),
-              if (a != null && b != null)
-                PolylineLayer(polylines: [
-                  Polyline(
-                      points: [a, b],
+                urlTemplate: KsMapPreview.tileUrl,
+                userAgentPackageName: KsMapPreview.userAgent,
+              ),
+              if (line.length > 1 || (a != null && b != null))
+                PolylineLayer(
+                  polylines: [
+                    Polyline(
+                      points: line.length > 1 ? line : [a!, b!],
                       strokeWidth: _line,
-                      color: AppColors.bgBrand),
-                ]),
-              MarkerLayer(markers: [
-                for (final p in all) _marker(p),
-                if (t != null)
-                  Marker(
-                    point: t,
-                    width: _truck,
-                    height: _truck,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: AppColors.bgBrand, shape: BoxShape.circle),
-                      padding: const EdgeInsets.all(AppSpacing.xs),
-                      child: SvgPicture.asset(AppIcons.truck,
-                          colorFilter: const ColorFilter.mode(
-                              AppColors.textOnBrand, BlendMode.srcIn)),
+                      color: AppColors.bgBrand,
                     ),
-                  ),
-              ]),
+                  ],
+                ),
+              MarkerLayer(
+                markers: [
+                  for (final p in all) _marker(p),
+                  if (t != null)
+                    Marker(
+                      point: t,
+                      width: _truck,
+                      height: _truck,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: AppColors.bgBrand,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: const EdgeInsets.all(AppSpacing.xs),
+                        child: SvgPicture.asset(
+                          AppIcons.truck,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.textOnBrand,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ],
           );
     return ClipRRect(
-      borderRadius: BorderRadius.circular(AppRadius.xl),
+      borderRadius: radius ?? BorderRadius.circular(AppRadius.xl),
       child: SizedBox(height: height, width: double.infinity, child: map),
     );
   }
@@ -140,12 +173,15 @@ class KsNoteBox extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.block, vertical: AppSpacing.md),
+        horizontal: AppSpacing.block,
+        vertical: AppSpacing.md,
+      ),
       decoration: BoxDecoration(
         color: warning ? AppColors.bgWarningSubtle : AppColors.bgSubtle,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(
-            color: warning ? AppColors.iconWarning : AppColors.borderBrand),
+          color: warning ? AppColors.iconWarning : AppColors.borderBrand,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +261,11 @@ class KsBarChart extends StatelessWidget {
     return Container(
       height: _h,
       padding: const EdgeInsets.fromLTRB(
-          AppSpacing.md - 1, AppSpacing.md - 1, AppSpacing.md - 1, AppSpacing.md),
+        AppSpacing.md - 1,
+        AppSpacing.md - 1,
+        AppSpacing.md - 1,
+        AppSpacing.md,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppRadius.lg),
         border: Border.all(color: AppColors.borderDefault),
@@ -243,20 +283,23 @@ class KsBarChart extends StatelessWidget {
                     height: max <= base || values[i] <= 0
                         ? _barMin
                         : (_barMin +
-                            (_barMax - _barMin) *
-                                (values[i] - base) /
-                                (max - base)),
+                              (_barMax - _barMin) *
+                                  (values[i] - base) /
+                                  (max - base)),
                     decoration: BoxDecoration(
                       color: AppColors.bgBrand,
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(labels[i],
-                      maxLines: 1,
-                      style: AppTypography.labelSmall.normal.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textSecondary)),
+                  Text(
+                    labels[i],
+                    maxLines: 1,
+                    style: AppTypography.labelSmall.normal.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -292,7 +335,11 @@ Future<T?> showKsOptionsSheet<T>(
           maxChildSize: 0.95,
           builder: (_, scroll) => Padding(
             padding: const EdgeInsets.fromLTRB(
-                AppSpacing.screen, AppSpacing.lg, AppSpacing.screen, 0),
+              AppSpacing.screen,
+              AppSpacing.lg,
+              AppSpacing.screen,
+              0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -300,9 +347,10 @@ Future<T?> showKsOptionsSheet<T>(
                 const SizedBox(height: AppSpacing.md),
                 if (searchHint != null) ...[
                   KsSearchBar(
-                      hint: searchHint,
-                      controller: q,
-                      onChanged: (_) => setS(() {})),
+                    hint: searchHint,
+                    controller: q,
+                    onChanged: (_) => setS(() {}),
+                  ),
                   const SizedBox(height: AppSpacing.md),
                 ],
                 Expanded(

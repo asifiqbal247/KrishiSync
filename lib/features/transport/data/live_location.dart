@@ -190,3 +190,36 @@ final liveTrackerProvider = Provider<void>((ref) {
 const _every = Duration(seconds: 30);
 const _freshFix = Duration(minutes: 5);
 const _moveM = 50;
+
+/// This phone's position for the driver's navigation screen (156): a fresh
+/// cached fix first, then live GPS. Null when location is off or denied.
+final myPositionProvider = StreamProvider.autoDispose<GeoPoint?>((ref) async* {
+  try {
+    if (!await Geolocator.isLocationServiceEnabled()) {
+      yield null;
+      return;
+    }
+    final perm = await Geolocator.checkPermission();
+    if (perm == LocationPermission.denied ||
+        perm == LocationPermission.deniedForever) {
+      yield null;
+      return;
+    }
+    final first = await Geolocator.getLastKnownPosition(
+      forceAndroidLocationManager: true,
+    );
+    if (first != null &&
+        DateTime.now().difference(first.timestamp) < _freshFix) {
+      yield GeoPoint(first.latitude, first.longitude);
+    }
+    yield* Geolocator.getPositionStream(
+      locationSettings: AndroidSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: _moveM,
+        forceLocationManager: true,
+      ),
+    ).map((p) => GeoPoint(p.latitude, p.longitude));
+  } catch (_) {
+    yield null;
+  }
+});

@@ -52,6 +52,7 @@ import '../features/trade/presentation/safe_payment_screen.dart';
 import '../features/transport/presentation/buyer_transport_screens.dart';
 import '../features/transport/presentation/loads_screens.dart';
 import '../features/transport/presentation/earnings_screen.dart';
+import '../features/transport/presentation/nav_screens.dart';
 import '../features/transport/presentation/rate_screens.dart';
 import '../features/transport/presentation/return_load_screens.dart';
 import '../features/transport/presentation/transporter_shell.dart';
@@ -139,6 +140,9 @@ abstract final class Routes {
   static String farmerRateBuyer(String orderId) => '/delivered/$orderId/rate';
   // 180: driver's fare in safe payment.
   static String trPayStatus(String id) => '/transporter/pay/$id';
+  // 155 Route map (multi-stop) and 156–158 navigation.
+  static String trRoute(String id) => '/transporter/trip/$id/route';
+  static String trNav(String id) => '/transporter/trip/$id/nav';
 
   static const farmerHome = '/farmer';
   static const buyerHome = '/buyer';
@@ -835,6 +839,16 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, s) =>
                 TripStatusScreen(deliveryId: s.pathParameters['id']!),
             routes: [
+              GoRoute(
+                path: 'route',
+                builder: (_, s) =>
+                    RouteMapScreen(deliveryId: s.pathParameters['id']!),
+              ),
+              GoRoute(
+                path: 'nav',
+                builder: (_, s) =>
+                    NavigationScreen(deliveryId: s.pathParameters['id']!),
+              ),
               GoRoute(
                 path: 'deliver',
                 builder: (_, s) =>

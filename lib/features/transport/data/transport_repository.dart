@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/l10n/locale_controller.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../trade/data/trade_repository.dart';
@@ -638,8 +639,35 @@ final tripProvider = Provider.family<Trip?, String>((ref, id) {
     if (driver) ...?ref.watch(openLoadsProvider).value,
     ...?ref.watch(myDeliveriesProvider).value,
   ];
-  return Trip.of(d, pool);
+  final trip = Trip.of(d, pool);
+  // The driver's chosen stop order (155), if any.
+  final saved = ref.watch(stopOrderProvider)[d.poNo];
+  return saved == null ? trip : trip.ordered(saved);
 });
+
+/// Stop order a driver picked on 155, per purchase order (this phone only).
+class StopOrderController extends Notifier<Map<String, List<String>>> {
+  static const _prefix = 'stop_order_';
+
+  @override
+  Map<String, List<String>> build() {
+    final p = ref.watch(sharedPrefsProvider);
+    return {
+      for (final k in p.getKeys().where((k) => k.startsWith(_prefix)))
+        k.substring(_prefix.length): p.getStringList(k) ?? const [],
+    };
+  }
+
+  Future<void> save(String poNo, List<String> ids) async {
+    await ref.read(sharedPrefsProvider).setStringList('$_prefix$poNo', ids);
+    state = {...state, poNo: ids};
+  }
+}
+
+final stopOrderProvider =
+    NotifierProvider<StopOrderController, Map<String, List<String>>>(
+      StopOrderController.new,
+    );
 
 final loadCodeProvider = StreamProvider.family<String?, String>(
   (ref, id) => ref.watch(transportRepositoryProvider).watchLoadCode(id),

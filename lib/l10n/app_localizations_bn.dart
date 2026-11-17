@@ -6069,4 +6069,63 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get payStepSent => 'আপনার অ্যাকাউন্টে পাঠানো';
+
+  @override
+  String get routeMapTitle => 'রুট ম্যাপ';
+
+  @override
+  String get routeOptimized => 'অপ্টিমাইজড রুট';
+
+  @override
+  String get routeYours => 'আপনার ক্রম';
+
+  @override
+  String get routeOptimizedShort => 'অপ্টিমাইজড';
+
+  @override
+  String get rowTotalDistance => 'মোট দূরত্ব';
+
+  @override
+  String get rowEstTime => 'আনুমানিক সময়';
+
+  @override
+  String get rowSaving => 'সাশ্রয়';
+
+  @override
+  String savingKm(String km) {
+    return '$km কিমি কম';
+  }
+
+  @override
+  String get savingNone => 'এই ক্রমই সবচেয়ে ছোট';
+
+  @override
+  String get startNav => 'নেভিগেশন শুরু';
+
+  @override
+  String get navTitle => 'নেভিগেশন';
+
+  @override
+  String get rowNextStop => 'পরবর্তী স্টপ';
+
+  @override
+  String get rowDistTime => 'দূরত্ব / সময়';
+
+  @override
+  String get arrivedBtn => 'পৌঁছেছি';
+
+  @override
+  String minutesShort(String m) {
+    return '$m মি.';
+  }
+
+  @override
+  String hoursOnly(String h) {
+    return '$h ঘণ্টা';
+  }
+
+  @override
+  String hoursMinutes(String h, String m) {
+    return '$h ঘ. $m মি.';
+  }
 }
