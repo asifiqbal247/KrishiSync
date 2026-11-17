@@ -21,13 +21,18 @@ import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../buyer/presentation/buyer_common.dart';
+import '../../transport/data/transport_repository.dart';
 import '../../transport/presentation/transport_common.dart';
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
 import '../../profile/presentation/payment_method_screens.dart';
 
 const _pad = EdgeInsets.fromLTRB(
-    AppSpacing.screen, AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg);
+  AppSpacing.screen,
+  AppSpacing.contentTop,
+  AppSpacing.screen,
+  AppSpacing.lg,
+);
 
 /// Farmer is paid when the crop is loaded (safe payment rule).
 bool farmerPaid(TradeOrder o) =>
@@ -48,9 +53,10 @@ String maskedPhone(String e164) {
 }
 
 Widget _cropThumb(TradeOrder o) => KsNetImage(
-    url: o.photo,
-    thumbSize: KsListItem.thumbSize.round(),
-    fallbackAsset: CropCatalog.imageFor(o.cropKey));
+  url: o.photo,
+  thumbSize: KsListItem.thumbSize.round(),
+  fallbackAsset: CropCatalog.imageFor(o.cropKey),
+);
 
 /// 56 Payments (farmer, Figma 292:798) / 124 Payments (buyer, 292:1513).
 /// All amounts come from real orders; the payment itself is a placeholder.
@@ -72,33 +78,39 @@ class PaymentsScreen extends ConsumerWidget {
       appBar: KsAppBar(title: l.payTitle),
       body: switch (async) {
         AsyncData(value: final all) => () {
-            final orders =
-                all.where((o) => o.status != OrderStatus.cancelled).toList();
-            final num held;
-            final num month;
-            if (isFarmer) {
-              held = orders
-                  .where((o) => !farmerPaid(o))
-                  .fold<num>(0, (a, o) => a + o.cropTotal);
-              month = orders
-                  .where((o) =>
+          final orders = all
+              .where((o) => o.status != OrderStatus.cancelled)
+              .toList();
+          final num held;
+          final num month;
+          if (isFarmer) {
+            held = orders
+                .where((o) => !farmerPaid(o))
+                .fold<num>(0, (a, o) => a + o.cropTotal);
+            month = orders
+                .where(
+                  (o) =>
                       farmerPaid(o) &&
-                      _thisMonth(o.timeline['pickedUp'] ?? o.createdAt))
-                  .fold<num>(0, (a, o) => a + o.cropTotal);
-            } else {
-              held = orders
-                  .where((o) => o.status.isOngoing)
-                  .fold<num>(0, (a, o) => a + o.total);
-              month = orders
-                  .where((o) => _thisMonth(o.createdAt))
-                  .fold<num>(0, (a, o) => a + o.total);
-            }
-            final rows = <Widget>[];
-            for (final o in orders) {
-              final title = l.payItemTitle(
-                  o.cropName(lang), qtyText(context, o.quantityKg));
-              if (isFarmer) {
-                rows.add(KsListItem(
+                      _thisMonth(o.timeline['pickedUp'] ?? o.createdAt),
+                )
+                .fold<num>(0, (a, o) => a + o.cropTotal);
+          } else {
+            held = orders
+                .where((o) => o.status.isOngoing)
+                .fold<num>(0, (a, o) => a + o.total);
+            month = orders
+                .where((o) => _thisMonth(o.createdAt))
+                .fold<num>(0, (a, o) => a + o.total);
+          }
+          final rows = <Widget>[];
+          for (final o in orders) {
+            final title = l.payItemTitle(
+              o.cropName(lang),
+              qtyText(context, o.quantityKg),
+            );
+            if (isFarmer) {
+              rows.add(
+                KsListItem(
                   thumb: _cropThumb(o),
                   title: title,
                   subtitle: farmerPaid(o)
@@ -106,9 +118,11 @@ class PaymentsScreen extends ConsumerWidget {
                       : l.payHeldSub(date(o.createdAt)),
                   trailingText: tk(o.cropTotal),
                   onTap: () => context.push(Routes.receipt(o.id)),
-                ));
-              } else {
-                rows.add(KsListItem(
+                ),
+              );
+            } else {
+              rows.add(
+                KsListItem(
                   thumb: _cropThumb(o),
                   title: l.orderLine(o.orderNo, title),
                   subtitle: o.status.isOngoing
@@ -116,14 +130,18 @@ class PaymentsScreen extends ConsumerWidget {
                       : l.payPaidSub(date(o.createdAt)),
                   // Booked truck fare gets its own row (124); otherwise the
                   // whole amount is on the order.
-                  trailingText: tk(o.transporterId == null
-                      ? o.total
-                      : o.cropTotal + o.platformFee),
+                  trailingText: tk(
+                    o.transporterId == null
+                        ? o.total
+                        : o.cropTotal + o.platformFee,
+                  ),
                   onTap: () => context.push(Routes.receipt(o.id)),
-                ));
-                if (o.transporterId != null && o.transportFare > 0) {
-                  final delivered = !o.status.isOngoing;
-                  rows.add(KsListItem(
+                ),
+              );
+              if (o.transporterId != null && o.transportFare > 0) {
+                final delivered = !o.status.isOngoing;
+                rows.add(
+                  KsListItem(
                     thumb: Image.asset(AppUi.avatarDriver, fit: BoxFit.cover),
                     title: l.payTransportTitle(o.transporterName ?? ''),
                     subtitle: delivered
@@ -131,60 +149,71 @@ class PaymentsScreen extends ConsumerWidget {
                         : l.payHeldSub(date(o.timeline['transportBooked'])),
                     trailingText: tk(o.transportFare),
                     onTap: () => context.push(Routes.receipt(o.id)),
-                  ));
-                }
+                  ),
+                );
               }
             }
-            return ListView(
-              padding: _pad,
-              children: [
-                Row(children: [
+          }
+          return ListView(
+            padding: _pad,
+            children: [
+              Row(
+                children: [
                   Expanded(
-                      child: KsStatCard(
-                          label: isFarmer ? l.payHeldFarmer : l.payHeldBuyer,
-                          value: tk(held))),
+                    child: KsStatCard(
+                      label: isFarmer ? l.payHeldFarmer : l.payHeldBuyer,
+                      value: tk(held),
+                    ),
+                  ),
                   const SizedBox(width: AppSpacing.lg),
                   Expanded(
-                      child: KsStatCard(
-                          label: isFarmer ? l.payReceivedMonth : l.payPaidMonth,
-                          value: tk(month))),
-                ]),
-                if (isFarmer && me != null) ...[
-                  const SizedBox(height: AppSpacing.block),
-                  // Payout accounts (197–201) are Tier B.
-                  KsListItem(
-                    thumb: Container(
-                      color: AppColors.bgSubtle,
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      child: Image.asset(AppUi.glyphWallet),
+                    child: KsStatCard(
+                      label: isFarmer ? l.payReceivedMonth : l.payPaidMonth,
+                      value: tk(month),
                     ),
-                    title: l.payReceiveMethod,
-                    subtitle: me.defaultPayout == null
-                        ? l.pmNone
-                        : payoutLine(l, me.defaultPayout!),
-                    trailingText: l.changeLink,
-                    onTap: () => context.push(Routes.paymentMethods),
                   ),
                 ],
+              ),
+              if (isFarmer && me != null) ...[
                 const SizedBox(height: AppSpacing.block),
-                KsSectionHeader(
-                    title: l.payHistory,
-                    actionLabel: l.seeAllLink,
-                    onAction: () => context.push(Routes.history)),
-                if (rows.isEmpty) ...[
-                  const SizedBox(height: AppSpacing.block),
-                  Text(l.payEmpty,
-                      textAlign: TextAlign.center,
-                      style: AppTypography.bodyMedium.normal
-                          .withColor(AppColors.textSecondary)),
-                ],
-                for (final r in rows) ...[
-                  const SizedBox(height: AppSpacing.block),
-                  r,
-                ],
+                // Payout accounts (197–201) are Tier B.
+                KsListItem(
+                  thumb: Container(
+                    color: AppColors.bgSubtle,
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Image.asset(AppUi.glyphWallet),
+                  ),
+                  title: l.payReceiveMethod,
+                  subtitle: me.defaultPayout == null
+                      ? l.pmNone
+                      : payoutLine(l, me.defaultPayout!),
+                  trailingText: l.changeLink,
+                  onTap: () => context.push(Routes.paymentMethods),
+                ),
               ],
-            );
-          }(),
+              const SizedBox(height: AppSpacing.block),
+              KsSectionHeader(
+                title: l.payHistory,
+                actionLabel: l.seeAllLink,
+                onAction: () => context.push(Routes.history),
+              ),
+              if (rows.isEmpty) ...[
+                const SizedBox(height: AppSpacing.block),
+                Text(
+                  l.payEmpty,
+                  textAlign: TextAlign.center,
+                  style: AppTypography.bodyMedium.normal.withColor(
+                    AppColors.textSecondary,
+                  ),
+                ),
+              ],
+              for (final r in rows) ...[
+                const SizedBox(height: AppSpacing.block),
+                r,
+              ],
+            ],
+          );
+        }(),
         AsyncError() => Center(child: Text(l.errorGeneric)),
         _ => const KsSkeletonList(),
       },
@@ -216,72 +245,87 @@ class ReceiptScreen extends ConsumerWidget {
         : (me.uid == o.transporterId ? UserRole.transporter : UserRole.buyer);
     final method = _method(l, o);
     final created = o.createdAt ?? DateTime.now();
-    final no = 'INV-${created.year}'
+    final no =
+        'INV-${created.year}'
         '${created.month.toString().padLeft(2, '0')}'
         '${created.day.toString().padLeft(2, '0')}-'
         '${o.orderNo.replaceAll(RegExp(r'[^0-9]'), '')}';
     final crop = l.cropQty(o.cropName(lang), qtyText(context, o.quantityKg));
+    // 181: a multi-stop trip's receipt shows the whole trip fare.
+    final trip = role == UserRole.transporter
+        ? ref.watch(tripProvider(o.id))
+        : null;
 
     final (num amount, bool paid, List<(String, String)> rows) = switch (role) {
       UserRole.farmer => (
-          o.cropTotal,
-          farmerPaid(o),
-          [
-            (l.rowReceiptNo, no),
-            (l.rowBuyer, o.buyerName),
-            (l.rowCrop, crop),
-            (l.rowPrice, l.priceLine(Fmt.number(context, o.pricePerKg))),
-            (l.rowPlatformFee(Fmt.digits(context, '0')), tk(0)),
-            (l.rowDate, Fmt.date(context, o.timeline['pickedUp'] ?? created)),
-          ]
-        ),
+        o.cropTotal,
+        farmerPaid(o),
+        [
+          (l.rowReceiptNo, no),
+          (l.rowBuyer, o.buyerName),
+          (l.rowCrop, crop),
+          (l.rowPrice, l.priceLine(Fmt.number(context, o.pricePerKg))),
+          (l.rowPlatformFee(Fmt.digits(context, '0')), tk(0)),
+          (l.rowDate, Fmt.dateYear(context, o.timeline['pickedUp'] ?? created)),
+        ],
+      ),
       UserRole.transporter => (
-          o.transportFare,
-          !o.status.isOngoing,
-          [
-            (l.rowReceiptNo, no),
-            (l.rowCustomer, o.buyerName),
-            (l.rowCrop, crop),
-            (
-              l.rowRoute,
-              l.routeLine(districtOf(context, o.pickup),
-                  districtOf(context, o.dropoff))
+        trip?.fare ?? o.transportFare,
+        !o.status.isOngoing,
+        [
+          (l.rowReceiptNo, no.replaceFirst('INV-', 'INV-T-')),
+          (l.rowCustomer, o.buyerName),
+          (l.rowJob, l.noOrderCrop(trip?.no ?? o.orderNo, o.cropName(lang))),
+          (
+            l.rowRoute,
+            l.routeLine(
+              districtOf(context, o.pickup),
+              districtOf(context, o.dropoff),
             ),
-            (l.rowDate, Fmt.date(context, o.timeline['delivered'] ?? created)),
-          ]
-        ),
+          ),
+          (l.rowPlatformFee(Fmt.digits(context, '0')), tk(0)),
+          (
+            l.rowDate,
+            Fmt.dateYear(context, o.timeline['delivered'] ?? created),
+          ),
+        ],
+      ),
       _ => (
-          o.total,
-          true,
-          [
-            (l.rowReceiptNo, no),
-            (l.rowFarmer, o.farmerName),
-            (l.rowCrop, crop),
-            (l.rowPrice, l.priceLine(Fmt.number(context, o.pricePerKg))),
-            if (o.transportFare > 0) (l.rowFareLabel, tk(o.transportFare)),
-            (
-              l.rowPlatformFee(
-                  Fmt.digits(context, '${TradeRepository.platformFeePct}')),
-              tk(o.platformFee)
+        o.total,
+        true,
+        [
+          (l.rowReceiptNo, no),
+          (l.rowFarmer, o.farmerName),
+          (l.rowCrop, crop),
+          (l.rowPrice, l.priceLine(Fmt.number(context, o.pricePerKg))),
+          if (o.transportFare > 0) (l.rowFareLabel, tk(o.transportFare)),
+          (
+            l.rowPlatformFee(
+              Fmt.digits(context, '${TradeRepository.platformFeePct}'),
             ),
-            (l.rowDate, Fmt.date(context, created)),
-          ]
-        ),
+            tk(o.platformFee),
+          ),
+          (l.rowDate, Fmt.dateYear(context, created)),
+        ],
+      ),
     };
 
     final receipt = [
-      Text(tk(amount),
-          textAlign: TextAlign.center,
-          style: AppTypography.display28.normal),
+      Text(
+        tk(amount),
+        textAlign: TextAlign.center,
+        style: AppTypography.display28.normal,
+      ),
       const SizedBox(height: AppSpacing.sm),
-      Text(paid ? l.receiptPaid(method) : l.receiptHeld,
-          textAlign: TextAlign.center,
-          style: AppTypography.bodySmall.normal
-              .withColor(AppColors.textSecondary)),
+      Text(
+        paid ? l.receiptPaid(method) : l.receiptHeld,
+        textAlign: TextAlign.center,
+        style: AppTypography.bodySmall.normal.withColor(
+          AppColors.textSecondary,
+        ),
+      ),
       const SizedBox(height: AppSpacing.block),
-      KsInfoBox(children: [
-        for (final (k, v) in rows) KsInfoRow(k, v),
-      ]),
+      KsInfoBox(children: [for (final (k, v) in rows) KsInfoRow(k, v)]),
     ];
 
     return Scaffold(
@@ -293,11 +337,17 @@ class ReceiptScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           ...receipt,
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton.outline(
-              label: l.pdfDownload,
-              onPressed: () => PdfService.share(context,
-                  title: l.receiptTitle, fileName: no, children: receipt)),
+            label: l.pdfDownload,
+            onPressed: () => PdfService.share(
+              context,
+              title: l.receiptTitle,
+              fileName: no,
+              children: receipt,
+            ),
+          ),
         ],
       ),
     );

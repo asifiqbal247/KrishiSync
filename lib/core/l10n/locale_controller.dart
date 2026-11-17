@@ -57,3 +57,21 @@ class OnboardingController extends Notifier<bool> {
 final onboardingDoneProvider = NotifierProvider<OnboardingController, bool>(
   OnboardingController.new,
 );
+
+/// 13 Permissions page seen (shown once per phone, after login).
+class PermissionsAskedController extends Notifier<bool> {
+  static const _key = 'permissions_asked';
+
+  @override
+  bool build() => ref.watch(sharedPrefsProvider).getBool(_key) ?? false;
+
+  Future<void> done() async {
+    await ref.read(sharedPrefsProvider).setBool(_key, true);
+    state = true;
+  }
+}
+
+final permissionsAskedProvider =
+    NotifierProvider<PermissionsAskedController, bool>(
+      PermissionsAskedController.new,
+    );

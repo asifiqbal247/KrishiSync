@@ -208,19 +208,29 @@ class OrderDetailsScreen extends ConsumerWidget {
   final String orderId;
 
   /// The next step for this person, or null when there is none (Part 6).
-  Widget? _action(BuildContext context, WidgetRef ref, AppLocalizations l,
-      TradeOrder o, bool iAmFarmer) {
+  Widget? _action(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l,
+    TradeOrder o,
+    bool iAmFarmer,
+  ) {
     final platform = o.transportMode == TransportMode.platform;
     final repo = ref.read(transportRepositoryProvider);
 
     Future<void> confirmThen(
-        String title, String body, Future<void> Function() run) async {
-      final ok = await showKsConfirm(context,
-          title: title,
-          body: body,
-          noLabel: l.commonCancel,
-          yesLabel: l.yesConfirm,
-          positive: true);
+      String title,
+      String body,
+      Future<void> Function() run,
+    ) async {
+      final ok = await showKsConfirm(
+        context,
+        title: title,
+        body: body,
+        noLabel: l.commonCancel,
+        yesLabel: l.yesConfirm,
+        positive: true,
+      );
       if (!ok) return;
       try {
         await run();
@@ -236,9 +246,17 @@ class OrderDetailsScreen extends ConsumerWidget {
       if (!platform && o.status == OrderStatus.confirmed) {
         return KsButton(
           label: l.handedOver,
-          onPressed: () => confirmThen(l.handedOverTitle, l.handedOverBody,
-              () => repo.farmerHandedOver(o)),
+          onPressed: () => confirmThen(
+            l.handedOverTitle,
+            l.handedOverBody,
+            () => repo.farmerHandedOver(o),
+          ),
         );
+      }
+      // 53: the crop reached the buyer → see it and rate the buyer (54).
+      if (o.status == OrderStatus.delivered ||
+          o.status == OrderStatus.completed) {
+        return go(l.seeDeliveryBtn, Routes.farmerDelivered(o.id));
       }
       return null;
     }
@@ -247,15 +265,22 @@ class OrderDetailsScreen extends ConsumerWidget {
       return go(l.answerExtraBtn, Routes.extraWeight(o.id));
     }
     return switch (o.status) {
-      OrderStatus.confirmed when platform =>
-        go(l.orderBookTruck, Routes.buyerBook(o.id)),
-      OrderStatus.transportBooked || OrderStatus.pickedUp when platform =>
-        go(l.orderReceive, Routes.buyerReceive(o.id)),
+      OrderStatus.confirmed when platform => go(
+        l.orderBookTruck,
+        Routes.buyerBook(o.id),
+      ),
+      OrderStatus.transportBooked || OrderStatus.pickedUp when platform => go(
+        l.orderReceive,
+        Routes.buyerReceive(o.id),
+      ),
       OrderStatus.pickedUp => KsButton(
-          label: l.receivedSelf,
-          onPressed: () => confirmThen(
-              l.receivedTitle, l.receivedBody, () => repo.buyerReceived(o)),
+        label: l.receivedSelf,
+        onPressed: () => confirmThen(
+          l.receivedTitle,
+          l.receivedBody,
+          () => repo.buyerReceived(o),
         ),
+      ),
       OrderStatus.delivered => go(l.orderRate, Routes.buyerRate(o.id)),
       _ => null,
     };
@@ -323,9 +348,11 @@ class OrderDetailsScreen extends ConsumerWidget {
               KsLinkRow(
                 label: iAmFarmer ? l.rowBuyer : l.rowFarmer,
                 value: iAmFarmer ? o.buyerName : o.farmerName,
-                onTap: () => context.push(iAmFarmer
-                    ? Routes.buyerProfile(o.buyerId)
-                    : Routes.buyerFarmer(o.farmerId)),
+                onTap: () => context.push(
+                  iAmFarmer
+                      ? Routes.buyerProfile(o.buyerId)
+                      : Routes.buyerFarmer(o.farmerId),
+                ),
               ),
               KsInfoRow(
                 l.offerTotal,
@@ -336,8 +363,8 @@ class OrderDetailsScreen extends ConsumerWidget {
                 o.status == OrderStatus.cancelled
                     ? l.orderStatusCancelled
                     : o.paymentStatus == 'unpaid'
-                        ? l.paymentPending
-                        : l.paymentHeld,
+                    ? l.paymentPending
+                    : l.paymentHeld,
               ),
               if (o.pickupDate != null)
                 iAmFarmer && o.transportMode == TransportMode.platform
@@ -372,7 +399,9 @@ class OrderDetailsScreen extends ConsumerWidget {
               if (!iAmFarmer &&
                   ((insp?.done ?? false) || o.timeline.containsKey('pickedUp')))
                 KsLinkRow(
-                  label: (insp?.done ?? false) ? l.rowInspReport : l.rowLoadRecord,
+                  label: (insp?.done ?? false)
+                      ? l.rowInspReport
+                      : l.rowLoadRecord,
                   value: l.seeLinkShort,
                   onTap: () => context.push(Routes.loadReport(o.id)),
                 ),
@@ -417,12 +446,15 @@ class OrderDetailsScreen extends ConsumerWidget {
                 ? l.stepTruckBookedSelf
                 : l.stepTruckBooked,
             // Self transport has no booking step: show the order time.
-            subtitle: when(o.timeline['transportBooked'] ??
-                (o.transportMode == TransportMode.self
-                    ? o.timeline['confirmed']
-                    : null)),
+            subtitle: when(
+              o.timeline['transportBooked'] ??
+                  (o.transportMode == TransportMode.self
+                      ? o.timeline['confirmed']
+                      : null),
+            ),
             done: done(OrderStatus.transportBooked),
-            onTap: !iAmFarmer &&
+            onTap:
+                !iAmFarmer &&
                     o.transportMode == TransportMode.platform &&
                     o.transporterId != null
                 ? () => context.push(Routes.buyerAssigned(o.id))
@@ -459,14 +491,18 @@ class OrderDetailsScreen extends ConsumerWidget {
               label: l.cancelOrder,
               onPressed: () async {
                 final fee = TradeRepository.cancelFee(o);
-                final ok = await showKsConfirm(context,
-                    title: l.cancelOrderTitle,
-                    body: fee == 0
-                        ? l.cancelOrderBodyNoFee(Fmt.taka(context, o.total))
-                        : l.cancelOrderBody(Fmt.taka(context, fee),
-                            Fmt.taka(context, o.total - fee)),
-                    noLabel: l.noGoBack,
-                    yesLabel: l.yesCancel);
+                final ok = await showKsConfirm(
+                  context,
+                  title: l.cancelOrderTitle,
+                  body: fee == 0
+                      ? l.cancelOrderBodyNoFee(Fmt.taka(context, o.total))
+                      : l.cancelOrderBody(
+                          Fmt.taka(context, fee),
+                          Fmt.taka(context, o.total - fee),
+                        ),
+                  noLabel: l.noGoBack,
+                  yesLabel: l.yesCancel,
+                );
                 if (!ok) return;
                 try {
                   await ref

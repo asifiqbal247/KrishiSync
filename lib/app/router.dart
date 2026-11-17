@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/l10n/locale_controller.dart';
+import '../features/auth/presentation/permissions_screen.dart';
+import '../features/farmer/presentation/farmer_delivered_screen.dart';
 import '../features/transport/presentation/shared_truck_screens.dart';
 import '../features/farmer/data/trade_doc_repository.dart';
 import '../features/farmer/presentation/trade_doc_screen.dart';
@@ -49,6 +51,7 @@ import '../features/trade/presentation/place_order_screen.dart';
 import '../features/trade/presentation/safe_payment_screen.dart';
 import '../features/transport/presentation/buyer_transport_screens.dart';
 import '../features/transport/presentation/loads_screens.dart';
+import '../features/transport/presentation/earnings_screen.dart';
 import '../features/transport/presentation/rate_screens.dart';
 import '../features/transport/presentation/return_load_screens.dart';
 import '../features/transport/presentation/transporter_shell.dart';
@@ -129,6 +132,13 @@ abstract final class Routes {
   static const verifyAndRatings = '/ratings?verify=1';
   static String buyerTrack(String id) => '/buyer/track/$id';
   static String receipt(String orderId) => '/receipt/$orderId';
+  // 13 Permissions (once, after login).
+  static const permissions = '/permissions';
+  // 53 / 54: farmer sees the delivery and rates the buyer.
+  static String farmerDelivered(String orderId) => '/delivered/$orderId';
+  static String farmerRateBuyer(String orderId) => '/delivered/$orderId/rate';
+  // 180: driver's fare in safe payment.
+  static String trPayStatus(String id) => '/transporter/pay/$id';
 
   static const farmerHome = '/farmer';
   static const buyerHome = '/buyer';
@@ -233,6 +243,7 @@ class _RouterRefresh extends ChangeNotifier {
     ref.listen(myInvitesProvider, ping);
     ref.listen(localeProvider, ping);
     ref.listen(onboardingDoneProvider, ping);
+    ref.listen(permissionsAskedProvider, ping);
     ref.listen(splashMinElapsedProvider, ping);
   }
 }
@@ -271,6 +282,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       return loc == Routes.splash ? null : Routes.splash;
     }
     final u = user.value!;
+    // 5b. 13 Permissions: once per phone, right after login.
+    if (!ref.read(permissionsAskedProvider)) {
+      return loc == Routes.permissions ? null : Routes.permissions;
+    }
     // 6. No role yet. A person invited as a buyer's inspector (88) only
     //    sees the inspector screens.
     if (!u.hasRole) {
@@ -297,6 +312,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     }
     // 8. Ready: leave auth screens for the role home.
     if (Routes.isPreAuth(loc) ||
+        loc == Routes.permissions ||
         loc == Routes.role ||
         loc == Routes.profileSetup) {
       return Routes.homeFor(u.role!);
@@ -543,6 +559,22 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Routes.role, builder: (_, _) => const RoleScreen()),
       GoRoute(
+        path: Routes.permissions,
+        builder: (_, _) => const PermissionsScreen(),
+      ),
+      GoRoute(
+        path: '/delivered/:id',
+        builder: (_, s) =>
+            FarmerDeliveredScreen(orderId: s.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'rate',
+            builder: (_, s) =>
+                RateBuyerScreen(orderId: s.pathParameters['id']!),
+          ),
+        ],
+      ),
+      GoRoute(
         path: Routes.profileSetup,
         builder: (_, _) => const ProfileSetupScreen(),
       ),
@@ -787,6 +819,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                     FareOfferScreen(deliveryId: s.pathParameters['id']!),
               ),
             ],
+          ),
+          GoRoute(
+            path: 'pay/:id',
+            builder: (_, s) =>
+                PayStatusScreen(deliveryId: s.pathParameters['id']!),
           ),
           GoRoute(
             path: 'job/:id',

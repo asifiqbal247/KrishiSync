@@ -82,6 +82,7 @@ abstract final class AppColors {
   // ---- Splash (01) ----
   /// Splash Fade end colour (white, 0% alpha).
   static const whiteTransparent = Color(0x00FFFFFF);
+
   /// Version text shadow: rgba(0,0,0,0.35).
   static const splashTextShadow = Color(0x59000000);
 
@@ -89,29 +90,47 @@ abstract final class AppColors {
   /// Primary button drop shadow as used in screens (Button/Primary 315:14):
   /// rgba(46,125,50,0.32).
   static const shadowBrandButton = Color(0x522E7D32);
+
   /// List item drop shadow: rgba(31,51,31,0.08).
   static const shadowCard = Color(0x141F331F);
+
   /// Action tile drop shadow: rgba(46,125,51,0.10).
   static const shadowBrandTile = Color(0x1A2E7D33);
+
   /// Brand action tile shadow: rgba(46,125,51,0.30).
   static const shadowBrandTileStrong = Color(0x4D2E7D33);
+
   /// Outline button shadow: rgba(31,31,31,0.06).
   static const shadowOutline = Color(0x0F1F1F1F);
+
   /// Warning button shadow: rgba(242,201,76,0.50).
   static const shadowWarning = Color(0x80F2C94C);
+
   /// Destructive button shadow: rgba(201,76,76,0.30).
   static const shadowDestructive = Color(0x4DC94C4C);
+
   /// Confirm dialog shadow: rgba(0,0,0,0.20).
   static const shadowDialog = Color(0x33000000);
+
   /// HF/Modal shadow: rgba(0,0,0,0.18).
   static const shadowModal = Color(0x2E000000);
+
   /// Modal overlay: rgba(31,31,31,0.45).
   static const overlayScrim = Color(0x731F1F1F);
 
+  /// Text and icons over a hero photo (53 app bar).
+  static const textOnImage = white;
+
+  /// Hero photo top shade: rgba(0,0,0,0.5) → transparent, 120 high.
+  static const heroShade = Color(0x80000000);
+  static const heroShadeEnd = Color(0x00000000);
+
   /// Full-screen photo viewer backdrop (chat photos, papers).
   static const photoBackdrop = black;
+
   /// Price / tip card border (#E0E0E0 in Figma cards).
   static const cardBorder = Color(0xFFE0E0E0);
+
   /// Tip card thumb background (#F3F3F3).
   static const tipThumbBg = Color(0xFFF3F3F3);
 }

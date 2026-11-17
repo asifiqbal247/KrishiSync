@@ -24,100 +24,102 @@ import '../domain/trade_models.dart';
 class NotificationsScreen extends ConsumerWidget {
   const NotificationsScreen({super.key});
 
-  static (String, String) text(
-      BuildContext context, AppNotification n) {
+  static (String, String) text(BuildContext context, AppNotification n) {
     final l = AppLocalizations.of(context);
     final bn = Localizations.localeOf(context).languageCode == 'bn';
     final p = n.params;
     final crop = (bn ? p['cropBn'] : p['cropEn']) ?? '';
-    String num(String? v) =>
-        Fmt.number(context, double.tryParse(v ?? '') ?? 0);
+    String num(String? v) => Fmt.number(context, double.tryParse(v ?? '') ?? 0);
     String docName(String? t) =>
         t == TradeDocType.license.name ? l.exDoc2 : l.exDoc1;
     return switch (n.type) {
       'offer_new' => (
-          l.nOfferNew(crop),
-          l.nOfferNewBody(p['buyer'] ?? '', num(p['price']),
-              l.qtyKg(num(p['qty'])))
+        l.nOfferNew(crop),
+        l.nOfferNewBody(
+          p['buyer'] ?? '',
+          num(p['price']),
+          l.qtyKg(num(p['qty'])),
         ),
+      ),
       'offer_counter' => (
-          l.nOfferCounter(crop),
-          l.nOfferCounterBody(p['farmer'] ?? '', num(p['price']))
-        ),
+        l.nOfferCounter(crop),
+        l.nOfferCounterBody(p['farmer'] ?? '', num(p['price'])),
+      ),
       'offer_accepted' => (
-          l.nOfferAccepted(crop),
-          l.nOfferAcceptedBody(num(p['price']))
-        ),
+        l.nOfferAccepted(crop),
+        l.nOfferAcceptedBody(num(p['price'])),
+      ),
       'offer_rejected' => (l.nOfferRejected(crop), ''),
       'order_new' => (
-          l.nOrderNew(p['no'] ?? ''),
-          l.nOrderNewBody(p['buyer'] ?? '', crop, l.qtyKg(num(p['qty'])))
-        ),
+        l.nOrderNew(p['no'] ?? ''),
+        l.nOrderNewBody(p['buyer'] ?? '', crop, l.qtyKg(num(p['qty']))),
+      ),
       'listing_approved' => (l.nListingApproved(crop), l.nListingApprovedBody),
       'listing_rejected' => (l.nListingRejected(crop), p['note'] ?? ''),
       'bid_new' => (
-          l.nBidNew(p['no'] ?? ''),
-          l.nBidNewBody(p['name'] ?? '', Fmt.taka(context,
-              double.tryParse(p['fare'] ?? '') ?? 0))
+        l.nBidNew(p['no'] ?? ''),
+        l.nBidNewBody(
+          p['name'] ?? '',
+          Fmt.taka(context, double.tryParse(p['fare'] ?? '') ?? 0),
         ),
+      ),
       'job_assigned' => (l.nJobAssigned(p['no'] ?? ''), crop),
       'order_cancelled' => (l.nOrderCancelled(p['no'] ?? ''), crop),
       'commit_new' => (
-          l.nCommitNew(crop),
-          l.nCommitNewBody(p['farmer'] ?? '', l.qtyKg(num(p['qty'])))
-        ),
+        l.nCommitNew(crop),
+        l.nCommitNewBody(p['farmer'] ?? '', l.qtyKg(num(p['qty']))),
+      ),
       'commit_accepted' => (l.nCommitAccepted(p['no'] ?? ''), crop),
       'verify_ok' => (l.nVerifyOk, l.nVerifyOkBody),
       'verify_rejected' => (l.nVerifyRejected, l.nVerifyRejectedBody),
       'doc_ok' => (l.nDocOk(docName(p['doc'])), l.nDocOkBody),
-      'doc_rejected' => (
-          l.nDocRejected(docName(p['doc'])),
-          l.nDocRejectedBody
-        ),
+      'doc_rejected' => (l.nDocRejected(docName(p['doc'])), l.nDocRejectedBody),
       'report_resolved' => (l.nReportResolved, p['note'] ?? ''),
       'report_dismissed' => (l.nReportDismissed, p['note'] ?? ''),
       'trip_picked' => (l.nTripPicked(p['no'] ?? ''), crop),
       'trip_delivered' => (l.nTripDelivered(p['no'] ?? ''), crop),
+      'farmer_delivered' => (l.nFarmerDelivered(p['no'] ?? ''), crop),
       'contract_new' => (l.nContractNew(crop), p['buyer'] ?? ''),
       'contract_active' => (l.nContractActive(crop), p['name'] ?? ''),
       'contract_rejected' => (l.nContractRejected(crop), p['name'] ?? ''),
       'contract_cancelled' => (l.nContractCancelled(crop), p['name'] ?? ''),
       'contract_order' => (
-          l.nContractOrder(p['no'] ?? ''),
-          l.nOrderNewBody(p['buyer'] ?? '', crop, l.qtyKg(num(p['qty'])))
-        ),
+        l.nContractOrder(p['no'] ?? ''),
+        l.nOrderNewBody(p['buyer'] ?? '', crop, l.qtyKg(num(p['qty']))),
+      ),
       'truck_booked' => (
-          l.nTruckBooked(p['no'] ?? ''),
-          l.nTruckBookedBody(p['name'] ?? '')
-        ),
+        l.nTruckBooked(p['no'] ?? ''),
+        l.nTruckBookedBody(p['name'] ?? ''),
+      ),
       'extra_request' => (
-          l.nExtraRequest(p['no'] ?? ''),
-          l.nExtraRequestBody(l.qtyKg(num(p['qty'])))
-        ),
+        l.nExtraRequest(p['no'] ?? ''),
+        l.nExtraRequestBody(l.qtyKg(num(p['qty']))),
+      ),
       'extra_approved' => (l.nExtraApproved(p['no'] ?? ''), ''),
       'extra_declined' => (l.nExtraDeclined(p['no'] ?? ''), ''),
       'weight_less' => (l.nWeightLess(p['no'] ?? ''), crop),
       'loaded_paid' => (l.nLoadedPaid(p['no'] ?? ''), crop),
       'inspection_done' => (
-          l.nInspectionDone(p['no'] ?? ''),
-          l.nameDot(
-              p['farmer'] ?? '',
-              switch (p['decision']) {
-                'partial' => l.decPartial,
-                'cancel' => l.decCancel,
-                _ => l.decApproved,
-              })
-        ),
+        l.nInspectionDone(p['no'] ?? ''),
+        l.nameDot(p['farmer'] ?? '', switch (p['decision']) {
+          'partial' => l.decPartial,
+          'cancel' => l.decCancel,
+          _ => l.decApproved,
+        }),
+      ),
       'return_load' => (
-          l.nReturnLoad(BdPlace.display(p['from'], bn ? 'bn' : 'en'),
-              BdPlace.display(p['to'], bn ? 'bn' : 'en')),
-          crop
+        l.nReturnLoad(
+          BdPlace.display(p['from'], bn ? 'bn' : 'en'),
+          BdPlace.display(p['to'], bn ? 'bn' : 'en'),
         ),
+        crop,
+      ),
       'price_alert' => (
-          l.nPriceAlert(crop),
-          l.nPriceAlertBody(
-              Fmt.taka(context, double.tryParse(p['price'] ?? '') ?? 0))
+        l.nPriceAlert(crop),
+        l.nPriceAlertBody(
+          Fmt.taka(context, double.tryParse(p['price'] ?? '') ?? 0),
         ),
+      ),
       _ => (n.type, ''),
     };
   }
@@ -138,13 +140,15 @@ class NotificationsScreen extends ConsumerWidget {
       'return' => Routes.trReturnDone(id),
       // tradeDocs id = {uid}_{type}
       'doc' when id.contains('_') => Routes.tradeDoc(
-          id.substring(0, id.lastIndexOf('_')),
-          id.substring(id.lastIndexOf('_') + 1)),
+        id.substring(0, id.lastIndexOf('_')),
+        id.substring(id.lastIndexOf('_') + 1),
+      ),
       'load' => Routes.trLoad(id),
       'demand' => Routes.demandOffers(id),
       'price' => Routes.priceTrend(id),
       'contract' => Routes.contractStatus(id),
       'truck' || 'loaded' => Routes.farmerLoad(id),
+      'delivered' => Routes.farmerDelivered(id),
       'extra' => Routes.extraWeight(id),
       'weight' => Routes.weightDiff(id),
       'rescue' => Routes.rescue(id),
@@ -164,19 +168,28 @@ class NotificationsScreen extends ConsumerWidget {
       appBar: KsAppBar(title: l.notifTitle),
       body: async.when(
         loading: () => const KsSkeletonList(),
-        error: (e, _) => KsErrorState.from(e,
-            onRetry: () => ref.invalidate(myNotificationsProvider)),
+        error: (e, _) => KsErrorState.from(
+          e,
+          onRetry: () => ref.invalidate(myNotificationsProvider),
+        ),
         data: (list) => list.isEmpty
             ? Padding(
                 padding: const EdgeInsets.all(AppSpacing.screen),
-                child: Text(l.notifEmpty,
-                    textAlign: TextAlign.center,
-                    style: AppTypography.bodyMedium.normal
-                        .withColor(AppColors.textSecondary)),
+                child: Text(
+                  l.notifEmpty,
+                  textAlign: TextAlign.center,
+                  style: AppTypography.bodyMedium.normal.withColor(
+                    AppColors.textSecondary,
+                  ),
+                ),
               )
             : ListView.separated(
-                padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-                    AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.screen,
+                  AppSpacing.contentTop,
+                  AppSpacing.screen,
+                  AppSpacing.lg,
+                ),
                 itemCount: list.length,
                 separatorBuilder: (_, _) =>
                     const SizedBox(height: AppSpacing.md),

@@ -4702,5 +4702,43 @@
         "type": "String"
       }
     }
-  }
+  },
+  "farmerDeliveredTitle": "ডেলিভারি নিশ্চিতকরণ",
+  "rowSentQty": "পাঠানো পরিমাণ",
+  "rowReceivedQty": "গ্রহণ করা পরিমাণ",
+  "rowDeliveredAt": "ডেলিভারি সময়",
+  "farmerDeliveredNote": "পণ্য ক্রেতার কাছে পৌঁছেছে। আপনার টাকা লোডের সময়ই পাঠানো হয়েছে (চূড়ান্ত)।",
+  "rateBuyerBtn": "ক্রেতাকে রেটিং দিন",
+  "seePayStatus": "পেমেন্টের অবস্থা দেখুন",
+  "seeDeliveryBtn": "ডেলিভারি ও রেটিং",
+  "howWasDeal": "লেনদেন কেমন ছিল?",
+  "tagOnTimePay": "সময়মতো পেমেন্ট",
+  "tagGoodBehaviour": "ভালো ব্যবহার",
+  "tagFairWeight": "সঠিক ওজন",
+  "nFarmerDelivered": "ক্রেতার কাছে পৌঁছেছে: {no}",
+  "@nFarmerDelivered": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "permTitle": "কয়েকটি অনুমতি দরকার",
+  "permSub": "কেন দরকার নিচে লেখা আছে। পরে সেটিংস থেকে বদলাতে পারবেন।",
+  "permLocation": "লোকেশন",
+  "permLocationWhy": "কাছাকাছি ক্রেতা, পিকআপ ও ট্রাক খুঁজতে",
+  "permCamera": "ক্যামেরা",
+  "permCameraWhy": "ফসলের ছবি ও ডেলিভারির প্রমাণ তুলতে",
+  "permNotif": "নোটিফিকেশন",
+  "permNotifWhy": "নতুন অফার ও পেমেন্টের খবর পেতে",
+  "permAllow": "অনুমতি",
+  "permGiven": "✓ দেওয়া",
+  "permAllowAll": "সব অনুমতি দিন",
+  "permLater": "পরে করব",
+  "payStatusTitle": "পেমেন্টের অবস্থা",
+  "payHeldLine": "নিরাপদ লেনদেনে জমা · ক্রেতার কাছে পৌঁছালেই ছাড়",
+  "paySentLine": "ভাড়া আপনার অ্যাকাউন্টে পাঠানো হয়েছে",
+  "payStepCustomer": "গ্রাহক পেমেন্ট জমা দিয়েছেন",
+  "payStepDelivered": "ডেলিভারি নিশ্চিত",
+  "payStepSent": "আপনার অ্যাকাউন্টে পাঠানো"
 }

@@ -5972,4 +5972,101 @@ class AppLocalizationsBn extends AppLocalizations {
   String startWeighingStop(String n) {
     return 'পিকআপ $n: লোড ও ওজন শুরু করুন';
   }
+
+  @override
+  String get farmerDeliveredTitle => 'ডেলিভারি নিশ্চিতকরণ';
+
+  @override
+  String get rowSentQty => 'পাঠানো পরিমাণ';
+
+  @override
+  String get rowReceivedQty => 'গ্রহণ করা পরিমাণ';
+
+  @override
+  String get rowDeliveredAt => 'ডেলিভারি সময়';
+
+  @override
+  String get farmerDeliveredNote =>
+      'পণ্য ক্রেতার কাছে পৌঁছেছে। আপনার টাকা লোডের সময়ই পাঠানো হয়েছে (চূড়ান্ত)।';
+
+  @override
+  String get rateBuyerBtn => 'ক্রেতাকে রেটিং দিন';
+
+  @override
+  String get seePayStatus => 'পেমেন্টের অবস্থা দেখুন';
+
+  @override
+  String get seeDeliveryBtn => 'ডেলিভারি ও রেটিং';
+
+  @override
+  String get howWasDeal => 'লেনদেন কেমন ছিল?';
+
+  @override
+  String get tagOnTimePay => 'সময়মতো পেমেন্ট';
+
+  @override
+  String get tagGoodBehaviour => 'ভালো ব্যবহার';
+
+  @override
+  String get tagFairWeight => 'সঠিক ওজন';
+
+  @override
+  String nFarmerDelivered(String no) {
+    return 'ক্রেতার কাছে পৌঁছেছে: $no';
+  }
+
+  @override
+  String get permTitle => 'কয়েকটি অনুমতি দরকার';
+
+  @override
+  String get permSub =>
+      'কেন দরকার নিচে লেখা আছে। পরে সেটিংস থেকে বদলাতে পারবেন।';
+
+  @override
+  String get permLocation => 'লোকেশন';
+
+  @override
+  String get permLocationWhy => 'কাছাকাছি ক্রেতা, পিকআপ ও ট্রাক খুঁজতে';
+
+  @override
+  String get permCamera => 'ক্যামেরা';
+
+  @override
+  String get permCameraWhy => 'ফসলের ছবি ও ডেলিভারির প্রমাণ তুলতে';
+
+  @override
+  String get permNotif => 'নোটিফিকেশন';
+
+  @override
+  String get permNotifWhy => 'নতুন অফার ও পেমেন্টের খবর পেতে';
+
+  @override
+  String get permAllow => 'অনুমতি';
+
+  @override
+  String get permGiven => '✓ দেওয়া';
+
+  @override
+  String get permAllowAll => 'সব অনুমতি দিন';
+
+  @override
+  String get permLater => 'পরে করব';
+
+  @override
+  String get payStatusTitle => 'পেমেন্টের অবস্থা';
+
+  @override
+  String get payHeldLine => 'নিরাপদ লেনদেনে জমা · ক্রেতার কাছে পৌঁছালেই ছাড়';
+
+  @override
+  String get paySentLine => 'ভাড়া আপনার অ্যাকাউন্টে পাঠানো হয়েছে';
+
+  @override
+  String get payStepCustomer => 'গ্রাহক পেমেন্ট জমা দিয়েছেন';
+
+  @override
+  String get payStepDelivered => 'ডেলিভারি নিশ্চিত';
+
+  @override
+  String get payStepSent => 'আপনার অ্যাকাউন্টে পাঠানো';
 }

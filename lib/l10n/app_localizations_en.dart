@@ -5979,4 +5979,101 @@ class AppLocalizationsEn extends AppLocalizations {
   String startWeighingStop(String n) {
     return 'Pickup $n: start loading and weighing';
   }
+
+  @override
+  String get farmerDeliveredTitle => 'Delivery confirmation';
+
+  @override
+  String get rowSentQty => 'Quantity sent';
+
+  @override
+  String get rowReceivedQty => 'Quantity received';
+
+  @override
+  String get rowDeliveredAt => 'Delivered at';
+
+  @override
+  String get farmerDeliveredNote =>
+      'The crop reached the buyer. Your money was sent at loading (final).';
+
+  @override
+  String get rateBuyerBtn => 'Rate the buyer';
+
+  @override
+  String get seePayStatus => 'See payment status';
+
+  @override
+  String get seeDeliveryBtn => 'Delivery and rating';
+
+  @override
+  String get howWasDeal => 'How was the deal?';
+
+  @override
+  String get tagOnTimePay => 'On-time payment';
+
+  @override
+  String get tagGoodBehaviour => 'Good behaviour';
+
+  @override
+  String get tagFairWeight => 'Fair weight';
+
+  @override
+  String nFarmerDelivered(String no) {
+    return 'Reached the buyer: $no';
+  }
+
+  @override
+  String get permTitle => 'A few permissions needed';
+
+  @override
+  String get permSub =>
+      'Why each is needed is written below. You can change them later in Settings.';
+
+  @override
+  String get permLocation => 'Location';
+
+  @override
+  String get permLocationWhy => 'To find nearby buyers, pickups and trucks';
+
+  @override
+  String get permCamera => 'Camera';
+
+  @override
+  String get permCameraWhy => 'To take crop photos and delivery proof';
+
+  @override
+  String get permNotif => 'Notifications';
+
+  @override
+  String get permNotifWhy => 'To hear about new offers and payments';
+
+  @override
+  String get permAllow => 'Allow';
+
+  @override
+  String get permGiven => '✓ Given';
+
+  @override
+  String get permAllowAll => 'Allow all';
+
+  @override
+  String get permLater => 'Later';
+
+  @override
+  String get payStatusTitle => 'Payment status';
+
+  @override
+  String get payHeldLine => 'Held in safe payment · released at the buyer';
+
+  @override
+  String get paySentLine => 'The fare was sent to your account';
+
+  @override
+  String get payStepCustomer => 'Customer paid in';
+
+  @override
+  String get payStepDelivered => 'Delivery confirmed';
+
+  @override
+  String get payStepSent => 'Sent to your account';
 }

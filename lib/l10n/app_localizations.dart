@@ -10434,6 +10434,192 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'পিকআপ {n}: লোড ও ওজন শুরু করুন'**
   String startWeighingStop(String n);
+
+  /// No description provided for @farmerDeliveredTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি নিশ্চিতকরণ'**
+  String get farmerDeliveredTitle;
+
+  /// No description provided for @rowSentQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠানো পরিমাণ'**
+  String get rowSentQty;
+
+  /// No description provided for @rowReceivedQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রহণ করা পরিমাণ'**
+  String get rowReceivedQty;
+
+  /// No description provided for @rowDeliveredAt.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি সময়'**
+  String get rowDeliveredAt;
+
+  /// No description provided for @farmerDeliveredNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'পণ্য ক্রেতার কাছে পৌঁছেছে। আপনার টাকা লোডের সময়ই পাঠানো হয়েছে (চূড়ান্ত)।'**
+  String get farmerDeliveredNote;
+
+  /// No description provided for @rateBuyerBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতাকে রেটিং দিন'**
+  String get rateBuyerBtn;
+
+  /// No description provided for @seePayStatus.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্টের অবস্থা দেখুন'**
+  String get seePayStatus;
+
+  /// No description provided for @seeDeliveryBtn.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি ও রেটিং'**
+  String get seeDeliveryBtn;
+
+  /// No description provided for @howWasDeal.
+  ///
+  /// In bn, this message translates to:
+  /// **'লেনদেন কেমন ছিল?'**
+  String get howWasDeal;
+
+  /// No description provided for @tagOnTimePay.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়মতো পেমেন্ট'**
+  String get tagOnTimePay;
+
+  /// No description provided for @tagGoodBehaviour.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভালো ব্যবহার'**
+  String get tagGoodBehaviour;
+
+  /// No description provided for @tagFairWeight.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক ওজন'**
+  String get tagFairWeight;
+
+  /// No description provided for @nFarmerDelivered.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতার কাছে পৌঁছেছে: {no}'**
+  String nFarmerDelivered(String no);
+
+  /// No description provided for @permTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'কয়েকটি অনুমতি দরকার'**
+  String get permTitle;
+
+  /// No description provided for @permSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেন দরকার নিচে লেখা আছে। পরে সেটিংস থেকে বদলাতে পারবেন।'**
+  String get permSub;
+
+  /// No description provided for @permLocation.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোকেশন'**
+  String get permLocation;
+
+  /// No description provided for @permLocationWhy.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাছাকাছি ক্রেতা, পিকআপ ও ট্রাক খুঁজতে'**
+  String get permLocationWhy;
+
+  /// No description provided for @permCamera.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্যামেরা'**
+  String get permCamera;
+
+  /// No description provided for @permCameraWhy.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফসলের ছবি ও ডেলিভারির প্রমাণ তুলতে'**
+  String get permCameraWhy;
+
+  /// No description provided for @permNotif.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোটিফিকেশন'**
+  String get permNotif;
+
+  /// No description provided for @permNotifWhy.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন অফার ও পেমেন্টের খবর পেতে'**
+  String get permNotifWhy;
+
+  /// No description provided for @permAllow.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমতি'**
+  String get permAllow;
+
+  /// No description provided for @permGiven.
+  ///
+  /// In bn, this message translates to:
+  /// **'✓ দেওয়া'**
+  String get permGiven;
+
+  /// No description provided for @permAllowAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব অনুমতি দিন'**
+  String get permAllowAll;
+
+  /// No description provided for @permLater.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরে করব'**
+  String get permLater;
+
+  /// No description provided for @payStatusTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্টের অবস্থা'**
+  String get payStatusTitle;
+
+  /// No description provided for @payHeldLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিরাপদ লেনদেনে জমা · ক্রেতার কাছে পৌঁছালেই ছাড়'**
+  String get payHeldLine;
+
+  /// No description provided for @paySentLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাড়া আপনার অ্যাকাউন্টে পাঠানো হয়েছে'**
+  String get paySentLine;
+
+  /// No description provided for @payStepCustomer.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্রাহক পেমেন্ট জমা দিয়েছেন'**
+  String get payStepCustomer;
+
+  /// No description provided for @payStepDelivered.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেলিভারি নিশ্চিত'**
+  String get payStepDelivered;
+
+  /// No description provided for @payStepSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার অ্যাকাউন্টে পাঠানো'**
+  String get payStepSent;
 }
 
 class _AppLocalizationsDelegate

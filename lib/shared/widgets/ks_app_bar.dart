@@ -16,7 +16,11 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showBack = true,
     this.onBack,
     this.actions = const [],
+    this.onImage = false,
   });
+
+  /// Over a hero photo (53): transparent bar, white title and back arrow.
+  final bool onImage;
 
   final String? title;
   final bool showBack;
@@ -29,7 +33,7 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.bgPage,
+      color: onImage ? AppColors.whiteTransparent : AppColors.bgPage,
       child: SafeArea(
         bottom: false,
         child: SizedBox(
@@ -42,7 +46,12 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               children: [
                 if (showBack) ...[
-                  _BackButton(onTap: onBack ?? () => _defaultBack(context)),
+                  _BackButton(
+                    onTap: onBack ?? () => _defaultBack(context),
+                    color: onImage
+                        ? AppColors.textOnImage
+                        : AppColors.iconPrimary,
+                  ),
                   const SizedBox(width: AppSpacing.md),
                 ],
                 Expanded(
@@ -50,7 +59,11 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ? const SizedBox.shrink()
                       : Text(
                           title!,
-                          style: AppTypography.h3.normal,
+                          style: onImage
+                              ? AppTypography.h3.normal.withColor(
+                                  AppColors.textOnImage,
+                                )
+                              : AppTypography.h3.normal,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -74,8 +87,9 @@ void _defaultBack(BuildContext context) {
 }
 
 class _BackButton extends StatelessWidget {
-  const _BackButton({required this.onTap});
+  const _BackButton({required this.onTap, required this.color});
   final VoidCallback onTap;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +103,7 @@ class _BackButton extends StatelessWidget {
           AppIcons.appBack,
           width: AppSizes.backButton,
           height: AppSizes.backButton,
-          colorFilter:
-              const ColorFilter.mode(AppColors.iconPrimary, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
         ),
       ),
     );

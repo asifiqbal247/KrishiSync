@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Chat voice messages (V2) and voice search (V1) -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 13 Permissions: crop / delivery photos and offer & payment alerts. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:label="Golaghor"
         android:name="${applicationName}"

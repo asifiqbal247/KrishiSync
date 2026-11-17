@@ -442,6 +442,13 @@ class TransportRepository {
       type: 'trip_delivered',
       params: {'no': d.orderNo, 'cropBn': d.cropNameBn, 'cropEn': d.cropNameEn},
       link: 'order:${d.orderId}',
+    ); // 53: the farmer sees that the crop reached the buyer.
+    await _trade.notify(
+      toUid: d.farmerId,
+      fromUid: byUid,
+      type: 'farmer_delivered',
+      params: {'no': d.orderNo, 'cropBn': d.cropNameBn, 'cropEn': d.cropNameEn},
+      link: 'delivered:${d.orderId}',
     );
   }
 
@@ -488,6 +495,19 @@ class TransportRepository {
       },
       link: 'order:${t.lead.orderId}',
     );
+    for (final d in t.stops) {
+      await _trade.notify(
+        toUid: d.farmerId,
+        fromUid: byUid,
+        type: 'farmer_delivered',
+        params: {
+          'no': d.orderNo,
+          'cropBn': d.cropNameBn,
+          'cropEn': d.cropNameEn,
+        },
+        link: 'delivered:${d.orderId}',
+      );
+    }
   }
 
   // ---------------- self transport ----------------

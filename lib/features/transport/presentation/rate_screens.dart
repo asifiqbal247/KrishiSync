@@ -343,3 +343,131 @@ class _RateCustomerState extends ConsumerState<RateCustomerScreen> {
     );
   }
 }
+
+/// Has [from] already rated [to] for this order? (key: orderId|from|to)
+final reviewedProvider = FutureProvider.family<bool, String>((ref, key) {
+  final p = key.split('|');
+  return ref.watch(transportRepositoryProvider).hasReviewed(p[0], p[1], p[2]);
+});
+
+/// 54 Rate & Review (farmer → buyer, Figma 292:774).
+class RateBuyerScreen extends ConsumerStatefulWidget {
+  const RateBuyerScreen({super.key, required this.orderId});
+  final String orderId;
+
+  @override
+  ConsumerState<RateBuyerScreen> createState() => _RateBuyerState();
+}
+
+class _RateBuyerState extends ConsumerState<RateBuyerScreen> {
+  int _stars = 0;
+  Set<String> _tags = {};
+  final _comment = TextEditingController();
+  bool _busy = false;
+
+  @override
+  void dispose() {
+    _comment.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit(TradeOrder o, String myUid) async {
+    final l = AppLocalizations.of(context);
+    if (_stars == 0) {
+      KsToast.show(context, l.errPickStars);
+      return;
+    }
+    setState(() => _busy = true);
+    try {
+      await ref
+          .read(transportRepositoryProvider)
+          .submitReviews(
+            orderId: o.id,
+            fromUid: myUid,
+            comment: _comment.text.trim(),
+            reviews: [
+              ReviewInput(
+                toUid: o.buyerId,
+                toRole: 'buyer',
+                stars: _stars,
+                tags: _tags.toList(),
+              ),
+            ],
+          );
+      ref.invalidate(reviewedProvider('${o.id}|$myUid|${o.buyerId}'));
+      if (!mounted) return;
+      KsToast.show(context, l.ratingThanks);
+      context.pop();
+    } catch (_) {
+      if (mounted) KsToast.show(context, l.errorGeneric);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final me = ref.watch(currentUserProvider).value;
+    final o = ref.watch(orderProvider(widget.orderId)).value;
+    if (o == null || me == null) {
+      return Scaffold(
+        appBar: KsAppBar(title: l.rateTitle),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    final buyer = ref.watch(userByIdProvider(o.buyerId)).value;
+    return Scaffold(
+      backgroundColor: AppColors.bgPage,
+      appBar: KsAppBar(title: l.rateTitle),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.lg,
+        ),
+        children: [
+          _person(
+            o.buyerName,
+            l.orderNoLine(o.orderNo),
+            buyer?.photoUrl,
+            AppUi.avatarBuyer,
+          ),
+          const SizedBox(height: AppSpacing.block),
+          Text(
+            l.howWasDeal,
+            textAlign: TextAlign.center,
+            style: AppTypography.bold18.normal,
+          ),
+          const SizedBox(height: AppSpacing.block),
+          _RateBlock(
+            stars: _stars,
+            onStars: (v) => setState(() => _stars = v),
+            tags: [
+              ('on_time_pay', l.tagOnTimePay),
+              ('good_behaviour', l.tagGoodBehaviour),
+              ('fair_weight', l.tagFairWeight),
+            ],
+            selected: _tags,
+            onTag: (k) => setState(() => _tags = _toggle(_tags, k)),
+          ),
+          const SizedBox(height: AppSpacing.block),
+          KsTextField(
+            label: l.commentOptional,
+            hint: l.commentHint,
+            controller: _comment,
+          ),
+          const SizedBox(
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
+          KsButton(
+            label: l.submit,
+            loading: _busy,
+            onPressed: () => _submit(o, me.uid),
+          ),
+        ],
+      ),
+    );
+  }
+}

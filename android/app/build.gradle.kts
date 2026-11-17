@@ -9,7 +9,8 @@ plugins {
 
 android {
     namespace = "com.asif.krishisync"
-    compileSdk = flutter.compileSdkVersion
+    // 37: permission_handler (13 Permissions) needs it; minSdk/targetSdk unchanged.
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

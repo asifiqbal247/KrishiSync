@@ -132,6 +132,12 @@ abstract final class Fmt {
     return digits(context, DateFormat(pattern, loc).format(d));
   }
 
+  /// Full date with year: "২০ সেপ্টেম্বর ২০২৬" (receipts).
+  static String dateYear(BuildContext context, DateTime d) {
+    final loc = Localizations.localeOf(context).languageCode;
+    return digits(context, DateFormat('d MMMM y', loc).format(d));
+  }
+
   /// "৮:২০" (24-hour, as elsewhere in the app).
   static String time(BuildContext context, DateTime d) =>
       digits(context, DateFormat('H:mm').format(d));
