@@ -8,6 +8,7 @@ import '../features/farmer/presentation/farmer_delivered_screen.dart';
 import '../features/transport/presentation/shared_truck_screens.dart';
 import '../features/farmer/data/trade_doc_repository.dart';
 import '../features/farmer/presentation/trade_doc_screen.dart';
+import '../features/admin/presentation/admin_orders_screen.dart';
 import '../features/admin/presentation/admin_screens.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/user_repository.dart';
@@ -20,6 +21,7 @@ import '../features/auth/presentation/otp_screen.dart';
 import '../features/auth/presentation/profile_setup_screen.dart';
 import '../features/auth/presentation/role_screen.dart';
 import '../features/auth/presentation/splash_screen.dart';
+import '../features/auth/presentation/suspended_screen.dart';
 import '../features/auth/presentation/terms_screen.dart';
 import '../features/buyer/presentation/procurement_screens.dart';
 import '../features/buyer/presentation/supplier_screens.dart';
@@ -111,6 +113,7 @@ abstract final class Routes {
   static String contractDetails(String id) => '/contracts/$id/details';
   static String contractStatus(String id) => '/contracts/$id';
   static const statement = '/history/statement';
+  static const tips = '/tips';
   static String tip(int i) => '/tips/$i';
   static const globalBuyers = '/export';
   static const exportGuide = '/export/guide';
@@ -135,6 +138,7 @@ abstract final class Routes {
   static String receipt(String orderId) => '/receipt/$orderId';
   // 13 Permissions (once, after login).
   static const permissions = '/permissions';
+  static const suspended = '/suspended';
   // 53 / 54: farmer sees the delivery and rates the buyer.
   static String farmerDelivered(String orderId) => '/delivered/$orderId';
   static String farmerRateBuyer(String orderId) => '/delivered/$orderId/rate';
@@ -220,6 +224,8 @@ abstract final class Routes {
   // Admin
   static String adminUser(String uid) => '/admin/user/$uid';
   static const adminCrops = '/admin/crops';
+  static String adminOrders([String filter = 'all']) =>
+      '/admin/orders?filter=$filter';
 
   static String homeFor(UserRole role) => switch (role) {
     UserRole.farmer => farmerHome,
@@ -286,6 +292,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       return loc == Routes.splash ? null : Routes.splash;
     }
     final u = user.value!;
+    // 5a. Suspended by an admin: nothing but the suspended screen.
+    if (u.isSuspended) {
+      return loc == Routes.suspended ? null : Routes.suspended;
+    }
     // 5b. 13 Permissions: once per phone, right after login.
     if (!ref.read(permissionsAskedProvider)) {
       return loc == Routes.permissions ? null : Routes.permissions;
@@ -317,6 +327,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     // 8. Ready: leave auth screens for the role home.
     if (Routes.isPreAuth(loc) ||
         loc == Routes.permissions ||
+        loc == Routes.suspended ||
         loc == Routes.role ||
         loc == Routes.profileSetup) {
       return Routes.homeFor(u.role!);
@@ -353,6 +364,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Routes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(path: Routes.otp, builder: (_, _) => const OtpScreen()),
+      GoRoute(
+        path: Routes.suspended,
+        builder: (_, _) => const SuspendedScreen(),
+      ),
       GoRoute(path: Routes.terms, builder: (_, _) => const TermsScreen()),
       GoRoute(
         path: Routes.marketPrices,
@@ -433,6 +448,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
+      GoRoute(path: Routes.tips, builder: (_, _) => const TipsListScreen()),
       GoRoute(
         path: '/tips/:i',
         builder: (_, s) =>
@@ -733,6 +749,12 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, s) => UserDetailScreen(uid: s.pathParameters['uid']!),
           ),
           GoRoute(path: 'crops', builder: (_, _) => const CropCatalogScreen()),
+          GoRoute(
+            path: 'orders',
+            builder: (_, s) => AdminOrdersScreen(
+              filter: s.uri.queryParameters['filter'] ?? 'all',
+            ),
+          ),
         ],
       ),
       GoRoute(

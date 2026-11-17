@@ -111,9 +111,12 @@ class AdminRepository {
       openReports: await _count(
         _db.collection('reports').where('status', isEqualTo: 'open'),
       ),
-      pendingVerifications: await _count(
-        _users.where('verification', isEqualTo: 'pending'),
-      ),
+      // NID / business checks + papers (export, licence, vehicle).
+      pendingVerifications:
+          await _count(_users.where('verification', isEqualTo: 'pending')) +
+          await _count(
+            _db.collection('tradeDocs').where('status', isEqualTo: 'pending'),
+          ),
     );
   }
 

@@ -1769,5 +1769,12 @@
   "arrivedBtn": "Arrived",
   "minutesShort": "{m} min",
   "hoursOnly": "{h} h",
-  "hoursMinutes": "{h} h {m} min"
+  "hoursMinutes": "{h} h {m} min",
+  "suspendedTitle": "Your account is suspended",
+  "suspendedBody": "An admin has paused your account. You can't use the app until it is turned back on. Call the helpline to find out why or to get it reactivated.",
+  "adminOrdersTitle": "All orders",
+  "adminOrdersEmpty": "No orders yet",
+  "adminOrdersEmptyBody": "Orders will show here once buyers place them.",
+  "adminOrderLine": "{no} · {farmer} → {buyer} · {total}",
+  "nDocOkDriverBody": "A moderator has checked your paper"
 }

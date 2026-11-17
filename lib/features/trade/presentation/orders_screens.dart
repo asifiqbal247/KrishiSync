@@ -299,6 +299,8 @@ class OrderDetailsScreen extends ConsumerWidget {
       );
     }
     final iAmFarmer = me.uid == o.farmerId;
+    // Admin / moderator (A8): read-only view of both sides, no actions.
+    final staff = me.role == UserRole.admin || me.role == UserRole.moderator;
     final insp = iAmFarmer ? null : ref.watch(inspectionProvider(o.id)).value;
     final (badge, bg, fg) = orderBadge(l, o.status);
 
@@ -345,15 +347,29 @@ class OrderDetailsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           KsInfoBox(
             children: [
-              KsLinkRow(
-                label: iAmFarmer ? l.rowBuyer : l.rowFarmer,
-                value: iAmFarmer ? o.buyerName : o.farmerName,
-                onTap: () => context.push(
-                  iAmFarmer
-                      ? Routes.buyerProfile(o.buyerId)
-                      : Routes.buyerFarmer(o.farmerId),
+              if (staff) ...[
+                KsLinkRow(
+                  label: l.rowFarmer,
+                  value: o.farmerName,
+                  onTap: () => context.push(Routes.buyerFarmer(o.farmerId)),
                 ),
-              ),
+                KsLinkRow(
+                  label: l.rowBuyer,
+                  value: o.buyerName,
+                  onTap: () => context.push(Routes.buyerProfile(o.buyerId)),
+                ),
+                if (o.transporterName != null)
+                  KsInfoRow(l.roleTransporter, o.transporterName!),
+              ] else
+                KsLinkRow(
+                  label: iAmFarmer ? l.rowBuyer : l.rowFarmer,
+                  value: iAmFarmer ? o.buyerName : o.farmerName,
+                  onTap: () => context.push(
+                    iAmFarmer
+                        ? Routes.buyerProfile(o.buyerId)
+                        : Routes.buyerFarmer(o.farmerId),
+                  ),
+                ),
               KsInfoRow(
                 l.offerTotal,
                 Fmt.taka(context, iAmFarmer ? o.cropTotal : o.total),
@@ -386,6 +402,7 @@ class OrderDetailsScreen extends ConsumerWidget {
                 ),
               // 88: buyer sends own inspector (platform truck, before loading).
               if (!iAmFarmer &&
+                  !staff &&
                   o.transportMode == TransportMode.platform &&
                   (o.status == OrderStatus.confirmed ||
                       o.status == OrderStatus.transportBooked) &&
@@ -455,6 +472,7 @@ class OrderDetailsScreen extends ConsumerWidget {
             done: done(OrderStatus.transportBooked),
             onTap:
                 !iAmFarmer &&
+                    !staff &&
                     o.transportMode == TransportMode.platform &&
                     o.transporterId != null
                 ? () => context.push(Routes.buyerAssigned(o.id))
@@ -473,17 +491,20 @@ class OrderDetailsScreen extends ConsumerWidget {
             done: done(OrderStatus.delivered),
           ),
           const SizedBox(height: AppSpacing.block),
-          KsListItem(
-            title: l.orderProblem,
-            subtitle: l.orderProblemSub,
-            onTap: () => context.push(Routes.report(orderId: o.id)),
-          ),
-          const SizedBox(
-            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
-          ),
-          ?_action(context, ref, l, o, iAmFarmer),
+          if (!staff) ...[
+            KsListItem(
+              title: l.orderProblem,
+              subtitle: l.orderProblemSub,
+              onTap: () => context.push(Routes.report(orderId: o.id)),
+            ),
+            const SizedBox(
+              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+            ),
+            ?_action(context, ref, l, o, iAmFarmer),
+          ],
           // D5: buyer may cancel until the crop is loaded.
           if (!iAmFarmer &&
+              !staff &&
               (o.status == OrderStatus.confirmed ||
                   o.status == OrderStatus.transportBooked)) ...[
             const SizedBox(height: AppSpacing.block),

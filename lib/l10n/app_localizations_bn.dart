@@ -6128,4 +6128,29 @@ class AppLocalizationsBn extends AppLocalizations {
   String hoursMinutes(String h, String m) {
     return '$h ঘ. $m মি.';
   }
+
+  @override
+  String get suspendedTitle => 'আপনার অ্যাকাউন্ট স্থগিত করা হয়েছে';
+
+  @override
+  String get suspendedBody =>
+      'অ্যাডমিন আপনার অ্যাকাউন্ট সাময়িকভাবে বন্ধ রেখেছেন। এই সময়ে অ্যাপের কোনো কাজ করা যাবে না। জানতে বা আবার চালু করতে হেল্পলাইনে কল করুন।';
+
+  @override
+  String get adminOrdersTitle => 'সব অর্ডার';
+
+  @override
+  String get adminOrdersEmpty => 'এখনো কোনো অর্ডার নেই';
+
+  @override
+  String get adminOrdersEmptyBody =>
+      'ক্রেতারা অর্ডার দিলে সেগুলো এখানে দেখা যাবে।';
+
+  @override
+  String adminOrderLine(String no, String farmer, String buyer, String total) {
+    return '$no · $farmer → $buyer · $total';
+  }
+
+  @override
+  String get nDocOkDriverBody => 'মডারেটর আপনার কাগজ যাচাই করেছেন';
 }

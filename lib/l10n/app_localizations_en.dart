@@ -6135,4 +6135,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String hoursMinutes(String h, String m) {
     return '$h h $m min';
   }
+
+  @override
+  String get suspendedTitle => 'Your account is suspended';
+
+  @override
+  String get suspendedBody =>
+      'An admin has paused your account. You can\'t use the app until it is turned back on. Call the helpline to find out why or to get it reactivated.';
+
+  @override
+  String get adminOrdersTitle => 'All orders';
+
+  @override
+  String get adminOrdersEmpty => 'No orders yet';
+
+  @override
+  String get adminOrdersEmptyBody =>
+      'Orders will show here once buyers place them.';
+
+  @override
+  String adminOrderLine(String no, String farmer, String buyer, String total) {
+    return '$no · $farmer → $buyer · $total';
+  }
+
+  @override
+  String get nDocOkDriverBody => 'A moderator has checked your paper';
 }

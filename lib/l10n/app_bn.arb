@@ -4788,5 +4788,13 @@
         "type": "String"
       }
     }
-  }
+  },
+  "suspendedTitle": "আপনার অ্যাকাউন্ট স্থগিত করা হয়েছে",
+  "suspendedBody": "অ্যাডমিন আপনার অ্যাকাউন্ট সাময়িকভাবে বন্ধ রেখেছেন। এই সময়ে অ্যাপের কোনো কাজ করা যাবে না। জানতে বা আবার চালু করতে হেল্পলাইনে কল করুন।",
+  "adminOrdersTitle": "সব অর্ডার",
+  "adminOrdersEmpty": "এখনো কোনো অর্ডার নেই",
+  "adminOrdersEmptyBody": "ক্রেতারা অর্ডার দিলে সেগুলো এখানে দেখা যাবে।",
+  "adminOrderLine": "{no} · {farmer} → {buyer} · {total}",
+  "@adminOrderLine": {"placeholders": {"no": {"type": "String"}, "farmer": {"type": "String"}, "buyer": {"type": "String"}, "total": {"type": "String"}}},
+  "nDocOkDriverBody": "মডারেটর আপনার কাগজ যাচাই করেছেন"
 }

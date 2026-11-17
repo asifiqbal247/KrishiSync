@@ -24,6 +24,60 @@ const _pad = EdgeInsets.fromLTRB(
   AppSpacing.lg,
 );
 
+/// Tip titles, their points and glyphs (same order as the home Tip Cards).
+List<(String, List<String>, String)> farmingTips(AppLocalizations l) => [
+  (
+    l.tipBetterPrice,
+    [l.tipPriceBody1, l.tipPriceBody2, l.tipPriceBody3],
+    AppUi.glyphTrendUp,
+  ),
+  (
+    l.tipPackaging,
+    [l.tipPackBody1, l.tipPackBody2, l.tipPackBody3],
+    AppUi.tipClipboard,
+  ),
+  (
+    l.tipGrading,
+    [l.tipGradeBody1, l.tipGradeBody2, l.tipGradeBody3],
+    AppUi.tipStar,
+  ),
+];
+
+/// "See all" behind the home tips (no Figma frame — List Items, same
+/// theme). Each row opens its tip page.
+class TipsListScreen extends StatelessWidget {
+  const TipsListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final tips = farmingTips(l);
+    return Scaffold(
+      backgroundColor: AppColors.bgPage,
+      appBar: KsAppBar(title: l.homeTips),
+      body: ListView(
+        padding: _pad,
+        children: [
+          for (var i = 0; i < tips.length; i++) ...[
+            if (i > 0) const SizedBox(height: AppSpacing.block),
+            KsListItem(
+              thumb: Container(
+                color: AppColors.bgSubtle,
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Image.asset(tips[i].$3),
+              ),
+              title: tips[i].$1,
+              subtitle: tips[i].$2.first,
+              subtitleMaxLines: 2,
+              onTap: () => context.push(Routes.tip(i)),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
 /// Farming tip pages behind the home Tip Cards (345:6251): better price,
 /// packaging, grading. Audio is Tier C; the tip is shown as text.
 class TipScreen extends StatelessWidget {
@@ -33,12 +87,8 @@ class TipScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final tips = [
-      (l.tipBetterPrice, [l.tipPriceBody1, l.tipPriceBody2, l.tipPriceBody3]),
-      (l.tipPackaging, [l.tipPackBody1, l.tipPackBody2, l.tipPackBody3]),
-      (l.tipGrading, [l.tipGradeBody1, l.tipGradeBody2, l.tipGradeBody3]),
-    ];
-    final (title, points) = tips[index.clamp(0, tips.length - 1)];
+    final tips = farmingTips(l);
+    final (title, points, _) = tips[index.clamp(0, tips.length - 1)];
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.tipTitle),

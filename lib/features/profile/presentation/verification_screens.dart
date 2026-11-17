@@ -23,6 +23,9 @@ import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_transport_widgets.dart';
 import '../../../shared/widgets/ks_upload_box.dart';
 import '../../../shared/widgets/photo_source_sheet.dart';
+import '../../farmer/data/trade_doc_repository.dart';
+import '../../farmer/presentation/trade_doc_screen.dart'
+    show tradeDocName, tradeDocStatusText;
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
 import '../../transport/presentation/transport_common.dart';
@@ -349,7 +352,15 @@ class RatingsScreen extends ConsumerWidget {
     final async = ref.watch(reviewsForProvider(me.uid));
     final avg = Fmt.number(context, me.ratingAvg, decimals: 1);
     final n = Fmt.digits(context, '${me.ratingCount}');
-    void soon() => KsToast.comingSoon(context);
+    // Driver's licence and vehicle papers: photo + expiry → moderator (207).
+    Widget paper(TradeDocType t) => KsListItem(
+      title: tradeDocName(l, t),
+      subtitle: tradeDocStatusText(
+        l,
+        ref.watch(tradeDocProvider((me.uid, t))).value,
+      ),
+      onTap: () => context.push(Routes.tradeDoc(me.uid, t.name)),
+    );
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -360,11 +371,7 @@ class RatingsScreen extends ConsumerWidget {
         padding: _pad,
         children: [
           if (withVerification) ...[
-            KsListItem(
-              title: l.drivingLicense,
-              subtitle: l.comingSoon,
-              onTap: soon,
-            ),
+            paper(TradeDocType.driving),
             const SizedBox(height: AppSpacing.block),
             KsListItem(
               title: 'NID',
@@ -372,11 +379,7 @@ class RatingsScreen extends ConsumerWidget {
               onTap: () => context.push(Routes.verification),
             ),
             const SizedBox(height: AppSpacing.block),
-            KsListItem(
-              title: l.vehiclePapers,
-              subtitle: l.comingSoon,
-              onTap: soon,
-            ),
+            paper(TradeDocType.vehicle),
             const SizedBox(height: AppSpacing.block),
             KsSectionHeader(title: l.ratingsTitle),
             const SizedBox(height: AppSpacing.block),

@@ -5,8 +5,9 @@ import '../../admin/data/admin_repository.dart';
 import '../../auth/data/user_repository.dart';
 import '../../trade/data/trade_repository.dart';
 
-/// Export papers a farmer keeps in the app (37 → 207).
-enum TradeDocType { phyto, license }
+/// Papers kept in the app and checked by a moderator (207): a farmer's
+/// export papers (37) and a driver's licence and vehicle papers.
+enum TradeDocType { phyto, license, driving, vehicle }
 
 enum TradeDocStatus { pending, verified, rejected }
 

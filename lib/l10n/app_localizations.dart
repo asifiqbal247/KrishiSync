@@ -10722,6 +10722,48 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'{h} ঘ. {m} মি.'**
   String hoursMinutes(String h, String m);
+
+  /// No description provided for @suspendedTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার অ্যাকাউন্ট স্থগিত করা হয়েছে'**
+  String get suspendedTitle;
+
+  /// No description provided for @suspendedBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাডমিন আপনার অ্যাকাউন্ট সাময়িকভাবে বন্ধ রেখেছেন। এই সময়ে অ্যাপের কোনো কাজ করা যাবে না। জানতে বা আবার চালু করতে হেল্পলাইনে কল করুন।'**
+  String get suspendedBody;
+
+  /// No description provided for @adminOrdersTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব অর্ডার'**
+  String get adminOrdersTitle;
+
+  /// No description provided for @adminOrdersEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো অর্ডার নেই'**
+  String get adminOrdersEmpty;
+
+  /// No description provided for @adminOrdersEmptyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতারা অর্ডার দিলে সেগুলো এখানে দেখা যাবে।'**
+  String get adminOrdersEmptyBody;
+
+  /// No description provided for @adminOrderLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{no} · {farmer} → {buyer} · {total}'**
+  String adminOrderLine(String no, String farmer, String buyer, String total);
+
+  /// No description provided for @nDocOkDriverBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'মডারেটর আপনার কাগজ যাচাই করেছেন'**
+  String get nDocOkDriverBody;
 }
 
 class _AppLocalizationsDelegate

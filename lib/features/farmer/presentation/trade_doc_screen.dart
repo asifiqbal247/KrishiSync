@@ -22,10 +22,21 @@ import '../../auth/domain/app_user.dart';
 import '../../chat/presentation/chat_screens.dart';
 import '../data/trade_doc_repository.dart';
 
-/// Paper name as on 37 (ফাইটোস্যানিটারি সার্টিফিকেট / ট্রেড লাইসেন্স).
+/// Paper name as on 37 (export) and the driver's verification list.
 String tradeDocName(AppLocalizations l, TradeDocType t) => switch (t) {
   TradeDocType.phyto => l.exDoc1,
   TradeDocType.license => l.exDoc2,
+  TradeDocType.driving => l.drivingLicense,
+  TradeDocType.vehicle => l.vehiclePapers,
+};
+
+/// Status line for a paper row (not uploaded / waiting / verified / …).
+String tradeDocStatusText(AppLocalizations l, TradeDoc? d) => switch (d) {
+  null => l.docNoneTitle,
+  TradeDoc(expired: true) => l.docExpired,
+  TradeDoc(status: TradeDocStatus.verified) => l.docVerified,
+  TradeDoc(status: TradeDocStatus.pending) => l.docPending,
+  TradeDoc(status: TradeDocStatus.rejected) => l.docRejected,
 };
 
 /// 207 Document Viewer (Figma 292:3662). The owner sees PDF download and

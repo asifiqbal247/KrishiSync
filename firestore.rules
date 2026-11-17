@@ -625,7 +625,7 @@ service cloud.firestore {
       // Owner uploads or re-uploads: always back to 'pending'.
       allow create, update: if isActive()
         && request.resource.data.uid == uid()
-        && request.resource.data.type in ['phyto', 'license']
+        && request.resource.data.type in ['phyto', 'license', 'driving', 'vehicle']
         && id == uid() + '_' + request.resource.data.type
         && request.resource.data.keys().hasOnly(
              ['uid', 'type', 'url', 'status', 'uploadedAt', 'expiresAt'])

@@ -554,6 +554,13 @@ class TradeRepository {
       .snapshots()
       .map((q) => [for (final d in q.docs) TradeOrder.fromDoc(d)]);
 
+  /// Admin A8: newest orders on the whole platform (read-only).
+  Stream<List<TradeOrder>> watchAllOrders() => _orders
+      .orderBy('createdAt', descending: true)
+      .limit(300)
+      .snapshots()
+      .map((q) => [for (final d in q.docs) TradeOrder.fromDoc(d)]);
+
   /// Simple fare estimate until a transporter's offer is accepted (Part 6):
   /// ৳ 1,500 base + ৳ 20 per km (rounded to 100).
   static num estimateFare(double? km) {

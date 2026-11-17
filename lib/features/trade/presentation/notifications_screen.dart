@@ -16,6 +16,7 @@ import '../../../shared/widgets/ks_states.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
 import '../../auth/data/user_repository.dart';
 import '../../farmer/data/trade_doc_repository.dart';
+import '../../farmer/presentation/trade_doc_screen.dart' show tradeDocName;
 import '../data/trade_repository.dart';
 import '../domain/trade_models.dart';
 
@@ -30,8 +31,13 @@ class NotificationsScreen extends ConsumerWidget {
     final p = n.params;
     final crop = (bn ? p['cropBn'] : p['cropEn']) ?? '';
     String num(String? v) => Fmt.number(context, double.tryParse(v ?? '') ?? 0);
-    String docName(String? t) =>
-        t == TradeDocType.license.name ? l.exDoc2 : l.exDoc1;
+    String docName(String? t) => tradeDocName(
+      l,
+      TradeDocType.values.firstWhere(
+        (x) => x.name == t,
+        orElse: () => TradeDocType.phyto,
+      ),
+    );
     return switch (n.type) {
       'offer_new' => (
         l.nOfferNew(crop),
@@ -72,7 +78,14 @@ class NotificationsScreen extends ConsumerWidget {
       'commit_accepted' => (l.nCommitAccepted(p['no'] ?? ''), crop),
       'verify_ok' => (l.nVerifyOk, l.nVerifyOkBody),
       'verify_rejected' => (l.nVerifyRejected, l.nVerifyRejectedBody),
-      'doc_ok' => (l.nDocOk(docName(p['doc'])), l.nDocOkBody),
+      'doc_ok' => (
+        l.nDocOk(docName(p['doc'])),
+        // Export papers vs a driver's licence / vehicle papers.
+        p['doc'] == TradeDocType.phyto.name ||
+                p['doc'] == TradeDocType.license.name
+            ? l.nDocOkBody
+            : l.nDocOkDriverBody,
+      ),
       'doc_rejected' => (l.nDocRejected(docName(p['doc'])), l.nDocRejectedBody),
       'report_resolved' => (l.nReportResolved, p['note'] ?? ''),
       'report_dismissed' => (l.nReportDismissed, p['note'] ?? ''),

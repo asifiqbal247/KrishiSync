@@ -168,16 +168,22 @@ class AdminDashboard extends ConsumerWidget {
                 ),
               ]),
               const SizedBox(height: AppSpacing.block),
-              KsSectionHeader(title: l.adminOrdersSection),
+              KsSectionHeader(
+                title: l.adminOrdersSection,
+                actionLabel: l.commonSeeAll,
+                onAction: () => context.push(Routes.adminOrders()),
+              ),
               const SizedBox(height: AppSpacing.block),
               _row([
                 KsStatCard(
                   label: l.statOngoingOrders,
                   value: _n(context, s.ongoingOrders),
+                  onTap: () => context.push(Routes.adminOrders('ongoing')),
                 ),
                 KsStatCard(
                   label: l.statCompletedOrders,
                   value: _n(context, s.completedOrders),
+                  onTap: () => context.push(Routes.adminOrders('completed')),
                 ),
               ]),
               const SizedBox(height: AppSpacing.block),

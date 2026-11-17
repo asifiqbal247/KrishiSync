@@ -14,7 +14,6 @@ import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_cards.dart';
 import '../../../shared/widgets/ks_home_header.dart';
 import '../../../shared/widgets/ks_search_bar.dart';
-import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../trade/data/trade_repository.dart';
@@ -43,7 +42,6 @@ class FarmerHomeScreen extends ConsumerWidget {
     final newOffers = (ref.watch(myOffersProvider).value ?? const [])
         .where((o) => o.status == OfferStatus.pending && o.lastBy == 'buyer')
         .toList();
-    void soon() => KsToast.comingSoon(context);
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -200,7 +198,7 @@ class FarmerHomeScreen extends ConsumerWidget {
           KsSectionHeader(
             title: l.homeTips,
             actionLabel: l.commonSeeAll,
-            onAction: soon,
+            onAction: () => context.push(Routes.tips),
           ),
           const SizedBox(height: AppSpacing.block),
           SizedBox(

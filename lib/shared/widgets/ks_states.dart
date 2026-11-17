@@ -187,3 +187,41 @@ class KsOfflineState extends StatelessWidget {
     );
   }
 }
+
+/// Suspended account (same layout as 212): red warning circle, title,
+/// body, call the helpline, log out.
+class KsSuspendedState extends StatelessWidget {
+  const KsSuspendedState({
+    super.key,
+    required this.onCall,
+    required this.onLogout,
+  });
+
+  final VoidCallback onCall;
+  final VoidCallback onLogout;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return _StateLayout(
+      children: [
+        _circle(AppImages.stateError),
+        Text(
+          l.suspendedTitle,
+          textAlign: TextAlign.center,
+          style: AppTypography.headingBold22.normal,
+        ),
+        Text(
+          l.suspendedBody,
+          textAlign: TextAlign.center,
+          style: AppTypography.bodyMedium.normal.withColor(
+            AppColors.textSecondary,
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        KsButton(label: l.callHelpline, onPressed: onCall),
+        KsButton.outline(label: l.logout, onPressed: onLogout),
+      ],
+    );
+  }
+}
