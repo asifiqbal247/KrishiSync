@@ -42,8 +42,9 @@ class TransportRepository {
   DocumentReference<Map<String, dynamic>> _order(String id) =>
       _db.collection('orders').doc(id);
 
-  List<Delivery> _list(QuerySnapshot<Map<String, dynamic>> q) =>
-      [for (final d in q.docs) Delivery.fromDoc(d)];
+  List<Delivery> _list(QuerySnapshot<Map<String, dynamic>> q) => [
+    for (final d in q.docs) Delivery.fromDoc(d),
+  ];
 
   /// 194 Vehicle & Capacity → users/{uid}.vehicle.
   Future<void> saveVehicle(String uid, Vehicle v) =>
@@ -73,10 +74,11 @@ class TransportRepository {
       .snapshots()
       .map(_list);
 
-  Stream<List<Bid>> watchBids(String deliveryId) => _bids(deliveryId)
-      .orderBy('fare')
-      .snapshots()
-      .map((q) => [for (final d in q.docs) Bid.fromDoc(d)]);
+  Stream<List<Bid>> watchBids(String deliveryId) =>
+      _bids(deliveryId)
+          .orderBy('fare')
+          .snapshots()
+          .map((q) => [for (final d in q.docs) Bid.fromDoc(d)]);
 
   /// Only the buyer can read this (rules).
   Stream<String?> watchOtp(String deliveryId) => _deliveries
@@ -111,13 +113,108 @@ class TransportRepository {
       toUid: d.buyerId,
       fromUid: me.uid,
       type: 'bid_new',
-      params: {
-        'no': d.orderNo,
-        'name': me.name,
-        'fare': '$fare',
-      },
+      params: {'no': d.orderNo, 'name': me.name, 'fare': '$fare'},
       link: 'book:${d.id}',
     );
+  }
+
+  /// Splits a trip fare over its farms by weight (whole taka; the last
+  /// stop takes the rounding rest).
+  static List<num> splitFare(Trip t, num total) {
+    final out = <num>[];
+    var left = total;
+    for (final (i, d) in t.stops.indexed) {
+      final part = i == t.stops.length - 1
+          ? left
+          : (total * d.weightKg / t.weightKg).round();
+      out.add(part);
+      left -= part;
+    }
+    return out;
+  }
+
+  /// Bid on a whole trip (multi-stop purchase order): one bid per farm with
+  /// its share of [total], one notice to the buyer.
+  Future<void> placeTripBid(Trip t, AppUser me, num total) async {
+    if (!t.multi) return placeBid(t.lead, me, total);
+    final parts = splitFare(t, total);
+    final b = _db.batch();
+    for (final (i, d) in t.stops.indexed) {
+      b.set(_bids(d.id).doc(me.uid), {
+        'name': me.name,
+        'photoUrl': me.photoUrl,
+        'vehicle': me.vehicle?.toMap(),
+        'ratingAvg': me.ratingAvg,
+        'ratingCount': me.ratingCount,
+        'fare': parts[i],
+        'status': BidStatus.pending.name,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    }
+    await b.commit();
+    await _trade.notify(
+      toUid: t.lead.buyerId,
+      fromUid: me.uid,
+      type: 'bid_new',
+      params: {'no': t.no, 'name': me.name, 'fare': '$total'},
+      link: 'book:${t.lead.id}',
+    );
+  }
+
+  /// Buyer books one transporter for every farm of a trip (116). [bids]
+  /// and [orders] are per stop, same order as [Trip.stops].
+  Future<void> bookTrip(Trip t, List<Bid> bids, List<TradeOrder> orders) async {
+    if (!t.multi) return book(t.lead, bids.first, orders.first);
+    final b = _db.batch();
+    final now = FieldValue.serverTimestamp();
+    for (final (i, d) in t.stops.indexed) {
+      final bid = bids[i];
+      final o = orders[i];
+      b.update(_deliveries.doc(d.id), {
+        'status': DeliveryStatus.assigned.name,
+        'transporterId': bid.transporterId,
+        'transporterName': bid.name,
+        'transporterPhotoUrl': bid.photoUrl,
+        'vehicle': bid.vehicle.toMap(),
+        'fare': bid.fare,
+        'timeline.assigned': now,
+        'updatedAt': now,
+      });
+      b.update(_bids(d.id).doc(bid.transporterId), {
+        'status': BidStatus.accepted.name,
+      });
+      b.update(_order(o.id), {
+        'status': OrderStatus.transportBooked.name,
+        'transporterId': bid.transporterId,
+        'transporterName': bid.name,
+        'transportFare': bid.fare,
+        'total': o.total - o.transportFare + bid.fare,
+        'timeline.transportBooked': now,
+        'updatedAt': now,
+      });
+    }
+    await b.commit();
+    final driver = bids.first;
+    await _trade.notify(
+      toUid: driver.transporterId,
+      fromUid: t.lead.buyerId,
+      type: 'job_assigned',
+      params: {
+        'no': t.no,
+        'cropBn': t.lead.cropNameBn,
+        'cropEn': t.lead.cropNameEn,
+      },
+      link: 'job:${t.lead.id}',
+    );
+    for (final (i, d) in t.stops.indexed) {
+      await _trade.notify(
+        toUid: d.farmerId,
+        fromUid: d.buyerId,
+        type: 'truck_booked',
+        params: {'no': d.orderNo, 'name': driver.name},
+        link: 'truck:${orders[i].id}',
+      );
+    }
   }
 
   // ---------------- buyer: book a bid (116) ----------------
@@ -135,8 +232,9 @@ class TransportRepository {
       'timeline.assigned': now,
       'updatedAt': now,
     });
-    b.update(_bids(d.id).doc(bid.transporterId),
-        {'status': BidStatus.accepted.name});
+    b.update(_bids(d.id).doc(bid.transporterId), {
+      'status': BidStatus.accepted.name,
+    });
     b.update(_order(order.id), {
       'status': OrderStatus.transportBooked.name,
       'transporterId': bid.transporterId,
@@ -152,8 +250,8 @@ class TransportRepository {
     var link = 'job:${d.id}';
     try {
       final r = AppUser.fromDoc(
-              await _db.collection('users').doc(bid.transporterId).get())
-          .returnRoute;
+        await _db.collection('users').doc(bid.transporterId).get(),
+      ).returnRoute;
       if (r != null &&
           r.from == d.pickup.district &&
           r.to == d.dropoff.district) {
@@ -185,7 +283,9 @@ class TransportRepository {
   /// Farmer's 4-digit loading code; made on first view. Only the farmer can
   /// read it (rules); the driver must type it to confirm the load.
   Stream<String?> watchLoadCode(String deliveryId) =>
-      _loadCode(deliveryId).snapshots().map((d) => d.data()?['code'] as String?);
+      _loadCode(deliveryId)
+          .snapshots()
+          .map((d) => d.data()?['code'] as String?);
 
   Future<void> ensureLoadCode(String deliveryId) async {
     final ref = _loadCode(deliveryId);
@@ -284,16 +384,26 @@ class TransportRepository {
       if (e.code == 'permission-denied') throw TransportException('wrong_otp');
       rethrow;
     }
-    final params = {'no': d.orderNo, 'cropBn': d.cropNameBn, 'cropEn': d.cropNameEn};
+    final params = {
+      'no': d.orderNo,
+      'cropBn': d.cropNameBn,
+      'cropEn': d.cropNameEn,
+    };
     final less = loadedKg < o.quantityKg;
     await _trade.notify(
-        toUid: d.buyerId, fromUid: byUid,
-        type: less ? 'weight_less' : 'trip_picked',
-        params: params,
-        link: less ? 'weight:${d.orderId}' : 'order:${d.orderId}');
+      toUid: d.buyerId,
+      fromUid: byUid,
+      type: less ? 'weight_less' : 'trip_picked',
+      params: params,
+      link: less ? 'weight:${d.orderId}' : 'order:${d.orderId}',
+    );
     await _trade.notify(
-        toUid: d.farmerId, fromUid: byUid, type: 'loaded_paid',
-        params: params, link: 'loaded:${d.orderId}');
+      toUid: d.farmerId,
+      fromUid: byUid,
+      type: 'loaded_paid',
+      params: params,
+      link: 'loaded:${d.orderId}',
+    );
   }
 
   /// Proof of delivery (167). Rules compare [otp] with the buyer's code.
@@ -335,21 +445,66 @@ class TransportRepository {
     );
   }
 
+  /// 167 for a multi-stop trip: the buyer's one code closes every farm's
+  /// load. Each keeps its loaded weight as the delivered weight.
+  Future<void> markTripDelivered(
+    Trip t,
+    String byUid, {
+    required String otp,
+    String? photoUrl,
+  }) async {
+    final b = _db.batch();
+    final now = FieldValue.serverTimestamp();
+    for (final d in t.stops) {
+      if (d.status != DeliveryStatus.pickedUp) continue;
+      b.update(_deliveries.doc(d.id), {
+        'status': DeliveryStatus.delivered.name,
+        'otpInput': otp,
+        'deliveredKg': d.loadedKg ?? d.weightKg,
+        'proofPhotoUrl': photoUrl,
+        'timeline.delivered': now,
+        'updatedAt': now,
+      });
+      b.update(_order(d.orderId), {
+        'status': OrderStatus.delivered.name,
+        'timeline.delivered': now,
+        'updatedAt': now,
+      });
+    }
+    try {
+      await b.commit();
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') throw TransportException('wrong_otp');
+      rethrow;
+    }
+    await _trade.notify(
+      toUid: t.lead.buyerId,
+      fromUid: byUid,
+      type: 'trip_delivered',
+      params: {
+        'no': t.no,
+        'cropBn': t.lead.cropNameBn,
+        'cropEn': t.lead.cropNameEn,
+      },
+      link: 'order:${t.lead.orderId}',
+    );
+  }
+
   // ---------------- self transport ----------------
 
   /// Farmer handed the crop to the buyer's own vehicle.
   Future<void> farmerHandedOver(TradeOrder o) => _order(o.id).update({
-        'status': OrderStatus.pickedUp.name,
-        'timeline.pickedUp': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
+    'status': OrderStatus.pickedUp.name,
+    'timeline.pickedUp': FieldValue.serverTimestamp(),
+    'updatedAt': FieldValue.serverTimestamp(),
+  });
 
   /// Buyer received the crop (self transport).
   Future<void> buyerReceived(TradeOrder o) => _order(o.id).update({
-        'status': OrderStatus.delivered.name,
-        'timeline.delivered': FieldValue.serverTimestamp(),
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
+    'status': OrderStatus.delivered.name,
+    'timeline.delivered': FieldValue.serverTimestamp(),
+    'updatedAt': FieldValue.serverTimestamp(),
+  });
 
   // ---------------- ratings (111 / 169) ----------------
 
@@ -372,7 +527,9 @@ class TransportRepository {
   }) async {
     final users = {
       for (final r in reviews)
-        r.toUid: AppUser.fromDoc(await _db.collection('users').doc(r.toUid).get()),
+        r.toUid: AppUser.fromDoc(
+          await _db.collection('users').doc(r.toUid).get(),
+        ),
     };
     final b = _db.batch();
     final now = FieldValue.serverTimestamp();
@@ -405,36 +562,65 @@ class TransportRepository {
       });
     }
     if (ratedDeliveryId != null) {
-      b.update(_deliveries.doc(ratedDeliveryId),
-          {'transporterRated': true, 'updatedAt': now});
+      b.update(_deliveries.doc(ratedDeliveryId), {
+        'transporterRated': true,
+        'updatedAt': now,
+      });
     }
     await b.commit();
   }
 }
 
-final transportRepositoryProvider = Provider<TransportRepository>((ref) =>
-    TransportRepository(
-        ref.watch(firestoreProvider), ref.watch(tradeRepositoryProvider)));
+final transportRepositoryProvider = Provider<TransportRepository>(
+  (ref) => TransportRepository(
+    ref.watch(firestoreProvider),
+    ref.watch(tradeRepositoryProvider),
+  ),
+);
 
 final openLoadsProvider = StreamProvider<List<Delivery>>(
-    (ref) => ref.watch(transportRepositoryProvider).watchOpenLoads());
+  (ref) => ref.watch(transportRepositoryProvider).watchOpenLoads(),
+);
 
 final deliveryProvider = StreamProvider.family<Delivery?, String>(
-    (ref, id) => ref.watch(transportRepositoryProvider).watchDelivery(id));
+  (ref, id) => ref.watch(transportRepositoryProvider).watchDelivery(id),
+);
 
 final bidsProvider = StreamProvider.family<List<Bid>, String>(
-    (ref, id) => ref.watch(transportRepositoryProvider).watchBids(id));
+  (ref, id) => ref.watch(transportRepositoryProvider).watchBids(id),
+);
 
 final deliveryOtpProvider = StreamProvider.family<String?, String>(
-    (ref, id) => ref.watch(transportRepositoryProvider).watchOtp(id));
+  (ref, id) => ref.watch(transportRepositoryProvider).watchOtp(id),
+);
 
 /// Transporter: my jobs. Buyer: my deliveries.
 final myDeliveriesProvider = StreamProvider<List<Delivery>>((ref) {
   final me = ref.watch(currentUserProvider).value;
   if (me == null) return Stream.value(const []);
-  return ref.watch(transportRepositoryProvider).watchFor(
-      me.role == UserRole.transporter ? 'transporterId' : 'buyerId', me.uid);
+  return ref
+      .watch(transportRepositoryProvider)
+      .watchFor(
+        me.role == UserRole.transporter ? 'transporterId' : 'buyerId',
+        me.uid,
+      );
+});
+
+/// The trip [id] belongs to, from the loads this person can see (open loads
+/// for a driver before booking, own deliveries after).
+final tripProvider = Provider.family<Trip?, String>((ref, id) {
+  final d = ref.watch(deliveryProvider(id)).value;
+  if (d == null) return null;
+  if (d.poNo == null) return Trip([d]);
+  final driver =
+      ref.watch(currentUserProvider).value?.role == UserRole.transporter;
+  final pool = [
+    if (driver) ...?ref.watch(openLoadsProvider).value,
+    ...?ref.watch(myDeliveriesProvider).value,
+  ];
+  return Trip.of(d, pool);
 });
 
 final loadCodeProvider = StreamProvider.family<String?, String>(
-    (ref, id) => ref.watch(transportRepositoryProvider).watchLoadCode(id));
+  (ref, id) => ref.watch(transportRepositoryProvider).watchLoadCode(id),
+);

@@ -38,19 +38,25 @@ class TransporterHomeScreen extends ConsumerWidget {
 
     final base = me?.vehicle?.base?.geo ?? me?.location.geo;
     double? km(Delivery d) => distanceKm(base, d.pickup.geo);
-    final byDistance = [...open]
-      ..sort((a, b) => (km(a) ?? 1e9).compareTo(km(b) ?? 1e9));
+    // A purchase order's farms are one trip (one row).
+    final byDistance = Trip.group(open).toList()
+      ..sort((a, b) => (km(a.lead) ?? 1e9).compareTo(km(b.lead) ?? 1e9));
     final nearbyCount = base == null
         ? open.length
-        : open.where((d) => (km(d) ?? 1e9) <= nearbyKm).length;
+        : byDistance.where((t) => (km(t.lead) ?? 1e9) <= nearbyKm).length;
 
     final active = jobs.where((j) => j.status.isActive).toList();
-    final ongoing = active.isEmpty ? null : active.first;
+    // Running job as a trip (a purchase order's farms count as one).
+    final ongoingTrip = active.isEmpty ? null : Trip.of(active.first, active);
+    final ongoing = ongoingTrip?.lead;
     final week = weekEarnings(jobs, now);
     final weekTotal = week.fold<num>(0, (a, v) => a + v);
-    final today = week[DateTime(now.year, now.month, now.day)
-        .difference(weekStart(now))
-        .inDays];
+    final today =
+        week[DateTime(
+          now.year,
+          now.month,
+          now.day,
+        ).difference(weekStart(now)).inDays];
     final pending = active.fold<num>(0, (a, j) => a + fareOf(j));
     final returns = returnLoads(open, ongoing?.dropoff.district);
 
@@ -65,30 +71,42 @@ class TransporterHomeScreen extends ConsumerWidget {
         onAvatar: () => tab(3),
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.s2xl),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.s2xl,
+        ),
         children: [
-          Row(children: [
-            Expanded(
+          Row(
+            children: [
+              Expanded(
                 child: KsStatCard(
-                    label: l.trStatToday,
-                    value: Fmt.taka(context, today),
-                    onTap: () => tab(2))),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
+                  label: l.trStatToday,
+                  value: Fmt.taka(context, today),
+                  onTap: () => tab(2),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
                 child: KsStatCard(
-                    label: l.trStatOngoing,
-                    value: n(active.length),
-                    onTap: () => tab(1))),
-          ]),
+                  label: l.trStatOngoing,
+                  value: n(active.length),
+                  onTap: () => tab(1),
+                ),
+              ),
+            ],
+          ),
           if (ongoing != null) ...[
             const SizedBox(height: AppSpacing.block),
             KsListItem(
               highlighted: true,
               thumb: Image.asset(AppUi.thumbTrip, fit: BoxFit.cover),
-              title: l.trOngoingTitle(ongoing.orderNo),
-              subtitle: l.trOngoingSub(Fmt.digits(context, '1'),
-                  deliveryStatusLabel(l, ongoing.status)),
+              title: l.trOngoingTitle(ongoingTrip!.no),
+              subtitle: l.trOngoingSub(
+                Fmt.digits(context, '${ongoingTrip.stops.length}'),
+                deliveryStatusLabel(l, ongoingTrip.status),
+              ),
               trailingText: l.trContinue,
               onTap: () => context.push(Routes.trTrip(ongoing.id)),
             ),
@@ -96,46 +114,52 @@ class TransporterHomeScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.trWhatToDo),
           const SizedBox(height: AppSpacing.block),
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-              child: KsActionTile(
-                primary: true,
-                icon: AppUi.glyphBox,
-                title: l.trFindLoads,
-                hint: l.trFindLoadsSub(Fmt.digits(context, '$nearbyCount')),
-                onTap: () => context.push(Routes.trLoads),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: KsActionTile(
+                  primary: true,
+                  icon: AppUi.glyphBox,
+                  title: l.trFindLoads,
+                  hint: l.trFindLoadsSub(Fmt.digits(context, '$nearbyCount')),
+                  onTap: () => context.push(Routes.trLoads),
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              child: KsActionTile(
-                icon: AppUi.glyphTruck,
-                title: l.trMyJobs,
-                hint: l.trMyJobsSub(Fmt.digits(context, '${active.length}')),
-                onTap: () => tab(1),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: KsActionTile(
+                  icon: AppUi.glyphTruck,
+                  title: l.trMyJobs,
+                  hint: l.trMyJobsSub(Fmt.digits(context, '${active.length}')),
+                  onTap: () => tab(1),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-              child: KsActionTile(
-                icon: AppUi.glyphMap,
-                title: l.trReturnLoads,
-                hint: l.trReturnLoadsSub,
-                onTap: () => context.push(Routes.trReturnLoads),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: KsActionTile(
+                  icon: AppUi.glyphMap,
+                  title: l.trReturnLoads,
+                  hint: l.trReturnLoadsSub,
+                  onTap: () => context.push(Routes.trReturnLoads),
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              child: KsActionTile(
-                icon: AppUi.glyphWallet,
-                title: l.trEarnings,
-                hint: l.trEarningsSub(Fmt.taka(context, weekTotal)),
-                onTap: () => tab(2),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: KsActionTile(
+                  icon: AppUi.glyphWallet,
+                  title: l.trEarnings,
+                  hint: l.trEarningsSub(Fmt.taka(context, weekTotal)),
+                  onTap: () => tab(2),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(
             title: l.trNearbyLoads,
@@ -146,9 +170,13 @@ class TransporterHomeScreen extends ConsumerWidget {
             const SizedBox(height: AppSpacing.block),
             KsListItem(title: l.noLoads, showChevron: false),
           ],
-          for (final d in byDistance.take(3)) ...[
+          for (final t in byDistance.take(3)) ...[
             const SizedBox(height: AppSpacing.block),
-            LoadTile(d: d, onTap: () => context.push(Routes.trLoad(d.id))),
+            LoadTile(
+              d: t.summary,
+              stops: t.stops.length,
+              onTap: () => context.push(Routes.trLoad(t.lead.id)),
+            ),
           ],
           if (returns.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
@@ -174,19 +202,25 @@ class TransporterHomeScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           KsBarChart(values: week, labels: weekLabels(l)),
           const SizedBox(height: AppSpacing.block),
-          Row(children: [
-            Expanded(
+          Row(
+            children: [
+              Expanded(
                 child: KsStatCard(
-                    label: l.trThisWeek,
-                    value: Fmt.taka(context, weekTotal),
-                    onTap: () => tab(2))),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
+                  label: l.trThisWeek,
+                  value: Fmt.taka(context, weekTotal),
+                  onTap: () => tab(2),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
                 child: KsStatCard(
-                    label: l.trPendingPay,
-                    value: Fmt.taka(context, pending),
-                    onTap: () => tab(1))),
-          ]),
+                  label: l.trPendingPay,
+                  value: Fmt.taka(context, pending),
+                  onTap: () => tab(1),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

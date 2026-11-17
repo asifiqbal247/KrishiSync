@@ -4575,5 +4575,132 @@
       }
     }
   },
-  "nDocRejectedBody": "পরিষ্কার ছবি দিয়ে নতুন করে আপলোড করুন"
+  "nDocRejectedBody": "পরিষ্কার ছবি দিয়ে নতুন করে আপলোড করুন",
+  "sharedTitle": "খালি জায়গায় লোড",
+  "sharedNoTripTitle": "এখন কোনো চলমান ট্রিপ নেই",
+  "sharedNoTripBody": "কাজ নিলে ট্রাকের খালি জায়গায় রুটের লোড এখানে দেখাবে।",
+  "sharedTruckSub": "{cap} ট্রাক · বর্তমান {now} ({no})",
+  "@sharedTruckSub": {
+    "placeholders": {
+      "cap": {
+        "type": "String"
+      },
+      "now": {
+        "type": "String"
+      },
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "truckFull": "ট্রাক ভর্তি",
+  "ofTons": "{a} / {b}",
+  "@ofTons": {
+    "placeholders": {
+      "a": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "loadsOnRoute": "আপনার রুটে লোড ({route})",
+  "@loadsOnRoute": {
+    "placeholders": {
+      "route": {
+        "type": "String"
+      }
+    }
+  },
+  "sharedNone": "এখন রুটে খালি জায়গায় মানানসই লোড নেই।",
+  "cropDashQty": "{crop} – {qty}",
+  "@cropDashQty": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "sharedRuleTitle": "আলাদা কাজ, আলাদা ভাড়া",
+  "sharedRuleBody": "এই লোড আলাদা নিরাপদ লেনদেনে। এর ক্রেতার কাছে পৌঁছালেই এর ভাড়া পাবেন।",
+  "addLoad": "লোড যোগ করুন",
+  "addThisLoad": "এই লোড যোগ করুন",
+  "sharedFits": "আপনার ট্রাকে {t} খালি আছে, এই লোড মানানসই।",
+  "@sharedFits": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "onRoute": "রুটেই",
+  "detourKm": "{km} কিমি ঘুরতে হবে",
+  "@detourKm": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "loadSubStops": "{crop} · {qty} · {n}টি পিকআপ",
+  "@loadSubStops": {
+    "placeholders": {
+      "crop": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      },
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "pickupsLine": "{n}টি পিকআপ · {places}",
+  "@pickupsLine": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      },
+      "places": {
+        "type": "String"
+      }
+    }
+  },
+  "pickupsN": "{n}টি পিকআপ",
+  "@pickupsN": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stopsMany": "{n}টি পিকআপ + ১টি ডেলিভারি",
+  "@stopsMany": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  },
+  "stepLoadedAt": "লোড হয়েছে · {time}",
+  "@stepLoadedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "startWeighingStop": "পিকআপ {n}: লোড ও ওজন শুরু করুন",
+  "@startWeighingStop": {
+    "placeholders": {
+      "n": {
+        "type": "String"
+      }
+    }
+  }
 }

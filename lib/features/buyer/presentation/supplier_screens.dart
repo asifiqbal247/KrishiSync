@@ -375,10 +375,14 @@ class ProgressRow extends StatelessWidget {
     required this.label,
     required this.value,
     required this.text,
+    this.gap = AppSpacing.xs + AppSpacing.s2xs,
   });
   final String label;
   final double? value;
   final String text;
+
+  /// Label → bar gap (6 on 120, 4 on 161).
+  final double gap;
 
   static const _h = 8.0;
 
@@ -394,7 +398,7 @@ class ProgressRow extends StatelessWidget {
           Text(text, style: AppTypography.bodySmallStrong.normal),
         ],
       ),
-      const SizedBox(height: AppSpacing.xs + AppSpacing.s2xs),
+      SizedBox(height: gap),
       ClipRRect(
         borderRadius: BorderRadius.circular(_h / 2),
         child: SizedBox(

@@ -5886,4 +5886,97 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nDocRejectedBody => 'Please upload a clear photo again';
+
+  @override
+  String get sharedTitle => 'Loads for free space';
+
+  @override
+  String get sharedNoTripTitle => 'No running trip now';
+
+  @override
+  String get sharedNoTripBody =>
+      'When you have a job, loads along its route that fit your free space show here.';
+
+  @override
+  String sharedTruckSub(String cap, String now, String no) {
+    return '$cap truck · now $now ($no)';
+  }
+
+  @override
+  String get truckFull => 'Truck load';
+
+  @override
+  String ofTons(String a, String b) {
+    return '$a / $b';
+  }
+
+  @override
+  String loadsOnRoute(String route) {
+    return 'Loads on your route ($route)';
+  }
+
+  @override
+  String get sharedNone =>
+      'No load on your route fits the free space right now.';
+
+  @override
+  String cropDashQty(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String get sharedRuleTitle => 'Separate job, separate fare';
+
+  @override
+  String get sharedRuleBody =>
+      'This load has its own safe payment. You get its fare when you reach its buyer.';
+
+  @override
+  String get addLoad => 'Add load';
+
+  @override
+  String get addThisLoad => 'Add this load';
+
+  @override
+  String sharedFits(String t) {
+    return 'Your truck has $t free; this load fits.';
+  }
+
+  @override
+  String get onRoute => 'On the route';
+
+  @override
+  String detourKm(String km) {
+    return '$km km detour';
+  }
+
+  @override
+  String loadSubStops(String crop, String qty, String n) {
+    return '$crop · $qty · $n pickups';
+  }
+
+  @override
+  String pickupsLine(String n, String places) {
+    return '$n pickups · $places';
+  }
+
+  @override
+  String pickupsN(String n) {
+    return '$n pickups';
+  }
+
+  @override
+  String stopsMany(String n) {
+    return '$n pickups + 1 delivery';
+  }
+
+  @override
+  String stepLoadedAt(String time) {
+    return 'Loaded · $time';
+  }
+
+  @override
+  String startWeighingStop(String n) {
+    return 'Pickup $n: start loading and weighing';
+  }
 }

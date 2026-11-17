@@ -46,8 +46,8 @@ abstract final class Fmt {
       final mapped = i == 0
           ? _plateCity[t]
           : t == 'METRO'
-              ? 'মেট্রো'
-              : _plateClass[t];
+          ? 'মেট্রো'
+          : _plateClass[t];
       out.write(mapped ?? bnDigits(parts[i]));
       if (i < seps.length) out.write(seps[i]);
     }
@@ -55,31 +55,68 @@ abstract final class Fmt {
   }
 
   static const _plateCity = {
-    'DHA': 'ঢাকা', 'DHAKA': 'ঢাকা', 'CTG': 'চট্ট', 'CHATTA': 'চট্ট',
-    'KHU': 'খুলনা', 'KHULNA': 'খুলনা', 'RAJ': 'রাজ', 'RAJSHAHI': 'রাজ',
-    'SYL': 'সিলেট', 'SYLHET': 'সিলেট', 'BAR': 'বরিশাল', 'BARISAL': 'বরিশাল',
-    'MYM': 'ময়মনসিংহ', 'RANG': 'রংপুর', 'RANGPUR': 'রংপুর',
-    'GAZ': 'গাজীপুর', 'NAR': 'নারায়ণগঞ্জ', 'COM': 'কুমিল্লা', 'BOG': 'বগুড়া',
+    'DHA': 'ঢাকা',
+    'DHAKA': 'ঢাকা',
+    'CTG': 'চট্ট',
+    'CHATTA': 'চট্ট',
+    'KHU': 'খুলনা',
+    'KHULNA': 'খুলনা',
+    'RAJ': 'রাজ',
+    'RAJSHAHI': 'রাজ',
+    'SYL': 'সিলেট',
+    'SYLHET': 'সিলেট',
+    'BAR': 'বরিশাল',
+    'BARISAL': 'বরিশাল',
+    'MYM': 'ময়মনসিংহ',
+    'RANG': 'রংপুর',
+    'RANGPUR': 'রংপুর',
+    'GAZ': 'গাজীপুর',
+    'NAR': 'নারায়ণগঞ্জ',
+    'COM': 'কুমিল্লা',
+    'BOG': 'বগুড়া',
   };
 
   static const _plateClass = {
-    'KA': 'ক', 'KHA': 'খ', 'GA': 'গ', 'GHA': 'ঘ', 'CHA': 'চ', 'CHHA': 'ছ',
-    'JA': 'জ', 'JHA': 'ঝ', 'TA': 'ত', 'THA': 'থ', 'T': 'ট', 'TH': 'ঠ',
-    'D': 'ড', 'DA': 'দ', 'DHA': 'ঢ', 'NA': 'ন', 'PA': 'প', 'FA': 'ফ',
-    'BA': 'ব', 'BHA': 'ভ', 'MA': 'ম', 'LA': 'ল', 'SHA': 'শ', 'SA': 'স',
-    'HA': 'হ', 'U': 'উ', 'E': 'এ',
+    'KA': 'ক',
+    'KHA': 'খ',
+    'GA': 'গ',
+    'GHA': 'ঘ',
+    'CHA': 'চ',
+    'CHHA': 'ছ',
+    'JA': 'জ',
+    'JHA': 'ঝ',
+    'TA': 'ত',
+    'THA': 'থ',
+    'T': 'ট',
+    'TH': 'ঠ',
+    'D': 'ড',
+    'DA': 'দ',
+    'DHA': 'ঢ',
+    'NA': 'ন',
+    'PA': 'প',
+    'FA': 'ফ',
+    'BA': 'ব',
+    'BHA': 'ভ',
+    'MA': 'ম',
+    'LA': 'ল',
+    'SHA': 'শ',
+    'SA': 'স',
+    'HA': 'হ',
+    'U': 'উ',
+    'E': 'এ',
   };
 
   /// 12500 → "12,500" / "১২,৫০০".
   static String number(BuildContext context, num n, {int decimals = 0}) {
     final f = NumberFormat.decimalPatternDigits(
-        locale: 'en_US', decimalDigits: decimals);
+      locale: 'en_US',
+      decimalDigits: decimals,
+    );
     return digits(context, f.format(n));
   }
 
   /// 38 → "৳ 38" / "৳ ৩৮".
-  static String taka(BuildContext context, num n) =>
-      '৳ ${number(context, n)}';
+  static String taka(BuildContext context, num n) => '৳ ${number(context, n)}';
 
   /// mm:ss timer, e.g. 45 → "0:45" / "০:৪৫".
   static String timer(BuildContext context, int seconds) {
@@ -94,6 +131,10 @@ abstract final class Fmt {
     final pattern = d.year == DateTime.now().year ? 'd MMMM' : 'd MMMM y';
     return digits(context, DateFormat(pattern, loc).format(d));
   }
+
+  /// "৮:২০" (24-hour, as elsewhere in the app).
+  static String time(BuildContext context, DateTime d) =>
+      digits(context, DateFormat('H:mm').format(d));
 
   /// Short month, always with year: "১২ অক্টো. ২০২৬" (207 papers).
   static String dateFull(BuildContext context, DateTime d) {

@@ -44,13 +44,18 @@ class _RateBlock extends StatelessWidget {
         KsStarRating(value: stars, onChanged: onStars),
         if (tags.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.block),
-          Wrap(spacing: AppSpacing.sm, runSpacing: AppSpacing.sm, children: [
-            for (final (k, label) in tags)
-              KsPill(
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final (k, label) in tags)
+                KsPill(
                   label: label,
                   selected: selected.contains(k),
-                  onTap: () => onTag?.call(k)),
-          ]),
+                  onTap: () => onTag?.call(k),
+                ),
+            ],
+          ),
         ],
       ],
     );
@@ -60,9 +65,10 @@ class _RateBlock extends StatelessWidget {
 Widget _person(String title, String sub, String? photo, String fallback) =>
     KsListItem(
       thumb: KsNetImage(
-          url: photo,
-          thumbSize: KsListItem.thumbSize.round(),
-          fallbackAsset: fallback),
+        url: photo,
+        thumbSize: KsListItem.thumbSize.round(),
+        fallbackAsset: fallback,
+      ),
       title: title,
       subtitle: sub,
       showChevron: false,
@@ -103,22 +109,26 @@ class _RateOrderState extends ConsumerState<RateOrderScreen> {
     }
     setState(() => _busy = true);
     try {
-      await ref.read(transportRepositoryProvider).submitReviews(
+      await ref
+          .read(transportRepositoryProvider)
+          .submitReviews(
             orderId: o.id,
             fromUid: myUid,
             comment: _comment.text.trim(),
             completeOrder: true,
             reviews: [
               ReviewInput(
-                  toUid: o.farmerId,
-                  toRole: 'farmer',
-                  stars: _farmerStars,
-                  tags: _tags.toList()),
+                toUid: o.farmerId,
+                toRole: 'farmer',
+                stars: _farmerStars,
+                tags: _tags.toList(),
+              ),
               if (hasDriver)
                 ReviewInput(
-                    toUid: o.transporterId!,
-                    toRole: 'transporter',
-                    stars: _driverStars),
+                  toUid: o.transporterId!,
+                  toRole: 'transporter',
+                  stars: _driverStars,
+                ),
             ],
           );
       if (!mounted) return;
@@ -151,14 +161,25 @@ class _RateOrderState extends ConsumerState<RateOrderScreen> {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.rateTitle),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.lg,
+        ),
         children: [
-          _person(l.roleFarmerName(o.farmerName), o.orderNo, farmer?.photoUrl,
-              AppUi.avatarFarmer),
+          _person(
+            l.roleFarmerName(o.farmerName),
+            o.orderNo,
+            farmer?.photoUrl,
+            AppUi.avatarFarmer,
+          ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.howWasSupplier,
-              textAlign: TextAlign.center, style: AppTypography.bold18.normal),
+          Text(
+            l.howWasSupplier,
+            textAlign: TextAlign.center,
+            style: AppTypography.bold18.normal,
+          ),
           const SizedBox(height: AppSpacing.block),
           _RateBlock(
             stars: _farmerStars,
@@ -173,24 +194,32 @@ class _RateOrderState extends ConsumerState<RateOrderScreen> {
           ),
           if (o.transporterId != null) ...[
             const SizedBox(height: AppSpacing.block),
-            _person(l.roleDriver(o.transporterName ?? ''), l.rateTransport,
-                driver?.photoUrl, AppUi.avatarDriver),
+            _person(
+              l.roleDriver(o.transporterName ?? ''),
+              l.rateTransport,
+              driver?.photoUrl,
+              AppUi.avatarDriver,
+            ),
             const SizedBox(height: AppSpacing.block),
             _RateBlock(
-                stars: _driverStars,
-                onStars: (v) => setState(() => _driverStars = v)),
+              stars: _driverStars,
+              onStars: (v) => setState(() => _driverStars = v),
+            ),
           ],
           const SizedBox(height: AppSpacing.block),
           KsTextField(
-              label: l.commentOptional,
-              hint: l.commentHint,
-              controller: _comment),
+            label: l.commentOptional,
+            hint: l.commentHint,
+            controller: _comment,
+          ),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton(
-              label: l.submit,
-              loading: _busy,
-              onPressed: () => _submit(o, me.uid)),
+            label: l.submit,
+            loading: _busy,
+            onPressed: () => _submit(o, me.uid),
+          ),
         ],
       ),
     );
@@ -238,17 +267,20 @@ class _RateCustomerState extends ConsumerState<RateCustomerScreen> {
       }
       setState(() => _busy = true);
       try {
-        await ref.read(transportRepositoryProvider).submitReviews(
+        await ref
+            .read(transportRepositoryProvider)
+            .submitReviews(
               orderId: d.orderId,
               fromUid: me.uid,
               comment: _comment.text.trim(),
               ratedDeliveryId: d.id,
               reviews: [
                 ReviewInput(
-                    toUid: d.buyerId,
-                    toRole: 'buyer',
-                    stars: _stars,
-                    tags: _tags.toList()),
+                  toUid: d.buyerId,
+                  toRole: 'buyer',
+                  stars: _stars,
+                  tags: _tags.toList(),
+                ),
               ],
             );
         if (!mounted) return;
@@ -265,14 +297,25 @@ class _RateCustomerState extends ConsumerState<RateCustomerScreen> {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.rateTitle),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.lg,
+        ),
         children: [
-          _person(l.roleCustomer(d.buyerName), l.justFinishedTrip,
-              buyer?.photoUrl, AppUi.avatarBuyer),
+          _person(
+            l.roleCustomer(d.buyerName),
+            l.justFinishedTrip,
+            buyer?.photoUrl,
+            AppUi.avatarBuyer,
+          ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.howWasCustomer,
-              textAlign: TextAlign.center, style: AppTypography.bold18.normal),
+          Text(
+            l.howWasCustomer,
+            textAlign: TextAlign.center,
+            style: AppTypography.bold18.normal,
+          ),
           const SizedBox(height: AppSpacing.block),
           _RateBlock(
             stars: _stars,
@@ -287,11 +330,13 @@ class _RateCustomerState extends ConsumerState<RateCustomerScreen> {
           ),
           const SizedBox(height: AppSpacing.block),
           KsTextField(
-              label: l.commentOptional,
-              hint: l.commentHint,
-              controller: _comment),
+            label: l.commentOptional,
+            hint: l.commentHint,
+            controller: _comment,
+          ),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton(label: l.submit, loading: _busy, onPressed: submit),
         ],
       ),

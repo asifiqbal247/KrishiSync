@@ -52,35 +52,50 @@ const _heroH = 96.0;
 const kgPerMon = 40;
 
 Widget _loading(String title) => Scaffold(
-      backgroundColor: AppColors.bgPage,
-      appBar: KsAppBar(title: title),
-      body: const KsSkeletonList(),
-    );
+  backgroundColor: AppColors.bgPage,
+  appBar: KsAppBar(title: title),
+  body: const KsSkeletonList(),
+);
 
 /// Picture + big title + line, used by 48 / 51 / 52.
 class _ResultHead extends StatelessWidget {
-  const _ResultHead({required this.image, required this.title, required this.body});
+  const _ResultHead({
+    required this.image,
+    required this.title,
+    required this.body,
+  });
   final String image;
   final String title;
   final String body;
 
   @override
-  Widget build(BuildContext context) => Column(children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(AppRadius.xl),
-          child: Image.asset(image,
-              height: _heroH, width: double.infinity, fit: BoxFit.cover),
+  Widget build(BuildContext context) => Column(
+    children: [
+      ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadius.xl),
+        child: Image.asset(
+          image,
+          height: _heroH,
+          width: double.infinity,
+          fit: BoxFit.cover,
         ),
-        const SizedBox(height: AppSpacing.block),
-        Text(title,
-            textAlign: TextAlign.center,
-            style: AppTypography.headingBold22.normal),
-        const SizedBox(height: AppSpacing.sm),
-        Text(body,
-            textAlign: TextAlign.center,
-            style: AppTypography.bodySmall.normal
-                .withColor(AppColors.textSecondary)),
-      ]);
+      ),
+      const SizedBox(height: AppSpacing.block),
+      Text(
+        title,
+        textAlign: TextAlign.center,
+        style: AppTypography.headingBold22.normal,
+      ),
+      const SizedBox(height: AppSpacing.sm),
+      Text(
+        body,
+        textAlign: TextAlign.center,
+        style: AppTypography.bodySmall.normal.withColor(
+          AppColors.textSecondary,
+        ),
+      ),
+    ],
+  );
 }
 
 // ───────────────────────── Farmer ─────────────────────────
@@ -135,22 +150,35 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
         children: [
           KsNoteBox(
             title: booked ? l.truckBookedByBuyer : l.truckNotBooked,
-            body: booked ? l.truckBookedBody(o.buyerName) : l.truckNotBookedBody,
+            body: booked
+                ? l.truckBookedBody(o.buyerName)
+                : l.truckNotBookedBody,
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            if (o.pickupDate != null)
-              KsInfoRow(l.rowWhenComes, Fmt.date(context, o.pickupDate!)),
-            KsInfoRow(l.rowWhereComes, placeFull(context, o.pickup)),
-            KsInfoRow(l.rowGoods,
-                l.cropQtyComma(o.cropName(lang), qtyText(context, o.quantityKg))),
-            KsInfoRow(l.rowDestination,
-                l.nameDistrict(o.buyerName, districtOf(context, o.dropoff))),
-          ]),
+          KsInfoBox(
+            children: [
+              if (o.pickupDate != null)
+                KsInfoRow(l.rowWhenComes, Fmt.date(context, o.pickupDate!)),
+              KsInfoRow(l.rowWhereComes, placeFull(context, o.pickup)),
+              KsInfoRow(
+                l.rowGoods,
+                l.cropQtyComma(
+                  o.cropName(lang),
+                  qtyText(context, o.quantityKg),
+                ),
+              ),
+              KsInfoRow(
+                l.rowDestination,
+                l.nameDistrict(o.buyerName, districtOf(context, o.dropoff)),
+              ),
+            ],
+          ),
           if (booked) ...[
             const SizedBox(height: AppSpacing.block),
-            Text(l.truckComingSection,
-                style: AppTypography.bodyMediumStrong.normal),
+            Text(
+              l.truckComingSection,
+              style: AppTypography.bodyMediumStrong.normal,
+            ),
             const SizedBox(height: AppSpacing.block),
             KsListItem(
               thumb: KsNetImage(
@@ -182,43 +210,53 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l.yourLoadOtp(Fmt.digits(context, code ?? '····')),
-                      style: AppTypography.headingBold20.normal
-                          .withColor(AppColors.textBrand)),
+                  Text(
+                    l.yourLoadOtp(Fmt.digits(context, code ?? '····')),
+                    style: AppTypography.headingBold20.normal.withColor(
+                      AppColors.textBrand,
+                    ),
+                  ),
                   const SizedBox(height: AppSpacing.xs),
-                  Text(l.yourLoadOtpBody,
-                      style: AppTypography.bodySmall.normal),
+                  Text(
+                    l.yourLoadOtpBody,
+                    style: AppTypography.bodySmall.normal,
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: AppSpacing.block),
-            Row(children: [
-              Expanded(
-                child: KsButton.outline(
-                  label: l.callBtn,
-                  compact: true,
-                  onPressed: driver?.phone == null
-                      ? null
-                      : () => launchUrl(Uri(scheme: 'tel', path: driver!.phone)),
+            Row(
+              children: [
+                Expanded(
+                  child: KsButton.outline(
+                    label: l.callBtn,
+                    compact: true,
+                    onPressed: driver?.phone == null
+                        ? null
+                        : () => launchUrl(
+                            Uri(scheme: 'tel', path: driver!.phone),
+                          ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: KsButton.outline(
-                  label: l.messageBtn,
-                  compact: true,
-                  onPressed: () => openChatWith(context, ref, d.transporterId!),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: KsButton.outline(
+                    label: l.messageBtn,
+                    compact: true,
+                    onPressed: () =>
+                        openChatWith(context, ref, d.transporterId!),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: KsButton.outline(
-                  label: l.trackBtn,
-                  compact: true,
-                  onPressed: () => context.push(Routes.track(o.id)),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: KsButton.outline(
+                    label: l.trackBtn,
+                    compact: true,
+                    onPressed: () => context.push(Routes.track(o.id)),
+                  ),
                 ),
-              ),
-            ]),
+              ],
+            ),
             const SizedBox(height: AppSpacing.block),
             KsButton(label: l.otpGiven, onPressed: () => context.pop()),
           ],
@@ -243,28 +281,41 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
             body: l.waitingBuyerBody(qtyText(context, extra)),
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(l.rowOrder, qtyText(context, o.quantityKg)),
-            KsInfoRow(l.rowWeighed, qtyText(context, o.quantityKg + extra)),
-            KsInfoRow(l.rowExtraPrice, Fmt.taka(context, extra * o.pricePerKg)),
-            KsInfoRow(l.rowReplyTime,
-                l.minutes(Fmt.digits(context, '${TradeOrder.extraWait.inMinutes}'))),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(l.rowOrder, qtyText(context, o.quantityKg)),
+              KsInfoRow(l.rowWeighed, qtyText(context, o.quantityKg + extra)),
+              KsInfoRow(
+                l.rowExtraPrice,
+                Fmt.taka(context, extra * o.pricePerKg),
+              ),
+              KsInfoRow(
+                l.rowReplyTime,
+                l.minutes(
+                  Fmt.digits(context, '${TradeOrder.extraWait.inMinutes}'),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
           KsNoteBox(
             warning: true,
             title: l.ifNoReply,
             body: l.ifNoReplyBody(
-                Fmt.digits(context, '${TradeOrder.extraWait.inMinutes}'),
-                qtyText(context, o.quantityKg)),
+              Fmt.digits(context, '${TradeOrder.extraWait.inMinutes}'),
+              qtyText(context, o.quantityKg),
+            ),
           ),
           const SizedBox(height: _gapBeforeCta),
           KsButton(
-              label: l.trackChalan,
-              onPressed: () => context.push(Routes.track(o.id))),
+            label: l.trackChalan,
+            onPressed: () => context.push(Routes.track(o.id)),
+          ),
           const SizedBox(height: AppSpacing.block),
           KsButton.secondary(
-              label: l.goHome, onPressed: () => context.go(Routes.farmerHome)),
+            label: l.goHome,
+            onPressed: () => context.go(Routes.farmerHome),
+          ),
         ],
       ),
     );
@@ -287,21 +338,26 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
             body: less ? l.weightLessBody : l.moneySentBody,
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            if (less) ...[
-              KsInfoRow(l.rowOrder, qtyText(context, o.orderedKg!)),
-              KsInfoRow(l.rowWeighed, qtyText(context, o.quantityKg)),
-            ] else ...[
-              KsInfoRow(l.rowWeightDigital, qtyText(context, o.quantityKg)),
-              KsInfoRow(l.rowPrice, l.priceLine(Fmt.number(context, o.pricePerKg))),
+          KsInfoBox(
+            children: [
+              if (less) ...[
+                KsInfoRow(l.rowOrder, qtyText(context, o.orderedKg!)),
+                KsInfoRow(l.rowWeighed, qtyText(context, o.quantityKg)),
+              ] else ...[
+                KsInfoRow(l.rowWeightDigital, qtyText(context, o.quantityKg)),
+                KsInfoRow(
+                  l.rowPrice,
+                  l.priceLine(Fmt.number(context, o.pricePerKg)),
+                ),
+              ],
+              KsInfoRow(l.rowReceivedTotal, Fmt.taka(context, o.cropTotal)),
+              KsLinkRow(
+                label: l.rowMethod,
+                value: pm == null ? l.pmNone : payoutLine(l, pm),
+                onTap: () => context.push(Routes.paymentMethods),
+              ),
             ],
-            KsInfoRow(l.rowReceivedTotal, Fmt.taka(context, o.cropTotal)),
-            KsLinkRow(
-              label: l.rowMethod,
-              value: pm == null ? l.pmNone : payoutLine(l, pm),
-              onTap: () => context.push(Routes.paymentMethods),
-            ),
-          ]),
+          ),
           const SizedBox(height: AppSpacing.block),
           KsNoteBox(
             warning: true,
@@ -311,20 +367,24 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
           const SizedBox(height: _gapBeforeCta),
           if (less) ...[
             KsButton(
-                label: l.seePayments,
-                onPressed: () => context.push(Routes.payments)),
+              label: l.seePayments,
+              onPressed: () => context.push(Routes.payments),
+            ),
             const SizedBox(height: AppSpacing.block),
             KsButton.secondary(
-                label: l.goHome,
-                onPressed: () => context.go(Routes.farmerHome)),
+              label: l.goHome,
+              onPressed: () => context.go(Routes.farmerHome),
+            ),
           ] else ...[
             KsButton(
-                label: l.seeReceipt,
-                onPressed: () => context.push(Routes.receipt(o.id))),
+              label: l.seeReceipt,
+              onPressed: () => context.push(Routes.receipt(o.id)),
+            ),
             const SizedBox(height: AppSpacing.block),
             KsButton.outline(
-                label: l.seePayments,
-                onPressed: () => context.push(Routes.payments)),
+              label: l.seePayments,
+              onPressed: () => context.push(Routes.payments),
+            ),
           ],
         ],
       ),
@@ -367,8 +427,12 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
     super.dispose();
   }
 
-  Future<void> _submit(Delivery d, TradeOrder o, AppUser me,
-      {num? maxKg}) async {
+  Future<void> _submit(
+    Delivery d,
+    TradeOrder o,
+    AppUser me, {
+    num? maxKg,
+  }) async {
     final l = AppLocalizations.of(context);
     final repo = ref.read(transportRepositoryProvider);
     final weighed = num.tryParse(Fmt.latinDigits(_kg.text.trim())) ?? 0;
@@ -412,12 +476,21 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
     try {
       final urls = <String>[];
       for (final f in _photos) {
-        urls.add((await ref.read(imageStorageProvider).upload(f,
-                kind: ImageKind.delivery, ownerUid: me.uid))
-            .url);
+        urls.add(
+          (await ref
+                  .read(imageStorageProvider)
+                  .upload(f, kind: ImageKind.delivery, ownerUid: me.uid))
+              .url,
+        );
       }
-      await repo.markPickedUp(d, o, me.uid,
-          loadedKg: loadKg, otp: otp, photos: urls);
+      await repo.markPickedUp(
+        d,
+        o,
+        me.uid,
+        loadedKg: loadKg,
+        otp: otp,
+        photos: urls,
+      );
       if (!mounted) return;
       KsToast.show(context, l.loadDone(qtyText(context, loadKg)));
       context.pop();
@@ -443,26 +516,36 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
     final d = ref.watch(deliveryProvider(widget.deliveryId)).value;
     final o = d == null ? null : ref.watch(orderProvider(d.orderId)).value;
     final xAsync = d == null ? null : ref.watch(inspectionProvider(d.orderId));
-    if (d == null || o == null || me == null || xAsync == null || xAsync.isLoading) {
+    if (d == null ||
+        o == null ||
+        me == null ||
+        xAsync == null ||
+        xAsync.isLoading) {
       return _loading(l.weighTitle);
     }
     // 88–94: buyer's inspector, if one was sent.
     final x = xAsync.value;
     final inspWait = x != null && !x.done;
-    final partialKg =
-        x?.decision == InspectionDecision.partial ? x!.acceptKg : null;
+    final partialKg = x?.decision == InspectionDecision.partial
+        ? x!.acceptKg
+        : null;
     if (!_filled) {
       _filled = true;
-      _kg.text = '${partialKg ?? (x?.decision == InspectionDecision.approve ? x!.weighedKg : null) ?? (o.extraStatus == 'approved' ? o.quantityKg + (o.extraKg ?? 0) : o.quantityKg)}';
+      _kg.text =
+          '${partialKg ?? (x?.decision == InspectionDecision.approve ? x!.weighedKg : null) ?? (o.extraStatus == 'approved' ? o.quantityKg + (o.extraKg ?? 0) : o.quantityKg)}';
     }
     final farmer = ref.watch(userByIdProvider(d.farmerId)).value;
+    final trip = ref.watch(tripProvider(d.id)) ?? Trip([d]);
     final extra = o.extraKg ?? 0;
     final waiting = o.extraPending && !o.extraExpired;
 
     final String? extraNote = switch (o.extraStatus) {
-      'pending' when waiting =>
-        l.extraWaitNote(qtyText(context, extra), qtyText(context, o.quantityKg)),
-      'pending' || 'declined' => l.extraLoadOrdered(qtyText(context, o.quantityKg)),
+      'pending' when waiting => l.extraWaitNote(
+        qtyText(context, extra),
+        qtyText(context, o.quantityKg),
+      ),
+      'pending' ||
+      'declined' => l.extraLoadOrdered(qtyText(context, o.quantityKg)),
       'approved' => l.extraApprovedNote(qtyText(context, o.quantityKg + extra)),
       _ => null,
     };
@@ -479,22 +562,30 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
               thumbSize: KsListItem.thumbSize.round(),
               fallbackAsset: AppUi.avatarFarmer,
             ),
-            title: l.nameDot(d.farmerName,
-                l.cropQtyComma(tonsText(context, o.quantityKg), d.cropName(lang))),
-            subtitle: l.gradeStop(o.grade, Fmt.digits(context, '1'),
-                Fmt.digits(context, '1')),
+            title: l.nameDot(
+              d.farmerName,
+              l.cropQtyComma(tonsText(context, o.quantityKg), d.cropName(lang)),
+            ),
+            subtitle: l.gradeStop(
+              o.grade,
+              Fmt.digits(context, '${trip.stopNo(d)}'),
+              Fmt.digits(context, '${trip.stops.length}'),
+            ),
             showChevron: false,
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            if (x != null) ...[
-              KsInfoRow(l.rowInspector, l.inspPresent(x.inspectorName)),
-              KsInfoRow(l.rowInspDecision,
-                  x.done ? decisionLabel(l, x.decision!) : l.stepWaiting),
+          KsInfoBox(
+            children: [
+              if (x != null) ...[
+                KsInfoRow(l.rowInspector, l.inspPresent(x.inspectorName)),
+                KsInfoRow(
+                  l.rowInspDecision,
+                  x.done ? decisionLabel(l, x.decision!) : l.stepWaiting,
+                ),
+              ],
+              KsInfoRow(l.oneMon, l.monFixed(Fmt.digits(context, '$kgPerMon'))),
             ],
-            KsInfoRow(l.oneMon,
-                l.monFixed(Fmt.digits(context, '$kgPerMon'))),
-          ]),
+          ),
           if (inspWait || partialKg != null) ...[
             const SizedBox(height: AppSpacing.block),
             KsNoteBox(
@@ -506,42 +597,52 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
           ],
           const SizedBox(height: AppSpacing.block),
           // Big weight, "২,০০০ কেজি" style: the number is editable.
-          Row(children: [
-            IntrinsicWidth(
-              child: TextField(
-                controller: _kg,
-                enabled: !waiting,
-                keyboardType: TextInputType.number,
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
-                ],
-                style: AppTypography.display28.normal,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  isDense: true,
-                  contentPadding: EdgeInsets.zero,
+          Row(
+            children: [
+              IntrinsicWidth(
+                child: TextField(
+                  controller: _kg,
+                  enabled: !waiting,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
+                  ],
+                  style: AppTypography.display28.normal,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.sm),
-            Text(l.unitKg, style: AppTypography.display28.normal),
-          ]),
+              const SizedBox(width: AppSpacing.sm),
+              Text(l.unitKg, style: AppTypography.display28.normal),
+            ],
+          ),
           if (_kgErr != null)
-            Text(_kgErr!,
-                style: AppTypography.caption.normal
-                    .withColor(AppColors.textError)),
+            Text(
+              _kgErr!,
+              style: AppTypography.caption.normal.withColor(
+                AppColors.textError,
+              ),
+            ),
           const SizedBox(height: AppSpacing.sm),
-          Text(l.scaleNote,
-              style: AppTypography.caption.normal
-                  .withColor(AppColors.textSecondary)),
+          Text(
+            l.scaleNote,
+            style: AppTypography.caption.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           if (extraNote != null) ...[
             const SizedBox(height: AppSpacing.block),
             KsNoteBox(warning: true, title: extraNote),
           ],
           const SizedBox(height: AppSpacing.block),
           KsUploadBox(
-            label: l.scalePhotos(Fmt.digits(context, '${_photos.length}'),
-                Fmt.digits(context, '$_maxPhotos')),
+            label: l.scalePhotos(
+              Fmt.digits(context, '${_photos.length}'),
+              Fmt.digits(context, '$_maxPhotos'),
+            ),
             file: _photos.isEmpty ? null : _photos.last,
             height: _photos.isEmpty
                 ? KsUploadBox.defaultHeight
@@ -566,9 +667,12 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
             errorText: _otpErr,
           ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.weighNote,
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+          Text(
+            l.weighNote,
+            style: AppTypography.bodySmall.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(height: _gapBeforeCta),
           KsButton.outline(
             label: l.notLoadedReport,
@@ -618,23 +722,36 @@ class WeightLessScreen extends ConsumerWidget {
             body: l.weightLessRefundBody(o.orderNo, o.cropName(lang)),
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(l.rowOrderedKg, qtyText(context, ordered)),
-            KsInfoRow(l.rowLoadWeighed, qtyText(context, o.quantityKg)),
-            KsInfoRow(l.rowLess, qtyText(context, lessKg), strong: true),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(l.rowOrderedKg, qtyText(context, ordered)),
+              KsInfoRow(l.rowLoadWeighed, qtyText(context, o.quantityKg)),
+              KsInfoRow(l.rowLess, qtyText(context, lessKg), strong: true),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(l.rowCropRefund(Fmt.number(context, o.pricePerKg)),
-                tk(cropBack)),
-            KsInfoRow(l.rowFeeRefund(Fmt.digits(context, '${TradeRepository.platformFeePct}')),
-                tk(o.weightRefund - cropBack)),
-            KsInfoRow(l.rowTotalRefund, tk(o.weightRefund), strong: true),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(
+                l.rowCropRefund(Fmt.number(context, o.pricePerKg)),
+                tk(cropBack),
+              ),
+              KsInfoRow(
+                l.rowFeeRefund(
+                  Fmt.digits(context, '${TradeRepository.platformFeePct}'),
+                ),
+                tk(o.weightRefund - cropBack),
+              ),
+              KsInfoRow(l.rowTotalRefund, tk(o.weightRefund), strong: true),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.weightLessNote(qtyText(context, o.quantityKg)),
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+          Text(
+            l.weightLessNote(qtyText(context, o.quantityKg)),
+            style: AppTypography.bodySmall.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(height: _gapBeforeCta),
           KsButton.outline(
             label: l.seeWeighReport,
@@ -666,8 +783,10 @@ Future<void> showLoadPhotos(BuildContext context, TradeOrder o) async {
         shrinkWrap: true,
         padding: const EdgeInsets.all(AppSpacing.screen),
         children: [
-          Text(l.weighReportTitle(qtyText(context, o.quantityKg)),
-              style: AppTypography.headingBold20.normal),
+          Text(
+            l.weighReportTitle(qtyText(context, o.quantityKg)),
+            style: AppTypography.headingBold20.normal,
+          ),
           for (final u in o.loadPhotos) ...[
             const SizedBox(height: AppSpacing.block),
             ClipRRect(
@@ -698,7 +817,9 @@ class _ExtraWeightState extends ConsumerState<ExtraWeightScreen> {
     setState(() => _busy = true);
     try {
       if (approve) {
-        final r = await ref.read(paymentServiceProvider).holdForOrder(
+        final r = await ref
+            .read(paymentServiceProvider)
+            .holdForOrder(
               orderNo: o.orderNo,
               amountBdt: pay,
               payerUid: o.buyerId,
@@ -742,45 +863,63 @@ class _ExtraWeightState extends ConsumerState<ExtraWeightScreen> {
             body: l.extraNeedApprovalBody(o.farmerName, o.cropName(lang)),
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(l.rowOrderedKg, qtyText(context, o.quantityKg)),
-            KsInfoRow(l.rowScaleWeighed, qtyText(context, o.quantityKg + extra)),
-            KsInfoRow(l.rowMore, qtyText(context, extra), strong: true),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(l.rowOrderedKg, qtyText(context, o.quantityKg)),
+              KsInfoRow(
+                l.rowScaleWeighed,
+                qtyText(context, o.quantityKg + extra),
+              ),
+              KsInfoRow(l.rowMore, qtyText(context, extra), strong: true),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(l.rowExtraPriceAt(Fmt.number(context, o.pricePerKg)),
-                tk(price)),
-            KsInfoRow(l.rowFeePct(Fmt.digits(context, '${TradeRepository.platformFeePct}')),
-                tk(fee)),
-            KsInfoRow(l.rowTotalToPay, tk(pay), strong: true),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(
+                l.rowExtraPriceAt(Fmt.number(context, o.pricePerKg)),
+                tk(price),
+              ),
+              KsInfoRow(
+                l.rowFeePct(
+                  Fmt.digits(context, '${TradeRepository.platformFeePct}'),
+                ),
+                tk(fee),
+              ),
+              KsInfoRow(l.rowTotalToPay, tk(pay), strong: true),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
           Text(
-              l.extraNote(
-                  Fmt.digits(context, '${TradeOrder.extraWait.inMinutes}')),
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+            l.extraNote(
+              Fmt.digits(context, '${TradeOrder.extraWait.inMinutes}'),
+            ),
+            style: AppTypography.bodySmall.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(height: _gapBeforeCta),
           if (open)
-            Row(children: [
-              Expanded(
-                child: KsButton(
-                  label: l.approveAndPay(tk(pay)),
-                  compact: true,
-                  loading: _busy,
-                  onPressed: () => _answer(o, true, pay),
+            Row(
+              children: [
+                Expanded(
+                  child: KsButton(
+                    label: l.approveAndPay(tk(pay)),
+                    compact: true,
+                    loading: _busy,
+                    onPressed: () => _answer(o, true, pay),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: KsButton.secondary(
-                  label: l.keepOrdered(qtyText(context, o.quantityKg)),
-                  compact: true,
-                  onPressed: _busy ? null : () => _answer(o, false, 0),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: KsButton.secondary(
+                    label: l.keepOrdered(qtyText(context, o.quantityKg)),
+                    compact: true,
+                    onPressed: _busy ? null : () => _answer(o, false, 0),
+                  ),
                 ),
-              ),
-            ])
+              ],
+            )
           else
             KsNoteBox(
               title: switch (o.extraStatus) {
@@ -826,27 +965,47 @@ class RefundScreen extends ConsumerWidget {
           Text(tk(amount), style: AppTypography.display28.normal),
           const SizedBox(height: AppSpacing.sm),
           Text(
-              cancelled
-                  ? l.refundSubCancel(o.cropName(lang), qtyText(context, o.quantityKg))
-                  : l.refundSubWeight(o.cropName(lang), qtyText(context, ordered - o.quantityKg)),
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+            cancelled
+                ? l.refundSubCancel(
+                    o.cropName(lang),
+                    qtyText(context, o.quantityKg),
+                  )
+                : l.refundSubWeight(
+                    o.cropName(lang),
+                    qtyText(context, ordered - o.quantityKg),
+                  ),
+            style: AppTypography.bodySmall.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            if (cancelled) ...[
-              KsInfoRow(l.rowCropValue, tk(o.cropTotal)),
-              if (o.transportFare > 0)
-                KsInfoRow(o.cancelFee > 0 ? l.rowTransportCut : l.rowTransport,
-                    tk(o.transportFare - o.cancelFee)),
-              KsInfoRow(l.rowPlatformFeePct(Fmt.digits(context, '${TradeRepository.platformFeePct}')),
-                  tk(o.platformFee)),
-            ] else ...[
-              KsInfoRow(l.rowCropValue, tk(cropBack)),
-              KsInfoRow(l.rowPlatformFeePct(Fmt.digits(context, '${TradeRepository.platformFeePct}')),
-                  tk(o.weightRefund - cropBack)),
+          KsInfoBox(
+            children: [
+              if (cancelled) ...[
+                KsInfoRow(l.rowCropValue, tk(o.cropTotal)),
+                if (o.transportFare > 0)
+                  KsInfoRow(
+                    o.cancelFee > 0 ? l.rowTransportCut : l.rowTransport,
+                    tk(o.transportFare - o.cancelFee),
+                  ),
+                KsInfoRow(
+                  l.rowPlatformFeePct(
+                    Fmt.digits(context, '${TradeRepository.platformFeePct}'),
+                  ),
+                  tk(o.platformFee),
+                ),
+              ] else ...[
+                KsInfoRow(l.rowCropValue, tk(cropBack)),
+                KsInfoRow(
+                  l.rowPlatformFeePct(
+                    Fmt.digits(context, '${TradeRepository.platformFeePct}'),
+                  ),
+                  tk(o.weightRefund - cropBack),
+                ),
+              ],
+              KsInfoRow(l.rowTotalRefund, tk(amount), strong: true),
             ],
-            KsInfoRow(l.rowTotalRefund, tk(amount), strong: true),
-          ]),
+          ),
           const SizedBox(height: AppSpacing.block),
           KsTimelineItem(
             title: cancelled ? l.refundStepCancelled : l.refundStepWeighed,
@@ -866,16 +1025,26 @@ class RefundScreen extends ConsumerWidget {
             done: false,
           ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(l.rowRefundTo, pm == null ? l.refundSameMethod : payoutLine(l, pm)),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(
+                l.rowRefundTo,
+                pm == null ? l.refundSameMethod : payoutLine(l, pm),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.refundNote,
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+          Text(
+            l.refundNote,
+            style: AppTypography.bodySmall.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(height: _gapBeforeCta),
           KsButton.outline(
-              label: l.getHelp, onPressed: () => context.push(Routes.help)),
+            label: l.getHelp,
+            onPressed: () => context.push(Routes.help),
+          ),
         ],
       ),
     );

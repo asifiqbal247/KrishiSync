@@ -29,10 +29,13 @@ class PlaceholderPaymentService implements PaymentService {
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 600));
     return PaymentResult(
-        success: true,
-        reference: 'PLACEHOLDER-$orderNo-${DateTime.now().millisecondsSinceEpoch}');
+      success: true,
+      reference:
+          'PLACEHOLDER-$orderNo-${DateTime.now().millisecondsSinceEpoch}',
+    );
   }
 }
 
-final paymentServiceProvider =
-    Provider<PaymentService>((_) => PlaceholderPaymentService());
+final paymentServiceProvider = Provider<PaymentService>(
+  (_) => PlaceholderPaymentService(),
+);

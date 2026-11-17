@@ -224,8 +224,11 @@ class DemandRepository {
     Demand d,
     List<Commit> picked,
     AppUser buyer,
-    num alreadyAcceptedKg,
-  ) async {
+    num alreadyAcceptedKg, {
+    String? poNo,
+  }) async {
+    // A purchase order is one truck trip: one delivery code for all farms.
+    final otp = poNo == null ? null : TradeRepository.newOtp();
     for (final c in picked) {
       final pay = await _pay.holdForOrder(
         orderNo: d.id,
@@ -250,6 +253,8 @@ class DemandRepository {
         pricePerKg: d.targetPrice,
         dropoff: d.dropoff,
         paymentRef: 'demand:${pay.reference ?? ''}',
+        poNo: poNo,
+        otp: otp,
       );
       await _commits(d.id)
           .doc(c.farmerId)
@@ -291,7 +296,7 @@ class DemandRepository {
       tx.set(counter, {'next': next + 1});
       return _poText(next);
     });
-    await accept(d, pooled, buyer, alreadyAcceptedKg);
+    await accept(d, pooled, buyer, alreadyAcceptedKg, poNo: no);
     await _col.doc(d.id).update({
       'poNos': FieldValue.arrayUnion([no]),
       'updatedAt': FieldValue.serverTimestamp(),

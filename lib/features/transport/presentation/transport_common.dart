@@ -27,37 +27,37 @@ String placeFull(BuildContext context, UserLocation loc) {
 }
 
 /// "নেত্রকোনা → ঢাকা"
-String routeOf(BuildContext context, Delivery d) =>
-    AppLocalizations.of(context)
-        .routeLine(districtOf(context, d.pickup), districtOf(context, d.dropoff));
+String routeOf(BuildContext context, Delivery d) => AppLocalizations.of(context)
+    .routeLine(districtOf(context, d.pickup), districtOf(context, d.dropoff));
 
 /// 4500 kg → "৪.৫ টন"; small loads stay in kg ("৫০০ কেজি").
 String tonsText(BuildContext context, num kg) {
   final l = AppLocalizations.of(context);
   if (kg < 1000) return qtyText(context, kg);
   final t = kg / 1000;
-  return l.tonQty(Fmt.number(context, t, decimals: t == t.roundToDouble() ? 0 : 1));
+  return l.tonQty(
+    Fmt.number(context, t, decimals: t == t.roundToDouble() ? 0 : 1),
+  );
 }
 
 String vehicleTypeLabel(AppLocalizations l, String key) => switch (key) {
-      'pickup' => l.vt_pickup,
-      'small_open' => l.vt_small_open,
-      'medium_open' => l.vt_medium_open,
-      'medium_covered' => l.vt_medium_covered,
-      'large_open' => l.vt_large_open,
-      'covered_van' => l.vt_covered_van,
-      'refrigerated' => l.vt_refrigerated,
-      _ => key,
-    };
+  'pickup' => l.vt_pickup,
+  'small_open' => l.vt_small_open,
+  'medium_open' => l.vt_medium_open,
+  'medium_covered' => l.vt_medium_covered,
+  'large_open' => l.vt_large_open,
+  'covered_van' => l.vt_covered_van,
+  'refrigerated' => l.vt_refrigerated,
+  _ => key,
+};
 
-String deliveryStatusLabel(AppLocalizations l, DeliveryStatus s) =>
-    switch (s) {
-      DeliveryStatus.open => l.dsOpen,
-      DeliveryStatus.assigned => l.dsAssigned,
-      DeliveryStatus.pickedUp => l.dsPickedUp,
-      DeliveryStatus.delivered => l.dsDelivered,
-      DeliveryStatus.cancelled => l.orderStatusCancelled,
-    };
+String deliveryStatusLabel(AppLocalizations l, DeliveryStatus s) => switch (s) {
+  DeliveryStatus.open => l.dsOpen,
+  DeliveryStatus.assigned => l.dsAssigned,
+  DeliveryStatus.pickedUp => l.dsPickedUp,
+  DeliveryStatus.delivered => l.dsDelivered,
+  DeliveryStatus.cancelled => l.orderStatusCancelled,
+};
 
 /// Fare the driver earns: booked fare, else the suggestion.
 num fareOf(Delivery d) => d.fare ?? d.suggestedFare;
@@ -70,9 +70,13 @@ class LoadTile extends StatelessWidget {
     required this.onTap,
     this.highlighted = false,
     this.withDate = false,
+    this.stops = 1,
   });
 
   final Delivery d;
+
+  /// Farms to load on this trip (multi-stop purchase order).
+  final int stops;
   final VoidCallback onTap;
   final bool highlighted;
   final bool withDate;
@@ -85,7 +89,9 @@ class LoadTile extends StatelessWidget {
     return KsListItem(
       thumb: Image.asset(AppUi.thumbLoad, fit: BoxFit.cover),
       title: routeOf(context, d),
-      subtitle: withDate && d.pickupDate != null
+      subtitle: stops > 1
+          ? l.loadSubStops(crop, qty, Fmt.digits(context, '$stops'))
+          : withDate && d.pickupDate != null
           ? l.loadSubDate(crop, qty, Fmt.date(context, d.pickupDate!))
           : l.loadSub(crop, qty),
       trailingText: Fmt.taka(context, fareOf(d)),
@@ -115,11 +121,18 @@ List<num> weekEarnings(List<Delivery> jobs, DateTime now) {
   return out;
 }
 
-List<String> weekLabels(AppLocalizations l) =>
-    [l.wdSat, l.wdSun, l.wdMon, l.wdTue, l.wdWed, l.wdThu, l.wdFri];
+List<String> weekLabels(AppLocalizations l) => [
+  l.wdSat,
+  l.wdSun,
+  l.wdMon,
+  l.wdTue,
+  l.wdWed,
+  l.wdThu,
+  l.wdFri,
+];
 
 /// Open loads that start in [district] (return-load chances).
 List<Delivery> returnLoads(List<Delivery> open, String? district) =>
     district == null
-        ? const []
-        : open.where((d) => d.pickup.district == district).toList();
+    ? const []
+    : open.where((d) => d.pickup.district == district).toList();

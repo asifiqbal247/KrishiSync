@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Overridden in main() with the loaded instance.
 final sharedPrefsProvider = Provider<SharedPreferences>(
-    (_) => throw UnimplementedError('sharedPrefsProvider not overridden'));
+  (_) => throw UnimplementedError('sharedPrefsProvider not overridden'),
+);
 
 const supportedLocales = [Locale('bn'), Locale('en')];
 
@@ -30,8 +31,9 @@ class LocaleController extends Notifier<Locale?> {
   }
 }
 
-final localeProvider =
-    NotifierProvider<LocaleController, Locale?>(LocaleController.new);
+final localeProvider = NotifierProvider<LocaleController, Locale?>(
+  LocaleController.new,
+);
 
 /// Onboarding seen flag (03–05 are shown once).
 class OnboardingController extends Notifier<bool> {
@@ -52,5 +54,6 @@ class OnboardingController extends Notifier<bool> {
   }
 }
 
-final onboardingDoneProvider =
-    NotifierProvider<OnboardingController, bool>(OnboardingController.new);
+final onboardingDoneProvider = NotifierProvider<OnboardingController, bool>(
+  OnboardingController.new,
+);

@@ -32,6 +32,7 @@ import '../../auth/data/user_repository.dart';
 import '../../trade/data/trade_repository.dart';
 import '../data/live_location.dart';
 import '../data/transport_repository.dart';
+import '../../trade/domain/trade_models.dart';
 import '../domain/delivery.dart';
 import '../../chat/presentation/chat_screens.dart';
 import 'transport_common.dart';
@@ -204,13 +205,25 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
   String? _pick;
   bool _busy = false;
 
-  Future<void> _book(Delivery d, Bid bid) async {
+  /// Books [driver] for every farm of the trip (one bid per farm).
+  Future<void> _book(Trip t, String driver) async {
     final l = AppLocalizations.of(context);
-    final order = ref.read(orderProvider(d.orderId)).value;
-    if (order == null) return;
+    final d = t.lead;
+    final orders = [
+      for (final s in t.stops) ref.read(orderProvider(s.orderId)).value,
+    ];
+    final bids = [
+      for (final s in t.stops)
+        (ref.read(bidsProvider(s.id)).value ?? const <Bid>[])
+            .where((b) => b.transporterId == driver)
+            .firstOrNull,
+    ];
+    if (orders.contains(null) || bids.contains(null)) return;
     setState(() => _busy = true);
     try {
-      await ref.read(transportRepositoryProvider).book(d, bid, order);
+      await ref
+          .read(transportRepositoryProvider)
+          .bookTrip(t, bids.cast<Bid>(), orders.cast<TradeOrder>());
       if (!mounted) return;
       KsToast.show(context, l.truckBooked);
       context.pushReplacement(Routes.buyerAssigned(d.id));
@@ -225,12 +238,39 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final lang = Localizations.localeOf(context).languageCode;
-    final d = ref.watch(deliveryProvider(widget.deliveryId)).value;
-    final bids = ref.watch(bidsProvider(widget.deliveryId)).value ?? const [];
-    ref.watch(orderProvider(widget.deliveryId));
-    if (d == null) return _loading(l.bookTruckTitle);
-    final pick = _pick ?? (bids.length == 1 ? bids.first.transporterId : null);
-    final chosen = bids.where((b) => b.transporterId == pick).firstOrNull;
+    final t = ref.watch(tripProvider(widget.deliveryId));
+    if (t == null) return _loading(l.bookTruckTitle);
+    final d = t.summary;
+    // A driver's offer for the trip = their bids on every farm, added up.
+    final perStop = [
+      for (final s in t.stops) ...[
+        ref.watch(bidsProvider(s.id)).value ?? const <Bid>[],
+      ],
+    ];
+    for (final s in t.stops) {
+      ref.watch(orderProvider(s.orderId));
+    }
+    final bids = [
+      for (final b in perStop.first)
+        if (perStop.every(
+          (list) => list.any((x) => x.transporterId == b.transporterId),
+        ))
+          (
+            b,
+            perStop.fold<num>(
+              0,
+              (a, list) =>
+                  a +
+                  list
+                      .firstWhere((x) => x.transporterId == b.transporterId)
+                      .fare,
+            ),
+          ),
+    ]..sort((a, b) => a.$2.compareTo(b.$2));
+    final pick =
+        _pick ?? (bids.length == 1 ? bids.first.$1.transporterId : null);
+    final chosen = bids.where((b) => b.$1.transporterId == pick).firstOrNull;
+    final open = t.status == DeliveryStatus.open;
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -241,7 +281,13 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
           KsSelectField(
             label: l.pickupLocation,
             placeholder: '',
-            value: placeFull(context, d.pickup),
+            value: t.multi
+                ? l.pickupsLine(
+                    Fmt.digits(context, '${t.stops.length}'),
+                    {for (final s in t.stops) districtOf(context, s.pickup)}
+                        .join(', '),
+                  )
+                : placeFull(context, d.pickup),
             onTap: () {},
           ),
           const SizedBox(height: AppSpacing.block),
@@ -272,7 +318,7 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
           ),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.suggestedTrucks),
-          if (d.status != DeliveryStatus.open) ...[
+          if (!open) ...[
             const SizedBox(height: AppSpacing.block),
             KsNoteBox(title: l.truckBooked),
           ] else if (bids.isEmpty) ...[
@@ -284,7 +330,7 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
               ),
             ),
           ],
-          for (final b in bids) ...[
+          for (final (b, total) in bids) ...[
             const SizedBox(height: AppSpacing.block),
             KsListItem(
               thumb: KsNetImage(
@@ -300,14 +346,14 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
                     ? l.notAvailable
                     : Fmt.number(context, b.ratingAvg, decimals: 1),
               ),
-              trailingText: Fmt.taka(context, b.fare),
+              trailingText: Fmt.taka(context, total),
               highlighted: b.transporterId == pick,
               // 80: see the driver's profile; "choose" selects this bid.
-              onTap: d.status == DeliveryStatus.open
+              onTap: open
                   ? () async {
                       final ok = await context.push<bool>(
-                          Routes.transporterProfile(b.transporterId,
-                              pick: true));
+                        Routes.transporterProfile(b.transporterId, pick: true),
+                      );
                       if (ok == true && mounted) {
                         setState(() => _pick = b.transporterId);
                       }
@@ -321,9 +367,9 @@ class _BookTruckState extends ConsumerState<BookTruckScreen> {
           KsButton(
             label: l.bookBtn,
             loading: _busy,
-            onPressed: chosen == null || d.status != DeliveryStatus.open
+            onPressed: chosen == null || !open
                 ? null
-                : () => _book(d, chosen),
+                : () => _book(t, chosen.$1.transporterId),
           ),
         ],
       ),
@@ -345,7 +391,8 @@ class AssignedTransportScreen extends ConsumerWidget {
     if (d == null || d.transporterId == null) {
       return _loading(l.assignedTitle);
     }
-    final live = d.status == DeliveryStatus.assigned ||
+    final live =
+        d.status == DeliveryStatus.assigned ||
             d.status == DeliveryStatus.pickedUp
         ? ref.watch(livePosProvider(d.id)).value
         : null;
@@ -385,7 +432,12 @@ class AssignedTransportScreen extends ConsumerWidget {
                 KsInfoRow(l.fieldPickup, Fmt.date(context, d.pickupDate!)),
               KsInfoRow(
                 l.rowFare,
-                l.fareSafeLine(Fmt.taka(context, fareOf(d))),
+                l.fareSafeLine(
+                  Fmt.taka(
+                    context,
+                    ref.watch(tripProvider(d.id))?.fare ?? fareOf(d),
+                  ),
+                ),
               ),
             ],
           ),
@@ -548,21 +600,22 @@ class TrackingScreen extends ConsumerWidget {
     final rating = driver == null || driver.ratingCount == 0
         ? l.notAvailable
         : Fmt.number(context, driver.ratingAvg, decimals: 1);
-    final active = d.status == DeliveryStatus.assigned ||
+    final active =
+        d.status == DeliveryStatus.assigned ||
         d.status == DeliveryStatus.pickedUp;
     final live = active ? ref.watch(livePosProvider(d.id)).value : null;
     // Share of the road still left; only once the crop is on the truck.
-    final left =
-        d.status == DeliveryStatus.pickedUp ? tripLeft(d, live) : null;
+    final left = d.status == DeliveryStatus.pickedUp ? tripLeft(d, live) : null;
     final start = d.timeline['pickedUp'] ?? d.pickupDate;
     var eta =
         d.timeline['delivered'] ??
         (left != null && d.hours != null
             ? DateTime.now().add(
-                Duration(minutes: (d.hours! * 60 * left).round()))
+                Duration(minutes: (d.hours! * 60 * left).round()),
+              )
             : start == null || d.hours == null
-                ? null
-                : start.add(Duration(hours: d.hours!)));
+            ? null
+            : start.add(Duration(hours: d.hours!)));
     // A planned time that has already passed (truck late or not loaded
     // yet): count the whole road time from now instead.
     if (eta != null &&
@@ -628,8 +681,8 @@ class TrackingScreen extends ConsumerWidget {
                   seen == null
                       ? l.liveOff
                       : seen < 1
-                          ? l.liveJustNow
-                          : l.liveMinAgo(Fmt.digits(context, '$seen')),
+                      ? l.liveJustNow
+                      : l.liveMinAgo(Fmt.digits(context, '$seen')),
                 ),
               if (d.roadKm != null)
                 left == null
@@ -639,7 +692,9 @@ class TrackingScreen extends ConsumerWidget {
                       )
                     : KsInfoRow(
                         l.rowLeftKm,
-                        l.kmOnly(Fmt.number(context, (d.roadKm! * left).round())),
+                        l.kmOnly(
+                          Fmt.number(context, (d.roadKm! * left).round()),
+                        ),
                       ),
             ],
           ),
@@ -661,8 +716,7 @@ class TrackingScreen extends ConsumerWidget {
                 // In-app chat is Tier C.
                 child: KsButton.outline(
                   label: l.messageBtn,
-                  onPressed: () =>
-                      openChatWith(context, ref, d.transporterId!),
+                  onPressed: () => openChatWith(context, ref, d.transporterId!),
                 ),
               ),
             ],

@@ -36,60 +36,79 @@ class EarningsScreen extends ConsumerWidget {
       appBar: KsAppBar(title: l.earnTitle, showBack: false),
       body: switch (async) {
         AsyncData(value: final jobs) => () {
-            final week = weekEarnings(jobs, DateTime.now());
-            final weekTotal = week.fold<num>(0, (a, v) => a + v);
-            final pending = jobs
-                .where((j) => j.status.isActive)
-                .fold<num>(0, (a, j) => a + fareOf(j));
-            final history = jobs
-                .where((j) =>
-                    j.status.isActive || j.status == DeliveryStatus.delivered)
-                .toList();
-            return ListView(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-                  AppSpacing.contentTop, AppSpacing.screen, AppSpacing.s2xl),
-              children: [
-                Row(children: [
+          final week = weekEarnings(jobs, DateTime.now());
+          final weekTotal = week.fold<num>(0, (a, v) => a + v);
+          final pending = jobs
+              .where((j) => j.status.isActive)
+              .fold<num>(0, (a, j) => a + fareOf(j));
+          final history = jobs
+              .where(
+                (j) =>
+                    j.status.isActive || j.status == DeliveryStatus.delivered,
+              )
+              .toList();
+          return ListView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.screen,
+              AppSpacing.contentTop,
+              AppSpacing.screen,
+              AppSpacing.s2xl,
+            ),
+            children: [
+              Row(
+                children: [
                   Expanded(
-                      child: KsStatCard(
-                          label: l.trThisWeek, value: tk(weekTotal))),
+                    child: KsStatCard(
+                      label: l.trThisWeek,
+                      value: tk(weekTotal),
+                    ),
+                  ),
                   const SizedBox(width: AppSpacing.lg),
                   Expanded(
-                      child: KsStatCard(
-                          label: l.trPendingPay, value: tk(pending))),
-                ]),
-                const SizedBox(height: AppSpacing.block),
-                KsBarChart(values: week, labels: weekLabels(l)),
-                const SizedBox(height: AppSpacing.block),
-                KsSectionHeader(
-                    title: l.earnHistory,
-                    actionLabel: l.seeAllLink,
-                    onAction: () => context.push(Routes.history)),
-                if (history.isEmpty) ...[
-                  const SizedBox(height: AppSpacing.block),
-                  Text(l.earnEmpty,
-                      textAlign: TextAlign.center,
-                      style: AppTypography.bodyMedium.normal
-                          .withColor(AppColors.textSecondary)),
-                ],
-                for (final j in history) ...[
-                  const SizedBox(height: AppSpacing.block),
-                  KsListItem(
-                    thumb: KsNetImage(
-                        url: j.photo,
-                        thumbSize: KsListItem.thumbSize.round(),
-                        fallbackAsset: CropCatalog.imageFor(j.cropKey)),
-                    title: l.noOrderCrop(j.orderNo, j.cropName(lang)),
-                    subtitle: j.status == DeliveryStatus.delivered
-                        ? l.earnPaidSub
-                        : l.earnHeldSub,
-                    trailingText: tk(fareOf(j)),
-                    onTap: () => context.push(Routes.receipt(j.orderId)),
+                    child: KsStatCard(
+                      label: l.trPendingPay,
+                      value: tk(pending),
+                    ),
                   ),
                 ],
+              ),
+              const SizedBox(height: AppSpacing.block),
+              KsBarChart(values: week, labels: weekLabels(l)),
+              const SizedBox(height: AppSpacing.block),
+              KsSectionHeader(
+                title: l.earnHistory,
+                actionLabel: l.seeAllLink,
+                onAction: () => context.push(Routes.history),
+              ),
+              if (history.isEmpty) ...[
+                const SizedBox(height: AppSpacing.block),
+                Text(
+                  l.earnEmpty,
+                  textAlign: TextAlign.center,
+                  style: AppTypography.bodyMedium.normal.withColor(
+                    AppColors.textSecondary,
+                  ),
+                ),
               ],
-            );
-          }(),
+              for (final j in history) ...[
+                const SizedBox(height: AppSpacing.block),
+                KsListItem(
+                  thumb: KsNetImage(
+                    url: j.photo,
+                    thumbSize: KsListItem.thumbSize.round(),
+                    fallbackAsset: CropCatalog.imageFor(j.cropKey),
+                  ),
+                  title: l.noOrderCrop(j.orderNo, j.cropName(lang)),
+                  subtitle: j.status == DeliveryStatus.delivered
+                      ? l.earnPaidSub
+                      : l.earnHeldSub,
+                  trailingText: tk(fareOf(j)),
+                  onTap: () => context.push(Routes.receipt(j.orderId)),
+                ),
+              ],
+            ],
+          );
+        }(),
         AsyncError() => Center(child: Text(l.errorGeneric)),
         _ => const KsSkeletonList(),
       },

@@ -10302,6 +10302,138 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'পরিষ্কার ছবি দিয়ে নতুন করে আপলোড করুন'**
   String get nDocRejectedBody;
+
+  /// No description provided for @sharedTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'খালি জায়গায় লোড'**
+  String get sharedTitle;
+
+  /// No description provided for @sharedNoTripTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন কোনো চলমান ট্রিপ নেই'**
+  String get sharedNoTripTitle;
+
+  /// No description provided for @sharedNoTripBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাজ নিলে ট্রাকের খালি জায়গায় রুটের লোড এখানে দেখাবে।'**
+  String get sharedNoTripBody;
+
+  /// No description provided for @sharedTruckSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'{cap} ট্রাক · বর্তমান {now} ({no})'**
+  String sharedTruckSub(String cap, String now, String no);
+
+  /// No description provided for @truckFull.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রাক ভর্তি'**
+  String get truckFull;
+
+  /// No description provided for @ofTons.
+  ///
+  /// In bn, this message translates to:
+  /// **'{a} / {b}'**
+  String ofTons(String a, String b);
+
+  /// No description provided for @loadsOnRoute.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার রুটে লোড ({route})'**
+  String loadsOnRoute(String route);
+
+  /// No description provided for @sharedNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন রুটে খালি জায়গায় মানানসই লোড নেই।'**
+  String get sharedNone;
+
+  /// No description provided for @cropDashQty.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} – {qty}'**
+  String cropDashQty(String crop, String qty);
+
+  /// No description provided for @sharedRuleTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আলাদা কাজ, আলাদা ভাড়া'**
+  String get sharedRuleTitle;
+
+  /// No description provided for @sharedRuleBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই লোড আলাদা নিরাপদ লেনদেনে। এর ক্রেতার কাছে পৌঁছালেই এর ভাড়া পাবেন।'**
+  String get sharedRuleBody;
+
+  /// No description provided for @addLoad.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড যোগ করুন'**
+  String get addLoad;
+
+  /// No description provided for @addThisLoad.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই লোড যোগ করুন'**
+  String get addThisLoad;
+
+  /// No description provided for @sharedFits.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার ট্রাকে {t} খালি আছে, এই লোড মানানসই।'**
+  String sharedFits(String t);
+
+  /// No description provided for @onRoute.
+  ///
+  /// In bn, this message translates to:
+  /// **'রুটেই'**
+  String get onRoute;
+
+  /// No description provided for @detourKm.
+  ///
+  /// In bn, this message translates to:
+  /// **'{km} কিমি ঘুরতে হবে'**
+  String detourKm(String km);
+
+  /// No description provided for @loadSubStops.
+  ///
+  /// In bn, this message translates to:
+  /// **'{crop} · {qty} · {n}টি পিকআপ'**
+  String loadSubStops(String crop, String qty, String n);
+
+  /// No description provided for @pickupsLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}টি পিকআপ · {places}'**
+  String pickupsLine(String n, String places);
+
+  /// No description provided for @pickupsN.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}টি পিকআপ'**
+  String pickupsN(String n);
+
+  /// No description provided for @stopsMany.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n}টি পিকআপ + ১টি ডেলিভারি'**
+  String stopsMany(String n);
+
+  /// No description provided for @stepLoadedAt.
+  ///
+  /// In bn, this message translates to:
+  /// **'লোড হয়েছে · {time}'**
+  String stepLoadedAt(String time);
+
+  /// No description provided for @startWeighingStop.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিকআপ {n}: লোড ও ওজন শুরু করুন'**
+  String startWeighingStop(String n);
 }
 
 class _AppLocalizationsDelegate

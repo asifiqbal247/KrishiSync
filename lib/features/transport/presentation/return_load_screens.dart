@@ -34,8 +34,12 @@ import '../domain/delivery.dart';
 import 'transport_common.dart';
 import 'trip_screens.dart' show openDirections;
 
-const _pad = EdgeInsets.fromLTRB(AppSpacing.screen, AppSpacing.contentTop,
-    AppSpacing.screen, AppSpacing.lg);
+const _pad = EdgeInsets.fromLTRB(
+  AppSpacing.screen,
+  AppSpacing.contentTop,
+  AppSpacing.screen,
+  AppSpacing.lg,
+);
 const _heroH = 96.0;
 const _mapH = 120.0;
 
@@ -70,11 +74,17 @@ GeoPoint? districtCenter(BdLocations data, String? stored) {
 
 bool _near(UserLocation loc, String target, GeoPoint? centre) =>
     loc.district == target ||
-    (loc.geo != null && centre != null && kmBetween(loc.geo!, centre) <= _nearKm);
+    (loc.geo != null &&
+        centre != null &&
+        kmBetween(loc.geo!, centre) <= _nearKm);
 
 /// Open loads that fit the saved way back (174).
 List<Delivery> returnMatches(
-    List<Delivery> open, ReturnRoute r, BdLocations? data, String myUid) {
+  List<Delivery> open,
+  ReturnRoute r,
+  BdLocations? data,
+  String myUid,
+) {
   final a = data == null ? null : districtCenter(data, r.from);
   final b = data == null ? null : districtCenter(data, r.to);
   final day = DateTime(r.date.year, r.date.month, r.date.day);
@@ -93,10 +103,12 @@ List<Delivery> returnMatches(
 /// Suggested way back: from where the current trip ends (or home district)
 /// to the truck's base, today, with the truck's full capacity free.
 ReturnRoute defaultReturnRoute(AppUser me, List<Delivery> mine) {
-  final active = mine.where((d) =>
-      d.transporterId == me.uid &&
-      (d.status == DeliveryStatus.assigned ||
-          d.status == DeliveryStatus.pickedUp));
+  final active = mine.where(
+    (d) =>
+        d.transporterId == me.uid &&
+        (d.status == DeliveryStatus.assigned ||
+            d.status == DeliveryStatus.pickedUp),
+  );
   final from = active.isNotEmpty
       ? active.first.dropoff.district
       : me.location.district;
@@ -111,7 +123,11 @@ ReturnRoute defaultReturnRoute(AppUser me, List<Delivery> mine) {
 
 /// 175 Set Return Route (sheet, Figma 292:2701). Saves users/{uid}.returnRoute.
 Future<void> showReturnRouteSheet(
-    BuildContext context, WidgetRef ref, AppUser me, ReturnRoute start) async {
+  BuildContext context,
+  WidgetRef ref,
+  AppUser me,
+  ReturnRoute start,
+) async {
   final l = AppLocalizations.of(context);
   final lang = Localizations.localeOf(context).languageCode;
   final data = await ref.read(bdLocationsProvider.future);
@@ -120,23 +136,30 @@ Future<void> showReturnRouteSheet(
     ..sort((a, b) => a.name(lang).compareTo(b.name(lang)));
   final tons = start.spaceKg / 1000;
   final space = TextEditingController(
-      text: start.spaceKg <= 0
-          ? ''
-          : Fmt.number(context, tons,
-              decimals: tons == tons.roundToDouble() ? 0 : 1));
+    text: start.spaceKg <= 0
+        ? ''
+        : Fmt.number(
+            context,
+            tons,
+            decimals: tons == tons.roundToDouble() ? 0 : 1,
+          ),
+  );
   var from = start.from, to = start.to;
   final today = DateTime.now();
-  final days = [for (var i = 0; i < 3; i++) DateTime(today.year, today.month, today.day + i)];
+  final days = [
+    for (var i = 0; i < 3; i++)
+      DateTime(today.year, today.month, today.day + i),
+  ];
   var dayIdx = days.indexWhere((d) => DateUtils.isSameDay(d, start.date));
   if (dayIdx < 0) dayIdx = 0;
   String? err;
   var busy = false;
 
   String dayLabel(int i) => switch (i) {
-        0 => l.retToday,
-        1 => l.retTomorrow,
-        _ => weekLabels(l)[(days[i].weekday + 1) % 7],
-      };
+    0 => l.retToday,
+    1 => l.retTomorrow,
+    _ => weekLabels(l)[(days[i].weekday + 1) % 7],
+  };
 
   await showModalBottomSheet<void>(
     context: context,
@@ -144,10 +167,12 @@ Future<void> showReturnRouteSheet(
     builder: (ctx) => StatefulBuilder(
       builder: (ctx, set) {
         Future<String?> pick(String title) async {
-          final p = await showKsOptionsSheet<BdPlace>(ctx,
-              title: title,
-              searchHint: l.commonSearch,
-              options: [for (final d in districts) (d, d.name(lang))]);
+          final p = await showKsOptionsSheet<BdPlace>(
+            ctx,
+            title: title,
+            searchHint: l.commonSearch,
+            options: [for (final d in districts) (d, d.name(lang))],
+          );
           return p?.stored;
         }
 
@@ -159,13 +184,17 @@ Future<void> showReturnRouteSheet(
           }
           set(() => busy = true);
           try {
-            await ref.read(userRepositoryProvider).setReturnRoute(
-                me.uid,
-                ReturnRoute(
+            await ref
+                .read(userRepositoryProvider)
+                .setReturnRoute(
+                  me.uid,
+                  ReturnRoute(
                     from: from,
                     to: to,
                     date: days[dayIdx],
-                    spaceKg: tons * 1000));
+                    spaceKg: tons * 1000,
+                  ),
+                );
             if (ctx.mounted) Navigator.pop(ctx);
           } catch (_) {
             set(() => busy = false);
@@ -174,7 +203,9 @@ Future<void> showReturnRouteSheet(
         }
 
         return Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(ctx).viewInsets.bottom,
+          ),
           child: SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(AppSpacing.screen),
@@ -182,7 +213,10 @@ Future<void> showReturnRouteSheet(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(l.retSetRoute, style: AppTypography.headingBold20.normal),
+                  Text(
+                    l.retSetRoute,
+                    style: AppTypography.headingBold20.normal,
+                  ),
                   const SizedBox(height: AppSpacing.block),
                   KsSelectField(
                     label: l.retFrom,
@@ -190,8 +224,8 @@ Future<void> showReturnRouteSheet(
                     value: from.isEmpty
                         ? null
                         : (from == start.from
-                            ? l.retFromHere(BdPlace.display(from, lang))
-                            : BdPlace.display(from, lang)),
+                              ? l.retFromHere(BdPlace.display(from, lang))
+                              : BdPlace.display(from, lang)),
                     onTap: () async {
                       final p = await pick(l.retFrom);
                       if (p != null) set(() => from = p);
@@ -210,23 +244,28 @@ Future<void> showReturnRouteSheet(
                   const SizedBox(height: AppSpacing.block),
                   Text(l.retWhen, style: AppTypography.bodySmallStrong.normal),
                   const SizedBox(height: AppSpacing.sm),
-                  Wrap(spacing: AppSpacing.sm, children: [
-                    for (var i = 0; i < days.length; i++)
-                      KsPill(
+                  Wrap(
+                    spacing: AppSpacing.sm,
+                    children: [
+                      for (var i = 0; i < days.length; i++)
+                        KsPill(
                           label: dayLabel(i),
                           selected: dayIdx == i,
-                          onTap: () => set(() => dayIdx = i)),
-                  ]),
+                          onTap: () => set(() => dayIdx = i),
+                        ),
+                    ],
+                  ),
                   const SizedBox(height: AppSpacing.block),
                   KsTextField(
                     label: l.retSpace,
                     hint: Fmt.digits(context, '3'),
                     controller: space,
                     suffixText: l.tonUnit,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]'))
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
                     ],
                     errorText: err,
                   ),
@@ -289,7 +328,11 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
     final r = me.returnRoute;
     String place(String s) => BdPlace.display(s, lang);
     void edit() => showReturnRouteSheet(
-        context, ref, me, r ?? defaultReturnRoute(me, mine));
+      context,
+      ref,
+      me,
+      r ?? defaultReturnRoute(me, mine),
+    );
 
     final routeCard = KsListItem(
       highlighted: true,
@@ -297,8 +340,12 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
       title: r == null ? l.retSetRoute : l.retMyRoute,
       subtitle: r == null
           ? l.retNoRouteSub
-          : l.retRouteSub(place(r.from), place(r.to),
-              Fmt.date(context, r.date), tonsText(context, r.spaceKg)),
+          : l.retRouteSub(
+              place(r.from),
+              place(r.to),
+              Fmt.date(context, r.date),
+              tonsText(context, r.spaceKg),
+            ),
       trailingText: l.retChange,
       onTap: edit,
     );
@@ -314,7 +361,8 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
     final matches = returnMatches(open, r, data, me.uid);
     if (matches.isEmpty) return _none(context, me, r, open, mine, data, edit);
 
-    final chosen = matches.where((d) => d.id == _pick).firstOrNull ??
+    final chosen =
+        matches.where((d) => d.id == _pick).firstOrNull ??
         (matches.length == 1 ? matches.first : null);
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -324,8 +372,10 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
         children: [
           routeCard,
           const SizedBox(height: AppSpacing.block),
-          Text(l.retForYou(place(r.from), place(r.to)),
-              style: AppTypography.bodySmallStrong.normal),
+          Text(
+            l.retForYou(place(r.from), place(r.to)),
+            style: AppTypography.bodySmallStrong.normal,
+          ),
           const SizedBox(height: AppSpacing.block),
           KsRouteMap(
             height: _mapH,
@@ -341,21 +391,25 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
                 thumbSize: KsListItem.thumbSize.round(),
                 fallbackAsset: AppImages.truckRoad,
               ),
-              title: l.retLoadTitle(districtOf(context, d.pickup),
-                  districtOf(context, d.dropoff)),
+              title: l.retLoadTitle(
+                districtOf(context, d.pickup),
+                districtOf(context, d.dropoff),
+              ),
               subtitle: l.retLoadSub(
-                  d.cropName(lang),
-                  tonsText(context, d.weightKg),
-                  d.pickupDate == null
-                      ? l.notAvailable
-                      : Fmt.date(context, d.pickupDate!)),
+                d.cropName(lang),
+                tonsText(context, d.weightKg),
+                d.pickupDate == null
+                    ? l.notAvailable
+                    : Fmt.date(context, d.pickupDate!),
+              ),
               trailingText: Fmt.taka(context, fareOf(d)),
               highlighted: d.id == chosen?.id,
               onTap: () => setState(() => _pick = d.id),
             ),
           ],
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton(
             label: l.retAccept,
             loading: _busy,
@@ -367,20 +421,33 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
   }
 
   /// 176: nothing on this route yet.
-  Widget _none(BuildContext context, AppUser me, ReturnRoute r,
-      List<Delivery> open, List<Delivery> mine, BdLocations? data,
-      VoidCallback edit) {
+  Widget _none(
+    BuildContext context,
+    AppUser me,
+    ReturnRoute r,
+    List<Delivery> open,
+    List<Delivery> mine,
+    BdLocations? data,
+    VoidCallback edit,
+  ) {
     final l = AppLocalizations.of(context);
     final lang = Localizations.localeOf(context).languageCode;
     String place(String s) => BdPlace.display(s, lang);
 
     // Last paid trip (the fare is released on delivery).
-    final paid = mine
-        .where((d) =>
-            d.transporterId == me.uid && d.status == DeliveryStatus.delivered)
-        .toList()
-      ..sort((a, b) => (b.timeline['delivered'] ?? DateTime(0))
-          .compareTo(a.timeline['delivered'] ?? DateTime(0)));
+    final paid =
+        mine
+            .where(
+              (d) =>
+                  d.transporterId == me.uid &&
+                  d.status == DeliveryStatus.delivered,
+            )
+            .toList()
+          ..sort(
+            (a, b) => (b.timeline['delivered'] ?? DateTime(0)).compareTo(
+              a.timeline['delivered'] ?? DateTime(0),
+            ),
+          );
 
     // Other places loads from here are going to.
     final a = data == null ? null : districtCenter(data, r.from);
@@ -392,9 +459,12 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
           d.dropoff.district!,
     }.take(_maxOtherDest).toList();
 
-    Future<void> setTo(String to) => ref.read(userRepositoryProvider).setReturnRoute(
-        me.uid,
-        ReturnRoute(from: r.from, to: to, date: r.date, spaceKg: r.spaceKg));
+    Future<void> setTo(String to) => ref
+        .read(userRepositoryProvider)
+        .setReturnRoute(
+          me.uid,
+          ReturnRoute(from: r.from, to: to, date: r.date, spaceKg: r.spaceKg),
+        );
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -404,42 +474,61 @@ class _ReturnLoadsState extends ConsumerState<ReturnLoadsScreen> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.xl),
-            child: Image.asset(AppImages.stateEmpty,
-                height: _heroH, width: double.infinity, fit: BoxFit.cover),
+            child: Image.asset(
+              AppImages.stateEmpty,
+              height: _heroH,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.retNoneTitle,
-              textAlign: TextAlign.center,
-              style: AppTypography.headingBold22.normal),
+          Text(
+            l.retNoneTitle,
+            textAlign: TextAlign.center,
+            style: AppTypography.headingBold22.normal,
+          ),
           const SizedBox(height: AppSpacing.sm),
-          Text(l.retNoneSub(place(r.from), place(r.to)),
-              textAlign: TextAlign.center,
-              style: AppTypography.bodySmall.normal
-                  .withColor(AppColors.textSecondary)),
+          Text(
+            l.retNoneSub(place(r.from), place(r.to)),
+            textAlign: TextAlign.center,
+            style: AppTypography.bodySmall.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           if (paid.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.block),
             KsNoteBox(
               warning: true,
               title: l.retPaidTitle,
               body: l.retPaidBody(
-                  paid.first.orderNo, Fmt.taka(context, fareOf(paid.first))),
+                paid.first.orderNo,
+                Fmt.taka(context, fareOf(paid.first)),
+              ),
             ),
           ],
           const SizedBox(height: AppSpacing.block),
           Text(l.retOtherDest, style: AppTypography.bodySmallStrong.normal),
           const SizedBox(height: AppSpacing.sm),
-          Wrap(spacing: AppSpacing.sm, runSpacing: AppSpacing.sm, children: [
-            KsPill(label: place(r.to), selected: true),
-            for (final o in others)
-              KsPill(label: place(o), selected: false, onTap: () => setTo(o)),
-            KsPill(label: l.retOther, selected: false, onTap: edit),
-          ]),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              KsPill(label: place(r.to), selected: true),
+              for (final o in others)
+                KsPill(label: place(o), selected: false, onTap: () => setTo(o)),
+              KsPill(label: l.retOther, selected: false, onTap: edit),
+            ],
+          ),
           const SizedBox(height: AppSpacing.sm),
-          Text(l.retAlertOn,
-              style: AppTypography.caption.normal
-                  .withColor(AppColors.textSecondary)),
+          Text(
+            l.retAlertOn,
+            style: AppTypography.caption.normal.withColor(
+              AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton(
             label: l.retSearchAgain,
             onPressed: () => ref.invalidate(openLoadsProvider),
@@ -483,8 +572,8 @@ class ReturnDoneScreen extends ConsumerWidget {
     final when = p == null
         ? l.notAvailable
         : (p.hour == 0 && p.minute == 0)
-            ? Fmt.date(context, p)
-            : Fmt.digits(context, DateFormat('d MMM, H:mm', lang).format(p));
+        ? Fmt.date(context, p)
+        : Fmt.digits(context, DateFormat('d MMM, H:mm', lang).format(p));
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -494,39 +583,58 @@ class ReturnDoneScreen extends ConsumerWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(AppRadius.xl),
-            child: Image.asset(AppImages.handshake,
-                height: _heroH, width: double.infinity, fit: BoxFit.cover),
+            child: Image.asset(
+              AppImages.handshake,
+              height: _heroH,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(height: AppSpacing.block),
-          Text(l.retDoneTitle,
-              textAlign: TextAlign.center,
-              style: AppTypography.headingBold22.normal),
+          Text(
+            l.retDoneTitle,
+            textAlign: TextAlign.center,
+            style: AppTypography.headingBold22.normal,
+          ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(
+          KsInfoBox(
+            children: [
+              KsInfoRow(
                 l.rowRoute,
-                l.retLoadTitle(districtOf(context, d.pickup),
-                    districtOf(context, d.dropoff)),
-                boldValue: true),
-            KsInfoRow(
+                l.retLoadTitle(
+                  districtOf(context, d.pickup),
+                  districtOf(context, d.dropoff),
+                ),
+                boldValue: true,
+              ),
+              KsInfoRow(
                 l.rowGoods,
                 l.nameDot(d.cropName(lang), tonsText(context, d.weightKg)),
-                boldValue: true),
-            KsInfoRow(
+                boldValue: true,
+              ),
+              KsInfoRow(
                 l.fieldPickup,
                 km == null
                     ? when
                     : l.retPickupLine(when, Fmt.digits(context, '$km')),
-                boldValue: true),
-            KsInfoRow(l.rowFare, Fmt.taka(context, fareOf(d)), boldValue: true),
-          ]),
+                boldValue: true,
+              ),
+              KsInfoRow(
+                l.rowFare,
+                Fmt.taka(context, fareOf(d)),
+                boldValue: true,
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
           KsNoteBox(
-              warning: true,
-              title: l.retPaySafeTitle,
-              body: l.retPaySafeBody),
+            warning: true,
+            title: l.retPaySafeTitle,
+            body: l.retPaySafeBody,
+          ),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton(label: l.retNavigate, onPressed: () => openDirections(d)),
           const SizedBox(height: AppSpacing.md),
           KsButton.outline(

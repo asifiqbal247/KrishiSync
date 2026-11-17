@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/l10n/locale_controller.dart';
+import '../features/transport/presentation/shared_truck_screens.dart';
 import '../features/farmer/data/trade_doc_repository.dart';
 import '../features/farmer/presentation/trade_doc_screen.dart';
 import '../features/admin/presentation/admin_screens.dart';
@@ -176,6 +177,9 @@ abstract final class Routes {
   // Transporter
   static const trLoads = '/transporter/loads';
   static const trReturnLoads = '/transporter/return';
+  // 161 / 150: loads for the free space on the running trip.
+  static const trShared = '/transporter/shared';
+  static String trSharedLoad(String id) => '/transporter/shared/$id';
   static String trReturnDone(String id) => '/transporter/return/$id';
   static String trLoad(String id) => '/transporter/load/$id';
   static String trFareOffer(String id) => '/transporter/load/$id/offer';
@@ -204,12 +208,12 @@ abstract final class Routes {
   static const adminCrops = '/admin/crops';
 
   static String homeFor(UserRole role) => switch (role) {
-        UserRole.farmer => farmerHome,
-        UserRole.buyer => buyerHome,
-        UserRole.transporter => transporterHome,
-        UserRole.moderator => moderatorHome,
-        UserRole.admin => adminHome,
-      };
+    UserRole.farmer => farmerHome,
+    UserRole.buyer => buyerHome,
+    UserRole.transporter => transporterHome,
+    UserRole.moderator => moderatorHome,
+    UserRole.admin => adminHome,
+  };
 
   static const _preAuth = {splash, language, onboarding, login, otp};
   static bool isPreAuth(String loc) => _preAuth.contains(loc);
@@ -217,7 +221,8 @@ abstract final class Routes {
 
 /// Splash stays visible at least this long (Figma 01).
 final splashMinElapsedProvider = FutureProvider<void>(
-    (_) => Future<void>.delayed(const Duration(milliseconds: 1500)));
+  (_) => Future<void>.delayed(const Duration(milliseconds: 1500)),
+);
 
 /// Re-runs go_router redirects whenever auth / profile / prefs change.
 class _RouterRefresh extends ChangeNotifier {
@@ -323,7 +328,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.splash, builder: (_, _) => const SplashScreen()),
       GoRoute(path: Routes.language, builder: (_, _) => const LanguageScreen()),
       GoRoute(
-          path: Routes.onboarding, builder: (_, _) => const OnboardingScreen()),
+        path: Routes.onboarding,
+        builder: (_, _) => const OnboardingScreen(),
+      ),
       GoRoute(path: Routes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(path: Routes.otp, builder: (_, _) => const OtpScreen()),
       GoRoute(path: Routes.terms, builder: (_, _) => const TermsScreen()),
@@ -338,13 +345,15 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
+      GoRoute(path: Routes.payments, builder: (_, _) => const PaymentsScreen()),
       GoRoute(
-          path: Routes.payments, builder: (_, _) => const PaymentsScreen()),
+        path: Routes.postDemand,
+        builder: (_, _) => const PostDemandScreen(),
+      ),
       GoRoute(
-          path: Routes.postDemand,
-          builder: (_, _) => const PostDemandScreen()),
-      GoRoute(
-          path: Routes.myDemands, builder: (_, _) => const MyDemandsScreen()),
+        path: Routes.myDemands,
+        builder: (_, _) => const MyDemandsScreen(),
+      ),
       GoRoute(
         path: '/demand/:id/match',
         builder: (_, s) => MatchingScreen(demandId: s.pathParameters['id']!),
@@ -394,7 +403,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const PaymentMethodsScreen(),
         routes: [
           GoRoute(
-              path: 'add', builder: (_, _) => const AddPaymentMethodScreen()),
+            path: 'add',
+            builder: (_, _) => const AddPaymentMethodScreen(),
+          ),
           GoRoute(path: 'bank', builder: (_, _) => const AddBankScreen()),
           GoRoute(
             path: 'wallet/:type',
@@ -419,53 +430,60 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const InspectorHomeScreen(),
         routes: [
           GoRoute(
-              path: 'check/:id',
-              builder: (_, s) =>
-                  QualityCheckScreen(orderId: s.pathParameters['id']!)),
+            path: 'check/:id',
+            builder: (_, s) =>
+                QualityCheckScreen(orderId: s.pathParameters['id']!),
+          ),
           GoRoute(
-              path: 'sent/:id',
-              builder: (_, s) =>
-                  ReportSentScreen(orderId: s.pathParameters['id']!)),
+            path: 'sent/:id',
+            builder: (_, s) =>
+                ReportSentScreen(orderId: s.pathParameters['id']!),
+          ),
         ],
       ),
       GoRoute(
-          path: '/inspection/:id',
-          builder: (_, s) => LoadReportScreen(orderId: s.pathParameters['id']!)),
+        path: '/inspection/:id',
+        builder: (_, s) => LoadReportScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(
-          path: Routes.opportunities,
-          builder: (_, _) => const OpportunityFeedScreen()),
+        path: Routes.opportunities,
+        builder: (_, _) => const OpportunityFeedScreen(),
+      ),
+      GoRoute(path: Routes.planning, builder: (_, _) => const PlanningScreen()),
       GoRoute(
-          path: Routes.planning, builder: (_, _) => const PlanningScreen()),
+        path: '/rescue/:id',
+        builder: (_, s) =>
+            SurplusRescueScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(
-          path: '/rescue/:id',
-          builder: (_, s) =>
-              SurplusRescueScreen(orderId: s.pathParameters['id']!)),
+        path: '/trace/:id',
+        builder: (_, s) => TraceScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(
-          path: '/trace/:id',
-          builder: (_, s) => TraceScreen(orderId: s.pathParameters['id']!)),
+        path: '/load/:id',
+        builder: (_, s) => FarmerLoadScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(
-          path: '/load/:id',
-          builder: (_, s) => FarmerLoadScreen(orderId: s.pathParameters['id']!)),
+        path: '/weight/:id',
+        builder: (_, s) => WeightLessScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(
-          path: '/weight/:id',
-          builder: (_, s) => WeightLessScreen(orderId: s.pathParameters['id']!)),
+        path: '/extra/:id',
+        builder: (_, s) => ExtraWeightScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(
-          path: '/extra/:id',
-          builder: (_, s) =>
-              ExtraWeightScreen(orderId: s.pathParameters['id']!)),
+        path: '/refund/:id',
+        builder: (_, s) => RefundScreen(orderId: s.pathParameters['id']!),
+      ),
       GoRoute(
-          path: '/refund/:id',
-          builder: (_, s) => RefundScreen(orderId: s.pathParameters['id']!)),
-      GoRoute(
-          path: '/track/:id',
-          builder: (_, s) =>
-              TrackingScreen(deliveryId: s.pathParameters['id']!)),
+        path: '/track/:id',
+        builder: (_, s) => TrackingScreen(deliveryId: s.pathParameters['id']!),
+      ),
       GoRoute(
         path: Routes.contracts,
         builder: (_, _) => const ContractsScreen(),
         routes: [
-          GoRoute(
-              path: 'new', builder: (_, _) => const NewContractScreen()),
+          GoRoute(path: 'new', builder: (_, _) => const NewContractScreen()),
           GoRoute(
             path: ':id',
             builder: (_, s) =>
@@ -485,12 +503,15 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const TransactionHistoryScreen(),
         routes: [
           GoRoute(
-              path: 'statement', builder: (_, _) => const StatementScreen()),
+            path: 'statement',
+            builder: (_, _) => const StatementScreen(),
+          ),
         ],
       ),
       GoRoute(
-          path: Routes.shareRecord,
-          builder: (_, _) => const ShareRecordScreen()),
+        path: Routes.shareRecord,
+        builder: (_, _) => const ShareRecordScreen(),
+      ),
       GoRoute(
         path: Routes.help,
         builder: (_, _) => const HelpScreen(),
@@ -503,15 +524,18 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(
-          path: Routes.editProfile,
-          builder: (_, _) => const ProfileSetupScreen(editing: true)),
+        path: Routes.editProfile,
+        builder: (_, _) => const ProfileSetupScreen(editing: true),
+      ),
       GoRoute(
-          path: Routes.verification,
-          builder: (_, _) => const VerificationScreen()),
+        path: Routes.verification,
+        builder: (_, _) => const VerificationScreen(),
+      ),
       GoRoute(
         path: Routes.ratings,
         builder: (_, s) => RatingsScreen(
-            withVerification: s.uri.queryParameters['verify'] == '1'),
+          withVerification: s.uri.queryParameters['verify'] == '1',
+        ),
       ),
       GoRoute(
         path: '/receipt/:id',
@@ -519,11 +543,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Routes.role, builder: (_, _) => const RoleScreen()),
       GoRoute(
-          path: Routes.profileSetup,
-          builder: (_, _) => const ProfileSetupScreen()),
+        path: Routes.profileSetup,
+        builder: (_, _) => const ProfileSetupScreen(),
+      ),
       GoRoute(
-          path: Routes.locationPicker,
-          builder: (_, _) => const LocationPickerScreen()),
+        path: Routes.locationPicker,
+        builder: (_, _) => const LocationPickerScreen(),
+      ),
       GoRoute(
         path: Routes.farmerHome,
         builder: (_, _) => const FarmerShell(),
@@ -559,8 +585,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, s) => OrderDetailsScreen(orderId: s.pathParameters['id']!),
       ),
       GoRoute(
-          path: '/search',
-          builder: (_, s) => SearchScreen(initialQuery: s.extra as String?)),
+        path: '/search',
+        builder: (_, s) => SearchScreen(initialQuery: s.extra as String?),
+      ),
       GoRoute(
         path: '/listing/:id',
         builder: (_, s) =>
@@ -638,11 +665,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (_, s) =>
                 ListingReviewScreen(listingId: s.pathParameters['id']!),
           ),
+          GoRoute(path: 'queue', builder: (_, _) => const ListingsQueuePage()),
           GoRoute(
-              path: 'queue', builder: (_, _) => const ListingsQueuePage()),
-          GoRoute(
-              path: 'reports',
-              builder: (_, _) => const ReportsQueue(showBack: true)),
+            path: 'reports',
+            builder: (_, _) => const ReportsQueue(showBack: true),
+          ),
           GoRoute(
             path: 'report/:id',
             builder: (_, s) =>
@@ -669,8 +696,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'user/:uid',
             builder: (_, s) => UserDetailScreen(uid: s.pathParameters['uid']!),
           ),
-          GoRoute(
-              path: 'crops', builder: (_, _) => const CropCatalogScreen()),
+          GoRoute(path: 'crops', builder: (_, _) => const CropCatalogScreen()),
         ],
       ),
       GoRoute(
@@ -679,8 +705,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: 'pay',
-            builder: (_, s) =>
-                SafePaymentScreen(draft: s.extra! as OrderDraft),
+            builder: (_, s) => SafePaymentScreen(draft: s.extra! as OrderDraft),
           ),
           GoRoute(
             path: 'order/:listingId',
@@ -690,8 +715,9 @@ final routerProvider = Provider<GoRouter>((ref) {
             ),
           ),
           GoRoute(
-              path: 'transport',
-              builder: (_, _) => const BuyerTransportScreen()),
+            path: 'transport',
+            builder: (_, _) => const BuyerTransportScreen(),
+          ),
           GoRoute(
             path: 'book/:id',
             builder: (_, s) =>
@@ -724,6 +750,17 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const TransporterShell(),
         routes: [
           GoRoute(
+            path: 'shared',
+            builder: (_, _) => const SharedTruckScreen(),
+            routes: [
+              GoRoute(
+                path: ':id',
+                builder: (_, s) =>
+                    SharedLoadScreen(deliveryId: s.pathParameters['id']!),
+              ),
+            ],
+          ),
+          GoRoute(
             path: 'return',
             builder: (_, _) => const ReturnLoadsScreen(),
             routes: [
@@ -736,8 +773,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: 'loads',
-            builder: (_, s) => LoadsScreen(
-                returnOnly: s.uri.queryParameters['return'] == '1'),
+            builder: (_, s) =>
+                LoadsScreen(returnOnly: s.uri.queryParameters['return'] == '1'),
           ),
           GoRoute(
             path: 'load/:id',

@@ -5880,4 +5880,96 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get nDocRejectedBody => 'পরিষ্কার ছবি দিয়ে নতুন করে আপলোড করুন';
+
+  @override
+  String get sharedTitle => 'খালি জায়গায় লোড';
+
+  @override
+  String get sharedNoTripTitle => 'এখন কোনো চলমান ট্রিপ নেই';
+
+  @override
+  String get sharedNoTripBody =>
+      'কাজ নিলে ট্রাকের খালি জায়গায় রুটের লোড এখানে দেখাবে।';
+
+  @override
+  String sharedTruckSub(String cap, String now, String no) {
+    return '$cap ট্রাক · বর্তমান $now ($no)';
+  }
+
+  @override
+  String get truckFull => 'ট্রাক ভর্তি';
+
+  @override
+  String ofTons(String a, String b) {
+    return '$a / $b';
+  }
+
+  @override
+  String loadsOnRoute(String route) {
+    return 'আপনার রুটে লোড ($route)';
+  }
+
+  @override
+  String get sharedNone => 'এখন রুটে খালি জায়গায় মানানসই লোড নেই।';
+
+  @override
+  String cropDashQty(String crop, String qty) {
+    return '$crop – $qty';
+  }
+
+  @override
+  String get sharedRuleTitle => 'আলাদা কাজ, আলাদা ভাড়া';
+
+  @override
+  String get sharedRuleBody =>
+      'এই লোড আলাদা নিরাপদ লেনদেনে। এর ক্রেতার কাছে পৌঁছালেই এর ভাড়া পাবেন।';
+
+  @override
+  String get addLoad => 'লোড যোগ করুন';
+
+  @override
+  String get addThisLoad => 'এই লোড যোগ করুন';
+
+  @override
+  String sharedFits(String t) {
+    return 'আপনার ট্রাকে $t খালি আছে, এই লোড মানানসই।';
+  }
+
+  @override
+  String get onRoute => 'রুটেই';
+
+  @override
+  String detourKm(String km) {
+    return '$km কিমি ঘুরতে হবে';
+  }
+
+  @override
+  String loadSubStops(String crop, String qty, String n) {
+    return '$crop · $qty · $nটি পিকআপ';
+  }
+
+  @override
+  String pickupsLine(String n, String places) {
+    return '$nটি পিকআপ · $places';
+  }
+
+  @override
+  String pickupsN(String n) {
+    return '$nটি পিকআপ';
+  }
+
+  @override
+  String stopsMany(String n) {
+    return '$nটি পিকআপ + ১টি ডেলিভারি';
+  }
+
+  @override
+  String stepLoadedAt(String time) {
+    return 'লোড হয়েছে · $time';
+  }
+
+  @override
+  String startWeighingStop(String n) {
+    return 'পিকআপ $n: লোড ও ওজন শুরু করুন';
+  }
 }

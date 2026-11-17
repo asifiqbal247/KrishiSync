@@ -25,8 +25,11 @@ import 'transport_common.dart';
 /// Truck (79) with [pick] — "choose this transporter" returns true — or
 /// from the assigned-truck card (view only).
 class TransporterProfileScreen extends ConsumerWidget {
-  const TransporterProfileScreen(
-      {super.key, required this.uid, this.pick = false});
+  const TransporterProfileScreen({
+    super.key,
+    required this.uid,
+    this.pick = false,
+  });
   final String uid;
   final bool pick;
 
@@ -46,23 +49,33 @@ class TransporterProfileScreen extends ConsumerWidget {
     // "5%", or "0.5%" when it has a fraction.
     String pct(num? v) => v == null
         ? l.notAvailable
-        : l.pctText(Fmt.digits(context,
-            v == v.roundToDouble() ? '${v.round()}' : v.toStringAsFixed(1)));
+        : l.pctText(
+            Fmt.digits(
+              context,
+              v == v.roundToDouble() ? '${v.round()}' : v.toStringAsFixed(1),
+            ),
+          );
     final v = u.vehicle;
     final since = u.createdAt == null
         ? null
-        : l.tpSince(Fmt.digits(
-            context, DateFormat.yMMM(lang).format(u.createdAt!)));
+        : l.tpSince(
+            Fmt.digits(context, DateFormat.yMMM(lang).format(u.createdAt!)),
+          );
 
-    Widget stat(String label, String value) =>
-        Expanded(child: KsStatCard(label: label, value: value));
+    Widget stat(String label, String value) => Expanded(
+      child: KsStatCard(label: label, value: value),
+    );
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.tpProfileTitle),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.lg,
+        ),
         children: [
           KsListItem(
             thumb: KsNetImage(
@@ -81,43 +94,56 @@ class TransporterProfileScreen extends ConsumerWidget {
             showChevron: false,
           ),
           const SizedBox(height: AppSpacing.block),
-          Row(children: [
-            stat(l.tpTrips, l.countTi(Fmt.digits(context, '${s.done}'))),
-            const SizedBox(width: AppSpacing.md),
-            stat(l.tpOnTime, pct(s.onTimePct)),
-          ]),
+          Row(
+            children: [
+              stat(l.tpTrips, l.countTi(Fmt.digits(context, '${s.done}'))),
+              const SizedBox(width: AppSpacing.md),
+              stat(l.tpOnTime, pct(s.onTimePct)),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          Row(children: [
-            stat(l.tpCancelRate, pct(s.cancelPct)),
-            const SizedBox(width: AppSpacing.md),
-            stat(l.tpDamage, pct(s.complaintPct)),
-          ]),
+          Row(
+            children: [
+              stat(l.tpCancelRate, pct(s.cancelPct)),
+              const SizedBox(width: AppSpacing.md),
+              stat(l.tpDamage, pct(s.complaintPct)),
+            ],
+          ),
           const SizedBox(height: AppSpacing.block),
-          KsInfoBox(children: [
-            KsInfoRow(
-              l.rowTruck,
-              v == null
-                  ? l.notAvailable
-                  : l.tpTruckLine(
-                      vehicleTypeLabel(l, v.type),
-                      tonsText(context, v.capacityKg),
-                      u.isVerified ? l.verifiedBadge : l.notVerified),
-              boldValue: true,
-            ),
-            KsInfoRow(l.tpFitness, u.isVerified ? l.tpValid : l.notVerified,
-                boldValue: true),
-            KsInfoRow(
-              l.tpMainRoute,
-              s.topFrom == null
-                  ? l.notAvailable
-                  : l.tpRoute(BdPlace.display(s.topFrom, lang),
-                      BdPlace.display(s.topTo, lang)),
-              boldValue: true,
-            ),
-          ]),
+          KsInfoBox(
+            children: [
+              KsInfoRow(
+                l.rowTruck,
+                v == null
+                    ? l.notAvailable
+                    : l.tpTruckLine(
+                        vehicleTypeLabel(l, v.type),
+                        tonsText(context, v.capacityKg),
+                        u.isVerified ? l.verifiedBadge : l.notVerified,
+                      ),
+                boldValue: true,
+              ),
+              KsInfoRow(
+                l.tpFitness,
+                u.isVerified ? l.tpValid : l.notVerified,
+                boldValue: true,
+              ),
+              KsInfoRow(
+                l.tpMainRoute,
+                s.topFrom == null
+                    ? l.notAvailable
+                    : l.tpRoute(
+                        BdPlace.display(s.topFrom, lang),
+                        BdPlace.display(s.topTo, lang),
+                      ),
+                boldValue: true,
+              ),
+            ],
+          ),
           if (pick) ...[
             const SizedBox(
-                height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+            ),
             KsButton(label: l.tpChoose, onPressed: () => context.pop(true)),
           ],
         ],

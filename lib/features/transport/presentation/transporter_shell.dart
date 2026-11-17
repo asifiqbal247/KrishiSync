@@ -27,9 +27,9 @@ class TransporterTabController extends Notifier<int> {
   void go(int i) => state = i;
 }
 
-final transporterTabProvider =
-    NotifierProvider<TransporterTabController, int>(
-        TransporterTabController.new);
+final transporterTabProvider = NotifierProvider<TransporterTabController, int>(
+  TransporterTabController.new,
+);
 
 /// Transporter area with HF/Bottom Nav / Transporter (Load FAB) (292:263):
 /// হোম · ট্রিপ · (লোড) · আয় · প্রোফাইল.
@@ -69,15 +69,25 @@ class TransporterShell extends ConsumerWidget {
         index: index,
         onTap: (i) => ref.read(transporterTabProvider.notifier).go(i),
         fabLabel: l.navLoad,
-        fabIcon: SvgPicture.asset(AppIcons.loadBox,
-            width: _fabIcon, height: _fabIcon),
+        fabIcon: SvgPicture.asset(
+          AppIcons.loadBox,
+          width: _fabIcon,
+          height: _fabIcon,
+        ),
         onFab: () => context.push(Routes.trLoads),
         items: [
           KsNavItem.images(l.navHome, AppUi.navOnHome, AppUi.navOffHome),
           KsNavItem.images(l.navTrip, AppUi.navOnTruck, AppUi.navOffTruck),
-          KsNavItem.images(l.navEarnings, AppUi.navOnWallet, AppUi.navOffWallet),
           KsNavItem.images(
-              l.navProfile, AppUi.navOnProfile, AppUi.navOffProfile),
+            l.navEarnings,
+            AppUi.navOnWallet,
+            AppUi.navOffWallet,
+          ),
+          KsNavItem.images(
+            l.navProfile,
+            AppUi.navOnProfile,
+            AppUi.navOffProfile,
+          ),
         ],
       ),
     );

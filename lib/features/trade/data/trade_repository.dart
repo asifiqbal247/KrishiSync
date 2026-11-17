@@ -283,9 +283,14 @@ class TradeRepository {
       link: 'order:${orderRef.id}',
     );
     final placed = TradeOrder.fromDoc(await orderRef.get());
-    if (mode == TransportMode.platform) await alertReturnDrivers(placed, buyer.uid);
+    if (mode == TransportMode.platform) {
+      await alertReturnDrivers(placed, buyer.uid);
+    }
     return placed;
   }
+
+  /// 4-digit delivery code the buyer gives the driver.
+  static String newOtp() => (1000 + Random.secure().nextInt(9000)).toString();
 
   /// Order doc + (platform truck) delivery "load" and the buyer-only OTP.
   /// Shared by listing orders (78) and demand orders (99).
@@ -302,6 +307,8 @@ class TradeRepository {
     required UserLocation dropoff,
     required String paymentRef,
     String? offerId,
+    String? poNo,
+    String? otp,
   }) {
     final cropTotal = quantityKg * pricePerKg;
     final fee = (cropTotal * platformFeePct / 100).round();
@@ -311,6 +318,7 @@ class TradeRepository {
       'listingId': src.listingId,
       'demandId': src.demandId,
       if (src.contractId != null) 'contractId': src.contractId,
+      'poNo': ?poNo,
       'offerId': offerId,
       'farmerId': src.farmerId,
       'farmerName': src.farmerName,
@@ -357,13 +365,13 @@ class TradeRepository {
       'pickupDate': Timestamp.fromDate(src.pickupDate),
       'suggestedFare': transportFare,
       'distanceKm': distanceKm(src.pickup.geo, dropoff.geo),
+      'poNo': ?poNo,
       'status': 'open',
       'createdAt': now,
       'updatedAt': now,
     });
-    tx.set(dRef.collection('private').doc('otp'), {
-      'code': (1000 + Random.secure().nextInt(9000)).toString(),
-    });
+    // One code for every farm of a purchase order: the buyer gives it once.
+    tx.set(dRef.collection('private').doc('otp'), {'code': otp ?? newOtp()});
   }
 
   /// Demand order (99): no listing stock; platform truck to the buyer's
@@ -376,6 +384,8 @@ class TradeRepository {
     required UserLocation dropoff,
     required String paymentRef,
     String notifyType = 'commit_accepted',
+    String? poNo,
+    String? otp,
   }) async {
     final counterRef = _db.collection('counters').doc('orders');
     final orderRef = _orders.doc();
@@ -396,6 +406,8 @@ class TradeRepository {
         transportFare: fare,
         dropoff: dropoff,
         paymentRef: paymentRef,
+        poNo: poNo,
+        otp: otp,
       );
       return 'KS-$next';
     });
@@ -466,8 +478,11 @@ class TradeRepository {
   /// Refund is recorded only (payment is a placeholder).
   /// [keepFare]: the buyer's inspector cancelled at the farm (91) — the
   /// truck already came, so its whole fare is kept.
-  Future<void> cancelOrder(TradeOrder o, String byUid,
-      {bool keepFare = false}) async {
+  Future<void> cancelOrder(
+    TradeOrder o,
+    String byUid, {
+    bool keepFare = false,
+  }) async {
     final fee = keepFare ? o.transportFare : cancelFee(o);
     final listingRef = o.listingId.isEmpty
         ? null

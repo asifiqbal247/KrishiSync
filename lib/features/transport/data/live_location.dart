@@ -24,8 +24,11 @@ class LiveLocationRepository {
   LiveLocationRepository(this._db);
   final FirebaseFirestore _db;
 
-  DocumentReference<Map<String, dynamic>> _pos(String deliveryId) =>
-      _db.collection('deliveries').doc(deliveryId).collection('live').doc('pos');
+  DocumentReference<Map<String, dynamic>> _pos(String deliveryId) => _db
+      .collection('deliveries')
+      .doc(deliveryId)
+      .collection('live')
+      .doc('pos');
 
   Stream<LivePos?> watch(String deliveryId) =>
       _pos(deliveryId).snapshots().map((d) {
@@ -35,21 +38,26 @@ class LiveLocationRepository {
       });
 
   Future<void> push(String deliveryId, double lat, double lng) =>
-      _pos(deliveryId).set({
-        'geo': GeoPoint(lat, lng),
-        'at': FieldValue.serverTimestamp(),
-      });
+      _pos(deliveryId)
+          .set({'geo': GeoPoint(lat, lng), 'at': FieldValue.serverTimestamp()});
 }
 
 final liveLocationRepositoryProvider = Provider<LiveLocationRepository>(
-    (ref) => LiveLocationRepository(ref.watch(firestoreProvider)));
+  (ref) => LiveLocationRepository(ref.watch(firestoreProvider)),
+);
 
 final livePosProvider = StreamProvider.family<LivePos?, String>(
-    (ref, id) => ref.watch(liveLocationRepositoryProvider).watch(id));
+  (ref, id) => ref.watch(liveLocationRepositoryProvider).watch(id),
+);
 
 /// Straight-line distance in km.
 double kmBetween(GeoPoint a, GeoPoint b) =>
-    Geolocator.distanceBetween(a.latitude, a.longitude, b.latitude, b.longitude) /
+    Geolocator.distanceBetween(
+      a.latitude,
+      a.longitude,
+      b.latitude,
+      b.longitude,
+    ) /
     1000;
 
 /// Share of the trip still left (0..1), from the truck's position:
@@ -75,8 +83,9 @@ class LocationAsk extends Notifier<bool> {
   void done() => state = false;
 }
 
-final locationAskProvider =
-    NotifierProvider<LocationAsk, bool>(LocationAsk.new);
+final locationAskProvider = NotifierProvider<LocationAsk, bool>(
+  LocationAsk.new,
+);
 
 /// Runs for a signed-in transporter: while any of their trips is assigned
 /// or on the way and the app is open, the phone's position is sent to
@@ -149,7 +158,8 @@ final liveTrackerProvider = Provider<void>((ref) {
       // A cached fix only if it is fresh; an old one would show the truck
       // where the phone was hours ago.
       final first = await Geolocator.getLastKnownPosition(
-          forceAndroidLocationManager: true);
+        forceAndroidLocationManager: true,
+      );
       if (first != null &&
           DateTime.now().difference(first.timestamp) < _freshFix) {
         send(first);

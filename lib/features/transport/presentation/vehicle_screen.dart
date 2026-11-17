@@ -62,16 +62,21 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
     if (v == null) return;
     _type = v.type;
     _plate.text = v.plateNo;
-    _cap.text = Fmt.number(context, v.capacityKg / 1000,
-        decimals: v.capacityKg % 1000 == 0 ? 0 : 1);
+    _cap.text = Fmt.number(
+      context,
+      v.capacityKg / 1000,
+      decimals: v.capacityKg % 1000 == 0 ? 0 : 1,
+    );
     _routeTo = v.routeTo;
   }
 
   Future<void> _pickType() async {
     final l = AppLocalizations.of(context);
-    final t = await showKsOptionsSheet<String>(context,
-        title: l.vehicleType,
-        options: [for (final k in VehicleTypes.all) (k, vehicleTypeLabel(l, k))]);
+    final t = await showKsOptionsSheet<String>(
+      context,
+      title: l.vehicleType,
+      options: [for (final k in VehicleTypes.all) (k, vehicleTypeLabel(l, k))],
+    );
     if (t != null) setState(() => _type = t);
   }
 
@@ -86,13 +91,14 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
     final l = AppLocalizations.of(context);
     final data = await ref.read(bdLocationsProvider.future);
     if (!mounted) return;
-    final districts = [
-      for (final dv in data.divisions) ...dv.children,
-    ]..sort((a, b) => a.name(lang).compareTo(b.name(lang)));
-    final picked = await showKsOptionsSheet<BdPlace>(context,
-        title: l.preferredRoute,
-        searchHint: l.commonSearch,
-        options: [for (final d in districts) (d, d.name(lang))]);
+    final districts = [for (final dv in data.divisions) ...dv.children]
+      ..sort((a, b) => a.name(lang).compareTo(b.name(lang)));
+    final picked = await showKsOptionsSheet<BdPlace>(
+      context,
+      title: l.preferredRoute,
+      searchHint: l.commonSearch,
+      options: [for (final d in districts) (d, d.name(lang))],
+    );
     if (picked != null) setState(() => _routeTo = picked.stored);
   }
 
@@ -109,12 +115,16 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
     try {
       var photoUrl = me.vehicle?.photoUrl;
       if (_photo != null) {
-        photoUrl = (await ref.read(imageStorageProvider).upload(_photo!,
-                kind: ImageKind.profile, ownerUid: me.uid))
-            .url;
+        photoUrl =
+            (await ref
+                    .read(imageStorageProvider)
+                    .upload(_photo!, kind: ImageKind.profile, ownerUid: me.uid))
+                .url;
       }
       final first = me.vehicle == null;
-      await ref.read(transportRepositoryProvider).saveVehicle(
+      await ref
+          .read(transportRepositoryProvider)
+          .saveVehicle(
             me.uid,
             Vehicle(
               type: _type!,
@@ -128,11 +138,13 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
       if (!mounted) return;
       if (first) {
         // 211 Success (Transporter); the router then opens the home.
-        await showKsSuccessModal(context,
-            title: l.successTitle,
-            body: l.successBody,
-            cta: l.okBtn,
-            onCta: () => context.go(Routes.transporterHome));
+        await showKsSuccessModal(
+          context,
+          title: l.successTitle,
+          body: l.successBody,
+          cta: l.okBtn,
+          onCta: () => context.go(Routes.transporterHome),
+        );
       } else {
         KsToast.show(context, l.successTitle);
         context.pop();
@@ -160,8 +172,12 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.vehicleTitle, showBack: me.vehicle != null),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.lg,
+        ),
         children: [
           KsUploadBox(
             label: l.truckPhoto,
@@ -205,7 +221,7 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
             suffixText: l.tonUnit,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]'))
+              FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
             ],
             errorText: _capErr,
           ),
@@ -219,9 +235,13 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
             onTap: () => _pickRoute(lang),
           ),
           const SizedBox(
-              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+            height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+          ),
           KsButton(
-              label: l.commonSave, loading: _busy, onPressed: () => _save(me)),
+            label: l.commonSave,
+            loading: _busy,
+            onPressed: () => _save(me),
+          ),
         ],
       ),
     );
