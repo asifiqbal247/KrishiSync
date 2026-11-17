@@ -293,7 +293,7 @@ class _ChatState extends ConsumerState<ChatScreen> {
           context,
           e.message == 'too_large'
               ? l.fileTooLarge(
-                  Fmt.digits(context, picked.kind == 'video' ? '30' : '5'),
+                  Fmt.digits(context, picked.kind == 'video' ? '20' : '5'),
                 )
               : l.errorGeneric,
         );
@@ -392,7 +392,11 @@ class _ChatState extends ConsumerState<ChatScreen> {
                                   maxWidth: width * _bubbleMax,
                                   onOpen: () => m.fileKind == 'image'
                                       ? showPhoto(context, m.fileUrl!)
-                                      : _openFile(m.fileUrl!),
+                                      : _openFile(
+                                          m.fileKind == 'video'
+                                              ? playableVideo(m.fileUrl!)
+                                              : m.fileUrl!,
+                                        ),
                                 )
                               : GestureDetector(
                                   onTap: m.isVoice
@@ -624,6 +628,12 @@ class _FileBubble extends StatelessWidget {
     );
   }
 }
+
+/// Cloudinary delivery as H.264 MP4, so any phone's player or browser can
+/// play it (phones may record HEVC; converted once, then cached).
+String playableVideo(String url) => url.contains('/video/upload/')
+    ? url.replaceFirst('/video/upload/', '/video/upload/vc_h264,f_mp4/')
+    : url;
 
 /// Full-screen photo with pinch zoom (chat photos, papers).
 Future<void> showPhoto(BuildContext context, String url) => showDialog<void>(

@@ -79,7 +79,7 @@ class CloudinaryImageStorageService implements ImageStorageService {
   static const _maxSide = 1280;
   static const _quality = 75;
   static const _maxBytes = 5 * 1024 * 1024;
-  static const _maxVideoBytes = 30 * 1024 * 1024;
+  static const _maxVideoBytes = 20 * 1024 * 1024;
 
   Uri get _endpoint => Uri.parse(
     'https://api.cloudinary.com/v1_1/${AppSecrets.cloudinaryCloudName}/image/upload',
@@ -153,9 +153,9 @@ class CloudinaryImageStorageService implements ImageStorageService {
     return (jsonDecode(body) as Map<String, dynamic>)['secure_url'] as String;
   }
 
-  /// Videos (max [_maxVideoBytes]) go to /video/upload, PDFs to
-  /// /raw/upload so they open as plain files. Own preset; the image preset
-  /// stays images-only.
+  /// Videos (max [_maxVideoBytes], 60 s) and PDFs go to /auto/upload:
+  /// Cloudinary picks the type itself. Own preset; the image preset stays
+  /// images-only.
   @override
   Future<String> uploadFile(
     File file, {
@@ -165,13 +165,12 @@ class CloudinaryImageStorageService implements ImageStorageService {
     if (await file.length() > (video ? _maxVideoBytes : _maxBytes)) {
       throw ImageUploadException('too_large');
     }
-    final type = video ? 'video' : 'raw';
     final req =
         http.MultipartRequest(
             'POST',
             Uri.parse(
               'https://api.cloudinary.com/v1_1/'
-              '${AppSecrets.cloudinaryCloudName}/$type/upload',
+              '${AppSecrets.cloudinaryCloudName}/auto/upload',
             ),
           )
           ..fields['upload_preset'] = AppSecrets.cloudinaryFilesPreset
