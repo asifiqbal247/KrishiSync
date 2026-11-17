@@ -20,6 +20,7 @@ import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_input.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
+import '../../../shared/widgets/ks_photo_gallery.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_transport_widgets.dart';
@@ -61,24 +62,30 @@ Widget _loading(String title) => Scaffold(
 class _ResultHead extends StatelessWidget {
   const _ResultHead({
     required this.image,
+    required this.photos,
     required this.title,
     required this.body,
   });
+
+  /// Fallback picture when no load photo was taken.
   final String image;
+
+  /// Load photos taken at pickup (Figma 48–52 Photo Gallery).
+  final List<String> photos;
   final String title;
   final String body;
 
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadius.photo),
-        child: Image.asset(
-          image,
-          height: _heroH,
-          width: double.infinity,
-          fit: BoxFit.cover,
-        ),
+      KsPhotoGallery(
+        height: _heroH,
+        photos: photos.isEmpty
+            ? [Image.asset(image, fit: BoxFit.cover)]
+            : [
+                for (final u in photos)
+                  KsNetImage(url: u, fallbackAsset: image),
+              ],
       ),
       const SizedBox(height: AppSpacing.block),
       Text(
@@ -277,6 +284,7 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
         children: [
           _ResultHead(
             image: AppImages.scale,
+            photos: o.loadPhotos,
             title: l.waitingBuyer,
             body: l.waitingBuyerBody(qtyText(context, extra)),
           ),
@@ -334,6 +342,7 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
         children: [
           _ResultHead(
             image: less ? AppImages.scale : AppImages.handshake,
+            photos: o.loadPhotos,
             title: less ? l.weightLessHeading : l.moneySent,
             body: less ? l.weightLessBody : l.moneySentBody,
           ),

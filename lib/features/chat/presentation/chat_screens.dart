@@ -669,8 +669,10 @@ List<Faq> faqs(AppLocalizations l) => [
   (l.q5, [(null, l.q5Body)]),
 ];
 
-/// Phone number for "হেল্পলাইনে কল করুন" (demo: the admin test line).
-const helplineNumber = '+8801700000005';
+/// Calls the helpline (number in the ARB files: `helplineNumber`).
+Future<void> callHelpline(BuildContext context) => launchUrl(
+  Uri(scheme: 'tel', path: AppLocalizations.of(context).helplineNumber),
+);
 
 Future<void> openSupportChat(BuildContext context, WidgetRef ref) async {
   final admin = await ref.read(chatRepositoryProvider).supportUser();
@@ -700,8 +702,7 @@ class HelpScreen extends ConsumerWidget {
         children: [
           KsButton(
             label: l.callHelpline,
-            onPressed: () =>
-                launchUrl(Uri(scheme: 'tel', path: helplineNumber)),
+            onPressed: () => callHelpline(context),
           ),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(title: l.voiceGuideTitle),

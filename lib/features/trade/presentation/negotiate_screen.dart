@@ -47,7 +47,9 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
     try {
       await action();
     } catch (_) {
-      if (mounted) KsToast.show(context, AppLocalizations.of(context).errorGeneric);
+      if (mounted) {
+        KsToast.show(context, AppLocalizations.of(context).errorGeneric);
+      }
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -68,7 +70,8 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
     final otherUid = iAmFarmer ? o.buyerId : o.farmerId;
     final other = ref.watch(userByIdProvider(otherUid)).value;
     final market = ref.watch(marketPriceProvider(o.cropKey)).value;
-    final myTurn = o.status.isOpen && o.lastBy != (iAmFarmer ? 'farmer' : 'buyer');
+    final myTurn =
+        o.status.isOpen && o.lastBy != (iAmFarmer ? 'farmer' : 'buyer');
     final left = o.expiresAt?.difference(DateTime.now());
     final repo = ref.read(tradeRepositoryProvider);
     final otherName = iAmFarmer ? o.buyerName : o.farmerName;
@@ -77,45 +80,64 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.negotiateTitle),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(AppSpacing.screen,
-            AppSpacing.contentTop, AppSpacing.screen, AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screen,
+          AppSpacing.contentTop,
+          AppSpacing.screen,
+          AppSpacing.lg,
+        ),
         children: [
-          KsInfoBox(children: [
-            KsLinkRow(
-              label: iAmFarmer ? l.rowBuyer : l.rowFarmer,
-              value: (other?.isVerified ?? false)
-                  ? l.verifiedSuffix(otherName)
-                  : otherName,
-              onTap: () => context.push(iAmFarmer
-                  ? Routes.buyerProfile(o.buyerId)
-                  : Routes.buyerFarmer(o.farmerId)),
-            ),
-            // Buyer's latest price, then the farmer's counter (if any).
-            KsInfoRow(iAmFarmer ? l.rowBuyerOffer : l.rowMyOffer,
-                l.priceLine(Fmt.number(context, o.buyerPrice ?? o.pricePerKg))),
-            if (o.counterPrice != null)
-              KsInfoRow(iAmFarmer ? l.rowMyCounter : l.rowFarmerCounter,
-                  l.priceLine(Fmt.number(context, o.counterPrice!))),
-            KsInfoRow(iAmFarmer ? l.fieldMyPrice : l.fieldPrice,
-                l.priceLine(Fmt.number(context, o.listingPrice))),
-            if (market != null)
+          KsInfoBox(
+            children: [
+              KsLinkRow(
+                label: iAmFarmer ? l.rowBuyer : l.rowFarmer,
+                value: (other?.isVerified ?? false)
+                    ? l.verifiedSuffix(otherName)
+                    : otherName,
+                onTap: () => context.push(
+                  iAmFarmer
+                      ? Routes.buyerProfile(o.buyerId)
+                      : Routes.buyerFarmer(o.farmerId),
+                ),
+              ),
+              // Buyer's latest price, then the farmer's counter (if any).
               KsInfoRow(
+                iAmFarmer ? l.rowBuyerOffer : l.rowMyOffer,
+                l.priceLine(Fmt.number(context, o.buyerPrice ?? o.pricePerKg)),
+              ),
+              if (o.counterPrice != null)
+                KsInfoRow(
+                  iAmFarmer ? l.rowMyCounter : l.rowFarmerCounter,
+                  l.priceLine(Fmt.number(context, o.counterPrice!)),
+                ),
+              KsInfoRow(
+                iAmFarmer ? l.fieldMyPrice : l.fieldPrice,
+                l.priceLine(Fmt.number(context, o.listingPrice)),
+              ),
+              if (market != null)
+                KsInfoRow(
                   l.fieldMarketPrice,
-                  l.rangeLine(Fmt.number(context, market.min),
-                      Fmt.number(context, market.max))),
-            KsInfoRow(l.fieldQuantity, qtyText(context, o.quantityKg)),
-            KsInfoRow(l.rowPayment,
-                iAmFarmer ? l.paymentSafeLoad : l.safePayment),
-            if (o.status.isOpen)
+                  l.rangeLine(
+                    Fmt.number(context, market.min),
+                    Fmt.number(context, market.max),
+                  ),
+                ),
+              KsInfoRow(l.fieldQuantity, qtyText(context, o.quantityKg)),
               KsInfoRow(
-                l.rowOfferValidity,
-                left == null || left.isNegative
-                    ? l.offerExpired
-                    : l.hoursLeft(Fmt.digits(context, '${left.inHours}')),
-              )
-            else
-              KsInfoRow(l.rowOfferStatus, _statusText(l, o.status)),
-          ]),
+                l.rowPayment,
+                iAmFarmer ? l.paymentSafeLoad : l.safePayment,
+              ),
+              if (o.status.isOpen)
+                KsInfoRow(
+                  l.rowOfferValidity,
+                  left == null || left.isNegative
+                      ? l.offerExpired
+                      : l.hoursLeft(Fmt.digits(context, '${left.inHours}')),
+                )
+              else
+                KsInfoRow(l.rowOfferStatus, _statusText(l, o.status)),
+            ],
+          ),
           if (myTurn) ...[
             const SizedBox(height: AppSpacing.block),
             KsTextField(
@@ -125,57 +147,69 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
               suffixText: l.sellPriceUnit,
               keyboardType: TextInputType.number,
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]'))
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9০-৯.]')),
               ],
               errorText: _err,
             ),
             const SizedBox(
-                height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
-            Row(children: [
-              Expanded(
-                child: KsButton.destructive(
-                  label: l.reject,
-                  onPressed: _busy
-                      ? null
-                      : () async {
-                          final ok = await showKsConfirm(context,
+              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: KsButton.destructive(
+                    label: l.reject,
+                    onPressed: _busy
+                        ? null
+                        : () async {
+                            final ok = await showKsConfirm(
+                              context,
                               title: l.rejectConfirmTitle,
                               body: l.rejectConfirmBody,
                               noLabel: l.noGoBack,
-                              yesLabel: l.yesReject);
-                          if (!ok) return;
-                          await _run(() =>
-                              repo.rejectOffer(o, byUid: me.uid));
-                          if (context.mounted) {
-                            KsToast.show(context, l.offerRejected);
-                          }
-                        },
+                              yesLabel: l.yesReject,
+                            );
+                            if (!ok) return;
+                            await _run(
+                              () => repo.rejectOffer(o, byUid: me.uid),
+                            );
+                            if (context.mounted) {
+                              KsToast.show(context, l.offerRejected);
+                            }
+                          },
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: KsButton.outline(
-                  label: l.counter,
-                  onPressed: _busy
-                      ? null
-                      : () async {
-                          final p = num.tryParse(
-                              Fmt.latinDigits(_counter.text.trim()));
-                          if (p == null || p <= 0) {
-                            setState(() => _err = l.errPriceInvalid);
-                            return;
-                          }
-                          setState(() => _err = null);
-                          await _run(() => repo.counterOffer(o,
-                              byUid: me.uid, pricePerKg: p));
-                          _counter.clear();
-                          if (context.mounted) {
-                            KsToast.show(context, l.counterSent);
-                          }
-                        },
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: KsButton.outline(
+                    label: l.counter,
+                    onPressed: _busy
+                        ? null
+                        : () async {
+                            final p = num.tryParse(
+                              Fmt.latinDigits(_counter.text.trim()),
+                            );
+                            if (p == null || p <= 0) {
+                              setState(() => _err = l.errPriceInvalid);
+                              return;
+                            }
+                            setState(() => _err = null);
+                            await _run(
+                              () => repo.counterOffer(
+                                o,
+                                byUid: me.uid,
+                                pricePerKg: p,
+                              ),
+                            );
+                            _counter.clear();
+                            if (context.mounted) {
+                              KsToast.show(context, l.counterSent);
+                            }
+                          },
+                  ),
                 ),
-              ),
-            ]),
+              ],
+            ),
             const SizedBox(height: AppSpacing.block),
             KsButton(
               label: l.acceptOffer,
@@ -198,19 +232,48 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
           // Buyer: an accepted offer can be ordered at the agreed price.
           if (!iAmFarmer && o.status == OfferStatus.accepted) ...[
             const SizedBox(
-                height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
+              height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
+            ),
             KsButton(
               label: l.orderNowFromOffer,
-              onPressed: () => context.push(
-                  Routes.placeOrder(o.listingId, offerId: o.id)),
+              onPressed: () =>
+                  context.push(Routes.placeOrder(o.listingId, offerId: o.id)),
             ),
           ],
           if (!myTurn && o.status.isOpen) ...[
             const SizedBox(height: AppSpacing.block),
-            Text(_statusText(l, o.status),
-                textAlign: TextAlign.center,
-                style: AppTypography.bodyMedium.normal
-                    .withColor(AppColors.textSecondary)),
+            Text(
+              _statusText(l, o.status),
+              textAlign: TextAlign.center,
+              style: AppTypography.bodyMedium.normal.withColor(
+                AppColors.textSecondary,
+              ),
+            ),
+          ],
+          // Buyer: take back a pending offer (farmer is notified).
+          if (!iAmFarmer && o.status == OfferStatus.pending) ...[
+            const SizedBox(height: AppSpacing.block),
+            KsButton.secondary(
+              label: l.withdrawOffer,
+              onPressed: () async {
+                final ok = await showKsConfirm(
+                  context,
+                  title: l.withdrawOfferTitle,
+                  body: l.withdrawOfferBody,
+                  noLabel: l.commonNo,
+                  yesLabel: l.withdrawOffer,
+                );
+                if (!ok) return;
+                try {
+                  await repo.withdrawOffer(o);
+                  if (context.mounted) {
+                    KsToast.show(context, l.offerWithdrawnToast);
+                  }
+                } catch (_) {
+                  if (context.mounted) KsToast.show(context, l.errorGeneric);
+                }
+              },
+            ),
           ],
         ],
       ),
@@ -218,10 +281,10 @@ class _NegotiateScreenState extends ConsumerState<NegotiateScreen> {
   }
 
   String _statusText(AppLocalizations l, OfferStatus s) => switch (s) {
-        OfferStatus.pending => l.offerStatusPending,
-        OfferStatus.countered => l.offerStatusCountered,
-        OfferStatus.accepted => l.offerStatusAccepted,
-        OfferStatus.rejected => l.offerStatusRejected,
-        OfferStatus.withdrawn => l.offerStatusWithdrawn,
-      };
+    OfferStatus.pending => l.offerStatusPending,
+    OfferStatus.countered => l.offerStatusCountered,
+    OfferStatus.accepted => l.offerStatusAccepted,
+    OfferStatus.rejected => l.offerStatusRejected,
+    OfferStatus.withdrawn => l.offerStatusWithdrawn,
+  };
 }

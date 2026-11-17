@@ -6153,4 +6153,88 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get nDocOkDriverBody => 'মডারেটর আপনার কাগজ যাচাই করেছেন';
+
+  @override
+  String get removePhoto => 'ছবি সরান';
+
+  @override
+  String get addMorePhotos => 'আরও ছবি যোগ করুন';
+
+  @override
+  String get statusWithdrawn => 'প্রত্যাহার করা';
+
+  @override
+  String get editListingTitle => 'বিজ্ঞাপন সম্পাদনা';
+
+  @override
+  String get editListing => 'সম্পাদনা করুন';
+
+  @override
+  String get withdrawListing => 'প্রত্যাহার করুন';
+
+  @override
+  String get withdrawListingTitle => 'বিজ্ঞাপন প্রত্যাহার করবেন?';
+
+  @override
+  String get withdrawListingBody =>
+      'ক্রেতারা আর এই ফসল দেখতে পাবেন না। পরে সম্পাদনা করে আবার পাঠাতে পারবেন।';
+
+  @override
+  String get listingWithdrawnToast => 'বিজ্ঞাপন প্রত্যাহার করা হয়েছে';
+
+  @override
+  String get listingHasOrder =>
+      'এই ফসলের একটি অর্ডার চলছে। অর্ডার শেষ হলে সম্পাদনা বা প্রত্যাহার করা যাবে।';
+
+  @override
+  String get listingUpdated => 'বিজ্ঞাপন হালনাগাদ হয়েছে';
+
+  @override
+  String get listingSentForReview => 'পরিবর্তন অনুমোদনের জন্য পাঠানো হয়েছে';
+
+  @override
+  String get commonNo => 'না';
+
+  @override
+  String get withdrawOffer => 'অফার ফিরিয়ে নিন';
+
+  @override
+  String get withdrawOfferTitle => 'অফার ফিরিয়ে নেবেন?';
+
+  @override
+  String get withdrawOfferBody =>
+      'কৃষক জানতে পারবেন যে আপনি অফারটি ফিরিয়ে নিয়েছেন।';
+
+  @override
+  String get offerWithdrawnToast => 'অফার ফিরিয়ে নেওয়া হয়েছে';
+
+  @override
+  String nOfferWithdrawn(String crop) {
+    return 'অফার ফিরিয়ে নেওয়া হয়েছে: $crop';
+  }
+
+  @override
+  String nOfferWithdrawnBody(String buyer) {
+    return '$buyer তাঁর অফার ফিরিয়ে নিয়েছেন';
+  }
+
+  @override
+  String get pmRemove => 'মুছে ফেলুন';
+
+  @override
+  String get pmRemoveTitle => 'পেমেন্ট পদ্ধতি মুছবেন?';
+
+  @override
+  String pmRemoveBody(String method) {
+    return '$method আপনার তালিকা থেকে মুছে যাবে।';
+  }
+
+  @override
+  String get pmRemoved => 'পেমেন্ট পদ্ধতি মুছে ফেলা হয়েছে';
+
+  @override
+  String get pmChooseDefault => 'নতুন ডিফল্ট পদ্ধতি বেছে নিন';
+
+  @override
+  String get helplineNumber => '+8801700000005';
 }

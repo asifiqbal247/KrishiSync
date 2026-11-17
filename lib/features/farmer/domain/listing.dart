@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../auth/domain/app_user.dart';
 
-/// pending → (moderator) → active | hidden ;  active → sold (farmer)
+/// pending → (moderator) → active | hidden ;  active → sold (farmer).
+/// Farmer edits of photos / crop / grade / pickup → pending again;
+/// withdraw (no running order) → withdrawn (soft delete).
 enum ListingStatus {
   pending,
   active,
   sold,
-  hidden;
+  hidden,
+  withdrawn;
 
   static ListingStatus parse(String? v) =>
       values.firstWhere((s) => s.name == v, orElse: () => pending);

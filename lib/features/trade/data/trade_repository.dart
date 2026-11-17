@@ -167,6 +167,23 @@ class TradeRepository {
     );
   }
 
+  /// Buyer takes back an open offer (soft: status withdrawn); the farmer
+  /// is told.
+  Future<void> withdrawOffer(Offer o) async {
+    await _offers.doc(o.id).update({
+      'status': OfferStatus.withdrawn.name,
+      'lastBy': 'buyer',
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+    await notify(
+      toUid: o.farmerId,
+      fromUid: o.buyerId,
+      type: 'offer_withdrawn',
+      params: _offerParams(o),
+      link: 'offer:${o.id}',
+    );
+  }
+
   /// Farmer counters (status countered) or buyer answers (back to pending).
   Future<void> counterOffer(
     Offer o, {
@@ -208,6 +225,16 @@ class TradeRepository {
   };
 
   // ---------------- orders ----------------
+
+  /// A running order (not delivered / completed / cancelled) on a listing:
+  /// the farmer may not edit or withdraw it then.
+  Future<bool> hasOpenOrder(String farmerUid, String listingId) async {
+    final q = await _orders
+        .where('farmerId', isEqualTo: farmerUid)
+        .where('listingId', isEqualTo: listingId)
+        .get();
+    return q.docs.any((d) => TradeOrder.fromDoc(d).status.isOngoing);
+  }
 
   /// Creates an order in one transaction: next order number, stock check,
   /// order doc, listing stock decrease. Payment is held (placeholder) before.

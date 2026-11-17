@@ -25,6 +25,25 @@ abstract interface class ListingRepository {
 
   Future<void> markSold(String id);
 
+  /// Farmer edit of price / quantity / date: instant, status unchanged.
+  Future<void> quickEdit(
+    Listing x, {
+    required num availableKg,
+    required num pricePerKg,
+    required DateTime availableFrom,
+  });
+
+  /// Farmer edit of photos, crop, grade or pickup: back to "pending" for a
+  /// moderator (firestore.rules enforce this).
+  Future<void> editForReview(
+    Listing x,
+    ListingDraft draft,
+    List<String> photoUrls,
+  );
+
+  /// Soft delete: status "withdrawn" (hidden from buyers, kept for history).
+  Future<void> withdraw(String id);
+
   /// Moderator / admin actions.
   Future<void> approve(String id, String moderatorUid);
   Future<void> reject(String id, String moderatorUid, String note);
@@ -126,6 +145,52 @@ class FirestoreListingRepository implements ListingRepository {
   @override
   Future<void> markSold(String id) => _col.doc(id).update({
     'status': ListingStatus.sold.name,
+    'updatedAt': FieldValue.serverTimestamp(),
+  });
+
+  /// Already sold kg stay counted in quantityKg.
+  Map<String, dynamic> _qty(Listing x, num availableKg) => {
+    'quantityKg': (x.quantityKg - x.availableKg) + availableKg,
+    'availableKg': availableKg,
+  };
+
+  @override
+  Future<void> quickEdit(
+    Listing x, {
+    required num availableKg,
+    required num pricePerKg,
+    required DateTime availableFrom,
+  }) => _col.doc(x.id).update({
+    ..._qty(x, availableKg),
+    'pricePerKg': pricePerKg,
+    'availableFrom': Timestamp.fromDate(availableFrom),
+    'updatedAt': FieldValue.serverTimestamp(),
+  });
+
+  @override
+  Future<void> editForReview(
+    Listing x,
+    ListingDraft draft,
+    List<String> photoUrls,
+  ) => _col.doc(x.id).update({
+    'cropKey': draft.cropKey,
+    'cropNameBn': draft.cropNameBn,
+    'cropNameEn': draft.cropNameEn,
+    'category': draft.category,
+    'grade': draft.grade,
+    ..._qty(x, draft.quantityKg),
+    'pricePerKg': draft.pricePerKg,
+    'availableFrom': Timestamp.fromDate(draft.availableFrom),
+    'pickup': draft.pickup.toMap(),
+    'photos': photoUrls,
+    'status': ListingStatus.pending.name,
+    'moderationNote': null,
+    'updatedAt': FieldValue.serverTimestamp(),
+  });
+
+  @override
+  Future<void> withdraw(String id) => _col.doc(id).update({
+    'status': ListingStatus.withdrawn.name,
     'updatedAt': FieldValue.serverTimestamp(),
   });
 

@@ -1,10 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../shared/widgets/ks_states.dart';
-import '../../chat/presentation/chat_screens.dart' show helplineNumber;
+import '../../chat/presentation/chat_screens.dart' show callHelpline;
 import '../data/auth_repository.dart';
 
 /// Shown instead of the whole app while an admin has suspended the
@@ -21,7 +20,7 @@ class SuspendedScreen extends ConsumerWidget {
         backgroundColor: AppColors.bgPage,
         body: SafeArea(
           child: KsSuspendedState(
-            onCall: () => launchUrl(Uri(scheme: 'tel', path: helplineNumber)),
+            onCall: () => callHelpline(context),
             onLogout: () => ref.read(authRepositoryProvider).signOut(),
           ),
         ),

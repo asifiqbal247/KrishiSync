@@ -23,6 +23,7 @@ import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_input.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
+import '../../../shared/widgets/ks_photo_gallery.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
 import '../../../shared/widgets/ks_toast.dart';
@@ -763,15 +764,8 @@ class ReportSentScreen extends ConsumerWidget {
       body: ListView(
         padding: _pad,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.photo),
-            child: Image.asset(
-              AppImages.scale,
-              height: _heroH,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
+          // 92-S…94-S: the inspector's photos (Photo Gallery).
+          KsPhotoGallery(height: _heroH, photos: _galleryOf(x.photos)),
           const SizedBox(height: AppSpacing.block),
           Text(
             x.done ? l.reportReachedBuyer : l.inspClosed,
@@ -895,9 +889,8 @@ class LoadReportScreen extends ConsumerWidget {
           };
     final at = x?.doneAt ?? o.timeline['pickedUp'];
     final self = o.transportMode == TransportMode.self;
-    final photo = (x?.photos.isNotEmpty ?? false)
-        ? x!.photos.first
-        : (o.loadPhotos.isNotEmpty ? o.loadPhotos.first : null);
+    // Inspector's photos, else the driver's weighing photos (95).
+    final photos = (x?.photos.isNotEmpty ?? false) ? x!.photos : o.loadPhotos;
 
     final rows = <Widget>[
       if (!inspected ||
@@ -1009,14 +1002,7 @@ class LoadReportScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.block),
           KsInfoBox(children: rows),
           const SizedBox(height: AppSpacing.block),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppRadius.photo),
-            child: SizedBox(
-              height: _heroH,
-              width: double.infinity,
-              child: KsNetImage(url: photo, fallbackAsset: AppImages.scale),
-            ),
-          ),
+          KsPhotoGallery(height: _heroH, photos: _galleryOf(photos)),
           const SizedBox(height: AppSpacing.block),
           KsNoteBox(
             warning: true,
@@ -1084,3 +1070,11 @@ class LoadReportScreen extends ConsumerWidget {
     );
   }
 }
+
+/// Report / load photos for a KsPhotoGallery (scale picture when none).
+List<Widget> _galleryOf(List<String> urls) => urls.isEmpty
+    ? [Image.asset(AppImages.scale, fit: BoxFit.cover)]
+    : [
+        for (final u in urls)
+          KsNetImage(url: u, fallbackAsset: AppImages.scale),
+      ];

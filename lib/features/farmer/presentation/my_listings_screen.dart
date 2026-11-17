@@ -19,7 +19,7 @@ enum _Tab { ongoing, sold, draft }
 
 /// 22 My Listings (Figma 292:519). "চলমান" = pending + active (pending shows
 /// the "অনুমোদনের অপেক্ষায়" badge), "বিক্রিত" = sold, "খসড়া" = rejected by a
-/// moderator (needs a new listing).
+/// moderator (edit to send again) or withdrawn by the farmer.
 class MyListingsScreen extends ConsumerStatefulWidget {
   const MyListingsScreen({super.key});
 
@@ -34,7 +34,8 @@ class _MyListingsScreenState extends ConsumerState<MyListingsScreen> {
     _Tab.ongoing =>
       x.status == ListingStatus.pending || x.status == ListingStatus.active,
     _Tab.sold => x.status == ListingStatus.sold,
-    _Tab.draft => x.status == ListingStatus.hidden,
+    _Tab.draft =>
+      x.status == ListingStatus.hidden || x.status == ListingStatus.withdrawn,
   };
 
   @override

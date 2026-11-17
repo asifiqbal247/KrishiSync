@@ -6160,4 +6160,88 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nDocOkDriverBody => 'A moderator has checked your paper';
+
+  @override
+  String get removePhoto => 'Remove photo';
+
+  @override
+  String get addMorePhotos => 'Add more photos';
+
+  @override
+  String get statusWithdrawn => 'Withdrawn';
+
+  @override
+  String get editListingTitle => 'Edit listing';
+
+  @override
+  String get editListing => 'Edit';
+
+  @override
+  String get withdrawListing => 'Withdraw';
+
+  @override
+  String get withdrawListingTitle => 'Withdraw this listing?';
+
+  @override
+  String get withdrawListingBody =>
+      'Buyers will no longer see this crop. You can edit it and send it again later.';
+
+  @override
+  String get listingWithdrawnToast => 'Listing withdrawn';
+
+  @override
+  String get listingHasOrder =>
+      'An order is running on this crop. You can edit or withdraw it after the order ends.';
+
+  @override
+  String get listingUpdated => 'Listing updated';
+
+  @override
+  String get listingSentForReview => 'Changes sent for approval';
+
+  @override
+  String get commonNo => 'No';
+
+  @override
+  String get withdrawOffer => 'Withdraw offer';
+
+  @override
+  String get withdrawOfferTitle => 'Withdraw this offer?';
+
+  @override
+  String get withdrawOfferBody =>
+      'The farmer will be told that you withdrew the offer.';
+
+  @override
+  String get offerWithdrawnToast => 'Offer withdrawn';
+
+  @override
+  String nOfferWithdrawn(String crop) {
+    return 'Offer withdrawn: $crop';
+  }
+
+  @override
+  String nOfferWithdrawnBody(String buyer) {
+    return '$buyer withdrew the offer';
+  }
+
+  @override
+  String get pmRemove => 'Remove';
+
+  @override
+  String get pmRemoveTitle => 'Remove payment method?';
+
+  @override
+  String pmRemoveBody(String method) {
+    return '$method will be removed from your list.';
+  }
+
+  @override
+  String get pmRemoved => 'Payment method removed';
+
+  @override
+  String get pmChooseDefault => 'Choose a new default method';
+
+  @override
+  String get helplineNumber => '+8801700000005';
 }

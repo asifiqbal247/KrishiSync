@@ -10764,6 +10764,156 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'মডারেটর আপনার কাগজ যাচাই করেছেন'**
   String get nDocOkDriverBody;
+
+  /// No description provided for @removePhoto.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি সরান'**
+  String get removePhoto;
+
+  /// No description provided for @addMorePhotos.
+  ///
+  /// In bn, this message translates to:
+  /// **'আরও ছবি যোগ করুন'**
+  String get addMorePhotos;
+
+  /// No description provided for @statusWithdrawn.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাহার করা'**
+  String get statusWithdrawn;
+
+  /// No description provided for @editListingTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিজ্ঞাপন সম্পাদনা'**
+  String get editListingTitle;
+
+  /// No description provided for @editListing.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পাদনা করুন'**
+  String get editListing;
+
+  /// No description provided for @withdrawListing.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাহার করুন'**
+  String get withdrawListing;
+
+  /// No description provided for @withdrawListingTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিজ্ঞাপন প্রত্যাহার করবেন?'**
+  String get withdrawListingTitle;
+
+  /// No description provided for @withdrawListingBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্রেতারা আর এই ফসল দেখতে পাবেন না। পরে সম্পাদনা করে আবার পাঠাতে পারবেন।'**
+  String get withdrawListingBody;
+
+  /// No description provided for @listingWithdrawnToast.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিজ্ঞাপন প্রত্যাহার করা হয়েছে'**
+  String get listingWithdrawnToast;
+
+  /// No description provided for @listingHasOrder.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ফসলের একটি অর্ডার চলছে। অর্ডার শেষ হলে সম্পাদনা বা প্রত্যাহার করা যাবে।'**
+  String get listingHasOrder;
+
+  /// No description provided for @listingUpdated.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিজ্ঞাপন হালনাগাদ হয়েছে'**
+  String get listingUpdated;
+
+  /// No description provided for @listingSentForReview.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবর্তন অনুমোদনের জন্য পাঠানো হয়েছে'**
+  String get listingSentForReview;
+
+  /// No description provided for @commonNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'না'**
+  String get commonNo;
+
+  /// No description provided for @withdrawOffer.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার ফিরিয়ে নিন'**
+  String get withdrawOffer;
+
+  /// No description provided for @withdrawOfferTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার ফিরিয়ে নেবেন?'**
+  String get withdrawOfferTitle;
+
+  /// No description provided for @withdrawOfferBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'কৃষক জানতে পারবেন যে আপনি অফারটি ফিরিয়ে নিয়েছেন।'**
+  String get withdrawOfferBody;
+
+  /// No description provided for @offerWithdrawnToast.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার ফিরিয়ে নেওয়া হয়েছে'**
+  String get offerWithdrawnToast;
+
+  /// No description provided for @nOfferWithdrawn.
+  ///
+  /// In bn, this message translates to:
+  /// **'অফার ফিরিয়ে নেওয়া হয়েছে: {crop}'**
+  String nOfferWithdrawn(String crop);
+
+  /// No description provided for @nOfferWithdrawnBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{buyer} তাঁর অফার ফিরিয়ে নিয়েছেন'**
+  String nOfferWithdrawnBody(String buyer);
+
+  /// No description provided for @pmRemove.
+  ///
+  /// In bn, this message translates to:
+  /// **'মুছে ফেলুন'**
+  String get pmRemove;
+
+  /// No description provided for @pmRemoveTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট পদ্ধতি মুছবেন?'**
+  String get pmRemoveTitle;
+
+  /// No description provided for @pmRemoveBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{method} আপনার তালিকা থেকে মুছে যাবে।'**
+  String pmRemoveBody(String method);
+
+  /// No description provided for @pmRemoved.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট পদ্ধতি মুছে ফেলা হয়েছে'**
+  String get pmRemoved;
+
+  /// No description provided for @pmChooseDefault.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন ডিফল্ট পদ্ধতি বেছে নিন'**
+  String get pmChooseDefault;
+
+  /// No description provided for @helplineNumber.
+  ///
+  /// In bn, this message translates to:
+  /// **'+8801700000005'**
+  String get helplineNumber;
 }
 
 class _AppLocalizationsDelegate

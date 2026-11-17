@@ -10,7 +10,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/presentation/simple_tabs.dart';
 import '../../../shared/services/bd_location_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
@@ -21,6 +20,7 @@ import '../../../shared/widgets/ks_home_header.dart';
 import '../../../shared/widgets/ks_input.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
+import '../../../shared/widgets/ks_photo_gallery.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
@@ -433,10 +433,7 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
                   borderRadius: BorderRadius.circular(AppRadius.photo),
                   child: SizedBox(
                     height: _imageHeight,
-                    child: KsNetImage(
-                      url: x.photo,
-                      fallbackAsset: CropCatalog.imageFor(x.cropKey),
-                    ),
+                    child: KsPhotoGallery(photos: listingPhotos(x)),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.block),

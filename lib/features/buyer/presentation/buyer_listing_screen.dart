@@ -19,6 +19,8 @@ import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_cards.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
+import '../../../shared/widgets/ks_photo_gallery.dart';
+import '../../farmer/presentation/listing_widgets.dart';
 import '../../../shared/widgets/ks_pill.dart';
 import '../../auth/data/user_repository.dart';
 import '../../auth/domain/app_user.dart';
@@ -76,10 +78,7 @@ class BuyerListingScreen extends ConsumerWidget {
                       children: [
                         KsHeroPhoto(
                           figmaHeight: _heroH,
-                          image: KsNetImage(
-                            url: x.photo,
-                            fallbackAsset: CropCatalog.imageFor(x.cropKey),
-                          ),
+                          image: KsPhotoGallery(photos: listingPhotos(x)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(

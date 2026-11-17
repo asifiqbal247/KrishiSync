@@ -118,6 +118,9 @@ abstract final class AppColors {
   /// Modal overlay: rgba(31,31,31,0.45).
   static const overlayScrim = Color(0x731F1F1F);
 
+  /// Photo gallery counter "১/৪" (HF/Switch/Gallery): rgba(31,31,31,0.6).
+  static const galleryBadge = Color(0x991F1F1F);
+
   /// Text and icons over a hero photo (53 app bar).
   static const textOnImage = white;
 

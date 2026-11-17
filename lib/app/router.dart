@@ -159,6 +159,7 @@ abstract final class Routes {
   static const farmerSell = '/farmer/sell';
   static const farmerListings = '/farmer/listings';
   static String farmerListingDetails(String id) => '/farmer/listings/$id';
+  static String farmerEditListing(String id) => '/farmer/listings/$id/edit';
 
   // Buyer
   // Shared by farmer (28/17) and buyer (74/73).
@@ -618,6 +619,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 builder: (_, s) =>
                     ListingDetailsScreen(listingId: s.pathParameters['id']!),
                 routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (_, s) =>
+                        EditListingScreen(listingId: s.pathParameters['id']!),
+                  ),
                   GoRoute(
                     path: 'offers',
                     builder: (_, s) =>

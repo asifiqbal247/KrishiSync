@@ -10,8 +10,10 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../shared/widgets/app_icon.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_button.dart';
+import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_input.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_option_card.dart';
@@ -86,6 +88,38 @@ class PaymentMethodsScreen extends ConsumerWidget {
       ]);
     }
 
+    // Remove (confirm). Removing the default asks for a new default.
+    Future<void> remove(PayoutMethod m) async {
+      final ok = await showKsConfirm(
+        context,
+        title: l.pmRemoveTitle,
+        body: l.pmRemoveBody(payoutLine(l, m)),
+        noLabel: l.commonNo,
+        yesLabel: l.pmRemove,
+      );
+      if (!ok || !context.mounted) return;
+      final rest = [
+        for (final x in methods)
+          if (!identical(x, m)) x,
+      ];
+      PayoutMethod? next;
+      if (identical(m, def) && rest.isNotEmpty) {
+        next = rest.length == 1
+            ? rest.first
+            : await _chooseDefault(context, l, rest);
+        if (next == null) return; // sheet closed: nothing removed
+      }
+      try {
+        await ref.read(userRepositoryProvider).savePayoutMethods(me.uid, [
+          for (final x in rest)
+            next == null ? x : x.copyWith(isDefault: identical(x, next)),
+        ]);
+        if (context.mounted) KsToast.show(context, l.pmRemoved);
+      } catch (_) {
+        if (context.mounted) KsToast.show(context, l.errorGeneric);
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       appBar: KsAppBar(title: l.pmTitle),
@@ -125,6 +159,19 @@ class PaymentMethodsScreen extends ConsumerWidget {
                     ),
               trailingText: identical(m, def) ? l.pmDefault : l.pmMakeDefault,
               onTap: identical(m, def) ? null : () => makeDefault(m),
+              showChevron: false,
+              trailing: Semantics(
+                button: true,
+                label: l.pmRemove,
+                child: InkResponse(
+                  onTap: () => remove(m),
+                  child: const AppIcon(
+                    AppIcons.close,
+                    size: AppSizes.iconSm,
+                    color: AppColors.iconError,
+                  ),
+                ),
+              ),
             ),
           ],
           const SizedBox(height: AppSpacing.block),
@@ -489,3 +536,33 @@ class _AddBankState extends ConsumerState<AddBankScreen> {
     );
   }
 }
+
+/// Sheet: pick the new default after removing the default method.
+Future<PayoutMethod?> _chooseDefault(
+  BuildContext context,
+  AppLocalizations l,
+  List<PayoutMethod> options,
+) => showModalBottomSheet<PayoutMethod>(
+  context: context,
+  builder: (ctx) => SafeArea(
+    child: Padding(
+      padding: const EdgeInsets.all(AppSpacing.screen),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(l.pmChooseDefault, style: AppTypography.headingBold20.normal),
+          for (final m in options) ...[
+            const SizedBox(height: AppSpacing.md),
+            KsListItem(
+              thumb: _wallet(),
+              title: payoutLine(l, m),
+              subtitle: m.accountName,
+              onTap: () => Navigator.pop(ctx, m),
+            ),
+          ],
+        ],
+      ),
+    ),
+  ),
+);

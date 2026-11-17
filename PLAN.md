@@ -1,6 +1,6 @@
 # KrishiSync — Plan
 
-## Current status (2026-11-14)
+## Current status (2026-11-18) — FEATURE FREEZE
 - **Tier A: built and E2E-tested on emulator.** Parts 1–7 done, Part 8 mostly done.
 - **Part 7 (tested):** Report Issue 203/204 → Moderator Reports M4/M5 (resolve with note → reporter notified); Safe Payment 82 (placeholder) between 78 and order; NID verification M6 (user with NID → moderator verifies → notified, verified badge); Admin A1 dashboard (count queries), A2 users search/filter, A3 suspend/activate + change role, A4 moderation hub, A5 market prices (feeds home price cards + listing ranges), A6 crop catalog (new crops appear in Sell Crop; on/off). Self-transport flow tested (farmer handed over → buyer received → rate → completed).
 - **Part 8 (done):** profiles 68/138/193 with real data, 196 language sheet, D4 logout confirm, 215 skeletons, English plural-safe strings, Golaghor launcher icon (Android 12 launch screen uses it), release APK builds and runs (signed with debug key — fine for demo install).
@@ -29,6 +29,14 @@
 - **FEATURE FREEZE (2026-11-17, Asif):** no new features. Only bug fixes found during real-phone testing. Left as "coming soon" on purpose: future-harvest commitment, voice guide on search. Not built: video calls 217–220 (paid service).
 - **Figma update (2026-11-17, Asif):** 75 order bar labels no longer wrap (compact buttons, single-line labels in KsButton); home action tiles all white (farmer, buyer, driver); 03–05 onboarding full-bleed hero (472, rounded bottom, top shade); fish category icon; 69 NID boxes 162/162/130; farmer home banner auto-slides every 3 s and loops forward; 76 farmer profile: rating card → that farmer's reviews, other stats → buyer's history (120), crops show 2 + "সব দেখুন". Kept: onboarding 2 says "পণ্য" (earlier মাল → পণ্য decision).
 - **Figma update 2 (2026-11-17, Asif):** photos have square corners. Hero screens (03, 06, 23, 36, 53, 75, 143, 144, 150/151, 156, 159) use a full-bleed photo/map behind a transparent app bar (`KsHeroPhoto` + `KsHeroShade` in `ks_hero.dart`); the photo scrolls, the shade stays. Inset photos/maps are 328×200 and square (`AppRadius.photo = 0`); 108 map is full width (320). Only 155 route map and 207 document viewer keep radius 16. Login and inspector-invite phone prefix is now "+88" (user types 01…). **Gap from the CRUD audit:** no seed button/script exists yet (demo data was entered through the app).
+- **Figma update 3 + CRUD gaps (2026-11-18, Asif):** onboarding active dot is a plain brand pill (no tick). Photo Gallery (HF/Switch/Gallery: swipe or tap, "১/৪" counter, max 4) on 20, 23, 75, moderator review, 48–52 (driver's load photos), 92–95 (inspector photos, else load photos). Sell Crop takes up to 4 photos (`KsPhotoPicker`). **Edit listing** (23 → Sell Crop steps prefilled): price / qty / date save instantly; photos / crop / grade / pickup (or a rejected listing) → back to "pending". **Withdraw listing** = status `withdrawn` (confirm dialog; shows under "খসড়া"). Both blocked while an order is running (app check; rules can't query orders). **Buyer withdraws a pending offer** (confirm, farmer notified `offer_withdrawn`). **Remove payment method** (× + confirm; removing the default asks for a new default, auto when one is left). Helpline number moved to ARB `helplineNumber`. Rules deployed: owner quick edit / review edit (must set pending) / withdraw; offer withdraw by buyer from pending only; listing photos ≤ 4.
+- **FEATURE FREEZE (2026-11-18): no new features.** Remaining tasks:
+  1. Device testing on Asif's phone (release APK + checklist).
+  2. Bug fixes from that test only.
+  3. Demo script (role order + test numbers; do not change Abdul / Karim / Salma / Rahim data during experiments).
+  4. Backup demo video (screen recording of the full chain).
+  5. Rehearsal (timed run of the demo, then the defence ~2026-11-25).
+  Known gap: no one-click seed button (demo data was entered through the app).
 - **Next step:** Asif tests the release APK on his phone with the device checklist; fix only bugs he reports.
 
 ## Timeline — defence in 12 days (~2026-11-25)

@@ -9,13 +9,15 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/data/market_price_repository.dart';
-import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/services/bd_location_service.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
-import '../../../shared/widgets/ks_net_image.dart';
+import '../../../shared/widgets/ks_photo_gallery.dart';
+import '../../../shared/widgets/ks_dialogs.dart';
+import '../../../shared/widgets/ks_toast.dart';
+import '../../auth/data/user_repository.dart';
 import '../../trade/data/trade_repository.dart';
 import '../data/listing_repository.dart';
 import '../domain/listing.dart';
@@ -55,10 +57,7 @@ class ListingDetailsScreen extends ConsumerWidget {
                   children: [
                     KsHeroPhoto(
                       figmaHeight: _heroH,
-                      image: KsNetImage(
-                        url: x.photo,
-                        fallbackAsset: CropCatalog.imageFor(x.cropKey),
-                      ),
+                      image: KsPhotoGallery(photos: listingPhotos(x)),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(
@@ -169,6 +168,7 @@ class ListingDetailsScreen extends ConsumerWidget {
                                   .markSold(x.id),
                             ),
                           ],
+                          ..._editActions(context, ref, l, x),
                         ],
                       ),
                     ),
@@ -181,5 +181,89 @@ class ListingDetailsScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  /// Edit / withdraw (only while no order is running on the listing).
+  List<Widget> _editActions(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l,
+    Listing x,
+  ) {
+    const editable = [
+      ListingStatus.pending,
+      ListingStatus.active,
+      ListingStatus.hidden,
+    ];
+    if (!editable.contains(x.status)) return const [];
+    final busy = (ref.watch(myOrdersProvider).value ?? const []).any(
+      (o) => o.listingId == x.id && o.status.isOngoing,
+    );
+    return [
+      const SizedBox(height: AppSpacing.block),
+      Row(
+        children: [
+          Expanded(
+            child: KsButton.outline(
+              label: l.editListing,
+              compact: true,
+              onPressed: busy
+                  ? null
+                  : () => context.push(Routes.farmerEditListing(x.id)),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: KsButton.destructive(
+              label: l.withdrawListing,
+              compact: true,
+              onPressed: busy
+                  ? null
+                  : () async {
+                      final ok = await showKsConfirm(
+                        context,
+                        title: l.withdrawListingTitle,
+                        body: l.withdrawListingBody,
+                        noLabel: l.commonNo,
+                        yesLabel: l.withdrawListing,
+                      );
+                      if (!ok) return;
+                      try {
+                        final me = ref.read(currentUserProvider).value;
+                        if (me == null) return;
+                        if (await ref
+                            .read(tradeRepositoryProvider)
+                            .hasOpenOrder(me.uid, x.id)) {
+                          if (context.mounted) {
+                            KsToast.show(context, l.listingHasOrder);
+                          }
+                          return;
+                        }
+                        await ref
+                            .read(listingRepositoryProvider)
+                            .withdraw(x.id);
+                        if (context.mounted) {
+                          KsToast.show(context, l.listingWithdrawnToast);
+                        }
+                      } catch (_) {
+                        if (context.mounted) {
+                          KsToast.show(context, l.errorGeneric);
+                        }
+                      }
+                    },
+            ),
+          ),
+        ],
+      ),
+      if (busy) ...[
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          l.listingHasOrder,
+          style: AppTypography.caption.normal.withColor(
+            AppColors.textSecondary,
+          ),
+        ),
+      ],
+    ];
   }
 }

@@ -31,6 +31,11 @@ import '../domain/listing.dart';
         AppColors.bgErrorSubtle,
         AppColors.textError,
       ),
+      ListingStatus.withdrawn => (
+        l.statusWithdrawn,
+        AppColors.bgMuted,
+        AppColors.textSecondary,
+      ),
     };
 
 /// One listing row (HF/List Item / Status): photo, "Crop (Grade X)",
@@ -72,3 +77,12 @@ class ListingTile extends StatelessWidget {
     );
   }
 }
+
+/// The listing's photos for a KsPhotoGallery (catalog picture when none).
+List<Widget> listingPhotos(Listing x) => [
+  if (x.photos.isEmpty)
+    KsNetImage(url: null, fallbackAsset: CropCatalog.imageFor(x.cropKey))
+  else
+    for (final u in x.photos)
+      KsNetImage(url: u, fallbackAsset: CropCatalog.imageFor(x.cropKey)),
+];

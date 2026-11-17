@@ -1,10 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
-import '../../core/theme/app_assets.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_dimens.dart';
 
-/// Onboarding "Dots" (292:2575): active = 18×6 image pill, inactive = 6×6
+/// Onboarding "Dots" (292:2575): active = 18×6 brand pill, inactive = 6×6
 /// white with 2px strong border, radius 3, gap 6.
 class KsPageDots extends StatelessWidget {
   const KsPageDots({super.key, required this.count, required this.index});
@@ -24,10 +23,14 @@ class KsPageDots extends StatelessWidget {
         for (var i = 0; i < count; i++) ...[
           if (i > 0) const SizedBox(width: AppSpacing.label),
           i == index
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(_r),
-                  child: Image.asset(AppImages.dotActive,
-                      width: _activeW, height: _h, fit: BoxFit.cover),
+              // Plain brand pill (Asif: no tick in the active dot).
+              ? Container(
+                  width: _activeW,
+                  height: _h,
+                  decoration: BoxDecoration(
+                    color: AppColors.bgBrand,
+                    borderRadius: BorderRadius.circular(_r),
+                  ),
                 )
               : Container(
                   width: _h,

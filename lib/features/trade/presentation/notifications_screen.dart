@@ -56,6 +56,10 @@ class NotificationsScreen extends ConsumerWidget {
         l.nOfferAcceptedBody(num(p['price'])),
       ),
       'offer_rejected' => (l.nOfferRejected(crop), ''),
+      'offer_withdrawn' => (
+        l.nOfferWithdrawn(crop),
+        l.nOfferWithdrawnBody(p['buyer'] ?? ''),
+      ),
       'order_new' => (
         l.nOrderNew(p['no'] ?? ''),
         l.nOrderNewBody(p['buyer'] ?? '', crop, l.qtyKg(num(p['qty']))),
