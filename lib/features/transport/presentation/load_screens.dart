@@ -658,12 +658,18 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
                 ? KsUploadBox.pickupPartialHeight
                 : KsUploadBox.pickupHeight,
             cameraSize: KsUploadBox.cameraSmall,
-            onTap: _photos.length >= _maxPhotos
-                ? () {}
-                : () async {
-                    final f = await pickPhoto(context);
-                    if (f != null) setState(() => _photos.add(f));
-                  },
+            doneLabel: l.photosAdded(
+              Fmt.digits(context, '${_photos.length}'),
+            ),
+            // Full: a new photo starts the set again ("আবার তুলতে চাপুন").
+            onTap: () async {
+              final f = await pickPhoto(context);
+              if (f == null) return;
+              setState(() {
+                if (_photos.length >= _maxPhotos) _photos.clear();
+                _photos.add(f);
+              });
+            },
           ),
           const SizedBox(height: AppSpacing.block),
           KsTextField(

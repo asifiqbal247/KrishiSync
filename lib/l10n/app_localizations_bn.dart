@@ -5233,6 +5233,14 @@ class AppLocalizationsBn extends AppLocalizations {
   String get voiceSearchNoWords => 'কিছু শোনা যায়নি, আবার মাইক চেপে বলুন';
 
   @override
+  String get photoAdded => '✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন';
+
+  @override
+  String photosAdded(String n) {
+    return '✓ $nটি ছবি যোগ হয়েছে · আবার তুলতে চাপুন';
+  }
+
+  @override
   String get pdfMaking => 'PDF তৈরি হচ্ছে...';
 
   @override

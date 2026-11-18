@@ -5240,6 +5240,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Didn\'t catch that. Tap the mic and try again';
 
   @override
+  String get photoAdded => '✓ Photo added · tap to take again';
+
+  @override
+  String photosAdded(String n) {
+    return '✓ $n photos added · tap to take again';
+  }
+
+  @override
   String get pdfMaking => 'Making PDF...';
 
   @override

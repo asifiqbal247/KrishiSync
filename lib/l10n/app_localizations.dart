@@ -9193,6 +9193,18 @@ abstract class AppLocalizations {
   /// **'কিছু শোনা যায়নি, আবার মাইক চেপে বলুন'**
   String get voiceSearchNoWords;
 
+  /// No description provided for @photoAdded.
+  ///
+  /// In bn, this message translates to:
+  /// **'✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন'**
+  String get photoAdded;
+
+  /// No description provided for @photosAdded.
+  ///
+  /// In bn, this message translates to:
+  /// **'✓ {n}টি ছবি যোগ হয়েছে · আবার তুলতে চাপুন'**
+  String photosAdded(String n);
+
   /// No description provided for @pdfMaking.
   ///
   /// In bn, this message translates to:

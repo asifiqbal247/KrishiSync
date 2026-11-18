@@ -156,10 +156,6 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
               networkUrl: _photo == null
                   ? ref.read(currentUserProvider).value?.photoUrl
                   : null,
-              height: _photo == null &&
-                      ref.read(currentUserProvider).value?.photoUrl == null
-                  ? KsUploadBox.defaultHeight
-                  : KsUploadBox.previewHeight,
               onTap: _pickPhoto,
             ),
             const SizedBox(height: AppSpacing.block),

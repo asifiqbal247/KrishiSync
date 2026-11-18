@@ -1515,6 +1515,8 @@
   "voiceSearchExampleSub": "“Tomato”, “Potato Netrokona”",
   "voiceSearchUnavailable": "Voice search is not available on this phone",
   "voiceSearchNoWords": "Didn't catch that. Tap the mic and try again",
+  "photoAdded": "✓ Photo added · tap to take again",
+  "photosAdded": "✓ {n} photos added · tap to take again",
   "pdfMaking": "Making PDF...",
   "locAskTitle": "Allow location to share your truck's position",
   "locAskBody": "During a trip, the buyer and farmer see your truck on the map. In the next box, tap “While using the app”.",

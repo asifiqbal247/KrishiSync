@@ -517,15 +517,16 @@ class _QualityState extends ConsumerState<QualityCheckScreen> {
     Widget photoBox(List<File> list, String label) => KsUploadBox(
       label: label,
       file: list.isEmpty ? null : list.last,
-      height: list.isEmpty
-          ? KsUploadBox.defaultHeight
-          : KsUploadBox.previewHeight,
-      onTap: list.length >= _maxPhotos
-          ? () {}
-          : () async {
-              final f = await pickPhoto(context);
-              if (f != null) setState(() => list.add(f));
-            },
+      doneLabel: l.photosAdded(Fmt.digits(context, '${list.length}')),
+      // Full: a new photo starts the set again ("আবার তুলতে চাপুন").
+      onTap: () async {
+        final f = await pickPhoto(context);
+        if (f == null) return;
+        setState(() {
+          if (list.length >= _maxPhotos) list.clear();
+          list.add(f);
+        });
+      },
     );
 
     Widget reasonPills() => Wrap(

@@ -181,13 +181,10 @@ class _ReportIssueState extends ConsumerState<ReportIssueScreen> {
           KsUploadBox(
             label: l.reportPhoto,
             file: _photo,
-            // Figma 203 (about an order): 227 high; 204 (general): small
-            // box, bigger once a photo is picked.
+            // Figma 203 (about an order): 227 high; 204 (general): 61.
             height: widget.orderId != null
                 ? KsUploadBox.reportHeight
-                : _photo == null
-                ? KsUploadBox.defaultHeight
-                : KsUploadBox.previewHeight,
+                : KsUploadBox.defaultHeight,
             onTap: () async {
               final f = await pickPhoto(context);
               if (f != null) setState(() => _photo = f);
@@ -451,7 +448,7 @@ class _ReportDetailState extends ConsumerState<ReportDetailScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.photo),
               child: SizedBox(
-                height: KsUploadBox.previewHeight * 1.5,
+                height: 200, // inset photo height used across the app
                 child: KsNetImage(url: r.photoUrl),
               ),
             ),
