@@ -612,7 +612,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get listingSuccessBody =>
-      'Buyers can see your crop and make offers after a moderator approves it.';
+      'Buyers can now see your crop and make offers.';
 
   @override
   String get listingSuccessCta => 'See my listings';
@@ -669,7 +669,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get markSold => 'Mark as sold';
 
   @override
-  String get modHomeQueue => 'Listings waiting for approval';
+  String get modHomeQueue => 'New listings';
 
   @override
   String get modStatPending => 'Pending listings';
@@ -681,7 +681,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modStatHidden => 'Rejected listings';
 
   @override
-  String get modListingsTitle => 'Review listings';
+  String get modListingsTitle => 'All listings';
 
   @override
   String get modReviewTitle => 'Review listing';
@@ -693,7 +693,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modApprove => 'Approve';
 
   @override
-  String get modReject => 'Reject';
+  String get modReject => 'Hide listing';
 
   @override
   String get modRejectReasonTitle => 'Reason for rejecting';
@@ -705,10 +705,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modApproved => 'Listing approved';
 
   @override
-  String get modRejected => 'Listing rejected';
+  String get modRejected => 'Listing hidden';
 
   @override
-  String get modQueueEmpty => 'No listings waiting';
+  String get modQueueEmpty => 'No listings yet';
 
   @override
   String submittedOn(String date) {
@@ -1382,7 +1382,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String nListingRejected(String crop) {
-    return 'Listing rejected: $crop';
+    return 'Listing hidden: $crop';
   }
 
   @override
@@ -2672,7 +2672,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsS2Body =>
-      'Farmers must give the correct crop, grade, quantity, price and photo. Buyers see a listing only after a moderator approves it. Wrong or misleading listings may be hidden, and repeated cases can lead to suspension.';
+      'Farmers must give the correct crop, grade, quantity, price and photo. Buyers see a listing as soon as it is published. A moderator may hide wrong or misleading listings, and repeated cases can lead to suspension.';
 
   @override
   String get termsS3Title => '3. Safe payment and fees';
@@ -3375,7 +3375,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get q1Farmer =>
-      'Tap the \"Sell\" button → add crop, grade, quantity and photo → set price, date and pickup address → publish. After a moderator approves it, buyers can see it and make offers.';
+      'Tap the \"Sell\" button → add crop, grade, quantity and photo → set price, date and pickup address → publish. Buyers can see it and make offers right away.';
 
   @override
   String get q2 => 'How you get paid';
@@ -5236,6 +5236,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Voice search is not available on this phone';
 
   @override
+  String get voiceSearchNoWords =>
+      'Didn\'t catch that. Tap the mic and try again';
+
+  @override
   String get pdfMaking => 'Making PDF...';
 
   @override
@@ -6195,9 +6199,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get listingUpdated => 'Listing updated';
-
-  @override
-  String get listingSentForReview => 'Changes sent for approval';
 
   @override
   String get commonNo => 'No';

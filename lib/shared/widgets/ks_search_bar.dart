@@ -9,10 +9,11 @@ import 'voice_search_sheet.dart';
 
 /// HF/Search Bar (292:59): surface fill, radius 16, h 48, pl 16 pr 8, gap 8,
 /// 20px search icon (border/strong), Regular 14 text, 32px white mic circle
-/// with 16px brand mic. The mic does voice search (V1): the words go into
-/// the field ([onChanged] + [onSubmitted]); a button-style bar passes them
-/// to [onVoice] instead (e.g. open the search screen with them).
-class KsSearchBar extends StatelessWidget {
+/// with 16px brand mic. The mic does voice search (V1): the words are typed
+/// into the field (cursor at the end, keyboard open) so the user can edit
+/// them and then press search. A button-style bar passes them to [onVoice]
+/// instead (e.g. open the search screen with them).
+class KsSearchBar extends StatefulWidget {
   const KsSearchBar({
     super.key,
     required this.hint,
@@ -38,8 +39,30 @@ class KsSearchBar extends StatelessWidget {
   final bool readOnly;
   final bool autofocus;
 
+  @override
+  State<KsSearchBar> createState() => _KsSearchBarState();
+}
+
+class _KsSearchBarState extends State<KsSearchBar> {
   static const _searchIcon = 20.0;
   static const _micBox = 32.0;
+  final _focus = FocusNode();
+
+  String get hint => widget.hint;
+  TextEditingController? get controller => widget.controller;
+  ValueChanged<String>? get onChanged => widget.onChanged;
+  ValueChanged<String>? get onSubmitted => widget.onSubmitted;
+  VoidCallback? get onTap => widget.onTap;
+  VoidCallback? get onMic => widget.onMic;
+  ValueChanged<String>? get onVoice => widget.onVoice;
+  bool get readOnly => widget.readOnly;
+  bool get autofocus => widget.autofocus;
+
+  @override
+  void dispose() {
+    _focus.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +84,11 @@ class KsSearchBar extends StatelessWidget {
       onVoice!(words);
       return;
     }
-    if (controller == null) return;
+    if (controller == null || !mounted) return;
     controller!.text = words;
     controller!.selection = TextSelection.collapsed(offset: words.length);
     onChanged?.call(words);
-    onSubmitted?.call(words);
+    if (!readOnly) _focus.requestFocus();
   }
 
   Widget _bar(BuildContext context, bool asButton) {
@@ -89,6 +112,7 @@ class KsSearchBar extends StatelessWidget {
               ignoring: asButton,
               child: TextField(
                 controller: controller,
+                focusNode: _focus,
                 onChanged: onChanged,
                 onSubmitted: onSubmitted,
                 onTap: onTap,

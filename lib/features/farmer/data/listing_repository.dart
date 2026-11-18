@@ -6,7 +6,8 @@ import '../../auth/domain/app_user.dart';
 import '../domain/listing.dart';
 
 abstract interface class ListingRepository {
-  /// Creates a listing with status `pending` (needs moderator approval).
+  /// Creates a listing that is live at once (status `active`). Moderators
+  /// can still hide it later.
   Future<String> create({
     required AppUser farmer,
     required ListingDraft draft,
@@ -33,9 +34,9 @@ abstract interface class ListingRepository {
     required DateTime availableFrom,
   });
 
-  /// Farmer edit of photos, crop, grade or pickup: back to "pending" for a
-  /// moderator (firestore.rules enforce this).
-  Future<void> editForReview(
+  /// Farmer edit of photos, crop, grade or pickup: saved and live at once
+  /// (status `active`, moderator note cleared).
+  Future<void> edit(
     Listing x,
     ListingDraft draft,
     List<String> photoUrls,
@@ -79,7 +80,7 @@ class FirestoreListingRepository implements ListingRepository {
       'availableFrom': Timestamp.fromDate(draft.availableFrom),
       'pickup': draft.pickup.toMap(),
       'photos': photoUrls,
-      'status': ListingStatus.pending.name,
+      'status': ListingStatus.active.name,
       'createdAt': FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
     });
@@ -168,7 +169,7 @@ class FirestoreListingRepository implements ListingRepository {
   });
 
   @override
-  Future<void> editForReview(
+  Future<void> edit(
     Listing x,
     ListingDraft draft,
     List<String> photoUrls,
@@ -183,7 +184,7 @@ class FirestoreListingRepository implements ListingRepository {
     'availableFrom': Timestamp.fromDate(draft.availableFrom),
     'pickup': draft.pickup.toMap(),
     'photos': photoUrls,
-    'status': ListingStatus.pending.name,
+    'status': ListingStatus.active.name,
     'moderationNote': null,
     'updatedAt': FieldValue.serverTimestamp(),
   });

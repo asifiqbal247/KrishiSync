@@ -108,7 +108,7 @@ service cloud.firestore {
 
       allow create: if isActive() && myRole() == 'farmer'
         && request.resource.data.farmerId == uid()
-        && request.resource.data.status == 'pending'
+        && request.resource.data.status == 'active'
         && validListing(request.resource.data);
 
       // Buyer placing an order: may only lower availableKg (sold at 0).
@@ -148,15 +148,15 @@ service cloud.firestore {
           && validListing(request.resource.data);
       }
 
-      // Farmer edit of anything else (photos, crop, grade, pickup): the
-      // listing must go back to 'pending' for a moderator.
-      function isOwnerReviewEdit() {
+      // Farmer edit of anything else (photos, crop, grade, pickup): live at
+      // once (no moderator approval). A hidden listing is published again.
+      function isOwnerFullEdit() {
         return isOwner() && isActive()
           && resource.data.status in ['pending', 'active', 'hidden']
           && onlyChanges(['photos', 'cropKey', 'cropNameBn', 'cropNameEn', 'category',
                           'grade', 'pickup', 'pricePerKg', 'quantityKg', 'availableKg',
                           'availableFrom', 'status', 'moderationNote', 'updatedAt'])
-          && request.resource.data.status == 'pending'
+          && request.resource.data.status == 'active'
           && validListing(request.resource.data);
       }
 
@@ -169,12 +169,12 @@ service cloud.firestore {
       }
 
       allow update: if isBuyerStockDecrease() || isCancelRestock()
-        || isOwnerQuickEdit() || isOwnerReviewEdit() || isOwnerWithdraw()
+        || isOwnerQuickEdit() || isOwnerFullEdit() || isOwnerWithdraw()
         || (isOwner() && isActive()
           && onlyChanges(['status', 'updatedAt'])
           && resource.data.status == 'active'
           && request.resource.data.status == 'sold')
-        // Moderator / admin: approve or reject with a note.
+        // Moderator / admin: hide with a note (or restore).
         || (isMod()
           && onlyChanges(['status', 'moderationNote', 'moderatedBy', 'moderatedAt', 'updatedAt'])
           && request.resource.data.status in ['active', 'hidden']

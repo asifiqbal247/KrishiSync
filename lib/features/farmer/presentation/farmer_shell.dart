@@ -25,7 +25,7 @@ class _FarmerShellState extends State<FarmerShell> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final pages = [
-      const FarmerHomeScreen(),
+      FarmerHomeScreen(onOpenProfile: () => setState(() => _index = 3)),
       // 28 Marketplace (farmers compare other listings' prices).
       MarketplaceScreen(onBack: () => setState(() => _index = 0)),
       const OrdersTab(),

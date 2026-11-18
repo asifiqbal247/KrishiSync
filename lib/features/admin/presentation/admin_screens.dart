@@ -520,7 +520,7 @@ class ModerationHub extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l = AppLocalizations.of(context);
     final pending = ref
-        .watch(listingCountProvider(ListingStatus.pending))
+        .watch(listingCountProvider(ListingStatus.active))
         .value;
     final reports = ref.watch(openReportsCountProvider).value;
     final verify = ref.watch(pendingVerifyCountProvider);
@@ -532,7 +532,7 @@ class ModerationHub extends ConsumerWidget {
         children: [
           KsListItem(
             title: l.modListingsTitle,
-            subtitle: l.placeDate(l.modStatPending, _n(context, pending ?? 0)),
+            subtitle: l.placeDate(l.modStatActive, _n(context, pending ?? 0)),
             onTap: () => context.push(Routes.moderatorQueue),
           ),
           const SizedBox(height: AppSpacing.block),

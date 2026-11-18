@@ -26,7 +26,10 @@ import '../domain/listing.dart';
 /// 15 Farmer Home (Figma 292:2169). Sections without data yet (offers,
 /// orders, demands, payments) appear in later Parts when their data exists.
 class FarmerHomeScreen extends ConsumerWidget {
-  const FarmerHomeScreen({super.key});
+  const FarmerHomeScreen({super.key, this.onOpenProfile});
+
+  /// Avatar tap: open the Profile tab.
+  final VoidCallback? onOpenProfile;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,7 +55,7 @@ class FarmerHomeScreen extends ConsumerWidget {
         photoUrl: me?.photoUrl,
         onBell: () => context.push(Routes.notifications),
         onChat: () => context.push(Routes.messages),
-        onAvatar: () {},
+        onAvatar: () => onOpenProfile?.call(),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(

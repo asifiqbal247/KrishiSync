@@ -611,7 +611,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get listingSuccessBody =>
-      'মডারেটর অনুমোদনের পর ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।';
+      'এখন ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।';
 
   @override
   String get listingSuccessCta => 'আমার তালিকা দেখুন';
@@ -668,7 +668,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get markSold => 'বিক্রি হয়েছে চিহ্নিত করুন';
 
   @override
-  String get modHomeQueue => 'অনুমোদনের অপেক্ষায় থাকা তালিকা';
+  String get modHomeQueue => 'নতুন তালিকা';
 
   @override
   String get modStatPending => 'অপেক্ষমাণ তালিকা';
@@ -680,7 +680,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get modStatHidden => 'বাতিল তালিকা';
 
   @override
-  String get modListingsTitle => 'তালিকা যাচাই';
+  String get modListingsTitle => 'সব তালিকা';
 
   @override
   String get modReviewTitle => 'তালিকা পর্যালোচনা';
@@ -692,7 +692,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get modApprove => 'অনুমোদন দিন';
 
   @override
-  String get modReject => 'বাতিল করুন';
+  String get modReject => 'তালিকা লুকান';
 
   @override
   String get modRejectReasonTitle => 'বাতিলের কারণ';
@@ -704,10 +704,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get modApproved => 'তালিকা অনুমোদিত হয়েছে';
 
   @override
-  String get modRejected => 'তালিকা বাতিল হয়েছে';
+  String get modRejected => 'তালিকা লুকানো হয়েছে';
 
   @override
-  String get modQueueEmpty => 'অপেক্ষমাণ কোনো তালিকা নেই';
+  String get modQueueEmpty => 'কোনো তালিকা নেই';
 
   @override
   String submittedOn(String date) {
@@ -1381,7 +1381,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String nListingRejected(String crop) {
-    return 'তালিকা বাতিল: $crop';
+    return 'তালিকা লুকানো হয়েছে: $crop';
   }
 
   @override
@@ -2666,7 +2666,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get termsS2Body =>
-      'কৃষক সঠিক ফসল, মান, পরিমাণ, দাম ও ছবি দেবেন। মডারেটর অনুমোদনের পরই তালিকা ক্রেতারা দেখতে পান। ভুল বা প্রতারণামূলক তালিকা লুকানো হতে পারে এবং বারবার হলে অ্যাকাউন্ট স্থগিত হতে পারে।';
+      'কৃষক সঠিক ফসল, মান, পরিমাণ, দাম ও ছবি দেবেন। প্রকাশ করলেই তালিকা ক্রেতারা দেখতে পান। ভুল বা প্রতারণামূলক তালিকা মডারেটর লুকিয়ে দিতে পারেন এবং বারবার হলে অ্যাকাউন্ট স্থগিত হতে পারে।';
 
   @override
   String get termsS3Title => '৩. নিরাপদ লেনদেন ও ফি';
@@ -3369,7 +3369,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get q1Farmer =>
-      'নিচের \"বিক্রি\" বোতাম চাপুন → ফসল, মান, পরিমাণ ও ছবি দিন → দাম, তারিখ ও পিকআপ ঠিকানা দিন → প্রকাশ করুন। মডারেটর অনুমোদনের পর ক্রেতারা দেখতে ও অফার দিতে পারবেন।';
+      'নিচের \"বিক্রি\" বোতাম চাপুন → ফসল, মান, পরিমাণ ও ছবি দিন → দাম, তারিখ ও পিকআপ ঠিকানা দিন → প্রকাশ করুন। প্রকাশ করলেই ক্রেতারা দেখতে ও অফার দিতে পারবেন।';
 
   @override
   String get q2 => 'কীভাবে পেমেন্ট পাবেন';
@@ -5230,6 +5230,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get voiceSearchUnavailable => 'এই ফোনে ভয়েস সার্চ চালু নেই';
 
   @override
+  String get voiceSearchNoWords => 'কিছু শোনা যায়নি, আবার মাইক চেপে বলুন';
+
+  @override
   String get pdfMaking => 'PDF তৈরি হচ্ছে...';
 
   @override
@@ -6188,9 +6191,6 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get listingUpdated => 'বিজ্ঞাপন হালনাগাদ হয়েছে';
-
-  @override
-  String get listingSentForReview => 'পরিবর্তন অনুমোদনের জন্য পাঠানো হয়েছে';
 
   @override
   String get commonNo => 'না';

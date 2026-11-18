@@ -183,9 +183,8 @@ class _VehicleScreenState extends ConsumerState<VehicleScreen> {
             label: l.truckPhoto,
             file: _photo,
             networkUrl: _photo == null ? me.vehicle?.photoUrl : null,
-            height: _photo == null && me.vehicle?.photoUrl == null
-                ? KsUploadBox.defaultHeight
-                : KsUploadBox.previewHeight,
+            // Figma 194: 175 high, with or without a photo.
+            height: KsUploadBox.truckHeight,
             onTap: () async {
               final f = await pickPhoto(context);
               if (f != null) setState(() => _photo = f);

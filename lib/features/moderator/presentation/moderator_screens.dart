@@ -44,7 +44,7 @@ class ModeratorShell extends StatefulWidget {
 
 class _ModeratorShellState extends State<ModeratorShell> {
   int _index = 0;
-  ListingStatus _queueFilter = ListingStatus.pending;
+  ListingStatus _queueFilter = ListingStatus.active;
 
   void _openQueue(ListingStatus s) => setState(() {
     _queueFilter = s;
@@ -84,7 +84,8 @@ class _ModeratorShellState extends State<ModeratorShell> {
   }
 }
 
-/// M1 Moderator Home: stat cards + pending queue preview.
+/// M1 Moderator Home: stat cards + newest listings (listings go live
+/// without approval; moderators hide bad ones).
 class ModeratorHome extends ConsumerWidget {
   const ModeratorHome({super.key, required this.onOpenQueue, this.onOpenTab});
   final void Function(ListingStatus) onOpenQueue;
@@ -98,7 +99,7 @@ class ModeratorHome extends ConsumerWidget {
     final me = ref.watch(currentUserProvider).value;
     String count(ListingStatus s) =>
         Fmt.digits(context, '${ref.watch(listingCountProvider(s)).value ?? 0}');
-    final pending = ref.watch(listingsByStatusProvider(ListingStatus.pending));
+    final recent = ref.watch(listingsByStatusProvider(ListingStatus.active));
 
     return Scaffold(
       backgroundColor: AppColors.bgPage,
@@ -107,7 +108,7 @@ class ModeratorHome extends ConsumerWidget {
         photoUrl: me?.photoUrl,
         onBell: () => context.push(Routes.notifications),
         onChat: () => context.push(Routes.messages),
-        onAvatar: () {},
+        onAvatar: () => onOpenTab?.call(4),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(
@@ -121,24 +122,12 @@ class ModeratorHome extends ConsumerWidget {
             children: [
               Expanded(
                 child: KsStatCard(
-                  label: l.modStatPending,
-                  value: count(ListingStatus.pending),
-                  onTap: () => onOpenQueue(ListingStatus.pending),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.lg),
-              Expanded(
-                child: KsStatCard(
                   label: l.modStatActive,
                   value: count(ListingStatus.active),
                   onTap: () => onOpenQueue(ListingStatus.active),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.block),
-          Row(
-            children: [
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: KsStatCard(
                   label: l.modStatHidden,
@@ -146,7 +135,11 @@ class ModeratorHome extends ConsumerWidget {
                   onTap: () => onOpenQueue(ListingStatus.hidden),
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.block),
+          Row(
+            children: [
               Expanded(
                 child: KsStatCard(
                   label: l.modStatReports,
@@ -157,11 +150,7 @@ class ModeratorHome extends ConsumerWidget {
                   onTap: () => onOpenTab?.call(2),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.block),
-          Row(
-            children: [
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: KsStatCard(
                   label: l.modStatVerify,
@@ -172,18 +161,16 @@ class ModeratorHome extends ConsumerWidget {
                   onTap: () => onOpenTab?.call(3),
                 ),
               ),
-              const SizedBox(width: AppSpacing.lg),
-              const Expanded(child: SizedBox.shrink()),
             ],
           ),
           const SizedBox(height: AppSpacing.block),
           KsSectionHeader(
             title: l.modHomeQueue,
             actionLabel: l.commonSeeAll,
-            onAction: () => onOpenQueue(ListingStatus.pending),
+            onAction: () => onOpenQueue(ListingStatus.active),
           ),
           const SizedBox(height: AppSpacing.block),
-          ...pending.when(
+          ...recent.when(
             loading: () => [const KsSkeletonList(rows: 3, padded: false)],
             error: (_, _) => [Text(l.errorGeneric)],
             data: (list) => list.isEmpty
@@ -232,7 +219,6 @@ class ListingsQueue extends ConsumerWidget {
     final l = AppLocalizations.of(context);
     final async = ref.watch(listingsByStatusProvider(filter));
     final pills = [
-      (ListingStatus.pending, l.statusPending),
       (ListingStatus.active, l.statusActive),
       (ListingStatus.hidden, l.statusHidden),
     ];
@@ -254,7 +240,7 @@ class ListingsQueue extends ConsumerWidget {
               child: Row(
                 children: [
                   for (final (s, label) in pills) ...[
-                    if (s != ListingStatus.pending)
+                    if (s != ListingStatus.active)
                       const SizedBox(width: AppSpacing.sm),
                     KsPill(
                       label: label,
@@ -310,7 +296,7 @@ class ListingsQueuePage extends StatefulWidget {
 }
 
 class _ListingsQueuePageState extends State<ListingsQueuePage> {
-  ListingStatus _f = ListingStatus.pending;
+  ListingStatus _f = ListingStatus.active;
 
   @override
   Widget build(BuildContext context) => ListingsQueue(
@@ -320,7 +306,7 @@ class _ListingsQueuePageState extends State<ListingsQueuePage> {
   );
 }
 
-/// M3 Listing Review: listing like screen 23 + farmer + Approve / Reject.
+/// M3 Listing Review: listing like screen 23 + farmer + Hide (with a note).
 class ListingReviewScreen extends ConsumerStatefulWidget {
   const ListingReviewScreen({super.key, required this.listingId});
   final String listingId;
@@ -333,35 +319,6 @@ class ListingReviewScreen extends ConsumerStatefulWidget {
 class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
   static const _imageHeight = 160.0;
   bool _busy = false;
-
-  Future<void> _approve() async {
-    final l = AppLocalizations.of(context);
-    final uid = ref.read(currentUserProvider).value?.uid;
-    if (uid == null) return;
-    setState(() => _busy = true);
-    try {
-      await ref.read(listingRepositoryProvider).approve(widget.listingId, uid);
-      final x = ref.read(listingProvider(widget.listingId)).value;
-      if (x != null) {
-        await ref
-            .read(tradeRepositoryProvider)
-            .notify(
-              toUid: x.farmerId,
-              fromUid: uid,
-              type: 'listing_approved',
-              params: {'cropBn': x.cropNameBn, 'cropEn': x.cropNameEn},
-              link: 'listing:${x.id}',
-            );
-      }
-      if (!mounted) return;
-      KsToast.show(context, l.modApproved);
-      context.pop();
-    } catch (_) {
-      if (mounted) KsToast.show(context, l.errorPermission);
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
-  }
 
   Future<void> _reject() async {
     final l = AppLocalizations.of(context);
@@ -522,28 +479,12 @@ class _ListingReviewScreenState extends ConsumerState<ListingReviewScreen> {
                 const SizedBox(
                   height: AppSpacing.block + AppSpacing.xs + AppSpacing.block,
                 ),
-                Row(
-                  children: [
-                    if (x.status != ListingStatus.hidden)
-                      Expanded(
-                        child: KsButton.outline(
-                          label: l.modReject,
-                          onPressed: _busy ? null : _reject,
-                        ),
-                      ),
-                    if (x.status != ListingStatus.hidden &&
-                        x.status != ListingStatus.active)
-                      const SizedBox(width: AppSpacing.md),
-                    if (x.status != ListingStatus.active)
-                      Expanded(
-                        child: KsButton(
-                          label: l.modApprove,
-                          loading: _busy,
-                          onPressed: _approve,
-                        ),
-                      ),
-                  ],
-                ),
+                if (x.status != ListingStatus.hidden)
+                  KsButton.outline(
+                    label: l.modReject,
+                    loading: _busy,
+                    onPressed: _reject,
+                  ),
               ],
             ),
           );

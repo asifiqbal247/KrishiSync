@@ -153,7 +153,6 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
 
   Widget _box(String key, String label, AppUser me) {
     final url = me.verificationDocs[key];
-    final has = _photos[key] != null || (url ?? '').isNotEmpty;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -161,12 +160,12 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
           label: label,
           file: _photos[key],
           networkUrl: _photos[key] == null ? url : null,
-          // Figma 69 (updated): NID boxes 162, selfie 130, same with a
-          // photo. 139 (business licence) keeps the small box.
+          // Figma 69 (updated): NID boxes 162, selfie 130; 139 licence
+          // 229. Same height with a photo.
           height: switch (key) {
             'nidFront' || 'nidBack' => _nidH,
             'selfie' => _selfieH,
-            _ => has ? KsUploadBox.previewHeight : _boxH,
+            _ => _boxH,
           },
           onTap: () => _pick(key),
         ),
@@ -182,8 +181,8 @@ class _VerificationState extends ConsumerState<VerificationScreen> {
     );
   }
 
-  /// Figma 139: the licence box is 92 high.
-  static const _boxH = 92.0;
+  /// Figma 139 (updated): the licence box is 229 high.
+  static const _boxH = KsUploadBox.deliveryHeight;
 
   /// Figma 69: the two NID boxes are 162 high, the selfie box 130.
   static const _nidH = 162.0;

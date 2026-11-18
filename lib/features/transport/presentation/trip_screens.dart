@@ -535,9 +535,8 @@ class _PodState extends ConsumerState<ProofOfDeliveryScreen> {
           KsUploadBox(
             label: l.podPhoto,
             file: _photo,
-            height: _photo == null
-                ? KsUploadBox.defaultHeight
-                : KsUploadBox.previewHeight,
+            // Figma 167 / 172: 260 high, with or without a photo.
+            height: KsUploadBox.podHeight,
             onTap: () async {
               final f = await pickPhoto(context);
               if (f != null) setState(() => _photo = f);

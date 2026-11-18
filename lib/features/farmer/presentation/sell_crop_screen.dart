@@ -37,9 +37,8 @@ enum _When { today, tomorrow, date }
 class SellCropScreen extends ConsumerStatefulWidget {
   const SellCropScreen({super.key, this.edit});
 
-  /// Edit an existing listing (same 3 steps, prefilled). Price, quantity
-  /// and date save instantly; photos / crop / grade / pickup go back to
-  /// the moderator ("pending").
+  /// Edit an existing listing (same 3 steps, prefilled). All changes are
+  /// live at once; no moderator approval.
   final Listing? edit;
 
   @override
@@ -92,12 +91,12 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
     }
   }
 
-  /// Edit mode: anything a moderator must see again changed?
-  bool get _needsReview {
+  /// Edit mode: more than price / quantity / date changed? (A listing
+  /// that is not active yet is always saved in full, which publishes it.)
+  bool get _fullEdit {
     final x = widget.edit!;
     final (bn, _, _) = _cropNames;
-    // A rejected listing always goes back to the moderator.
-    return x.status == ListingStatus.hidden ||
+    return x.status != ListingStatus.active ||
         _cropKey != x.cropKey ||
         bn != x.cropNameBn ||
         _grade != x.grade ||
@@ -226,7 +225,7 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
           setState(() => _error = l.listingHasOrder);
           return;
         }
-        if (!_needsReview) {
+        if (!_fullEdit) {
           await repo.quickEdit(
             x,
             availableKg: _num(_qty)!,
@@ -263,9 +262,9 @@ class _SellCropScreenState extends ConsumerState<SellCropScreen> {
         pickup: _pickup!,
       );
       if (x != null) {
-        await repo.editForReview(x, draft, urls);
+        await repo.edit(x, draft, urls);
         if (!mounted) return;
-        KsToast.show(context, l.listingSentForReview);
+        KsToast.show(context, l.listingUpdated);
         context.pop();
         return;
       }

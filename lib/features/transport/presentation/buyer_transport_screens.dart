@@ -553,9 +553,8 @@ class _ReceiveState extends ConsumerState<ReceiveDeliveryScreen> {
           KsUploadBox(
             label: l.deliveryPhotoOpt,
             file: _photo,
-            height: _photo == null
-                ? KsUploadBox.defaultHeight
-                : KsUploadBox.previewHeight,
+            // Figma 110 / 114: the photo box fills the free space (229).
+            height: KsUploadBox.deliveryHeight,
             onTap: () async {
               final f = await pickPhoto(context);
               if (f != null) setState(() => _photo = f);

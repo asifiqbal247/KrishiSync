@@ -11,6 +11,7 @@ import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
+import '../../../shared/widgets/ks_hero.dart';
 import '../../../shared/widgets/ks_button.dart';
 import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_pill.dart';
@@ -328,21 +329,8 @@ class NavigationScreen extends ConsumerWidget {
                 ),
                 onTap: openGoogle,
               ),
-              // Shade so the white app bar reads over the map.
-              IgnorePointer(
-                child: Container(
-                  height:
-                      AppSizes.appBarHeight +
-                      MediaQuery.of(context).padding.top,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [AppColors.heroShade, AppColors.heroShadeEnd],
-                    ),
-                  ),
-                ),
-              ),
+              // Figma 156-158 "Top Shade": 140 high.
+              const KsHeroShade(figmaHeight: 140),
             ],
           ),
           Expanded(

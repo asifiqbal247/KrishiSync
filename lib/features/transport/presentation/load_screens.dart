@@ -653,9 +653,11 @@ class _LoadWeighState extends ConsumerState<LoadWeighScreen> {
               Fmt.digits(context, '$_maxPhotos'),
             ),
             file: _photos.isEmpty ? null : _photos.last,
-            height: _photos.isEmpty
-                ? KsUploadBox.defaultHeight
-                : KsUploadBox.previewHeight,
+            // Figma 163: 167 high; 164 (partial load): 157. 28px camera.
+            height: partialKg != null
+                ? KsUploadBox.pickupPartialHeight
+                : KsUploadBox.pickupHeight,
+            cameraSize: KsUploadBox.cameraSmall,
             onTap: _photos.length >= _maxPhotos
                 ? () {}
                 : () async {

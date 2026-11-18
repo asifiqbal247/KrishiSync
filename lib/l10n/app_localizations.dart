@@ -1211,7 +1211,7 @@ abstract class AppLocalizations {
   /// No description provided for @listingSuccessBody.
   ///
   /// In bn, this message translates to:
-  /// **'মডারেটর অনুমোদনের পর ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।'**
+  /// **'এখন ক্রেতারা আপনার ফসল দেখতে ও অফার দিতে পারবেন।'**
   String get listingSuccessBody;
 
   /// No description provided for @listingSuccessCta.
@@ -1313,7 +1313,7 @@ abstract class AppLocalizations {
   /// No description provided for @modHomeQueue.
   ///
   /// In bn, this message translates to:
-  /// **'অনুমোদনের অপেক্ষায় থাকা তালিকা'**
+  /// **'নতুন তালিকা'**
   String get modHomeQueue;
 
   /// No description provided for @modStatPending.
@@ -1337,7 +1337,7 @@ abstract class AppLocalizations {
   /// No description provided for @modListingsTitle.
   ///
   /// In bn, this message translates to:
-  /// **'তালিকা যাচাই'**
+  /// **'সব তালিকা'**
   String get modListingsTitle;
 
   /// No description provided for @modReviewTitle.
@@ -1361,7 +1361,7 @@ abstract class AppLocalizations {
   /// No description provided for @modReject.
   ///
   /// In bn, this message translates to:
-  /// **'বাতিল করুন'**
+  /// **'তালিকা লুকান'**
   String get modReject;
 
   /// No description provided for @modRejectReasonTitle.
@@ -1385,13 +1385,13 @@ abstract class AppLocalizations {
   /// No description provided for @modRejected.
   ///
   /// In bn, this message translates to:
-  /// **'তালিকা বাতিল হয়েছে'**
+  /// **'তালিকা লুকানো হয়েছে'**
   String get modRejected;
 
   /// No description provided for @modQueueEmpty.
   ///
   /// In bn, this message translates to:
-  /// **'অপেক্ষমাণ কোনো তালিকা নেই'**
+  /// **'কোনো তালিকা নেই'**
   String get modQueueEmpty;
 
   /// No description provided for @submittedOn.
@@ -2567,7 +2567,7 @@ abstract class AppLocalizations {
   /// No description provided for @nListingRejected.
   ///
   /// In bn, this message translates to:
-  /// **'তালিকা বাতিল: {crop}'**
+  /// **'তালিকা লুকানো হয়েছে: {crop}'**
   String nListingRejected(String crop);
 
   /// No description provided for @nListingApprovedBody.
@@ -4883,7 +4883,7 @@ abstract class AppLocalizations {
   /// No description provided for @termsS2Body.
   ///
   /// In bn, this message translates to:
-  /// **'কৃষক সঠিক ফসল, মান, পরিমাণ, দাম ও ছবি দেবেন। মডারেটর অনুমোদনের পরই তালিকা ক্রেতারা দেখতে পান। ভুল বা প্রতারণামূলক তালিকা লুকানো হতে পারে এবং বারবার হলে অ্যাকাউন্ট স্থগিত হতে পারে।'**
+  /// **'কৃষক সঠিক ফসল, মান, পরিমাণ, দাম ও ছবি দেবেন। প্রকাশ করলেই তালিকা ক্রেতারা দেখতে পান। ভুল বা প্রতারণামূলক তালিকা মডারেটর লুকিয়ে দিতে পারেন এবং বারবার হলে অ্যাকাউন্ট স্থগিত হতে পারে।'**
   String get termsS2Body;
 
   /// No description provided for @termsS3Title.
@@ -6119,7 +6119,7 @@ abstract class AppLocalizations {
   /// No description provided for @q1Farmer.
   ///
   /// In bn, this message translates to:
-  /// **'নিচের \"বিক্রি\" বোতাম চাপুন → ফসল, মান, পরিমাণ ও ছবি দিন → দাম, তারিখ ও পিকআপ ঠিকানা দিন → প্রকাশ করুন। মডারেটর অনুমোদনের পর ক্রেতারা দেখতে ও অফার দিতে পারবেন।'**
+  /// **'নিচের \"বিক্রি\" বোতাম চাপুন → ফসল, মান, পরিমাণ ও ছবি দিন → দাম, তারিখ ও পিকআপ ঠিকানা দিন → প্রকাশ করুন। প্রকাশ করলেই ক্রেতারা দেখতে ও অফার দিতে পারবেন।'**
   String get q1Farmer;
 
   /// No description provided for @q2.
@@ -9187,6 +9187,12 @@ abstract class AppLocalizations {
   /// **'এই ফোনে ভয়েস সার্চ চালু নেই'**
   String get voiceSearchUnavailable;
 
+  /// No description provided for @voiceSearchNoWords.
+  ///
+  /// In bn, this message translates to:
+  /// **'কিছু শোনা যায়নি, আবার মাইক চেপে বলুন'**
+  String get voiceSearchNoWords;
+
   /// No description provided for @pdfMaking.
   ///
   /// In bn, this message translates to:
@@ -10830,12 +10836,6 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বিজ্ঞাপন হালনাগাদ হয়েছে'**
   String get listingUpdated;
-
-  /// No description provided for @listingSentForReview.
-  ///
-  /// In bn, this message translates to:
-  /// **'পরিবর্তন অনুমোদনের জন্য পাঠানো হয়েছে'**
-  String get listingSentForReview;
 
   /// No description provided for @commonNo.
   ///

@@ -181,7 +181,11 @@ class _ReportIssueState extends ConsumerState<ReportIssueScreen> {
           KsUploadBox(
             label: l.reportPhoto,
             file: _photo,
-            height: _photo == null
+            // Figma 203 (about an order): 227 high; 204 (general): small
+            // box, bigger once a photo is picked.
+            height: widget.orderId != null
+                ? KsUploadBox.reportHeight
+                : _photo == null
                 ? KsUploadBox.defaultHeight
                 : KsUploadBox.previewHeight,
             onTap: () async {

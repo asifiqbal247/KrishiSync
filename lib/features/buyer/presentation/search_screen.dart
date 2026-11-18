@@ -46,8 +46,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         ref.read(sharedPrefsProvider).getStringList(_recentKey) ?? const [];
     final q = widget.initialQuery;
     if (q != null && q.isNotEmpty) {
+      // Voice words from a home screen: shown for editing; saved to
+      // "recent" only when the user presses search.
       _q.text = q;
-      WidgetsBinding.instance.addPostFrameCallback((_) => _remember(q));
+      _q.selection = TextSelection.collapsed(offset: q.length);
     }
   }
 

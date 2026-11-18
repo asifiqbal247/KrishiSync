@@ -19,11 +19,22 @@ class KsUploadBox extends StatelessWidget {
     this.networkUrl,
     this.height = defaultHeight,
     this.uploading = false,
+    this.cameraSize = _camera,
   });
 
   static const defaultHeight = 61.4;
   static const previewHeight = 120.0;
+
+  /// Figma box heights (360×800 frame; the box fills the free space).
+  static const deliveryHeight = 229.0; // 110, 114, 139
+  static const reportHeight = 227.0; // 203
+  static const podHeight = 260.0; // 167, 172
+  static const truckHeight = 175.0; // 194
+  static const pickupHeight = 167.0; // 163
+  static const pickupPartialHeight = 157.0; // 164
+
   static const _camera = 32.0;
+  static const cameraSmall = 28.0; // 163, 164
   static const _dash = 1.2;
 
   final String label;
@@ -32,6 +43,7 @@ class KsUploadBox extends StatelessWidget {
   final String? networkUrl;
   final double height;
   final bool uploading;
+  final double cameraSize;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +78,7 @@ class KsUploadBox extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(AppImages.cameraUpload,
-                            width: _camera, height: _camera),
+                            width: cameraSize, height: cameraSize),
                         const SizedBox(height: AppSpacing.label),
                         Text(label,
                             style: AppTypography.bodySmallEmphasis.normal
