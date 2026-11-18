@@ -21,6 +21,7 @@ import '../../l10n/app_localizations.dart';
 import '../services/bd_location_service.dart';
 import '../widgets/app_icon.dart';
 import '../widgets/ks_app_bar.dart';
+import '../widgets/ks_avatar_edit.dart';
 import '../widgets/ks_blocks.dart';
 import '../widgets/ks_button.dart';
 import '../widgets/ks_dialogs.dart';
@@ -135,14 +136,18 @@ class SimpleProfileTab extends ConsumerWidget {
         ),
         children: [
           KsListItem(
-            thumb: KsNetImage(
-              url: me.photoUrl,
-              thumbSize: KsListItem.thumbSize.round(),
-              fallbackAsset: switch (role) {
-                UserRole.buyer => AppUi.avatarBuyer,
-                UserRole.transporter => AppUi.avatarDriver,
-                _ => AppUi.avatarFarmer,
-              },
+            // Tap the picture (camera badge) to change it right here.
+            thumb: KsAvatarEdit(
+              uid: me.uid,
+              child: KsNetImage(
+                url: me.photoUrl,
+                thumbSize: KsListItem.thumbSize.round(),
+                fallbackAsset: switch (role) {
+                  UserRole.buyer => AppUi.avatarBuyer,
+                  UserRole.transporter => AppUi.avatarDriver,
+                  _ => AppUi.avatarFarmer,
+                },
+              ),
             ),
             title: me.name,
             subtitle: district.isEmpty

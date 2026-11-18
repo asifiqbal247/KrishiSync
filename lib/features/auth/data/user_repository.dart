@@ -23,7 +23,11 @@ abstract interface class UserRepository {
     required UserLocation location,
     String? photoUrl,
     String? nidNumber,
+    Map<String, String>? business,
   });
+
+  /// Profile tab camera badge: new photo only.
+  Future<void> setPhoto(String uid, String photoUrl);
 
   Future<void> setLanguage(String uid, String language);
 
@@ -124,15 +128,27 @@ class FirestoreUserRepository implements UserRepository {
     required UserLocation location,
     String? photoUrl,
     String? nidNumber,
+    Map<String, String>? business,
   }) =>
       _doc(uid).update({
         'name': name.trim(),
         'location': location.toMap(),
         'photoUrl': ?photoUrl,
+        // A new NID or business info must be checked again.
         if (nidNumber != null && nidNumber.trim().isNotEmpty) ...{
           'nidNumber': nidNumber.trim(),
           'verification': 'pending',
         },
+        if (business != null) ...{
+          'business': business,
+          'verification': 'pending',
+        },
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+  @override
+  Future<void> setPhoto(String uid, String photoUrl) => _doc(uid).update({
+        'photoUrl': photoUrl,
         'updatedAt': FieldValue.serverTimestamp(),
       });
 

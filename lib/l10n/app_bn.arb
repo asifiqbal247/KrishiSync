@@ -1826,6 +1826,8 @@
   "mpSearchHint": "ফসল খুঁজুন",
   "mpWholesale": "পাইকারি বাজার দর",
   "mpUpdated": "আপডেট: {when}",
+  "mpUpdatedDam": "সূত্র: DAM · {when}",
+  "@mpUpdatedDam": {"placeholders": {"when": {"type": "String"}}},
   "@mpUpdated": {
     "placeholders": {
       "when": {
@@ -4006,6 +4008,8 @@
   "voiceSearchUnavailable": "এই ফোনে ভয়েস সার্চ চালু নেই",
   "voiceSearchNoWords": "কিছু শোনা যায়নি, আবার মাইক চেপে বলুন",
   "photoAdded": "✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন",
+  "photoUpdated": "ছবি পরিবর্তন হয়েছে",
+  "changePhoto": "ছবি পরিবর্তন করুন",
   "photosAdded": "✓ {n}টি ছবি যোগ হয়েছে · আবার তুলতে চাপুন",
   "@photosAdded": {"placeholders": {"n": {"type": "String"}}},
   "pdfMaking": "PDF তৈরি হচ্ছে...",

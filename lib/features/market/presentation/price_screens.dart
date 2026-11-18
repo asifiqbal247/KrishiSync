@@ -108,7 +108,10 @@ class _MarketPricesState extends ConsumerState<MarketPricesScreen> {
                           style: AppTypography.bodySmallStrong.normal)),
                   if (latest != null)
                     Text(
-                        l.mpUpdated(Fmt.digits(
+                        // Live DAM prices name their source.
+                        (prices.any((p) => p.fromDam)
+                            ? l.mpUpdatedDam
+                            : l.mpUpdated)(Fmt.digits(
                             context,
                             '${Fmt.date(context, latest)} '
                             '${DateFormat('H:mm').format(latest)}')),

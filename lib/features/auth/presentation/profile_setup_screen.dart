@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../app/router.dart';
+import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_dimens.dart';
 import '../../../core/theme/app_typography.dart';
@@ -36,7 +37,11 @@ class ProfileSetupScreen extends ConsumerStatefulWidget {
 class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   final _name = TextEditingController();
   final _nid = TextEditingController();
+  final _bizName = TextEditingController();
+  final _license = TextEditingController();
+  final _tin = TextEditingController();
   File? _photo;
+  String? _nidError;
   UserLocation? _location;
   bool _saving = false;
   String? _nameError;
@@ -50,6 +55,9 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
     if (me != null) {
       _name.text = me.name;
       _nid.text = me.nidNumber ?? '';
+      _bizName.text = me.business?['name'] ?? '';
+      _license.text = me.business?['licenseNo'] ?? '';
+      _tin.text = me.business?['tin'] ?? '';
       if (me.location.isComplete) _location = me.location;
     }
   }
@@ -58,6 +66,9 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
   void dispose() {
     _name.dispose();
     _nid.dispose();
+    _bizName.dispose();
+    _license.dispose();
+    _tin.dispose();
     super.dispose();
   }
 
@@ -88,8 +99,27 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
       _locationError =
           (_location?.isComplete ?? false) ? null : l.commonRequired;
       _error = null;
+      final nid = Fmt.latinDigits(_nid.text.trim());
+      _nidError = nid.isEmpty || RegExp(r'^(\d{10}|\d{17})$').hasMatch(nid)
+          ? null
+          : l.errNid;
     });
-    if (_nameError != null || _locationError != null) return;
+    if (_nameError != null || _locationError != null || _nidError != null) {
+      return;
+    }
+    final me = ref.read(currentUserProvider).value;
+    final nid = Fmt.latinDigits(_nid.text.trim());
+    // Editing: send NID / business info only when changed (goes back to
+    // the moderator for verification).
+    final nidChanged = nid != (me?.nidNumber ?? '');
+    final biz = {
+      'name': _bizName.text.trim(),
+      'licenseNo': _license.text.trim(),
+      'tin': Fmt.latinDigits(_tin.text.trim()),
+    };
+    final old = me?.business ?? const <String, String>{};
+    final bizChanged = _isBuyer &&
+        biz.entries.any((e) => e.value != (old[e.key] ?? ''));
 
     final uid = ref.read(authRepositoryProvider).currentUser?.uid;
     if (uid == null) return;
@@ -107,8 +137,8 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
             name: _name.text,
             location: _location!,
             photoUrl: photoUrl,
-            // Verification has its own screen (69/139) when editing.
-            nidNumber: widget.editing ? null : _nid.text,
+            nidNumber: !widget.editing || nidChanged ? nid : null,
+            business: widget.editing && bizChanged ? biz : null,
           );
       if (widget.editing && mounted) {
         KsToast.show(context, l.profileSaved);
@@ -123,6 +153,9 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
       if (mounted) setState(() => _saving = false);
     }
   }
+
+  bool get _isBuyer =>
+      ref.read(currentUserProvider).value?.role == UserRole.buyer;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +221,7 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
               value: loc?.village,
               onTap: _pickLocation,
             ),
-            if (!widget.editing) ...[
+            if (!(widget.editing && _isBuyer)) ...[
               const SizedBox(height: AppSpacing.block),
               KsTextField(
                 label: l.profileNid,
@@ -196,6 +229,25 @@ class _ProfileSetupScreenState extends ConsumerState<ProfileSetupScreen> {
                 controller: _nid,
                 keyboardType: TextInputType.number,
                 maxLength: 17,
+                errorText: _nidError,
+              ),
+            ],
+            // Buyer business info (same fields as 139), editable here too.
+            if (widget.editing && _isBuyer) ...[
+              const SizedBox(height: AppSpacing.block),
+              KsTextField(label: l.bizName, controller: _bizName),
+              const SizedBox(height: AppSpacing.block),
+              KsTextField(
+                label: l.tradeLicense,
+                hint: 'TRAD/DNCC/012345',
+                controller: _license,
+              ),
+              const SizedBox(height: AppSpacing.block),
+              KsTextField(
+                label: l.tinLabel,
+                hint: l.tinHint,
+                controller: _tin,
+                keyboardType: TextInputType.number,
               ),
             ],
             if (_error != null) ...[

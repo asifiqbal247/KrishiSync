@@ -4970,6 +4970,12 @@ abstract class AppLocalizations {
   /// **'আপডেট: {when}'**
   String mpUpdated(String when);
 
+  /// No description provided for @mpUpdatedDam.
+  ///
+  /// In bn, this message translates to:
+  /// **'সূত্র: DAM · {when}'**
+  String mpUpdatedDam(String when);
+
   /// No description provided for @pctChange.
   ///
   /// In bn, this message translates to:
@@ -9198,6 +9204,18 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন'**
   String get photoAdded;
+
+  /// No description provided for @photoUpdated.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি পরিবর্তন হয়েছে'**
+  String get photoUpdated;
+
+  /// No description provided for @changePhoto.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি পরিবর্তন করুন'**
+  String get changePhoto;
 
   /// No description provided for @photosAdded.
   ///

@@ -2718,6 +2718,11 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
+  String mpUpdatedDam(String when) {
+    return 'সূত্র: DAM · $when';
+  }
+
+  @override
   String pctChange(String sign, String pct) {
     return '$sign$pct%';
   }
@@ -5234,6 +5239,12 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get photoAdded => '✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন';
+
+  @override
+  String get photoUpdated => 'ছবি পরিবর্তন হয়েছে';
+
+  @override
+  String get changePhoto => 'ছবি পরিবর্তন করুন';
 
   @override
   String photosAdded(String n) {

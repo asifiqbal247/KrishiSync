@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../features/auth/data/user_repository.dart';
+import '../services/dam_price_service.dart';
 
-/// Firestore: marketPrices/{cropKey} — typed in daily by Admin (A5).
+/// A crop's market price per kg. Live from DAM (Department of Agricultural
+/// Marketing, see [DamPriceService]) for the crops it reports; otherwise
+/// Firestore marketPrices/{cropKey}, typed in by Admin (A5).
 class MarketPrice {
   const MarketPrice({
     required this.cropKey,
@@ -12,7 +17,11 @@ class MarketPrice {
     required this.max,
     required this.prevPrice,
     this.updatedAt,
+    this.fromDam = false,
   });
+
+  /// True when the price came live from DAM.
+  final bool fromDam;
 
   final String cropKey;
   final num price;
@@ -192,15 +201,95 @@ class PricePoint {
 final marketPriceRepositoryProvider = Provider<MarketPriceRepository>(
     (ref) => MarketPriceRepository(ref.watch(firestoreProvider)));
 
-final marketPricesProvider = StreamProvider<List<MarketPrice>>(
-    (ref) => ref.watch(marketPriceRepositoryProvider).watchAll());
+final damPriceServiceProvider = Provider((ref) => DamPriceService());
 
-final marketPriceProvider = StreamProvider.family<MarketPrice?, String>(
-    (ref, key) => ref.watch(marketPriceRepositoryProvider).watch(key));
+/// How often the live DAM prices are fetched again.
+const _damRefresh = Duration(minutes: 30);
 
+/// Latest DAM prices: the newest day with data is "today", the day before
+/// it with data gives the change. Empty when offline (admin prices used).
+final damPricesProvider = FutureProvider<Map<String, MarketPrice>>((ref) async {
+  final timer = Timer(_damRefresh, ref.invalidateSelf);
+  ref.onDispose(timer.cancel);
+  final dam = ref.watch(damPriceServiceProvider);
+  final now = DateTime.now();
+  final days = <Map<int, DamPrice>>[];
+  for (var i = 0; i < DamPriceService.lookBackDays && days.length < 2; i++) {
+    try {
+      final d = await dam.day(now.subtract(Duration(days: i)));
+      if (d.isNotEmpty) days.add(d);
+    } catch (_) {
+      if (i == 0) return const {}; // offline: don't wait on more requests
+    }
+  }
+  return {
+    for (final key in DamPriceService.commodities.keys)
+      if (DamPriceService.pick(days.firstOrNull ?? const {}, key)
+          case final cur?)
+        key: MarketPrice(
+          cropKey: key,
+          price: cur.mid.round(),
+          min: cur.min.round(),
+          max: cur.max.round(),
+          prevPrice: (days.length > 1
+                      ? DamPriceService.pick(days[1], key)
+                      : null)
+                  ?.mid
+                  .round() ??
+              cur.mid.round(),
+          updatedAt: cur.updatedAt,
+          fromDam: true,
+        ),
+  };
+});
+
+/// All market prices: live DAM where available, admin prices otherwise.
+final marketPricesProvider = StreamProvider<List<MarketPrice>>((ref) {
+  final dam = ref.watch(damPricesProvider).value ?? const {};
+  return ref.watch(marketPriceRepositoryProvider).watchAll().map(
+        (admin) => {for (final p in admin) p.cropKey: p, ...dam}.values.toList(),
+      );
+});
+
+final marketPriceProvider = Provider.family<AsyncValue<MarketPrice?>, String>(
+  (ref, key) => ref
+      .watch(marketPricesProvider)
+      .whenData((all) => all.where((p) => p.cropKey == key).firstOrNull),
+);
+
+/// Price trend (30): one point per day. DAM crops use DAM's daily reports
+/// (cached per day); others use the admin's Firestore history.
 final priceHistoryProvider =
-    StreamProvider.family<List<PricePoint>, (String, int)>((ref, k) =>
-        ref.watch(marketPriceRepositoryProvider).watchHistory(k.$1, k.$2));
+    StreamProvider.family<List<PricePoint>, (String, int)>((ref, k) {
+  final (cropKey, days) = k;
+  final repo = ref.watch(marketPriceRepositoryProvider);
+  if (!DamPriceService.commodities.containsKey(cropKey)) {
+    return repo.watchHistory(cropKey, days);
+  }
+  final dam = ref.watch(damPriceServiceProvider);
+  final now = DateTime.now();
+  Future<List<PricePoint>> load() async {
+    final all = await Future.wait([
+      for (var i = days; i >= 0; i--)
+        () async {
+          final d = now.subtract(Duration(days: i));
+          try {
+            final p = DamPriceService.pick(await dam.day(d), cropKey);
+            return p == null
+                ? null
+                : PricePoint(DateTime(d.year, d.month, d.day), p.mid.round());
+          } catch (_) {
+            return null;
+          }
+        }(),
+    ]);
+    return all.whereType<PricePoint>().toList();
+  }
+
+  return Stream.fromFuture(load()).asyncExpand(
+    (pts) => pts.isEmpty ? repo.watchHistory(cropKey, days) : Stream.value(pts),
+  );
+});
 
 final priceAlertProvider =
     StreamProvider.family<PriceAlert?, String>((ref, cropKey) {
