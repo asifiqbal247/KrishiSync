@@ -130,7 +130,11 @@ class _FarmerLoadState extends ConsumerState<FarmerLoadScreen> {
     // Make the farmer's loading code once a truck is booked.
     if (!_codeAsked && o.transporterId != null) {
       _codeAsked = true;
-      ref.read(transportRepositoryProvider).ensureLoadCode(o.id);
+      // Offline: try again next time the screen is built.
+      ref
+          .read(transportRepositoryProvider)
+          .ensureLoadCode(o.id)
+          .catchError((_) => _codeAsked = false);
     }
     final loaded = farmerLoaded(o);
     if (loaded) return _loadedView(context, o, me);

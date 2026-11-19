@@ -120,6 +120,8 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                                 RegExp(r'[0-9০-৯]')),
                           ],
                           onChanged: (v) {
+                            // Typing again removes the red "wrong code".
+                            ref.read(phoneAuthProvider.notifier).clearError();
                             if (v.length == _len) _verify();
                           },
                         ),

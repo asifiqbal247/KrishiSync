@@ -57,10 +57,19 @@ class FirebaseAuthRepository implements AuthRepository {
       forceResendingToken: resendToken,
       timeout: const Duration(seconds: 60),
       verificationCompleted: (cred) async {
-        if (c.isCompleted) return;
+        // Android read the SMS itself. If the OTP screen is already open,
+        // sign in anyway: the router then leaves the OTP screen.
+        if (c.isCompleted) {
+          try {
+            if (_auth.currentUser == null) {
+              await _auth.signInWithCredential(cred);
+            }
+          } catch (_) {} // the user can still type the code
+          return;
+        }
         try {
           final r = await _auth.signInWithCredential(cred);
-          c.complete(AutoVerified(r.user!));
+          if (!c.isCompleted) c.complete(AutoVerified(r.user!));
         } on FirebaseAuthException catch (e) {
           if (!c.isCompleted) c.completeError(_map(e));
         }
@@ -73,8 +82,15 @@ class FirebaseAuthRepository implements AuthRepository {
       },
       codeAutoRetrievalTimeout: (_) {},
     );
-    return c.future;
+    // Firebase normally answers in seconds (a reCAPTCHA check can take
+    // longer); never leave the "send code" button spinning forever.
+    return c.future.timeout(
+      _sendTimeout,
+      onTimeout: () => throw AuthFailure(AuthErrorCode.network, 'send_timeout'),
+    );
   }
+
+  static const _sendTimeout = Duration(seconds: 120);
 
   @override
   Future<User> verifyCode(String verificationId, String smsCode) async {
