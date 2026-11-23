@@ -1516,6 +1516,7 @@
   "voiceSearchExampleSub": "“Tomato”, “Potato Netrokona”",
   "voiceSearchUnavailable": "Voice search is not available on this phone",
   "voiceSearchNoWords": "Didn't catch that. Tap the mic and try again",
+  "notifChannelName": "Golaghor alerts",
   "photoAdded": "✓ Photo added · tap to take again",
   "photoUpdated": "Photo updated",
   "changePhoto": "Change photo",

@@ -5238,6 +5238,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get voiceSearchNoWords => 'কিছু শোনা যায়নি, আবার মাইক চেপে বলুন';
 
   @override
+  String get notifChannelName => 'গোলাঘর বার্তা';
+
+  @override
   String get photoAdded => '✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন';
 
   @override

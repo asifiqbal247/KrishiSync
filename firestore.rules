@@ -103,8 +103,9 @@ service cloud.firestore {
           && d.pickup is map;
       }
 
+      // Sold listings stay readable so a buyer's cancel can put stock back.
       allow read: if signedIn()
-        && (resource.data.status == 'active' || isOwner() || isMod());
+        && (resource.data.status in ['active', 'sold'] || isOwner() || isMod());
 
       allow create: if isActive() && myRole() == 'farmer'
         && request.resource.data.farmerId == uid()

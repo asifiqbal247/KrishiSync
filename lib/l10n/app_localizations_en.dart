@@ -5245,6 +5245,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Didn\'t catch that. Tap the mic and try again';
 
   @override
+  String get notifChannelName => 'Golaghor alerts';
+
+  @override
   String get photoAdded => '✓ Photo added · tap to take again';
 
   @override

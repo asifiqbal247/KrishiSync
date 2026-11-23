@@ -9199,6 +9199,12 @@ abstract class AppLocalizations {
   /// **'কিছু শোনা যায়নি, আবার মাইক চেপে বলুন'**
   String get voiceSearchNoWords;
 
+  /// No description provided for @notifChannelName.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর বার্তা'**
+  String get notifChannelName;
+
   /// No description provided for @photoAdded.
   ///
   /// In bn, this message translates to:

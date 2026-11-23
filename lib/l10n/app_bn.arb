@@ -4007,6 +4007,7 @@
   "voiceSearchExampleSub": "“টমেটো”, “আলু নেত্রকোনা”",
   "voiceSearchUnavailable": "এই ফোনে ভয়েস সার্চ চালু নেই",
   "voiceSearchNoWords": "কিছু শোনা যায়নি, আবার মাইক চেপে বলুন",
+  "notifChannelName": "গোলাঘর বার্তা",
   "photoAdded": "✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন",
   "photoUpdated": "ছবি পরিবর্তন হয়েছে",
   "changePhoto": "ছবি পরিবর্তন করুন",

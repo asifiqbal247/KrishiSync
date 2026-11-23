@@ -515,8 +515,18 @@ class TradeRepository {
         ? null
         : _db.collection('listings').doc(o.listingId);
     final deliveryRef = _db.collection('deliveries').doc(o.id);
+    // Read the listing first, outside the transaction: the buyer may read it
+    // only while it is active or sold. Hidden / withdrawn stock is not put
+    // back, and must not block the cancel.
+    String? listingStatus;
+    if (listingRef != null) {
+      try {
+        listingStatus = (await listingRef.get()).data()?['status'] as String?;
+      } catch (_) {}
+    }
+    final restock = listingStatus == ListingStatus.active.name ||
+        listingStatus == ListingStatus.sold.name;
     await _db.runTransaction((tx) async {
-      final l = listingRef == null ? null : await tx.get(listingRef);
       final d = o.transportMode == TransportMode.platform
           ? await tx.get(deliveryRef)
           : null;
@@ -528,11 +538,10 @@ class TradeRepository {
         'cancelFee': fee,
         'updatedAt': now,
       });
-      if (l != null && l.exists) {
-        final avail = (l.data()!['availableKg'] as num? ?? 0) + o.quantityKg;
+      if (restock) {
         tx.update(listingRef!, {
-          'availableKg': avail,
-          if (l.data()!['status'] == ListingStatus.sold.name)
+          'availableKg': FieldValue.increment(o.quantityKg),
+          if (listingStatus == ListingStatus.sold.name)
             'status': ListingStatus.active.name,
           'lastCancelOrder': o.id,
           'updatedAt': now,

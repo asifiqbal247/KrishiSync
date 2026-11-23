@@ -8,6 +8,7 @@ import '../core/l10n/locale_controller.dart';
 import '../core/theme/app_theme.dart';
 import '../features/auth/data/auth_repository.dart';
 import '../features/auth/data/user_repository.dart';
+import '../features/trade/presentation/notification_popups.dart';
 import '../features/transport/data/live_location.dart';
 import '../shared/data/trade_stats_repository.dart';
 import '../l10n/app_localizations.dart';
@@ -43,6 +44,9 @@ class KrishiSyncApp extends ConsumerWidget {
       onGenerateTitle: (c) => AppLocalizations.of(c).appName,
       theme: AppTheme.light,
       routerConfig: router,
+      // Phone popups for new notifications (local; FCM after Blaze).
+      builder: (_, child) =>
+          NotificationPopups(child: child ?? const SizedBox.shrink()),
       // Before the user picks (screen 02) we show Bangla, as in Figma.
       locale: locale ?? const Locale('bn'),
       supportedLocales: supportedLocales,
