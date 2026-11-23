@@ -123,6 +123,23 @@ class _CallScreenState extends ConsumerState<CallScreen> {
             );
           },
           onUserOffline: (_, _, _) => _hangUp(),
+          // Wrong App ID, or the Agora project needs tokens (Secure mode):
+          // say so and hang up instead of "connecting" forever.
+          onConnectionStateChanged: (_, state, reason) {
+            const setup = {
+              ConnectionChangedReasonType.connectionChangedInvalidAppId,
+              ConnectionChangedReasonType.connectionChangedInvalidToken,
+              ConnectionChangedReasonType.connectionChangedTokenExpired,
+              ConnectionChangedReasonType.connectionChangedRejectedByServer,
+            };
+            if (setup.contains(reason) ||
+                state == ConnectionStateType.connectionStateFailed) {
+              if (mounted) {
+                KsToast.show(context, AppLocalizations.of(context).callNotReady);
+              }
+              _hangUp();
+            }
+          },
           onRemoteVideoStateChanged: (_, _, state, _, _) => setState(
             () => _remoteVideo =
                 state == RemoteVideoState.remoteVideoStateStarting ||
