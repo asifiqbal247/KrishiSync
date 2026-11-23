@@ -130,6 +130,19 @@ abstract final class AppColors {
   static const countBadgeText = white;
   static const countBadgeRing = bgPage;
 
+  /// Voice message player (not in Figma; Messenger-like). On my green
+  /// bubble: white parts; on the other person's grey bubble: brand parts.
+  static const voiceMineButton = white;
+  static const voiceMineIcon = green500;
+  static const voiceMinePlayed = white;
+  static const voiceMineRest = Color(0x73FFFFFF);
+  static const voiceMineChip = Color(0x33FFFFFF);
+  static const voiceTheirsButton = green500;
+  static const voiceTheirsIcon = white;
+  static const voiceTheirsPlayed = green500;
+  static const voiceTheirsRest = gray300;
+  static const voiceTheirsChip = white;
+
   /// 217–220 Video Call (Figma 412:6167).
   static const callBg = gray900;
   /// Round button, off: rgba(255,255,255,0.22); on: white.

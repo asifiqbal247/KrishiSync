@@ -5241,6 +5241,52 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifChannelName => 'গোলাঘর বার্তা';
 
   @override
+  String get msgUnsent => 'এই বার্তাটি মুছে ফেলা হয়েছে';
+
+  @override
+  String get msgUnsentMine => 'আপনি বার্তাটি মুছে ফেলেছেন';
+
+  @override
+  String get msgUnsend => 'সবার জন্য মুছে ফেলুন';
+
+  @override
+  String get msgUnsendSub => 'দুজনের চ্যাট থেকেই মুছে যাবে';
+
+  @override
+  String get msgDeleteMe => 'আমার জন্য মুছে ফেলুন';
+
+  @override
+  String get msgDeleteMeSub => 'শুধু আপনার চ্যাট থেকে সরবে';
+
+  @override
+  String get msgUnsendConfirm => 'বার্তাটি সবার জন্য মুছবেন?';
+
+  @override
+  String get msgUnsendConfirmBody =>
+      'দুজনের চ্যাট থেকেই মুছে যাবে। এটি আর ফেরত আনা যাবে না।';
+
+  @override
+  String get msgDeleteYes => 'মুছে ফেলুন';
+
+  @override
+  String get voiceRecordFailed =>
+      'রেকর্ড হয়নি। মাইক্রোফোন চেক করে আবার চেষ্টা করুন।';
+
+  @override
+  String get voicePlayFailed => 'ভয়েস বার্তাটি চালানো যায়নি';
+
+  @override
+  String get voicePlay => 'চালান';
+
+  @override
+  String get voicePause => 'থামান';
+
+  @override
+  String voiceSpeed(String speed) {
+    return 'গতি $speed';
+  }
+
+  @override
   String get updateTitle => 'নতুন আপডেট এসেছে';
 
   @override

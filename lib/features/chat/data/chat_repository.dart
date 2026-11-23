@@ -16,6 +16,7 @@ class ChatThread {
     this.lastVoice = false,
     this.lastFile = '',
     this.lastCall = '',
+    this.lastDeleted = false,
     this.lastAt,
   });
 
@@ -34,13 +35,17 @@ class ChatThread {
 
   /// The last message was a call log: voice | video, or ''.
   final String lastCall;
+
+  /// The last message was unsent.
+  final bool lastDeleted;
   final DateTime? lastAt;
 
   bool get hasMessages =>
       lastText.isNotEmpty ||
       lastVoice ||
       lastFile.isNotEmpty ||
-      lastCall.isNotEmpty;
+      lastCall.isNotEmpty ||
+      lastDeleted;
 
   String other(String me) =>
       members.firstWhere((m) => m != me, orElse: () => me);
@@ -63,6 +68,7 @@ class ChatThread {
       lastVoice: m['lastVoice'] == true,
       lastFile: m['lastFile'] as String? ?? '',
       lastCall: m['lastCall'] as String? ?? '',
+      lastDeleted: m['lastDeleted'] == true,
       lastAt: (m['lastAt'] as Timestamp?)?.toDate(),
     );
   }
@@ -73,8 +79,12 @@ class ChatMessage {
     this.from,
     this.text,
     this.at, {
+    this.id = '',
     this.voiceUrl,
     this.voiceSec,
+    this.voiceWave = const [],
+    this.deleted = false,
+    this.hiddenFor = const [],
     this.fileUrl,
     this.fileKind,
     this.fileName,
@@ -82,13 +92,24 @@ class ChatMessage {
     this.callResult,
     this.callSec,
   });
+  final String id;
   final String from;
   final String text;
   final DateTime? at;
 
+  /// Unsent for everyone: shows "এই বার্তাটি মুছে ফেলা হয়েছে".
+  final bool deleted;
+
+  /// People who deleted it for themselves only.
+  final List<String> hiddenFor;
+
   /// Voice message (V2): audio URL and length in seconds.
   final String? voiceUrl;
   final int? voiceSec;
+
+  /// Loudness bars (0–100) recorded with the voice message; empty for old
+  /// messages.
+  final List<int> voiceWave;
   bool get isVoice => voiceUrl != null;
 
   /// Attachment (216): image | video | doc, its URL and (doc) file name.
@@ -110,8 +131,17 @@ class ChatMessage {
       m['from'] as String? ?? '',
       m['text'] as String? ?? '',
       (m['at'] as Timestamp?)?.toDate(),
+      id: d.id,
       voiceUrl: m['voiceUrl'] as String?,
       voiceSec: (m['voiceSec'] as num?)?.toInt(),
+      voiceWave: [
+        for (final x in (m['voiceWave'] as List<dynamic>? ?? const []))
+          (x as num).toInt(),
+      ],
+      deleted: m['deleted'] == true,
+      hiddenFor: [
+        for (final x in (m['hiddenFor'] as List<dynamic>? ?? const [])) '$x',
+      ],
       fileUrl: m['fileUrl'] as String?,
       fileKind: m['fileKind'] as String?,
       fileName: m['fileName'] as String?,
@@ -185,6 +215,7 @@ class ChatRepository {
       'lastVoice': false,
       'lastFile': '',
       'lastCall': '',
+      'lastDeleted': false,
       'lastAt': now,
     });
     return b.commit();
@@ -195,6 +226,7 @@ class ChatRepository {
     String from, {
     required String url,
     required int seconds,
+    List<int> wave = const [],
   }) {
     final b = _db.batch();
     final now = FieldValue.serverTimestamp();
@@ -203,6 +235,7 @@ class ChatRepository {
       'text': '',
       'voiceUrl': url,
       'voiceSec': seconds,
+      if (wave.isNotEmpty) 'voiceWave': wave,
       'at': now,
     });
     b.update(_chats.doc(chatId), {
@@ -210,6 +243,7 @@ class ChatRepository {
       'lastVoice': true,
       'lastFile': '',
       'lastCall': '',
+      'lastDeleted': false,
       'lastAt': now,
     });
     return b.commit();
@@ -238,6 +272,7 @@ class ChatRepository {
       'lastVoice': false,
       'lastFile': kind,
       'lastCall': '',
+      'lastDeleted': false,
       'lastAt': now,
     });
     return b.commit();
@@ -267,10 +302,50 @@ class ChatRepository {
       'lastVoice': false,
       'lastFile': '',
       'lastCall': kind,
+      'lastDeleted': false,
       'lastAt': now,
     });
     return b.commit();
   }
+
+  /// Unsend for everyone (own message): the content is removed and the
+  /// bubble says it was deleted. [isLast]: also update the chat preview.
+  Future<void> unsend(String chatId, String messageId, {required bool isLast}) {
+    final b = _db.batch();
+    b.update(_chats.doc(chatId).collection('messages').doc(messageId), {
+      'deleted': true,
+      'text': '',
+      for (final k in _contentKeys) k: FieldValue.delete(),
+    });
+    if (isLast) {
+      b.update(_chats.doc(chatId), {
+        'lastText': '',
+        'lastVoice': false,
+        'lastFile': '',
+        'lastCall': '',
+        'lastDeleted': true,
+      });
+    }
+    return b.commit();
+  }
+
+  /// Delete for me: hidden only on [uid]'s side.
+  Future<void> hideForMe(String chatId, String messageId, String uid) =>
+      _chats.doc(chatId).collection('messages').doc(messageId).update({
+        'hiddenFor': FieldValue.arrayUnion([uid]),
+      });
+
+  static const _contentKeys = [
+    'voiceUrl',
+    'voiceSec',
+    'voiceWave',
+    'fileUrl',
+    'fileKind',
+    'fileName',
+    'callKind',
+    'callResult',
+    'callSec',
+  ];
 
   /// First admin, for "চ্যাটে সাহায্য নিন" (support chat).
   Future<AppUser?> supportUser() async {

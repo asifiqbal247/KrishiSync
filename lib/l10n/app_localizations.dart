@@ -9205,6 +9205,90 @@ abstract class AppLocalizations {
   /// **'গোলাঘর বার্তা'**
   String get notifChannelName;
 
+  /// No description provided for @msgUnsent.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই বার্তাটি মুছে ফেলা হয়েছে'**
+  String get msgUnsent;
+
+  /// No description provided for @msgUnsentMine.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি বার্তাটি মুছে ফেলেছেন'**
+  String get msgUnsentMine;
+
+  /// No description provided for @msgUnsend.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবার জন্য মুছে ফেলুন'**
+  String get msgUnsend;
+
+  /// No description provided for @msgUnsendSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'দুজনের চ্যাট থেকেই মুছে যাবে'**
+  String get msgUnsendSub;
+
+  /// No description provided for @msgDeleteMe.
+  ///
+  /// In bn, this message translates to:
+  /// **'আমার জন্য মুছে ফেলুন'**
+  String get msgDeleteMe;
+
+  /// No description provided for @msgDeleteMeSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু আপনার চ্যাট থেকে সরবে'**
+  String get msgDeleteMeSub;
+
+  /// No description provided for @msgUnsendConfirm.
+  ///
+  /// In bn, this message translates to:
+  /// **'বার্তাটি সবার জন্য মুছবেন?'**
+  String get msgUnsendConfirm;
+
+  /// No description provided for @msgUnsendConfirmBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'দুজনের চ্যাট থেকেই মুছে যাবে। এটি আর ফেরত আনা যাবে না।'**
+  String get msgUnsendConfirmBody;
+
+  /// No description provided for @msgDeleteYes.
+  ///
+  /// In bn, this message translates to:
+  /// **'মুছে ফেলুন'**
+  String get msgDeleteYes;
+
+  /// No description provided for @voiceRecordFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'রেকর্ড হয়নি। মাইক্রোফোন চেক করে আবার চেষ্টা করুন।'**
+  String get voiceRecordFailed;
+
+  /// No description provided for @voicePlayFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভয়েস বার্তাটি চালানো যায়নি'**
+  String get voicePlayFailed;
+
+  /// No description provided for @voicePlay.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালান'**
+  String get voicePlay;
+
+  /// No description provided for @voicePause.
+  ///
+  /// In bn, this message translates to:
+  /// **'থামান'**
+  String get voicePause;
+
+  /// No description provided for @voiceSpeed.
+  ///
+  /// In bn, this message translates to:
+  /// **'গতি {speed}'**
+  String voiceSpeed(String speed);
+
   /// No description provided for @updateTitle.
   ///
   /// In bn, this message translates to:

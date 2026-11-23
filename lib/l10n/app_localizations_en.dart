@@ -5248,6 +5248,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifChannelName => 'Golaghor alerts';
 
   @override
+  String get msgUnsent => 'This message was deleted';
+
+  @override
+  String get msgUnsentMine => 'You deleted this message';
+
+  @override
+  String get msgUnsend => 'Unsend for everyone';
+
+  @override
+  String get msgUnsendSub => 'Removed from both chats';
+
+  @override
+  String get msgDeleteMe => 'Delete for me';
+
+  @override
+  String get msgDeleteMeSub => 'Removed only from your chat';
+
+  @override
+  String get msgUnsendConfirm => 'Unsend for everyone?';
+
+  @override
+  String get msgUnsendConfirmBody =>
+      'It will be removed from both chats. This can\'t be undone.';
+
+  @override
+  String get msgDeleteYes => 'Delete';
+
+  @override
+  String get voiceRecordFailed =>
+      'Nothing was recorded. Check the microphone and try again.';
+
+  @override
+  String get voicePlayFailed => 'Couldn\'t play the voice message';
+
+  @override
+  String get voicePlay => 'Play';
+
+  @override
+  String get voicePause => 'Pause';
+
+  @override
+  String voiceSpeed(String speed) {
+    return 'Speed $speed';
+  }
+
+  @override
   String get updateTitle => 'Update available';
 
   @override

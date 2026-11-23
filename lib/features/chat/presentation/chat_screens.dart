@@ -18,6 +18,7 @@ import '../../../shared/widgets/app_icon.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
+import '../../../shared/widgets/ks_dialogs.dart';
 import '../../../shared/widgets/ks_list_item.dart';
 import '../../../shared/widgets/ks_net_image.dart';
 import '../../../shared/widgets/ks_pill.dart';
@@ -147,6 +148,7 @@ class _MessagesState extends ConsumerState<MessagesScreen> {
                     'image' => l.attachPhoto,
                     'video' => l.attachVideo,
                     'doc' => l.attachDoc,
+                    _ when c.lastDeleted => l.msgUnsent,
                     _ => switch (c.lastCall) {
                       'voice' => l.callLogVoice,
                       'video' => l.callLogVideo,
@@ -188,9 +190,16 @@ class _ChatState extends ConsumerState<ChatScreen> {
 
   final _player = AudioPlayer();
   StreamSubscription<Duration>? _posSub;
+  StreamSubscription<Duration>? _durSub;
   StreamSubscription<void>? _endSub;
-  String? _playing; // voice URL now playing
-  int _playedSec = 0;
+  String? _playing; // voice URL now loaded in the player
+  bool _paused = false;
+  Duration _pos = Duration.zero;
+  Duration _dur = Duration.zero;
+
+  /// Messenger-like speed chip: 1× → 1.5× → 2×.
+  static const _speeds = [1.0, 1.5, 2.0];
+  int _speed = 0;
   bool _sendingVoice = false;
   bool _sendingFile = false;
 
@@ -198,18 +207,26 @@ class _ChatState extends ConsumerState<ChatScreen> {
   void initState() {
     super.initState();
     _posSub = _player.onPositionChanged.listen((p) {
-      if (mounted && p.inSeconds != _playedSec) {
-        setState(() => _playedSec = p.inSeconds);
-      }
+      if (mounted) setState(() => _pos = p);
+    });
+    _durSub = _player.onDurationChanged.listen((d) {
+      if (mounted) setState(() => _dur = d);
     });
     _endSub = _player.onPlayerComplete.listen((_) {
-      if (mounted) setState(() => _playing = null);
+      if (mounted) {
+        setState(() {
+          _playing = null;
+          _paused = false;
+          _pos = Duration.zero;
+        });
+      }
     });
   }
 
   @override
   void dispose() {
     _posSub?.cancel();
+    _durSub?.cancel();
     _endSub?.cancel();
     _player.dispose();
     _text.dispose();
@@ -217,24 +234,121 @@ class _ChatState extends ConsumerState<ChatScreen> {
     super.dispose();
   }
 
-  /// Tap a voice bubble: play it, or stop it when it is playing.
-  Future<void> _toggle(String url) async {
-    if (_playing == url) {
-      await _player.stop();
-      if (mounted) setState(() => _playing = null);
-      return;
+  /// Play button: start, pause or resume this voice message.
+  Future<void> _playPause(String url) async {
+    try {
+      if (_playing == url) {
+        if (_paused) {
+          await _player.resume();
+        } else {
+          await _player.pause();
+        }
+        if (mounted) setState(() => _paused = !_paused);
+        return;
+      }
+      await _start(url);
+    } catch (_) {
+      _playFailed();
     }
+  }
+
+  Future<void> _start(String url, {Duration from = Duration.zero}) async {
+    await _player.stop();
     setState(() {
       _playing = url;
-      _playedSec = 0;
+      _paused = false;
+      _pos = from;
+      _dur = Duration.zero;
     });
+    await _player.play(UrlSource(url), position: from);
+    await _player.setPlaybackRate(_speeds[_speed]);
+  }
+
+  /// Tap / drag on the waveform: jump there ([f] = 0…1 of [seconds]).
+  Future<void> _seek(String url, double f, int seconds) async {
+    final total = _playing == url && _dur > Duration.zero
+        ? _dur
+        : Duration(seconds: seconds);
+    final to = total * f.clamp(0.0, 1.0);
     try {
-      await _player.play(UrlSource(url));
-    } catch (_) {
-      if (mounted) {
-        setState(() => _playing = null);
-        KsToast.show(context, AppLocalizations.of(context).errorGeneric);
+      if (_playing == url) {
+        await _player.seek(to);
+        setState(() => _pos = to);
+      } else {
+        await _start(url, from: to);
       }
+    } catch (_) {
+      _playFailed();
+    }
+  }
+
+  Future<void> _cycleSpeed() async {
+    setState(() => _speed = (_speed + 1) % _speeds.length);
+    try {
+      await _player.setPlaybackRate(_speeds[_speed]);
+    } catch (_) {}
+  }
+
+  void _playFailed() {
+    if (!mounted) return;
+    setState(() {
+      _playing = null;
+      _paused = false;
+    });
+    KsToast.show(context, AppLocalizations.of(context).voicePlayFailed);
+  }
+
+  /// Long-press a message: unsend for everyone (own) / delete for me.
+  Future<void> _messageMenu(ChatMessage m, String me, bool isLast) async {
+    final l = AppLocalizations.of(context);
+    final repo = ref.read(chatRepositoryProvider);
+    final mine = m.from == me;
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.screen),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (mine && !m.deleted) ...[
+                KsListItem(
+                  title: l.msgUnsend,
+                  subtitle: l.msgUnsendSub,
+                  showChevron: false,
+                  onTap: () => Navigator.pop(ctx, 'unsend'),
+                ),
+                const SizedBox(height: AppSpacing.md),
+              ],
+              KsListItem(
+                title: l.msgDeleteMe,
+                subtitle: l.msgDeleteMeSub,
+                showChevron: false,
+                onTap: () => Navigator.pop(ctx, 'me'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (choice == null || !mounted) return;
+    try {
+      if (choice == 'unsend') {
+        final ok = await showKsConfirm(
+          context,
+          title: l.msgUnsendConfirm,
+          body: l.msgUnsendConfirmBody,
+          noLabel: l.noGoBack,
+          yesLabel: l.msgDeleteYes,
+        );
+        if (!ok) return;
+        if (_playing == m.voiceUrl) await _player.stop();
+        await repo.unsend(widget.chatId, m.id, isLast: isLast);
+      } else {
+        await repo.hideForMe(widget.chatId, m.id, me);
+      }
+    } catch (_) {
+      if (mounted) KsToast.show(context, l.errorGeneric);
     }
   }
 
@@ -244,7 +358,7 @@ class _ChatState extends ConsumerState<ChatScreen> {
     FocusManager.instance.primaryFocus?.unfocus();
     final rec = await recordVoice(context);
     if (rec == null || !mounted) return;
-    final (file, sec) = rec;
+    final (:file, seconds: sec, :wave) = rec;
     setState(() => _sendingVoice = true);
     try {
       final url = await ref
@@ -252,7 +366,7 @@ class _ChatState extends ConsumerState<ChatScreen> {
           .uploadAudio(file, ownerUid: uid);
       await ref
           .read(chatRepositoryProvider)
-          .sendVoice(widget.chatId, uid, url: url, seconds: sec);
+          .sendVoice(widget.chatId, uid, url: url, seconds: sec, wave: wave);
     } catch (_) {
       if (mounted) {
         KsToast.show(context, AppLocalizations.of(context).errorGeneric);
@@ -340,6 +454,10 @@ class _ChatState extends ConsumerState<ChatScreen> {
     final me = ref.watch(currentUserProvider).value;
     final chat = ref.watch(chatProvider(widget.chatId)).value;
     final msgs = ref.watch(chatMessagesProvider(widget.chatId)).value;
+    // "Delete for me" hides a message only on this side.
+    final shown = msgs
+        ?.where((m) => me == null || !m.hiddenFor.contains(me.uid))
+        .toList();
     void soon() => KsToast.comingSoon(context);
     final width = MediaQuery.of(context).size.width;
     if (msgs != null) {
@@ -401,7 +519,7 @@ class _ChatState extends ConsumerState<ChatScreen> {
             Expanded(
               child: msgs == null || me == null
                   ? const KsSkeletonList(rows: 3)
-                  : msgs.isEmpty
+                  : shown!.isEmpty
                   ? Center(
                       child: Text(
                         l.chatStart,
@@ -413,17 +531,54 @@ class _ChatState extends ConsumerState<ChatScreen> {
                   : ListView.separated(
                       controller: _scroll,
                       padding: _pad,
-                      itemCount: msgs.length,
+                      itemCount: shown.length,
                       separatorBuilder: (_, _) =>
                           const SizedBox(height: AppSpacing.block),
                       itemBuilder: (_, i) {
-                        final m = msgs[i];
+                        final m = shown[i];
                         final mine = m.from == me.uid;
                         return Align(
                           alignment: mine
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
-                          child: m.isCall
+                          // Long-press: unsend for everyone / delete for me.
+                          child: GestureDetector(
+                            onLongPress: () => _messageMenu(
+                              m,
+                              me.uid,
+                              m.id == msgs.last.id,
+                            ),
+                            child: m.deleted
+                              ? _DeletedBubble(
+                                  mine: mine,
+                                  maxWidth: width * _bubbleMax,
+                                )
+                              : m.isVoice
+                              ? _VoiceBubble(
+                                  m: m,
+                                  mine: mine,
+                                  maxWidth: width * _bubbleMax,
+                                  active: _playing == m.voiceUrl,
+                                  playing:
+                                      _playing == m.voiceUrl && !_paused,
+                                  position: _playing == m.voiceUrl
+                                      ? _pos
+                                      : Duration.zero,
+                                  duration:
+                                      _playing == m.voiceUrl &&
+                                          _dur > Duration.zero
+                                      ? _dur
+                                      : Duration(seconds: m.voiceSec ?? 0),
+                                  speed: _speeds[_speed],
+                                  onPlay: () => _playPause(m.voiceUrl!),
+                                  onSeek: (f) => _seek(
+                                    m.voiceUrl!,
+                                    f,
+                                    m.voiceSec ?? 0,
+                                  ),
+                                  onSpeed: _cycleSpeed,
+                                )
+                              : m.isCall
                               ? _CallBubble(
                                   m: m,
                                   mine: mine,
@@ -449,46 +604,33 @@ class _ChatState extends ConsumerState<ChatScreen> {
                                               : m.fileUrl!,
                                         ),
                                 )
-                              : GestureDetector(
-                                  onTap: m.isVoice
-                                      ? () => _toggle(m.voiceUrl!)
-                                      : null,
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: width * _bubbleMax,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: AppSpacing.md,
-                                      vertical: AppSpacing.x10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: mine
-                                          ? AppColors.bgBrand
-                                          : AppColors.bgSurface,
-                                      borderRadius: BorderRadius.circular(
-                                        AppRadius.lg,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      m.isVoice
-                                          ? l.voiceMessageLen(
-                                              voiceLen(
-                                                context,
-                                                _playing == m.voiceUrl
-                                                    ? _playedSec
-                                                    : (m.voiceSec ?? 0),
-                                              ),
-                                            )
-                                          : m.text,
-                                      style: AppTypography.bodyMedium.normal
-                                          .withColor(
-                                            mine
-                                                ? AppColors.textOnBrand
-                                                : AppColors.textPrimary,
-                                          ),
+                              : Container(
+                                  constraints: BoxConstraints(
+                                    maxWidth: width * _bubbleMax,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.md,
+                                    vertical: AppSpacing.x10,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: mine
+                                        ? AppColors.bgBrand
+                                        : AppColors.bgSurface,
+                                    borderRadius: BorderRadius.circular(
+                                      AppRadius.lg,
                                     ),
                                   ),
+                                  child: Text(
+                                    m.text,
+                                    style: AppTypography.bodyMedium.normal
+                                        .withColor(
+                                          mine
+                                              ? AppColors.textOnBrand
+                                              : AppColors.textPrimary,
+                                        ),
+                                  ),
                                 ),
+                          ),
                         );
                       },
                     ),
@@ -599,6 +741,245 @@ class _RoundButton extends StatelessWidget {
 
 /// Chat attachment (216). Photo: rounded picture, tap for full screen.
 /// Video / document: bubble with the sheet's icon tile and a label.
+/// Unsent message: "এই বার্তাটি মুছে ফেলা হয়েছে" in an outlined bubble.
+class _DeletedBubble extends StatelessWidget {
+  const _DeletedBubble({required this.mine, required this.maxWidth});
+  final bool mine;
+  final double maxWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    return Container(
+      constraints: BoxConstraints(maxWidth: maxWidth),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.x10,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.bgPage,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.borderDefault),
+      ),
+      child: Text(
+        mine ? l.msgUnsentMine : l.msgUnsent,
+        style: AppTypography.bodyMedium.normal.withColor(
+          AppColors.textSecondary,
+        ),
+      ),
+    );
+  }
+}
+
+/// Voice message player (Messenger-like; not in Figma): play / pause,
+/// waveform of the recording (tap or drag to jump), time, speed chip.
+class _VoiceBubble extends StatelessWidget {
+  const _VoiceBubble({
+    required this.m,
+    required this.mine,
+    required this.maxWidth,
+    required this.active,
+    required this.playing,
+    required this.position,
+    required this.duration,
+    required this.speed,
+    required this.onPlay,
+    required this.onSeek,
+    required this.onSpeed,
+  });
+
+  final ChatMessage m;
+  final bool mine;
+  final double maxWidth;
+
+  /// This message is loaded in the player (playing or paused).
+  final bool active;
+  final bool playing;
+  final Duration position;
+  final Duration duration;
+  final double speed;
+  final VoidCallback onPlay;
+  final ValueChanged<double> onSeek;
+  final VoidCallback onSpeed;
+
+  static const _button = 32.0;
+  static const _icon = 16.0;
+  static const _waveH = 28.0;
+  static const _waveW = 132.0;
+  static const _chipH = 22.0;
+
+  /// Old messages have no recorded waveform: a steady pattern from the URL.
+  List<int> get _bars {
+    if (m.voiceWave.isNotEmpty) return m.voiceWave;
+    var x = (m.voiceUrl ?? '').hashCode & 0x7fffffff;
+    return [
+      for (var i = 0; i < voiceWaveBars; i++)
+        () {
+          x = (x * 1103515245 + 12345) & 0x7fffffff;
+          return 25 + x % 60;
+        }(),
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final total = duration.inMilliseconds;
+    final played = total == 0
+        ? 0.0
+        : (position.inMilliseconds / total).clamp(0.0, 1.0);
+    final fg = mine ? AppColors.textOnBrand : AppColors.textPrimary;
+    final shown = active ? position : duration;
+    final speedText = Fmt.digits(
+      context,
+      '${speed == speed.roundToDouble() ? speed.round() : speed}×',
+    );
+
+    return Container(
+      constraints: BoxConstraints(maxWidth: maxWidth),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.x10,
+      ),
+      decoration: BoxDecoration(
+        color: mine ? AppColors.bgBrand : AppColors.bgSurface,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Semantics(
+            button: true,
+            label: playing ? l.voicePause : l.voicePlay,
+            child: GestureDetector(
+              onTap: onPlay,
+              child: Container(
+                width: _button,
+                height: _button,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: mine
+                      ? AppColors.voiceMineButton
+                      : AppColors.voiceTheirsButton,
+                ),
+                child: AppIcon(
+                  playing ? AppIcons.pause : AppIcons.play,
+                  size: _icon,
+                  color: mine
+                      ? AppColors.voiceMineIcon
+                      : AppColors.voiceTheirsIcon,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Flexible(
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTapDown: (d) => onSeek(d.localPosition.dx / _waveW),
+              onHorizontalDragUpdate: (d) =>
+                  onSeek(d.localPosition.dx / _waveW),
+              child: SizedBox(
+                width: _waveW,
+                height: _waveH,
+                child: CustomPaint(
+                  painter: _WavePainter(
+                    bars: _bars,
+                    played: played,
+                    playedColor: mine
+                        ? AppColors.voiceMinePlayed
+                        : AppColors.voiceTheirsPlayed,
+                    restColor: mine
+                        ? AppColors.voiceMineRest
+                        : AppColors.voiceTheirsRest,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Text(
+            voiceLen(context, shown.inSeconds),
+            style: AppTypography.caption.normal.withColor(fg),
+          ),
+          if (active) ...[
+            const SizedBox(width: AppSpacing.sm),
+            Semantics(
+              button: true,
+              label: l.voiceSpeed(speedText),
+              child: GestureDetector(
+                onTap: onSpeed,
+                child: Container(
+                  height: _chipH,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                  ),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: mine
+                        ? AppColors.voiceMineChip
+                        : AppColors.voiceTheirsChip,
+                    borderRadius: BorderRadius.circular(AppRadius.full),
+                  ),
+                  child: Text(
+                    speedText,
+                    style: AppTypography.labelSmall.normal.withColor(fg),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Rounded bars; the played part (left) in [playedColor].
+class _WavePainter extends CustomPainter {
+  _WavePainter({
+    required this.bars,
+    required this.played,
+    required this.playedColor,
+    required this.restColor,
+  });
+
+  final List<int> bars;
+  final double played;
+  final Color playedColor;
+  final Color restColor;
+
+  static const _minBar = 0.12;
+  static const _gapRatio = 0.4;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (bars.isEmpty) return;
+    final slot = size.width / bars.length;
+    final barW = slot * (1 - _gapRatio);
+    final paint = Paint()..strokeCap = StrokeCap.round;
+    for (var i = 0; i < bars.length; i++) {
+      final h = size.height * (_minBar + (1 - _minBar) * bars[i] / 100);
+      final x = i * slot + slot / 2;
+      paint
+        ..color = (i + 0.5) / bars.length <= played ? playedColor : restColor
+        ..strokeWidth = barW;
+      canvas.drawLine(
+        Offset(x, (size.height - h) / 2 + barW / 2),
+        Offset(x, (size.height + h) / 2 - barW / 2),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_WavePainter old) =>
+      old.played != played ||
+      old.bars != bars ||
+      old.playedColor != playedColor;
+}
+
 /// Public profile page of a chat partner (info button), or null (staff).
 String? profileRouteFor(String? role, String uid) => switch (role) {
   'farmer' => Routes.buyerFarmer(uid),
