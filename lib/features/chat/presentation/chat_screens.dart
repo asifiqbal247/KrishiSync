@@ -353,6 +353,14 @@ class _ChatState extends ConsumerState<ChatScreen> {
             ? ''
             : chatName(l, chat, chat.other(me.uid)),
         actions: [
+          // Audio call (not in Figma; Asif asked for it, left of video).
+          _RoundButton(
+            icon: AppIcons.phone,
+            onTap: chat == null || me == null
+                ? soon
+                : () => startCall(context, ref, chat.other(me.uid)),
+          ),
+          const SizedBox(width: AppSpacing.sm),
           _RoundButton(
             icon: AppIcons.video,
             onTap: chat == null || me == null
