@@ -1,0 +1,17 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon / Email" clip-path="url(#clip0_0_12)">
+<path id="Vector" d="M28 55.5C43.1878 55.5 55.5 43.1878 55.5 28C55.5 12.8122 43.1878 0.5 28 0.5C12.8122 0.5 0.5 12.8122 0.5 28C0.5 43.1878 12.8122 55.5 28 55.5Z" fill="white" stroke="#E0E0E0"/>
+<g id="Vector_2">
+</g>
+<path id="Vector_3" d="M14 38.5V21.6C14 19 16.9 17.6 19 19.1L19.5 19.4V38.5H16C15.4696 38.5 14.9609 38.2893 14.5858 37.9142C14.2107 37.5391 14 37.0304 14 36.5V38.5Z" fill="#4285F4"/>
+<path id="Vector_4" d="M42 38.5V21.6C42 19 39.1 17.6 37 19.1L36.5 19.4V38.5H40C40.5304 38.5 41.0391 38.2893 41.4142 37.9142C41.7893 37.5391 42 37.0304 42 36.5V38.5Z" fill="#34A853"/>
+<path id="Vector_5" d="M19.5 19.4L28 25.8L36.5 19.4V25.6L28 32L19.5 25.6V19.4Z" fill="#EA4335"/>
+<path id="Vector_6" d="M14 21.6C14 19 16.9 17.6 19 19.1L19.5 19.4V25.6L14 21.6Z" fill="#C5221F"/>
+<path id="Vector_7" d="M36.5 19.4L37 19.1C39.1 17.6 42 19 42 21.6L36.5 25.6V19.4Z" fill="#FBBC04"/>
+</g>
+<defs>
+<clipPath id="clip0_0_12">
+<rect width="56" height="56" fill="white"/>
+</clipPath>
+</defs>
+</svg>

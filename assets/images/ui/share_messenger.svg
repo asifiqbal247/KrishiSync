@@ -1,0 +1,17 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Icon / Messenger" clip-path="url(#clip0_0_7)">
+<path id="Vector" d="M28 56C43.464 56 56 43.464 56 28C56 12.536 43.464 0 28 0C12.536 0 0 12.536 0 28C0 43.464 12.536 56 28 56Z" fill="url(#paint0_linear_0_7)"/>
+<path id="Vector_2" d="M28 13C19.4 13 13 19.3 13 27.6C13 31.9 14.8 35.7 17.7 38.2V43.1L22.2 40.6C24 41.1 25.9 41.4 28 41.4C36.6 41.4 43 35.1 43 26.8C43 18.5 36.6 13 28 13Z" fill="white"/>
+<path id="Vector_3" d="M18.8 32.2L24 24C24.8 22.7 26.6 22.4 27.8 23.3L31.9 26.4C32.3 26.7 32.8 26.7 33.1 26.4L38.7 22.1C39.4 21.5 40.4 22.4 39.9 23.2L34.7 31.4C33.9 32.7 32.1 33 30.9 32.1L26.8 29C26.4 28.7 25.9 28.7 25.6 29L20 33.3C19.3 33.9 18.3 33 18.8 32.2Z" fill="#0A7CFF"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_7" x1="0" y1="56" x2="56" y2="0" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0099FF"/>
+<stop offset="0.6" stop-color="#A033FF"/>
+<stop offset="1" stop-color="#FF5280"/>
+</linearGradient>
+<clipPath id="clip0_0_7">
+<rect width="56" height="56" fill="white"/>
+</clipPath>
+</defs>
+</svg>

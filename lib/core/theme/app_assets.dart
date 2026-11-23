@@ -104,6 +104,12 @@ abstract final class AppImages {
 /// Figma HF – Assets images used inside screens (assets/images/ui).
 abstract final class AppUi {
   static const _p = 'assets/images/ui';
+
+  /// 63 Statement "শেয়ার করুন" (Figma 292:2760): 56px brand logos + other.
+  static const shareWhatsapp = '$_p/share_whatsapp.svg';
+  static const shareEmail = '$_p/share_email.svg';
+  static const shareMessenger = '$_p/share_messenger.svg';
+  static const shareOther = '$_p/share_other.png';
   static const navOnHome = '$_p/nav_on_home.webp';
   static const navOffHome = '$_p/nav_off_home.webp';
   static const navOnMarket = '$_p/nav_on_market.webp';

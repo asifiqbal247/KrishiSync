@@ -2,7 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
@@ -13,7 +15,6 @@ import '../../../core/theme/app_typography.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/domain/crop_catalog.dart';
 import '../../../shared/services/pdf_service.dart';
-import '../../../shared/widgets/app_icon.dart';
 import '../../../shared/widgets/ks_app_bar.dart';
 import '../../../shared/widgets/ks_blocks.dart';
 import '../../../shared/widgets/ks_button.dart';
@@ -271,6 +272,7 @@ class _StatementState extends ConsumerState<StatementScreen> {
   DateTimeRange? _custom;
   static const _previewH = 120.0;
   static const _shareIcon = 56.0;
+  static const _shareItemW = 64.0;
 
   DateTimeRange _range() {
     final now = DateTime.now();
@@ -317,23 +319,35 @@ class _StatementState extends ConsumerState<StatementScreen> {
       l.statementVerified,
     ].join('\n');
 
-    Widget shareButton(String label) => Expanded(
+    Future<void> shareSheet() =>
+        SharePlus.instance.share(ShareParams(text: text));
+
+    // WhatsApp / email open that app with the statement; if it is not
+    // there, the phone's share sheet opens instead.
+    Future<void> openOr(Uri uri) async {
+      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication)
+          .catchError((_) => false);
+      if (!ok) await shareSheet();
+    }
+
+    // Figma 292:2760: 64 wide, 56px logo, gap 6, Medium 12 primary label.
+    Widget shareButton(String label, Widget logo, VoidCallback onTap) =>
+        Semantics(
+          button: true,
+          label: label,
           child: GestureDetector(
-            onTap: () => SharePlus.instance.share(ShareParams(text: text)),
-            child: Column(children: [
-              Container(
-                width: _shareIcon,
-                height: _shareIcon,
-                decoration: const BoxDecoration(
-                    color: AppColors.bgSubtle, shape: BoxShape.circle),
-                child: const Center(
-                    child: AppIcon(AppIcons.send, color: AppColors.iconBrand)),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(label,
-                  style: AppTypography.caption.normal
-                      .withColor(AppColors.textSecondary)),
-            ]),
+            onTap: onTap,
+            child: SizedBox(
+              width: _shareItemW,
+              child: Column(children: [
+                SizedBox.square(dimension: _shareIcon, child: logo),
+                const SizedBox(height: AppSpacing.label),
+                Text(label,
+                    textAlign: TextAlign.center,
+                    style: AppTypography.captionEmphasis.normal
+                        .withColor(AppColors.textPrimary)),
+              ]),
+            ),
           ),
         );
 
@@ -399,12 +413,38 @@ class _StatementState extends ConsumerState<StatementScreen> {
           const SizedBox(height: AppSpacing.block),
           Text(l.shareLabel, style: AppTypography.bodySmallStrong.normal),
           const SizedBox(height: AppSpacing.block),
-          Row(children: [
-            shareButton(l.shareWhatsapp),
-            shareButton(l.shareEmail),
-            shareButton(l.shareMessenger),
-            shareButton(l.shareOther),
-          ]),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              shareButton(
+                l.shareWhatsapp,
+                SvgPicture.asset(AppUi.shareWhatsapp),
+                () => openOr(Uri.parse(
+                    'whatsapp://send?text=${Uri.encodeComponent(text)}')),
+              ),
+              shareButton(
+                l.shareEmail,
+                SvgPicture.asset(AppUi.shareEmail),
+                () => openOr(Uri(
+                  scheme: 'mailto',
+                  query: 'subject=${Uri.encodeComponent(l.statementTitle)}'
+                      '&body=${Uri.encodeComponent(text)}',
+                )),
+              ),
+              // Messenger has no "share text" link: the share sheet lists it.
+              shareButton(
+                l.shareMessenger,
+                SvgPicture.asset(AppUi.shareMessenger),
+                shareSheet,
+              ),
+              shareButton(
+                l.shareOther,
+                Image.asset(AppUi.shareOther),
+                shareSheet,
+              ),
+            ],
+          ),
           const SizedBox(
               height: AppSpacing.block + AppSpacing.xs + AppSpacing.block),
           KsButton(
