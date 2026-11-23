@@ -45,8 +45,10 @@ Future<void> startCall(
   final l = AppLocalizations.of(context);
   final me = ref.read(currentUserProvider).value;
   if (me == null) return;
+  // Agora needs a token server (Secure mode only; Blaze plan). Until then
+  // every call button says "শীঘ্রই আসছে" (Asif, 2026-11-23, defence).
   if (AppSecrets.agoraAppId.isEmpty) {
-    KsToast.show(context, l.callNotReady);
+    KsToast.comingSoon(context);
     return;
   }
   final peer = await ref.read(userByIdProvider(peerUid).future);
