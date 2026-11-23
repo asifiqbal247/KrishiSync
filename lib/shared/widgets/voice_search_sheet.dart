@@ -20,9 +20,23 @@ Future<String?> listenForSearch(BuildContext context) async {
   final l = AppLocalizations.of(context);
   final stt = SpeechToText();
   var ok = false;
+  // No Bluetooth: since the call SDK added the Bluetooth permission, the
+  // plugin would otherwise listen through a paired headset / car kit
+  // instead of the phone's mic (and ask for "Nearby devices").
   try {
-    ok = await stt.initialize();
+    ok = await stt.initialize(options: [SpeechToText.androidNoBluetooth]);
   } catch (_) {}
+  // Some phones hide their speech service from the normal lookup.
+  if (!ok) {
+    try {
+      ok = await stt.initialize(
+        options: [
+          SpeechToText.androidNoBluetooth,
+          SpeechToText.androidIntentLookup,
+        ],
+      );
+    } catch (_) {}
+  }
   if (!context.mounted) return null;
   if (!ok) {
     KsToast.show(context, l.voiceSearchUnavailable);
@@ -78,6 +92,10 @@ class _ListenSheetState extends State<_ListenSheet> {
   String _words = '';
   bool _closed = false;
 
+  /// Language the phone is asked for; null = the phone's own language.
+  late String? _localeId = widget.localeId;
+  bool _retried = false;
+
   @override
   void initState() {
     super.initState();
@@ -93,7 +111,7 @@ class _ListenSheetState extends State<_ListenSheet> {
       await widget.stt.listen(
         onResult: _onResult,
         listenOptions: SpeechListenOptions(
-          localeId: widget.localeId,
+          localeId: _localeId,
           listenFor: _listenFor,
           pauseFor: _pauseFor,
           partialResults: true,
@@ -101,6 +119,7 @@ class _ListenSheetState extends State<_ListenSheet> {
           listenMode: ListenMode.search,
         ),
       );
+      _restarting = false;
     } catch (_) {
       _finish();
     }
@@ -119,11 +138,31 @@ class _ListenSheetState extends State<_ListenSheet> {
     if (r.finalResult) _finish();
   }
 
-  void _onError(SpeechRecognitionError e) => _finish();
+  void _onError(SpeechRecognitionError e) {
+    // The phone's recognizer has no Bangla (or is busy): try once more in
+    // the phone's own language before giving up.
+    final retry = !_retried &&
+        _words.isEmpty &&
+        (e.errorMsg.contains('language') ||
+            e.errorMsg == 'error_busy' ||
+            e.errorMsg == 'error_client');
+    if (retry && mounted && !_closed) {
+      _retried = true;
+      _restarting = true;
+      _localeId = null;
+      widget.stt.cancel().whenComplete(_listen);
+      return;
+    }
+    _finish();
+  }
 
   void _onStatus(String status) {
-    if (status == SpeechToText.doneStatus) _finish();
+    // A retry is starting: ignore the "done" of the first attempt.
+    if (status == SpeechToText.doneStatus && !_restarting) _finish();
   }
+
+  /// True from the retry until its new listen has started.
+  bool _restarting = false;
 
   Future<void> _finish() async {
     if (_closed) return;
