@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -35,11 +37,33 @@ android {
         versionName = flutter.versionName
     }
 
+    // Golaghor release key (2026-11-23). Every release APK must use the
+    // same key, or phones refuse the update. The key and its passwords are
+    // in android/key.properties (git-ignored); back up the .jks it names.
+    signingConfigs {
+        create("release") {
+            val props = Properties()
+            val file = rootProject.file("key.properties")
+            if (file.exists()) {
+                file.inputStream().use { props.load(it) }
+                storeFile = file(props.getProperty("storeFile"))
+                storePassword = props.getProperty("storePassword")
+                keyAlias = props.getProperty("keyAlias")
+                keyPassword = props.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Never fall back to the debug key for a release build.
+            if (!rootProject.file("key.properties").exists()) {
+                throw GradleException(
+                    "android/key.properties is missing: restore it (and the " +
+                        "release .jks) from the backup before building a release.",
+                )
+            }
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 }

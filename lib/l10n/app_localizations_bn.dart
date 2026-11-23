@@ -5241,6 +5241,26 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifChannelName => 'গোলাঘর বার্তা';
 
   @override
+  String get updateTitle => 'নতুন আপডেট এসেছে';
+
+  @override
+  String updateVersion(String version) {
+    return 'গোলাঘর $version এখন পাওয়া যাচ্ছে।';
+  }
+
+  @override
+  String get updateRequired => 'অ্যাপটি চালিয়ে যেতে এই আপডেটটি দরকার।';
+
+  @override
+  String get updateNow => 'এখন আপডেট';
+
+  @override
+  String get updateLater => 'পরে';
+
+  @override
+  String get updateOpenFailed => 'ডাউনলোড লিংক খোলা যায়নি';
+
+  @override
   String get callLogVoice => 'ভয়েস কল';
 
   @override

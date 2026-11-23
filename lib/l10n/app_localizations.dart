@@ -9205,6 +9205,42 @@ abstract class AppLocalizations {
   /// **'গোলাঘর বার্তা'**
   String get notifChannelName;
 
+  /// No description provided for @updateTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন আপডেট এসেছে'**
+  String get updateTitle;
+
+  /// No description provided for @updateVersion.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোলাঘর {version} এখন পাওয়া যাচ্ছে।'**
+  String updateVersion(String version);
+
+  /// No description provided for @updateRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাপটি চালিয়ে যেতে এই আপডেটটি দরকার।'**
+  String get updateRequired;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন আপডেট'**
+  String get updateNow;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরে'**
+  String get updateLater;
+
+  /// No description provided for @updateOpenFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডাউনলোড লিংক খোলা যায়নি'**
+  String get updateOpenFailed;
+
   /// No description provided for @callLogVoice.
   ///
   /// In bn, this message translates to:

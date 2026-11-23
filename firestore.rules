@@ -375,6 +375,13 @@ service cloud.firestore {
       allow delete: if signedIn() && owner == uid();
     }
 
+    // ---------- appConfig/{platform} (in-app update check) ----------
+    // Public (checked before login too); only an admin may change it.
+    match /appConfig/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // ---------- calls/{id} (in-app voice / video calls, 217–220) ----------
     // The id is the Agora channel. Only the two people see the call.
     match /calls/{id} {

@@ -5248,6 +5248,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifChannelName => 'Golaghor alerts';
 
   @override
+  String get updateTitle => 'Update available';
+
+  @override
+  String updateVersion(String version) {
+    return 'Golaghor $version is now available.';
+  }
+
+  @override
+  String get updateRequired => 'This update is needed to keep using the app.';
+
+  @override
+  String get updateNow => 'Update now';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateOpenFailed => 'Could not open the download link';
+
+  @override
   String get callLogVoice => 'Voice call';
 
   @override

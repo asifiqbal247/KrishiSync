@@ -13,6 +13,7 @@ import '../features/trade/presentation/notification_popups.dart';
 import '../features/transport/data/live_location.dart';
 import '../shared/data/trade_stats_repository.dart';
 import '../l10n/app_localizations.dart';
+import 'app_update_gate.dart';
 import 'router.dart';
 
 class KrishiSyncApp extends ConsumerWidget {
@@ -47,8 +48,11 @@ class KrishiSyncApp extends ConsumerWidget {
       routerConfig: router,
       // Phone popups for new notifications (local; FCM after Blaze).
       // Incoming in-app calls open their screen from anywhere.
+      // + the update dialog once per start (appConfig/android).
       builder: (_, child) => NotificationPopups(
-        child: IncomingCallListener(child: child ?? const SizedBox.shrink()),
+        child: IncomingCallListener(
+          child: AppUpdateGate(child: child ?? const SizedBox.shrink()),
+        ),
       ),
       // Before the user picks (screen 02) we show Bangla, as in Figma.
       locale: locale ?? const Locale('bn'),

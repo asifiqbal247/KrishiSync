@@ -83,6 +83,74 @@ Future<bool> showKsConfirm(
   return r ?? false;
 }
 
+/// "নতুন আপডেট এসেছে" — same look as the confirm dialog (positive style).
+/// [laterLabel] null = required update: no "later", back / outside tap do
+/// nothing, and the dialog stays after "update" (the APK is downloading).
+Future<void> showKsUpdate(
+  BuildContext context, {
+  required String title,
+  required String body,
+  required String updateLabel,
+  String? laterLabel,
+  required VoidCallback onUpdate,
+}) => showGeneralDialog<void>(
+  context: context,
+  barrierDismissible: laterLabel != null,
+  barrierLabel: laterLabel ?? updateLabel,
+  barrierColor: AppColors.overlayScrim,
+  pageBuilder: (ctx, _, _) => PopScope(
+    canPop: laterLabel != null,
+    child: Center(
+      child: Container(
+        width: AppSizes.modalWidth,
+        padding: const EdgeInsets.all(AppSpacing.s2xl),
+        decoration: BoxDecoration(
+          color: AppColors.bgPage,
+          borderRadius: BorderRadius.circular(AppRadius.xl),
+          boxShadow: AppShadows.dialog,
+        ),
+        child: Material(
+          type: MaterialType.transparency,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: AppTypography.bold18.normal),
+              const SizedBox(height: AppSpacing.md),
+              Text(body, style: AppTypography.bodyMedium.copyWith(height: 1.5)),
+              const SizedBox(height: AppSpacing.md),
+              Row(
+                children: [
+                  if (laterLabel != null) ...[
+                    Expanded(
+                      child: KsButton.secondary(
+                        compact: true,
+                        label: laterLabel,
+                        onPressed: () => Navigator.of(ctx).pop(),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                  ],
+                  Expanded(
+                    child: KsButton(
+                      compact: true,
+                      label: updateLabel,
+                      onPressed: () {
+                        if (laterLabel != null) Navigator.of(ctx).pop();
+                        onUpdate();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  ),
+);
+
 /// HF/Timeline Item (292:85): 20px dot (done = green check image, pending =
 /// white circle with 2px border/strong), gap 12, SemiBold 14 title
 /// (brand + underline when tappable), Regular 12 secondary sub.
