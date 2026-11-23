@@ -9205,6 +9205,72 @@ abstract class AppLocalizations {
   /// **'গোলাঘর বার্তা'**
   String get notifChannelName;
 
+  /// No description provided for @callLogVoice.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভয়েস কল'**
+  String get callLogVoice;
+
+  /// No description provided for @callLogVideo.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভিডিও কল'**
+  String get callLogVideo;
+
+  /// No description provided for @callLogMissedVoice.
+  ///
+  /// In bn, this message translates to:
+  /// **'মিসড ভয়েস কল'**
+  String get callLogMissedVoice;
+
+  /// No description provided for @callLogMissedVideo.
+  ///
+  /// In bn, this message translates to:
+  /// **'মিসড ভিডিও কল'**
+  String get callLogMissedVideo;
+
+  /// No description provided for @callLogSeconds.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} সেকেন্ড'**
+  String callLogSeconds(String n);
+
+  /// No description provided for @callLogNoAnswer.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাড়া পাওয়া যায়নি'**
+  String get callLogNoAnswer;
+
+  /// No description provided for @callLogDeclined.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেটে দেওয়া হয়েছে'**
+  String get callLogDeclined;
+
+  /// No description provided for @callLogCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল করা হয়েছে'**
+  String get callLogCancelled;
+
+  /// No description provided for @callLogTapBack.
+  ///
+  /// In bn, this message translates to:
+  /// **'আবার কল করতে চাপুন'**
+  String get callLogTapBack;
+
+  /// No description provided for @callRedial.
+  ///
+  /// In bn, this message translates to:
+  /// **'আবার কল'**
+  String get callRedial;
+
+  /// No description provided for @callClose.
+  ///
+  /// In bn, this message translates to:
+  /// **'বন্ধ'**
+  String get callClose;
+
   /// No description provided for @unreadNotifications.
   ///
   /// In bn, this message translates to:

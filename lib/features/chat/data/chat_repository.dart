@@ -15,6 +15,7 @@ class ChatThread {
     required this.lastText,
     this.lastVoice = false,
     this.lastFile = '',
+    this.lastCall = '',
     this.lastAt,
   });
 
@@ -30,10 +31,16 @@ class ChatThread {
 
   /// Kind of the last attachment (216): image | video | doc, or ''.
   final String lastFile;
+
+  /// The last message was a call log: voice | video, or ''.
+  final String lastCall;
   final DateTime? lastAt;
 
   bool get hasMessages =>
-      lastText.isNotEmpty || lastVoice || lastFile.isNotEmpty;
+      lastText.isNotEmpty ||
+      lastVoice ||
+      lastFile.isNotEmpty ||
+      lastCall.isNotEmpty;
 
   String other(String me) =>
       members.firstWhere((m) => m != me, orElse: () => me);
@@ -55,6 +62,7 @@ class ChatThread {
       lastText: m['lastText'] as String? ?? '',
       lastVoice: m['lastVoice'] == true,
       lastFile: m['lastFile'] as String? ?? '',
+      lastCall: m['lastCall'] as String? ?? '',
       lastAt: (m['lastAt'] as Timestamp?)?.toDate(),
     );
   }
@@ -70,6 +78,9 @@ class ChatMessage {
     this.fileUrl,
     this.fileKind,
     this.fileName,
+    this.callKind,
+    this.callResult,
+    this.callSec,
   });
   final String from;
   final String text;
@@ -86,6 +97,13 @@ class ChatMessage {
   final String? fileName;
   bool get isFile => fileUrl != null;
 
+  /// Call log (written by the caller when a call ends): voice | video,
+  /// result ended | missed | declined | cancelled, and talk time.
+  final String? callKind;
+  final String? callResult;
+  final int? callSec;
+  bool get isCall => callKind != null;
+
   factory ChatMessage.fromDoc(DocumentSnapshot<Map<String, dynamic>> d) {
     final m = d.data() ?? const {};
     return ChatMessage(
@@ -97,6 +115,9 @@ class ChatMessage {
       fileUrl: m['fileUrl'] as String?,
       fileKind: m['fileKind'] as String?,
       fileName: m['fileName'] as String?,
+      callKind: m['callKind'] as String?,
+      callResult: m['callResult'] as String?,
+      callSec: (m['callSec'] as num?)?.toInt(),
     );
   }
 }
@@ -163,6 +184,7 @@ class ChatRepository {
       'lastText': text,
       'lastVoice': false,
       'lastFile': '',
+      'lastCall': '',
       'lastAt': now,
     });
     return b.commit();
@@ -187,6 +209,7 @@ class ChatRepository {
       'lastText': '',
       'lastVoice': true,
       'lastFile': '',
+      'lastCall': '',
       'lastAt': now,
     });
     return b.commit();
@@ -214,6 +237,36 @@ class ChatRepository {
       'lastText': '',
       'lastVoice': false,
       'lastFile': kind,
+      'lastCall': '',
+      'lastAt': now,
+    });
+    return b.commit();
+  }
+
+  /// Call log bubble ("ভয়েস কল · ১৮ সেকেন্ড"); tapping it calls back.
+  Future<void> sendCallLog(
+    String chatId,
+    String from, {
+    required bool video,
+    required String result,
+    required int seconds,
+  }) {
+    final b = _db.batch();
+    final now = FieldValue.serverTimestamp();
+    final kind = video ? 'video' : 'voice';
+    b.set(_chats.doc(chatId).collection('messages').doc(), {
+      'from': from,
+      'text': '',
+      'callKind': kind,
+      'callResult': result,
+      'callSec': seconds,
+      'at': now,
+    });
+    b.update(_chats.doc(chatId), {
+      'lastText': '',
+      'lastVoice': false,
+      'lastFile': '',
+      'lastCall': kind,
       'lastAt': now,
     });
     return b.commit();

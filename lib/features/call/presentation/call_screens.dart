@@ -17,6 +17,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../../shared/widgets/app_icon.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
+import '../../chat/data/chat_repository.dart';
 import '../data/call_repository.dart';
 
 // Figma 218 Video Call (412:6167) sizes.
@@ -87,6 +88,12 @@ class _CallScreenState extends ConsumerState<CallScreen> {
   bool _micOff = false;
   bool _speaker = false;
   bool _left = false;
+  bool _logged = false;
+
+  /// Caller only: nobody answered / declined. The screen stays with
+  /// "বন্ধ" and "আবার কল" (redial) instead of closing.
+  CallStatus? _unreached;
+  bool _redialing = false;
   int _seconds = 0;
   Timer? _clock;
   Timer? _ringTimer;
@@ -195,13 +202,32 @@ class _CallScreenState extends ConsumerState<CallScreen> {
       try {
         await ref.read(callRepositoryProvider).setStatus(_id, s);
       } catch (_) {}
+      _log(c, s);
     }
     await _leave();
   }
 
-  Future<void> _leave() async {
-    if (_left) return;
-    _left = true;
+  /// The caller writes one call log into the chat (both people see it).
+  Future<void> _log(Call c, CallStatus result) async {
+    if (_logged || c.callerId != _me) return;
+    _logged = true;
+    try {
+      final me = ref.read(currentUserProvider).value;
+      final peer = await ref.read(userByIdProvider(c.calleeId).future);
+      if (me == null || peer == null) return;
+      final chats = ref.read(chatRepositoryProvider);
+      final chatId = await chats.open(me, peer);
+      await chats.sendCallLog(
+        chatId,
+        me.uid,
+        video: c.video,
+        result: result == CallStatus.accepted ? CallStatus.ended.name : result.name,
+        seconds: _seconds,
+      );
+    } catch (_) {}
+  }
+
+  Future<void> _stopEngine() async {
     _clock?.cancel();
     _ringTimer?.cancel();
     final e = _engine;
@@ -212,7 +238,35 @@ class _CallScreenState extends ConsumerState<CallScreen> {
         await e.release();
       } catch (_) {}
     }
+  }
+
+  Future<void> _leave() async {
+    if (_left) return;
+    _left = true;
+    await _stopEngine();
     if (mounted && context.canPop()) context.pop();
+  }
+
+  /// "আবার কল": a new call to the same person, same kind.
+  Future<void> _redial() async {
+    final c = ref.read(callProvider(_id)).value;
+    final me = ref.read(currentUserProvider).value;
+    if (c == null || me == null || _redialing) return;
+    setState(() => _redialing = true);
+    try {
+      final peer = await ref.read(userByIdProvider(c.calleeId).future);
+      if (peer == null) throw StateError('peer');
+      final id = await ref
+          .read(callRepositoryProvider)
+          .start(me, peer, video: c.video);
+      _left = true;
+      if (mounted) context.pushReplacement(Routes.call(id));
+    } catch (_) {
+      if (mounted) {
+        KsToast.show(context, AppLocalizations.of(context).errorGeneric);
+        setState(() => _redialing = false);
+      }
+    }
   }
 
   @override
@@ -253,7 +307,17 @@ class _CallScreenState extends ConsumerState<CallScreen> {
     final c = ref.watch(callProvider(_id)).value;
     ref.listen(callProvider(_id), (_, next) {
       final now = next.value;
-      if (now == null || !now.isOver || _left) return;
+      if (now == null || !now.isOver || _left || _unreached != null) return;
+      _log(now, now.status);
+      // Caller, never connected: offer redial (like a phone's call screen).
+      if (now.callerId == me &&
+          _remoteUid == null &&
+          (now.status == CallStatus.missed ||
+              now.status == CallStatus.declined)) {
+        _stopEngine();
+        setState(() => _unreached = now.status);
+        return;
+      }
       final msg = switch (now.status) {
         CallStatus.declined when now.callerId == me => l.callDeclined,
         CallStatus.missed when now.callerId == me => l.callNoAnswer,
@@ -273,6 +337,35 @@ class _CallScreenState extends ConsumerState<CallScreen> {
       status = l.callConnecting;
     }
     final e = _engine;
+
+    if (_unreached != null) {
+      return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, _) {
+          if (!didPop) _leave();
+        },
+        child: _CallFrame(
+          photoUrl: c?.peerPhoto(me),
+          name: c?.peerName(me) ?? '',
+          status: _unreached == CallStatus.declined
+              ? l.callDeclined
+              : l.callNoAnswer,
+          buttons: [
+            _CallButton(
+              icon: AppIcons.close,
+              label: l.callClose,
+              onTap: _redialing ? null : _leave,
+            ),
+            _CallButton(
+              icon: AppIcons.phone,
+              label: l.callRedial,
+              fill: AppColors.callAccept,
+              onTap: _redialing ? null : _redial,
+            ),
+          ],
+        ),
+      );
+    }
 
     return PopScope(
       canPop: false,

@@ -147,7 +147,11 @@ class _MessagesState extends ConsumerState<MessagesScreen> {
                     'image' => l.attachPhoto,
                     'video' => l.attachVideo,
                     'doc' => l.attachDoc,
-                    _ => c.lastVoice ? l.voiceMessage : c.lastText,
+                    _ => switch (c.lastCall) {
+                      'voice' => l.callLogVoice,
+                      'video' => l.callLogVideo,
+                      _ => c.lastVoice ? l.voiceMessage : c.lastText,
+                    },
                   },
                   trailingText: chatTime(context, c.lastAt),
                   onTap: () {
@@ -372,6 +376,21 @@ class _ChatState extends ConsumerState<ChatScreen> {
                     video: true,
                   ),
           ),
+          // Info (like Messenger): the other person's profile.
+          if (chat != null && me != null)
+            ?switch (profileRouteFor(
+              chat.roles[chat.other(me.uid)],
+              chat.other(me.uid),
+            )) {
+              final route? => Padding(
+                padding: const EdgeInsets.only(left: AppSpacing.sm),
+                child: _RoundButton(
+                  icon: AppIcons.info,
+                  onTap: () => context.push(route),
+                ),
+              ),
+              null => null,
+            },
           const SizedBox(width: AppSpacing.lg),
         ],
       ),
@@ -404,7 +423,20 @@ class _ChatState extends ConsumerState<ChatScreen> {
                           alignment: mine
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
-                          child: m.isFile
+                          child: m.isCall
+                              ? _CallBubble(
+                                  m: m,
+                                  mine: mine,
+                                  maxWidth: width * _bubbleMax,
+                                  // Tap = call back (same kind).
+                                  onTap: () => startCall(
+                                    context,
+                                    ref,
+                                    chat!.other(me.uid),
+                                    video: m.callKind == 'video',
+                                  ),
+                                )
+                              : m.isFile
                               ? _FileBubble(
                                   m: m,
                                   mine: mine,
@@ -567,6 +599,110 @@ class _RoundButton extends StatelessWidget {
 
 /// Chat attachment (216). Photo: rounded picture, tap for full screen.
 /// Video / document: bubble with the sheet's icon tile and a label.
+/// Public profile page of a chat partner (info button), or null (staff).
+String? profileRouteFor(String? role, String uid) => switch (role) {
+  'farmer' => Routes.buyerFarmer(uid),
+  'buyer' => Routes.buyerProfile(uid),
+  'transporter' => Routes.transporterProfile(uid),
+  _ => null,
+};
+
+/// Call log: phone / video icon, "ভয়েস কল" + talk time or the result.
+/// The caller wrote it, so "mine" = I called. Tap calls back.
+class _CallBubble extends StatelessWidget {
+  const _CallBubble({
+    required this.m,
+    required this.mine,
+    required this.maxWidth,
+    required this.onTap,
+  });
+
+  final ChatMessage m;
+  final bool mine;
+  final double maxWidth;
+  final VoidCallback onTap;
+
+  static const _tile = 36.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final video = m.callKind == 'video';
+    final sec = m.callSec ?? 0;
+    final missed = !mine && m.callResult != 'ended';
+    final fg = mine ? AppColors.textOnBrand : AppColors.textPrimary;
+    final title = missed
+        ? (video ? l.callLogMissedVideo : l.callLogMissedVoice)
+        : (video ? l.callLogVideo : l.callLogVoice);
+    final sub = switch (m.callResult) {
+      'ended' => sec < 60
+          ? l.callLogSeconds(Fmt.digits(context, '$sec'))
+          : voiceLen(context, sec),
+      'declined' when mine => l.callLogDeclined,
+      'cancelled' when mine => l.callLogCancelled,
+      _ when mine => l.callLogNoAnswer,
+      _ => l.callLogTapBack,
+    };
+    return Semantics(
+      button: true,
+      label: '$title, $sub',
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          constraints: BoxConstraints(maxWidth: maxWidth),
+          padding: const EdgeInsets.all(AppSpacing.x10),
+          decoration: BoxDecoration(
+            color: mine ? AppColors.bgBrand : AppColors.bgSurface,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: _tile,
+                height: _tile,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: mine ? AppColors.bgBrandHover : AppColors.bgSubtle,
+                ),
+                child: AppIcon(
+                  video ? AppIcons.video : AppIcons.phone,
+                  size: AppSizes.icon,
+                  color: mine
+                      ? AppColors.textOnBrand
+                      : missed
+                      ? AppColors.textError
+                      : AppColors.iconBrand,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.x10),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTypography.bodyMediumStrong.normal.withColor(
+                        missed ? AppColors.textError : fg,
+                      ),
+                    ),
+                    Text(
+                      sub,
+                      style: AppTypography.caption.normal.withColor(fg),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _FileBubble extends StatelessWidget {
   const _FileBubble({
     required this.m,

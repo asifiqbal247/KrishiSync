@@ -5248,6 +5248,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifChannelName => 'Golaghor alerts';
 
   @override
+  String get callLogVoice => 'Voice call';
+
+  @override
+  String get callLogVideo => 'Video call';
+
+  @override
+  String get callLogMissedVoice => 'Missed voice call';
+
+  @override
+  String get callLogMissedVideo => 'Missed video call';
+
+  @override
+  String callLogSeconds(String n) {
+    return '$n seconds';
+  }
+
+  @override
+  String get callLogNoAnswer => 'No answer';
+
+  @override
+  String get callLogDeclined => 'Declined';
+
+  @override
+  String get callLogCancelled => 'Cancelled';
+
+  @override
+  String get callLogTapBack => 'Tap to call back';
+
+  @override
+  String get callRedial => 'Call again';
+
+  @override
+  String get callClose => 'Close';
+
+  @override
   String unreadNotifications(int count) {
     return '$count unread notifications';
   }

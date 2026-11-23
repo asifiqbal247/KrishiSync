@@ -5241,6 +5241,41 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifChannelName => 'গোলাঘর বার্তা';
 
   @override
+  String get callLogVoice => 'ভয়েস কল';
+
+  @override
+  String get callLogVideo => 'ভিডিও কল';
+
+  @override
+  String get callLogMissedVoice => 'মিসড ভয়েস কল';
+
+  @override
+  String get callLogMissedVideo => 'মিসড ভিডিও কল';
+
+  @override
+  String callLogSeconds(String n) {
+    return '$n সেকেন্ড';
+  }
+
+  @override
+  String get callLogNoAnswer => 'সাড়া পাওয়া যায়নি';
+
+  @override
+  String get callLogDeclined => 'কেটে দেওয়া হয়েছে';
+
+  @override
+  String get callLogCancelled => 'বাতিল করা হয়েছে';
+
+  @override
+  String get callLogTapBack => 'আবার কল করতে চাপুন';
+
+  @override
+  String get callRedial => 'আবার কল';
+
+  @override
+  String get callClose => 'বন্ধ';
+
+  @override
   String unreadNotifications(int count) {
     return '$countটি নতুন বিজ্ঞপ্তি';
   }
