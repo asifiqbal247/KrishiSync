@@ -25,6 +25,7 @@ import '../../../shared/widgets/ks_search_bar.dart';
 import '../../../shared/widgets/ks_skeleton.dart';
 import '../../../shared/widgets/ks_toast.dart';
 import '../../auth/data/user_repository.dart';
+import '../../call/presentation/call_screens.dart';
 import '../../auth/domain/app_user.dart';
 import '../../moderator/presentation/report_screens.dart';
 import '../../../shared/services/image_storage_service.dart';
@@ -352,7 +353,17 @@ class _ChatState extends ConsumerState<ChatScreen> {
             ? ''
             : chatName(l, chat, chat.other(me.uid)),
         actions: [
-          _RoundButton(icon: AppIcons.video, onTap: soon),
+          _RoundButton(
+            icon: AppIcons.video,
+            onTap: chat == null || me == null
+                ? soon
+                : () => startCall(
+                    context,
+                    ref,
+                    chat.other(me.uid),
+                    video: true,
+                  ),
+          ),
           const SizedBox(width: AppSpacing.lg),
         ],
       ),

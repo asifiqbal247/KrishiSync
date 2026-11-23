@@ -27,6 +27,11 @@ class LocalNotificationService {
       )
       .then((_) {});
 
+  Future<void> cancel(int id) async {
+    await init();
+    await _plugin.cancel(id: id);
+  }
+
   Future<void> show({
     required int id,
     required String title,

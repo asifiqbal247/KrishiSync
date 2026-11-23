@@ -31,9 +31,30 @@ class _NotificationPopupsState extends ConsumerState<NotificationPopups> {
   @override
   void initState() {
     super.initState();
-    _service.onOpen = (route) => ref.read(routerProvider).push(route);
+    _service.onOpen = _open;
     _service.init();
   }
+
+  /// Payload `n:{id}:{route}` = a bell item (mark read, then open it);
+  /// anything else is a plain route (e.g. an incoming call).
+  void _open(String payload) {
+    final router = ref.read(routerProvider);
+    if (!payload.startsWith(_prefix)) {
+      router.push(payload);
+      return;
+    }
+    final rest = payload.substring(_prefix.length);
+    final i = rest.indexOf(':');
+    final id = rest.substring(0, i);
+    final route = rest.substring(i + 1);
+    final uid = ref.read(currentUserProvider).value?.uid;
+    if (uid != null) {
+      ref.read(tradeRepositoryProvider).markRead(uid, id).catchError((_) {});
+    }
+    router.push(route.isEmpty ? Routes.notifications : route);
+  }
+
+  static const _prefix = 'n:';
 
   void _onList(List<AppNotification> list) {
     final uid = ref.read(currentUserProvider).value?.uid;
@@ -62,7 +83,7 @@ class _NotificationPopupsState extends ConsumerState<NotificationPopups> {
       title: title,
       body: body,
       channelName: l.notifChannelName,
-      route: NotificationsScreen.routeFor(n),
+      route: '$_prefix${n.id}:${NotificationsScreen.routeFor(n) ?? ''}',
     );
   }
 

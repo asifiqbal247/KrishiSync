@@ -5241,6 +5241,76 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifChannelName => 'গোলাঘর বার্তা';
 
   @override
+  String unreadNotifications(int count) {
+    return '$countটি নতুন বিজ্ঞপ্তি';
+  }
+
+  @override
+  String callingToast(String name) {
+    return '$nameকে কল করা হচ্ছে…';
+  }
+
+  @override
+  String get callNotReady => 'কল চালু হয়নি। পরে আবার চেষ্টা করুন।';
+
+  @override
+  String get callNeedMic => 'কল করতে মাইক্রোফোনের অনুমতি দিন';
+
+  @override
+  String get callRinging => 'রিং হচ্ছে…';
+
+  @override
+  String get callConnecting => 'সংযোগ হচ্ছে…';
+
+  @override
+  String callVideoOn(String time) {
+    return 'ভিডিও কল চলছে · $time';
+  }
+
+  @override
+  String callVoiceOn(String time) {
+    return 'কল চলছে · $time';
+  }
+
+  @override
+  String get callIncoming => 'কল আসছে…';
+
+  @override
+  String get callIncomingVideo => 'ভিডিও কল আসছে…';
+
+  @override
+  String get callSpeaker => 'স্পিকার';
+
+  @override
+  String get callCamera => 'ক্যামেরা';
+
+  @override
+  String get callMic => 'মাইক';
+
+  @override
+  String get callEnd => 'শেষ';
+
+  @override
+  String get callAnswer => 'ধরুন';
+
+  @override
+  String get callDecline => 'কেটে দিন';
+
+  @override
+  String get callDeclined => 'কলটি কেটে দেওয়া হয়েছে';
+
+  @override
+  String get callNoAnswer => 'কেউ কল ধরেননি';
+
+  @override
+  String get callEnded => 'কল শেষ';
+
+  @override
+  String nCallMissed(String name) {
+    return '$name আপনাকে কল করেছিলেন';
+  }
+
+  @override
   String get photoAdded => '✓ ছবি যোগ হয়েছে · আবার তুলতে চাপুন';
 
   @override

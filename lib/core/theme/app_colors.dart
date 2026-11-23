@@ -124,6 +124,29 @@ abstract final class AppColors {
   /// Text and icons over a hero photo (53 app bar).
   static const textOnImage = white;
 
+  /// Unread count on the home-header bell (not in Figma; Asif asked for
+  /// it): red circle, white number, page-coloured ring.
+  static const countBadge = red500;
+  static const countBadgeText = white;
+  static const countBadgeRing = bgPage;
+
+  /// 217–220 Video Call (Figma 412:6167).
+  static const callBg = gray900;
+  /// Round button, off: rgba(255,255,255,0.22); on: white.
+  static const callButton = Color(0x38FFFFFF);
+  static const callButtonOn = white;
+  static const callIcon = white;
+  /// Speaker on: brand icon on white. Camera / mic off: red icon on white.
+  static const callIconOn = green500;
+  static const callIconOff = red500;
+  static const callEnd = red500;
+  static const callAccept = green500;
+  /// Top shade rgba(31,31,31,0.65) → 0; bottom shade 0 → 0.75.
+  static const callShadeTop = Color(0xA61F1F1F);
+  static const callShadeBottom = Color(0xBF1F1F1F);
+  static const callShadeClear = Color(0x001F1F1F);
+  static const callSelfBorder = white;
+
   /// Hero photo top shade: rgba(0,0,0,0.5) → transparent, 120 high.
   static const heroShade = Color(0x80000000);
   static const heroShadeEnd = Color(0x00000000);

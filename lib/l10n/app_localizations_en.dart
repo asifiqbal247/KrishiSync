@@ -5248,6 +5248,76 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifChannelName => 'Golaghor alerts';
 
   @override
+  String unreadNotifications(int count) {
+    return '$count unread notifications';
+  }
+
+  @override
+  String callingToast(String name) {
+    return 'Calling $name…';
+  }
+
+  @override
+  String get callNotReady => 'Calling is not set up yet. Please try later.';
+
+  @override
+  String get callNeedMic => 'Allow the microphone to make calls';
+
+  @override
+  String get callRinging => 'Ringing…';
+
+  @override
+  String get callConnecting => 'Connecting…';
+
+  @override
+  String callVideoOn(String time) {
+    return 'Video call · $time';
+  }
+
+  @override
+  String callVoiceOn(String time) {
+    return 'Call · $time';
+  }
+
+  @override
+  String get callIncoming => 'Incoming call…';
+
+  @override
+  String get callIncomingVideo => 'Incoming video call…';
+
+  @override
+  String get callSpeaker => 'Speaker';
+
+  @override
+  String get callCamera => 'Camera';
+
+  @override
+  String get callMic => 'Mic';
+
+  @override
+  String get callEnd => 'End';
+
+  @override
+  String get callAnswer => 'Answer';
+
+  @override
+  String get callDecline => 'Decline';
+
+  @override
+  String get callDeclined => 'Call declined';
+
+  @override
+  String get callNoAnswer => 'No answer';
+
+  @override
+  String get callEnded => 'Call ended';
+
+  @override
+  String nCallMissed(String name) {
+    return 'Missed call from $name';
+  }
+
+  @override
   String get photoAdded => '✓ Photo added · tap to take again';
 
   @override

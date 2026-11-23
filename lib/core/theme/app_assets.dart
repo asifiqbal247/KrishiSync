@@ -28,6 +28,13 @@ abstract final class AppIcons {
   static const close = '$_p/close.svg';
   static const location = '$_p/location.svg';
   static const phone = '$_p/phone.svg';
+
+  /// 217–220 Video Call buttons and self view (Figma 412:6167).
+  static const callSpeaker = '$_p/call_speaker.svg';
+  static const callCamera = '$_p/call_camera.svg';
+  static const callMic = '$_p/call_mic.svg';
+  static const callEnd = '$_p/call_end.svg';
+  static const callSelf = '$_p/call_self.svg';
   static const speaker = '$_p/speaker.svg';
   static const plus = '$_p/plus.svg';
   static const filter = '$_p/filter.svg';

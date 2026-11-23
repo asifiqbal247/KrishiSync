@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../call/presentation/call_screens.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_assets.dart';
@@ -458,7 +458,7 @@ class AssignedTransportScreen extends ConsumerWidget {
                   label: l.callBtn,
                   onPressed: driver == null
                       ? null
-                      : () => launchUrl(Uri(scheme: 'tel', path: driver.phone)),
+                      : () => startCall(context, ref, driver.uid),
                 ),
               ),
               const SizedBox(width: AppSpacing.md),
@@ -717,9 +717,7 @@ class TrackingScreen extends ConsumerWidget {
                         label: l.callBtn,
                         onPressed: driver == null
                             ? null
-                            : () => launchUrl(
-                                Uri(scheme: 'tel', path: driver.phone),
-                              ),
+                            : () => startCall(context, ref, driver.uid),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.md),

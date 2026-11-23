@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../call/presentation/call_screens.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_assets.dart';
@@ -641,7 +641,7 @@ class ReturnDoneScreen extends ConsumerWidget {
             label: l.retCallBuyer,
             onPressed: buyer == null
                 ? () => openChatWith(context, ref, d.buyerId)
-                : () => launchUrl(Uri(scheme: 'tel', path: buyer.phone)),
+                : () => startCall(context, ref, buyer.uid),
           ),
           const SizedBox(height: AppSpacing.md),
           KsLinkRow(

@@ -9205,6 +9205,126 @@ abstract class AppLocalizations {
   /// **'গোলাঘর বার্তা'**
   String get notifChannelName;
 
+  /// No description provided for @unreadNotifications.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count}টি নতুন বিজ্ঞপ্তি'**
+  String unreadNotifications(int count);
+
+  /// No description provided for @callingToast.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name}কে কল করা হচ্ছে…'**
+  String callingToast(String name);
+
+  /// No description provided for @callNotReady.
+  ///
+  /// In bn, this message translates to:
+  /// **'কল চালু হয়নি। পরে আবার চেষ্টা করুন।'**
+  String get callNotReady;
+
+  /// No description provided for @callNeedMic.
+  ///
+  /// In bn, this message translates to:
+  /// **'কল করতে মাইক্রোফোনের অনুমতি দিন'**
+  String get callNeedMic;
+
+  /// No description provided for @callRinging.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিং হচ্ছে…'**
+  String get callRinging;
+
+  /// No description provided for @callConnecting.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংযোগ হচ্ছে…'**
+  String get callConnecting;
+
+  /// No description provided for @callVideoOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভিডিও কল চলছে · {time}'**
+  String callVideoOn(String time);
+
+  /// No description provided for @callVoiceOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'কল চলছে · {time}'**
+  String callVoiceOn(String time);
+
+  /// No description provided for @callIncoming.
+  ///
+  /// In bn, this message translates to:
+  /// **'কল আসছে…'**
+  String get callIncoming;
+
+  /// No description provided for @callIncomingVideo.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভিডিও কল আসছে…'**
+  String get callIncomingVideo;
+
+  /// No description provided for @callSpeaker.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্পিকার'**
+  String get callSpeaker;
+
+  /// No description provided for @callCamera.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্যামেরা'**
+  String get callCamera;
+
+  /// No description provided for @callMic.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাইক'**
+  String get callMic;
+
+  /// No description provided for @callEnd.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেষ'**
+  String get callEnd;
+
+  /// No description provided for @callAnswer.
+  ///
+  /// In bn, this message translates to:
+  /// **'ধরুন'**
+  String get callAnswer;
+
+  /// No description provided for @callDecline.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেটে দিন'**
+  String get callDecline;
+
+  /// No description provided for @callDeclined.
+  ///
+  /// In bn, this message translates to:
+  /// **'কলটি কেটে দেওয়া হয়েছে'**
+  String get callDeclined;
+
+  /// No description provided for @callNoAnswer.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেউ কল ধরেননি'**
+  String get callNoAnswer;
+
+  /// No description provided for @callEnded.
+  ///
+  /// In bn, this message translates to:
+  /// **'কল শেষ'**
+  String get callEnded;
+
+  /// No description provided for @nCallMissed.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} আপনাকে কল করেছিলেন'**
+  String nCallMissed(String name);
+
   /// No description provided for @photoAdded.
   ///
   /// In bn, this message translates to:

@@ -375,6 +375,34 @@ service cloud.firestore {
       allow delete: if signedIn() && owner == uid();
     }
 
+    // ---------- calls/{id} (in-app voice / video calls, 217–220) ----------
+    // The id is the Agora channel. Only the two people see the call.
+    match /calls/{id} {
+      function isParty() {
+        return resource.data.callerId == uid() || resource.data.calleeId == uid();
+      }
+      allow read: if signedIn() && isParty();
+      allow create: if isActive()
+        && request.resource.data.callerId == uid()
+        && request.resource.data.calleeId is string
+        && request.resource.data.calleeId != uid()
+        && request.resource.data.status == 'ringing'
+        && request.resource.data.video is bool;
+      allow update: if signedIn()
+        && onlyChanges(['status', 'answeredAt', 'endedAt'])
+        && (
+          // Callee answers or declines.
+          (resource.data.calleeId == uid() && resource.data.status == 'ringing'
+            && request.resource.data.status in ['accepted', 'declined'])
+          // Caller gives up, or nobody answered.
+          || (resource.data.callerId == uid() && resource.data.status == 'ringing'
+            && request.resource.data.status in ['cancelled', 'missed'])
+          // Either hangs up.
+          || (isParty() && resource.data.status == 'accepted'
+            && request.resource.data.status == 'ended')
+        );
+    }
+
     // ---------- deliveries/{orderId} ("loads") ----------
     match /deliveries/{id} {
       function d() { return resource.data; }

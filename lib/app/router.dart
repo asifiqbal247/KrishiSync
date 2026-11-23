@@ -46,6 +46,7 @@ import '../features/profile/presentation/verification_screens.dart';
 import '../features/trade/presentation/make_offer_screen.dart';
 import '../features/trade/presentation/negotiate_screen.dart';
 import '../features/trade/presentation/notifications_screen.dart';
+import '../features/call/presentation/call_screens.dart';
 import '../features/trade/presentation/offers_screen.dart';
 import '../features/trade/presentation/orders_screens.dart';
 import '../features/trade/presentation/payment_screens.dart';
@@ -185,6 +186,8 @@ abstract final class Routes {
   static String placeOrder(String listingId, {String? offerId}) =>
       '/buyer/order/$listingId${offerId == null ? '' : '?offer=$offerId'}';
   static const notifications = '/notifications';
+  static String call(String id) => '/call/$id';
+  static String incomingCall(String id) => '/call/$id/incoming';
 
   // Buyer transport (Part 6)
   static const buyerTransport = '/buyer/transport';
@@ -706,6 +709,15 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/people/buyer/:uid',
         builder: (_, s) => BuyerProfileScreen(uid: s.pathParameters['uid']!),
+      ),
+      GoRoute(
+        path: '/call/:id',
+        builder: (_, s) => CallScreen(callId: s.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/call/:id/incoming',
+        builder: (_, s) =>
+            IncomingCallScreen(callId: s.pathParameters['id']!),
       ),
       GoRoute(
         path: Routes.notifications,

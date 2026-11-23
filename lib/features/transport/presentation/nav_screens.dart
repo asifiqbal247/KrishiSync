@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../call/presentation/call_screens.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/theme/app_colors.dart';
@@ -367,9 +368,7 @@ class NavigationScreen extends ConsumerWidget {
                             label: l.callBtn,
                             onPressed: person == null
                                 ? null
-                                : () => launchUrl(
-                                    Uri.parse('tel:${person.phone}'),
-                                  ),
+                                : () => startCall(context, ref, person.uid),
                           ),
                         ),
                         const SizedBox(width: AppSpacing.md),

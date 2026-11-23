@@ -655,6 +655,13 @@ final myNotificationsProvider = StreamProvider<List<AppNotification>>((ref) {
   return ref.watch(tradeRepositoryProvider).watchNotifications(uid);
 });
 
+/// Unread items in the bell list (live: drops as soon as one is read).
+final unreadNotificationCountProvider = Provider<int>(
+  (ref) =>
+      ref.watch(myNotificationsProvider).value?.where((n) => !n.read).length ??
+      0,
+);
+
 /// What an order is made from: a listing (78) or a farmer's demand
 /// commitment (99).
 class OrderSource {

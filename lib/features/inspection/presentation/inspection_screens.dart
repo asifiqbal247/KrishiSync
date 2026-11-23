@@ -7,6 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../call/presentation/call_screens.dart';
 import '../../../shared/utils/sheet_utils.dart';
 import '../../../app/router.dart';
 import '../../../core/l10n/formatters.dart';
@@ -298,11 +299,9 @@ class InspectorHomeScreen extends ConsumerWidget {
                   child: KsButton.outline(
                     label: l.callDriver,
                     compact: true,
-                    onPressed: driver?.phone == null
+                    onPressed: driver == null
                         ? null
-                        : () => launchUrl(
-                            Uri(scheme: 'tel', path: driver!.phone),
-                          ),
+                        : () => startCall(context, ref, driver.uid),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.md),

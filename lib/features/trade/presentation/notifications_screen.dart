@@ -75,6 +75,7 @@ class NotificationsScreen extends ConsumerWidget {
       ),
       'job_assigned' => (l.nJobAssigned(p['no'] ?? ''), crop),
       'order_cancelled' => (l.nOrderCancelled(p['no'] ?? ''), crop),
+      'call_missed' => (l.nCallMissed(p['name'] ?? ''), ''),
       'commit_new' => (
         l.nCommitNew(crop),
         l.nCommitNewBody(p['farmer'] ?? '', l.qtyKg(num(p['qty']))),
