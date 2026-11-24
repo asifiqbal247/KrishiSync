@@ -9205,6 +9205,144 @@ abstract class AppLocalizations {
   /// **'গোলাঘর বার্তা'**
   String get notifChannelName;
 
+  /// No description provided for @msgNotFound.
+  ///
+  /// In bn, this message translates to:
+  /// **'মূল বার্তাটি আর নেই'**
+  String get msgNotFound;
+
+  /// No description provided for @chatTyping.
+  ///
+  /// In bn, this message translates to:
+  /// **'লিখছে…'**
+  String get chatTyping;
+
+  /// No description provided for @activeNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন সক্রিয়'**
+  String get activeNow;
+
+  /// No description provided for @activeAgo.
+  ///
+  /// In bn, this message translates to:
+  /// **'সক্রিয় ছিলেন {time} আগে'**
+  String activeAgo(String time);
+
+  /// No description provided for @agoMinutes.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} মিনিট'**
+  String agoMinutes(String n);
+
+  /// No description provided for @agoHours.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} ঘণ্টা'**
+  String agoHours(String n);
+
+  /// No description provided for @agoDays.
+  ///
+  /// In bn, this message translates to:
+  /// **'{n} দিন'**
+  String agoDays(String n);
+
+  /// No description provided for @chatToday.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজ'**
+  String get chatToday;
+
+  /// No description provided for @msgEdited.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পাদিত'**
+  String get msgEdited;
+
+  /// No description provided for @msgReply.
+  ///
+  /// In bn, this message translates to:
+  /// **'উত্তর দিন'**
+  String get msgReply;
+
+  /// No description provided for @msgCopy.
+  ///
+  /// In bn, this message translates to:
+  /// **'কপি'**
+  String get msgCopy;
+
+  /// No description provided for @msgEdit.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পাদনা'**
+  String get msgEdit;
+
+  /// No description provided for @msgEditing.
+  ///
+  /// In bn, this message translates to:
+  /// **'বার্তা সম্পাদনা'**
+  String get msgEditing;
+
+  /// No description provided for @msgEditExpired.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পাদনার সময় (১৫ মিনিট) শেষ হয়ে গেছে'**
+  String get msgEditExpired;
+
+  /// No description provided for @msgPin.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন করুন'**
+  String get msgPin;
+
+  /// No description provided for @msgUnpin.
+  ///
+  /// In bn, this message translates to:
+  /// **'আনপিন করুন'**
+  String get msgUnpin;
+
+  /// No description provided for @pinLimit.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বোচ্চ ৩টি বার্তা পিন করা যায়'**
+  String get pinLimit;
+
+  /// No description provided for @pinnedOne.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন করা বার্তা'**
+  String get pinnedOne;
+
+  /// No description provided for @pinnedCount.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন করা বার্তা {n}/{total}'**
+  String pinnedCount(String n, String total);
+
+  /// No description provided for @replyingTo.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name}-কে উত্তর'**
+  String replyingTo(String name);
+
+  /// No description provided for @chatYou.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি'**
+  String get chatYou;
+
+  /// No description provided for @msgSeen.
+  ///
+  /// In bn, this message translates to:
+  /// **'দেখেছেন'**
+  String get msgSeen;
+
+  /// No description provided for @msgSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠানো হয়েছে'**
+  String get msgSent;
+
   /// No description provided for @msgUnsent.
   ///
   /// In bn, this message translates to:

@@ -11,6 +11,7 @@ import '../features/auth/data/user_repository.dart';
 import '../features/call/presentation/incoming_call_listener.dart';
 import '../features/trade/presentation/notification_popups.dart';
 import '../features/transport/data/live_location.dart';
+import '../shared/data/presence_repository.dart';
 import '../shared/data/trade_stats_repository.dart';
 import '../l10n/app_localizations.dart';
 import 'app_update_gate.dart';
@@ -51,7 +52,9 @@ class KrishiSyncApp extends ConsumerWidget {
       // + the update dialog once per start (appConfig/android).
       builder: (_, child) => NotificationPopups(
         child: IncomingCallListener(
-          child: AppUpdateGate(child: child ?? const SizedBox.shrink()),
+          child: AppUpdateGate(
+            child: PresenceHeartbeat(child: child ?? const SizedBox.shrink()),
+          ),
         ),
       ),
       // Before the user picks (screen 02) we show Bangla, as in Figma.

@@ -5248,6 +5248,87 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifChannelName => 'Golaghor alerts';
 
   @override
+  String get msgNotFound => 'The original message is no longer here';
+
+  @override
+  String get chatTyping => 'typing…';
+
+  @override
+  String get activeNow => 'Active now';
+
+  @override
+  String activeAgo(String time) {
+    return 'Active $time ago';
+  }
+
+  @override
+  String agoMinutes(String n) {
+    return '$n min';
+  }
+
+  @override
+  String agoHours(String n) {
+    return '$n h';
+  }
+
+  @override
+  String agoDays(String n) {
+    return '$n d';
+  }
+
+  @override
+  String get chatToday => 'Today';
+
+  @override
+  String get msgEdited => 'Edited';
+
+  @override
+  String get msgReply => 'Reply';
+
+  @override
+  String get msgCopy => 'Copy';
+
+  @override
+  String get msgEdit => 'Edit';
+
+  @override
+  String get msgEditing => 'Editing message';
+
+  @override
+  String get msgEditExpired => 'Editing time (15 minutes) is over';
+
+  @override
+  String get msgPin => 'Pin';
+
+  @override
+  String get msgUnpin => 'Unpin';
+
+  @override
+  String get pinLimit => 'You can pin up to 3 messages';
+
+  @override
+  String get pinnedOne => 'Pinned message';
+
+  @override
+  String pinnedCount(String n, String total) {
+    return 'Pinned message $n/$total';
+  }
+
+  @override
+  String replyingTo(String name) {
+    return 'Replying to $name';
+  }
+
+  @override
+  String get chatYou => 'You';
+
+  @override
+  String get msgSeen => 'Seen';
+
+  @override
+  String get msgSent => 'Sent';
+
+  @override
   String get msgUnsent => 'This message was deleted';
 
   @override

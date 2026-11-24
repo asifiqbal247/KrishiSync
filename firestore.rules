@@ -382,6 +382,15 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // ---------- presence/{uid} ("এখন সক্রিয়" like Messenger) ----------
+    // Each app writes its own heartbeat about once a minute while open.
+    match /presence/{id} {
+      allow read: if signedIn();
+      allow write: if signedIn() && id == uid()
+        && request.resource.data.keys().hasOnly(['at'])
+        && request.resource.data.at == request.time;
+    }
+
     // ---------- calls/{id} (in-app voice / video calls, 217–220) ----------
     // The id is the Agora channel. Only the two people see the call.
     match /calls/{id} {
@@ -661,7 +670,19 @@ service cloud.firestore {
         && uid() in request.resource.data.members
         && request.resource.data.members.size() == 2
         && id == request.resource.data.members[0] + '_' + request.resource.data.members[1];
-      allow update: if isActive() && member() && onlyChanges(['lastText', 'lastVoice', 'lastFile', 'lastCall', 'lastDeleted', 'lastAt']);
+      // Previews, read receipts, typing and pins. A person may only set
+      // their own "seen" / "typing" time; at most 3 pins.
+      allow update: if isActive() && member()
+        && onlyChanges(['lastText', 'lastVoice', 'lastFile', 'lastCall', 'lastDeleted',
+                        'lastAt', 'readAt', 'typing', 'pins'])
+        && (!('readAt' in request.resource.data)
+            || request.resource.data.readAt.diff(resource.data.get('readAt', {}))
+                 .affectedKeys().hasOnly([uid()]))
+        && (!('typing' in request.resource.data)
+            || request.resource.data.typing.diff(resource.data.get('typing', {}))
+                 .affectedKeys().hasOnly([uid()]))
+        && (!('pins' in request.resource.data)
+            || request.resource.data.pins.size() <= 3);
 
       match /messages/{mid} {
         function inChat() {
@@ -702,6 +723,16 @@ service cloud.firestore {
                     'fileKind', 'fileName', 'callKind', 'callResult', 'callSec'])
               && !request.resource.data.keys().hasAny(
                    ['voiceUrl', 'fileUrl', 'callKind']))
+            // Edit own text within 15 minutes of sending.
+            || (resource.data.from == uid()
+              && resource.data.get('deleted', false) == false
+              && request.resource.data.diff(resource.data).affectedKeys()
+                   .hasOnly(['text', 'editedAt'])
+              && request.resource.data.text is string
+              && request.resource.data.text.size() > 0
+              && request.resource.data.text.size() <= 2000
+              && request.resource.data.editedAt == request.time
+              && request.time < resource.data.at + duration.value(15, 'm'))
             // Delete for me: add yourself to hiddenFor, nothing else.
             || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['hiddenFor'])
               && request.resource.data.hiddenFor.toSet()

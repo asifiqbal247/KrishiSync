@@ -18,6 +18,9 @@ class ChatThread {
     this.lastCall = '',
     this.lastDeleted = false,
     this.lastAt,
+    this.readAt = const {},
+    this.typing = const {},
+    this.pins = const [],
   });
 
   final String id;
@@ -40,6 +43,16 @@ class ChatThread {
   final bool lastDeleted;
   final DateTime? lastAt;
 
+  /// When each person last opened the chat (WhatsApp-style "seen" ticks).
+  final Map<String, DateTime> readAt;
+
+  /// When each person last typed (shown as "লিখছে…" for a few seconds).
+  final Map<String, DateTime> typing;
+
+  /// Up to [maxPins] pinned messages, oldest first.
+  final List<PinnedMessage> pins;
+  static const maxPins = 3;
+
   bool get hasMessages =>
       lastText.isNotEmpty ||
       lastVoice ||
@@ -56,6 +69,10 @@ class ChatThread {
       for (final e in (m[k] as Map<String, dynamic>? ?? const {}).entries)
         e.key: '${e.value}',
     };
+    Map<String, DateTime> times(String k) => {
+      for (final e in (m[k] as Map<String, dynamic>? ?? const {}).entries)
+        if (e.value is Timestamp) e.key: (e.value as Timestamp).toDate(),
+    };
     return ChatThread(
       id: d.id,
       members: [
@@ -70,6 +87,12 @@ class ChatThread {
       lastCall: m['lastCall'] as String? ?? '',
       lastDeleted: m['lastDeleted'] == true,
       lastAt: (m['lastAt'] as Timestamp?)?.toDate(),
+      readAt: times('readAt'),
+      typing: times('typing'),
+      pins: [
+        for (final p in (m['pins'] as List<dynamic>? ?? const []))
+          PinnedMessage.fromMap(p as Map<String, dynamic>),
+      ],
     );
   }
 }
@@ -85,6 +108,8 @@ class ChatMessage {
     this.voiceWave = const [],
     this.deleted = false,
     this.hiddenFor = const [],
+    this.editedAt,
+    this.replyTo,
     this.fileUrl,
     this.fileKind,
     this.fileName,
@@ -102,6 +127,21 @@ class ChatMessage {
 
   /// People who deleted it for themselves only.
   final List<String> hiddenFor;
+
+  /// Set when the sender edited the text (within 15 minutes).
+  final DateTime? editedAt;
+
+  /// The message this one answers (quoted on top of the bubble).
+  final ReplyRef? replyTo;
+
+  /// Short text for quotes, pins and previews.
+  String get kind => isVoice
+      ? 'voice'
+      : isFile
+      ? (fileKind ?? 'doc')
+      : isCall
+      ? 'call'
+      : 'text';
 
   /// Voice message (V2): audio URL and length in seconds.
   final String? voiceUrl;
@@ -139,6 +179,10 @@ class ChatMessage {
           (x as num).toInt(),
       ],
       deleted: m['deleted'] == true,
+      editedAt: (m['editedAt'] as Timestamp?)?.toDate(),
+      replyTo: m['replyTo'] is Map<String, dynamic>
+          ? ReplyRef.fromMap(m['replyTo'] as Map<String, dynamic>)
+          : null,
       hiddenFor: [
         for (final x in (m['hiddenFor'] as List<dynamic>? ?? const [])) '$x',
       ],
@@ -202,12 +246,18 @@ class ChatRepository {
       .snapshots()
       .map((q) => [for (final d in q.docs) ChatMessage.fromDoc(d)]);
 
-  Future<void> send(String chatId, String from, String text) {
+  Future<void> send(
+    String chatId,
+    String from,
+    String text, {
+    ReplyRef? reply,
+  }) {
     final b = _db.batch();
     final now = FieldValue.serverTimestamp();
     b.set(_chats.doc(chatId).collection('messages').doc(), {
       'from': from,
       'text': text,
+      'replyTo': ?reply?.toMap(),
       'at': now,
     });
     b.update(_chats.doc(chatId), {
@@ -227,6 +277,7 @@ class ChatRepository {
     required String url,
     required int seconds,
     List<int> wave = const [],
+    ReplyRef? reply,
   }) {
     final b = _db.batch();
     final now = FieldValue.serverTimestamp();
@@ -236,6 +287,7 @@ class ChatRepository {
       'voiceUrl': url,
       'voiceSec': seconds,
       if (wave.isNotEmpty) 'voiceWave': wave,
+      'replyTo': ?reply?.toMap(),
       'at': now,
     });
     b.update(_chats.doc(chatId), {
@@ -329,6 +381,40 @@ class ChatRepository {
     return b.commit();
   }
 
+  /// Edit own text (rules allow 15 minutes after sending).
+  static const editWindow = Duration(minutes: 15);
+
+  Future<void> edit(
+    String chatId,
+    String messageId,
+    String text, {
+    required bool isLast,
+  }) {
+    final b = _db.batch();
+    b.update(_chats.doc(chatId).collection('messages').doc(messageId), {
+      'text': text,
+      'editedAt': FieldValue.serverTimestamp(),
+    });
+    if (isLast) b.update(_chats.doc(chatId), {'lastText': text});
+    return b.commit();
+  }
+
+  /// Opened the chat: the other person's messages so far are "seen".
+  Future<void> markRead(String chatId, String uid) =>
+      _chats.doc(chatId).update({'readAt.$uid': FieldValue.serverTimestamp()});
+
+  /// "লিখছে…": on while typing (sent at most every few seconds), off when
+  /// the text is sent or cleared.
+  Future<void> setTyping(String chatId, String uid, {required bool on}) =>
+      _chats.doc(chatId).update({
+        'typing.$uid': on ? FieldValue.serverTimestamp() : FieldValue.delete(),
+      });
+
+  Future<void> setPins(String chatId, List<PinnedMessage> pins) =>
+      _chats.doc(chatId).update({
+        'pins': [for (final p in pins) p.toMap()],
+      });
+
   /// Delete for me: hidden only on [uid]'s side.
   Future<void> hideForMe(String chatId, String messageId, String uid) =>
       _chats.doc(chatId).collection('messages').doc(messageId).update({
@@ -375,3 +461,48 @@ final chatProvider = StreamProvider.family<ChatThread?, String>(
 final chatMessagesProvider = StreamProvider.family<List<ChatMessage>, String>(
   (ref, id) => ref.watch(chatRepositoryProvider).watchMessages(id),
 );
+
+/// The quoted message of a reply: who wrote it and a short preview.
+class ReplyRef {
+  const ReplyRef({
+    required this.id,
+    required this.from,
+    required this.text,
+    required this.kind,
+  });
+
+  final String id;
+  final String from;
+
+  /// Text of the original (cut to [maxText]); empty for voice / files.
+  final String text;
+
+  /// text | voice | image | video | doc | call
+  final String kind;
+
+  static const maxText = 120;
+
+  factory ReplyRef.of(ChatMessage m) => ReplyRef(
+    id: m.id,
+    from: m.from,
+    text: m.text.length > maxText ? m.text.substring(0, maxText) : m.text,
+    kind: m.kind,
+  );
+
+  factory ReplyRef.fromMap(Map<String, dynamic> m) => ReplyRef(
+    id: m['id'] as String? ?? '',
+    from: m['from'] as String? ?? '',
+    text: m['text'] as String? ?? '',
+    kind: m['kind'] as String? ?? 'text',
+  );
+
+  Map<String, dynamic> toMap() => {
+    'id': id,
+    'from': from,
+    'text': text,
+    'kind': kind,
+  };
+}
+
+/// A pinned message as shown in the bar on top of the chat.
+typedef PinnedMessage = ReplyRef;

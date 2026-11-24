@@ -143,6 +143,16 @@ abstract final class AppColors {
   static const voiceTheirsRest = gray300;
   static const voiceTheirsChip = white;
 
+  /// Chat extras (not in Figma): "seen" ticks and "এখন সক্রিয়" in brand
+  /// green, quote / pin bar accent, highlight when jumping to a message.
+  static const chatSeen = green500;
+  static const chatSent = gray500;
+  static const chatActive = green500;
+  static const chatQuoteBar = green500;
+  static const chatQuoteMine = Color(0x26FFFFFF);
+  static const chatQuoteTheirs = white;
+  static const chatHighlight = Color(0x332E7D32);
+
   /// 217–220 Video Call (Figma 412:6167).
   static const callBg = gray900;
   /// Round button, off: rgba(255,255,255,0.22); on: white.

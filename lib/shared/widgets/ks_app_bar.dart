@@ -17,6 +17,7 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onBack,
     this.actions = const [],
     this.onImage = false,
+    this.subtitle,
   });
 
   /// Over a hero photo (53): transparent bar, white title and back arrow.
@@ -26,6 +27,9 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBack;
   final VoidCallback? onBack;
   final List<Widget> actions;
+
+  /// Small line under the title (chat: "লিখছে…" / "এখন সক্রিয়").
+  final Widget? subtitle;
 
   @override
   Size get preferredSize => const Size.fromHeight(AppSizes.appBarHeight);
@@ -57,15 +61,22 @@ class KsAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Expanded(
                   child: title == null
                       ? const SizedBox.shrink()
-                      : Text(
-                          title!,
-                          style: onImage
-                              ? AppTypography.h3.normal.withColor(
-                                  AppColors.textOnImage,
-                                )
-                              : AppTypography.h3.normal,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title!,
+                              style: onImage
+                                  ? AppTypography.h3.normal.withColor(
+                                      AppColors.textOnImage,
+                                    )
+                                  : AppTypography.h3.normal,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            ?subtitle,
+                          ],
                         ),
                 ),
                 ...actions,

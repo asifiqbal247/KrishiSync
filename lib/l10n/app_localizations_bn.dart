@@ -5241,6 +5241,87 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifChannelName => 'গোলাঘর বার্তা';
 
   @override
+  String get msgNotFound => 'মূল বার্তাটি আর নেই';
+
+  @override
+  String get chatTyping => 'লিখছে…';
+
+  @override
+  String get activeNow => 'এখন সক্রিয়';
+
+  @override
+  String activeAgo(String time) {
+    return 'সক্রিয় ছিলেন $time আগে';
+  }
+
+  @override
+  String agoMinutes(String n) {
+    return '$n মিনিট';
+  }
+
+  @override
+  String agoHours(String n) {
+    return '$n ঘণ্টা';
+  }
+
+  @override
+  String agoDays(String n) {
+    return '$n দিন';
+  }
+
+  @override
+  String get chatToday => 'আজ';
+
+  @override
+  String get msgEdited => 'সম্পাদিত';
+
+  @override
+  String get msgReply => 'উত্তর দিন';
+
+  @override
+  String get msgCopy => 'কপি';
+
+  @override
+  String get msgEdit => 'সম্পাদনা';
+
+  @override
+  String get msgEditing => 'বার্তা সম্পাদনা';
+
+  @override
+  String get msgEditExpired => 'সম্পাদনার সময় (১৫ মিনিট) শেষ হয়ে গেছে';
+
+  @override
+  String get msgPin => 'পিন করুন';
+
+  @override
+  String get msgUnpin => 'আনপিন করুন';
+
+  @override
+  String get pinLimit => 'সর্বোচ্চ ৩টি বার্তা পিন করা যায়';
+
+  @override
+  String get pinnedOne => 'পিন করা বার্তা';
+
+  @override
+  String pinnedCount(String n, String total) {
+    return 'পিন করা বার্তা $n/$total';
+  }
+
+  @override
+  String replyingTo(String name) {
+    return '$name-কে উত্তর';
+  }
+
+  @override
+  String get chatYou => 'আপনি';
+
+  @override
+  String get msgSeen => 'দেখেছেন';
+
+  @override
+  String get msgSent => 'পাঠানো হয়েছে';
+
+  @override
   String get msgUnsent => 'এই বার্তাটি মুছে ফেলা হয়েছে';
 
   @override

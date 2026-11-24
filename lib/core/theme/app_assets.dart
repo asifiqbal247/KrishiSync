@@ -33,6 +33,13 @@ abstract final class AppIcons {
   static const play = '$_p/play.svg';
   static const pause = '$_p/pause.svg';
 
+  /// Chat message actions and ticks (not in Figma; DS stroke style).
+  static const reply = '$_p/reply.svg';
+  static const pin = '$_p/pin.svg';
+  static const copy = '$_p/copy.svg';
+  static const edit = '$_p/edit.svg';
+  static const checkDouble = '$_p/check_double.svg';
+
   /// 217–220 Video Call buttons and self view (Figma 412:6167).
   static const callSpeaker = '$_p/call_speaker.svg';
   static const callCamera = '$_p/call_camera.svg';
